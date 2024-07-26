@@ -1,0 +1,8 @@
+// Just enough prelude for Hello World
+let type String = extern "helium_String"
+effect IO = effect []
+data Unit = ()
+let printStr = extern "helium_printStr" : String ->[IO] Unit
+// The Hello World
+let do_hello_world x = printStr "Hello World!"
+let _ = do_hello_world 12

@@ -1,0 +1,29 @@
+data Unit = I
+
+signature Reader (X : Type) =
+| get : Unit => X
+
+data Bool = True | False
+
+let withReader s f =
+  handle `a in f `a I with
+  | get I    => resume s
+  end
+
+let bnot b =
+  match b with
+  | True  => False
+  | False => True
+  end
+
+let r = withReader True (fn `s I =>
+  get `s I)
+
+let stringOfBool b =
+  match b with
+  | True  => "True"
+  | False => "False"
+  end
+
+let _ = printStr (stringOfBool r)
+
