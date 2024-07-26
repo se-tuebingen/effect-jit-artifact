@@ -1,0 +1,17 @@
+data Unit = I
+
+signature State (X : Type) =
+| get : Unit => X
+| put : X => Unit
+
+let _ =
+  handle
+    let a = get I
+    let _ = put 42 in
+    a
+  with
+  | get I => fn s => resume s s
+  | put s => fn _ => resume I s
+  | return  x => fn _ => x
+  | finally f => f 13
+  end

@@ -1,0 +1,10 @@
+
+type Set : Type -> Type
+type UF : Type -> Sig
+
+val new    : forall {A : Type} (`uf : UF A), A ->[`uf] Set A
+val find   : forall {A : Type} (`uf : UF A), Set A ->[`uf] A
+val union  : forall {A : Type} {R : Effect} (`uf : UF A),
+  (A -> A ->[R] A) -> Set A -> Set A ->[`uf, R] Unit
+val withUF : {A B : Type} -> {R : Effect} ->
+  handler of UF A in[RE,R] B =>[RE,R] B

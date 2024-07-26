@@ -1,0 +1,13 @@
+data U (X : Type) =
+| A of X
+| B of X
+| C
+
+data D (X : Type) (F : Type -> Type) =
+| P of X, forall (Z : Type), F Z
+
+let foo x =
+  match x with
+  | P (A x) b c => C
+  | P _ b c => C
+  end

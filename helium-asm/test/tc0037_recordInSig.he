@@ -1,0 +1,8 @@
+let type S = sig
+  data rec T = { apply : T -> T }
+end
+
+let module M : S = struct
+  data rec T = { apply : T -> T }
+  let foo (x : T) = x
+end

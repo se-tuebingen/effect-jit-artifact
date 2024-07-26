@@ -1,0 +1,11 @@
+data Unit = ()
+data rec List (X : Type) =
+| []
+| (::) of X, List X
+
+let foo () = ()
+let tail xs =
+  match xs with
+  | []      => []
+  | _ :: xs => xs
+  end

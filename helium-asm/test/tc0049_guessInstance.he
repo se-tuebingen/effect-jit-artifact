@@ -1,0 +1,7 @@
+data Unit = I
+
+signature State (X : Type) =
+| get : Unit => X
+| put : X => Unit
+
+let update `a f = put (f (get I))

@@ -1,0 +1,40 @@
+module this = Prelude.List
+
+val map : forall {A B : Type} {E : Effect} ->
+  (A ->[E] B) -> this A ->[E] this B
+
+val mapi : forall {A B : Type} {E : Effect} ->
+  (Int -> A ->[E] B) -> this A ->[E] this B
+
+val iter : forall {A : Type} {E : Effect} ->
+  (A ->[E] Unit) -> this A ->[E] Unit
+
+val iteri : forall {A : Type} {E : Effect} ->
+  (Int -> A ->[E] Unit) -> this A ->[E] Unit
+
+val exists : forall {A : Type} {E : Effect} ->
+  (A ->[E] Bool) -> this A ->[E] Bool
+
+val forAll : forall {A : Type} {E : Effect} ->
+  (A ->[E] Bool) -> this A ->[E] Bool
+
+val foldl : forall {A S : Type} {E : Effect} ->
+  (S -> A ->[E] S) -> S -> this A ->[E] S
+
+val foldr : forall {A S : Type} {E : Effect} ->
+  (A -> S ->[E] S) -> this A -> S ->[E] S
+
+val revAppend : forall {A : Type} ->
+  this A -> this A -> this A
+
+val rev : forall {A : Type} ->
+  this A -> this A
+
+val take : forall {A : Type} ->
+  Int -> this A -> this A
+
+val drop : forall {A : Type} ->
+  Int -> this A -> this A
+
+val length : forall {A : Type} ->
+  this A -> Int

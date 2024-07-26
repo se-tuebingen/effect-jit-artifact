@@ -1,0 +1,9 @@
+data Unit = I
+
+signature State (X : Type) =
+| put : X    => Unit
+| get : Unit => X
+
+let update1 `a f = put `a (f (get `a I))
+let update2 `a f = put `a (f `a (get `a I))
+let update3 (type X) (`a : State X) f = update1 `a f

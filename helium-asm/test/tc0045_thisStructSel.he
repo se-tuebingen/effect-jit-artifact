@@ -1,0 +1,8 @@
+type S = sig
+  val T : Type
+  val this : sig
+    val x : T
+  end
+end
+
+let f (module X : S) = X.x

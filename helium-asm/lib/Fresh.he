@@ -1,0 +1,10 @@
+signature Fresh (N : Type) = 
+| fresh : N => N
+
+let freshStr c =
+  handler
+  | fresh x =>
+    fn c => resume (x ++ stringOfInt c) (c + 1)
+  | return  x => fn _ => x
+  | finally f => f 0
+  end

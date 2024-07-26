@@ -1,0 +1,24 @@
+(* Finite maps based on 2-3 trees *)
+
+signature NotFound (Key V : Type) =
+| not_found : Key => V
+
+type Order = sig
+  type this : Type
+  val compare : this -> this -> Ord
+end
+
+module this : forall (Key : Order) ->[] sig
+  type this : Type -> Type
+
+  val empty     : forall {v : Type} -> this v
+  val singleton : forall {v : Type} -> Key -> v -> this v
+  val add       : forall {v : Type} -> Key -> v -> this v -> this v
+  val remove    : forall {v : Type} -> Key -> this v -> this v
+  val find      : forall {v : Type}, (`err : NotFound Key v) ->
+    Key -> this v ->[`err] v
+  val mem       : forall {v : Type} -> Key -> this v -> Bool
+  val iter      : forall {v : Type} {r : Effect} -> 
+    (Key -> v ->[r] Unit) -> this v ->[r] Unit
+  val size      : forall {v : Type} -> this v -> Int
+end

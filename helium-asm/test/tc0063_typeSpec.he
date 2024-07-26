@@ -1,0 +1,24 @@
+data Unit = ()
+
+data Option (X : Type) =
+| None
+| Some of X
+
+let type S = sig
+  val T : Type
+  data OptT =
+  | None
+  | Some of T
+end
+
+let foo (module M : S) = ()
+
+let bar = foo struct
+  let type T = Unit
+
+  let module OptT = struct
+    include Option
+    let this = Option T
+  end
+  include type OptT
+end

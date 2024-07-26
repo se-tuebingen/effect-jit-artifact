@@ -1,0 +1,11 @@
+data U = I
+let type S = sig
+  val T : Type
+  signature Reader = ask : U => T
+end
+
+let module M : S = struct
+  data Bool = True | False
+  let type T = Bool
+  signature Reader = ask : U => Bool
+end

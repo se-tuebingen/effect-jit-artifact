@@ -1,0 +1,11 @@
+data D = A | B
+data Triple (X Y Z : Type) =
+| T of X, Y, Z
+data E = Ex of forall (X : Type), X, (X -> X), (X -> D)
+
+let foo x =
+  match x with
+  | T A a (Ex _ x f g) => T a a (g x)
+  | T a A (Ex _ x f g) => T a a (g (f x))
+  | T a b (Ex _ x f g) => T a b (g (f (f x)))
+  end

@@ -1,0 +1,15 @@
+let type Int = extern "helium_Int"
+let ( + ) = extern "helium_addInt" : Int -> Int -> Int
+
+data ExInt =
+| Pack of forall {T : Type}, T, (T -> Int)
+
+data IntPair = IntPair of Int, Int
+
+let test_ex = fn (Pack x f) => f x + 0
+let fst = fn (IntPair x _) => x
+let snd = fn (IntPair _ x) => x
+
+let _ = test_ex (Pack 42 (fn x => x))
+let _ = test_ex (Pack (IntPair 13 21) fst)
+let _ = test_ex (Pack (IntPair 666 69) snd)

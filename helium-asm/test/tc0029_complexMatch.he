@@ -1,0 +1,9 @@
+data D = A | B
+data E = Ex of forall (X : Type)
+data P = Pr of D, E
+
+let foo x =
+  match x with
+  | Pr A _      => A
+  | Pr x (Ex y) => B
+  end

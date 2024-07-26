@@ -1,0 +1,14 @@
+data rec Nat = O | S of Nat
+data Bool = False | True
+
+let rec is_odd n =
+  match n with
+  | O   => False
+  | S n => is_even n
+  end
+
+and is_even n =
+  match n with
+  | O   => True
+  | S n => is_odd n
+  end

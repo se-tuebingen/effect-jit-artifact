@@ -1,0 +1,44 @@
+(** Writer effect *)
+import List
+
+signature this (X : Type) =
+| tell : X => Unit
+
+let listHandler =
+  handler
+  | return () => fn xs => List.rev xs
+  | tell x    => fn xs => resume () (x :: xs)
+  | finally f => f []
+  end
+
+let accHandler empty add =
+  handler
+  | return () => fn s => s
+  | tell x    => fn s => resume () (add x s)
+  | finally f => f empty
+  end
+
+let channelHandler chan =
+  handler
+  | tell str => resume (outputString chan str)
+  end
+
+let workSetHandler {X : Type} {E : Effect}
+    (f : {`w : this X} -> X ->[`w,E] Unit) =
+  let rec handleWS q =
+    handler
+    | tell    x => fn xs => resume () (x :: xs)
+    | return  v => fn xs => procList xs
+    | finally c => c q
+    end
+  and procList xs =
+    match xs with
+    | []      => ()
+    | x :: xs => handle f x with handleWS xs
+    end
+  in
+  handler
+  | tell    x => fn xs => resume () (x :: xs)
+  | return  v => fn xs => let _ = procList xs in v
+  | finally c => c []
+  end
