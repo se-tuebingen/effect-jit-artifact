@@ -1,0 +1,24 @@
+// TODO Running example
+effect Emit(i: Int): Unit
+effect Abort(): Bottom
+
+def reversed[R](){body: => R/Emit}
+= try {
+    body()
+} with Emit { (i: Int) =>
+    val r = resume(());
+    do Emit(i); r
+}
+
+def delayEmit[R](){body: => R/Emit}
+= reversed[R]{ reversed[R]{ body }}
+
+def main() = try { delayEmit {
+    do Emit(2);
+    do Emit(3);
+    if (2 < 3) {
+        do Abort()
+    }
+}} with Emit { (i: Int) =>
+    println(i); resume(()) 
+} with Abort { () => () }

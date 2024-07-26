@@ -1,0 +1,13 @@
+(executable
+ (name eff_primes_wrapper)
+ (libraries OcamlHeader)
+ (modules generated_eff_primes eff_primes_wrapper)
+ (ocamlopt_flags
+  (:standard -O3)))
+(library
+ (name OcamlHeader) (modules OcamlHeader))
+
+(env
+ (dev
+  (flags
+   (:standard -w -33 -w -39 -w -8 -w -20))))

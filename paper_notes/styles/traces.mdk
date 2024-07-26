@@ -1,0 +1,164 @@
+Description:
+    Nice(-ish) typesetting of RPython traces for the jit.
+
+.jit-instruction {
+    replace: "/\s*//g";
+    replace: "//{\"op\":\"Const\"[\.,]\"type\":\"num\"[\.,](?:\"format\":\"int\"[\.,])?\"out\":([0-9]+)[\.,]\"value\":([0-9]+)}/num\1<-\2\
+              //{\"op\":\"Add\"[\.,]\"out\":([0-9]+)[\.,]\"in1\":([0-9]+)[\.,]\"in2\":([0-9]+)}/num\1<-num\2\\oplus{}num\3\
+              //{\"op\":\"PrimOp\".\"name\":\"([a-zA-Z]+)\([^\)]*\):[^\"]*\"[\.,]\"out\":{([^}]*)}[\.,]\"in\":{([^}]*)}}/ARGS[\2]<-primitive \1(ARGS[\3])\
+              //{\"op\":\"PrimOp\".\"name\":\"hole\"[\.,]\"out\":{([^}]*)}[\.,]\"in\":{([^}]*)}}/<>\
+              //{\"op\":\"Jump\"[\.,]\"target\":([0-9]+)}/jump label\1\
+              //{\"op\":\"IfZero\"[\.,]\"cond\":([0-9]+)[\.,]\"then\":{\"target\":([0-9]+)[\.,]\"args\":{([^}]*)}}}/if num\1=0 then label\2(ARGS[\3])\
+              //{\"op\":\"Push\"[\.,]\"target\":([0-9]+)[\.,]\"args\":{([^}]*)}}/push label\1(ARGS[\2])\
+              //{\"op\":\"Return\"[\.,]\"args\":{([^}]*)}}/return(ARGS[\1])\
+              //{\"op\":\"ShiftDyn\"[\.,]\"out\":([0-9]+)[\.,]\"n\":([0-9]+)}/ptr\1<-shift num\2\
+              //{\"op\":\"NewStack\"[\.,]\"out\":([0-9]+)[\.,]\"region\":([0-9]+)[\.,]\"target\":([0-9]+)[\.,]\"args\":{([^}]*)}}/ptr\1<-new stack label\3(ARGS[\4])\
+              //{\"op\":\"PushStack\"[\.,]\"arg\":([0-9]+)}/push stack ptr\1\
+              //{\"op\":\"New\"[\.,]\"out\":([0-9+])[\.,]\"targets\":\[([0-9]+)\][\.,]\"args\":{([^}]*)}}/ptr\1<-new \{m0 !-> label\2\}(ARGS[\3])\
+              //{\"op\":\"Invoke\"[\.,]\"receiver\":([0-9]+)[\.,]\"tag\":([0-9]+)[\.,]\"args\":{([^}]*)}}/ptr\1.m\2(ARGS[\3])\
+              //{\"op\":\"Construct\"[\.,]\"out\":([0-9]+)[\.,]\"type\":([0-9]+)[\.,]\"tag\":([0-9]+)[\.,]\"args\":{([^}]*)}}/ptr\1<-tag\3(ARGS[\4])\
+              //{\"op\":\"Match\"[\.,]\"type\":([0-9]+)[\.,]\"scrutinee\":([0-9]+)[\.,]\"clauses\":(.*)[\.,]\"default\":(.*)}/\2 match \{CLAUSES\3,CLAUSE*\4\}\
+              //{\"op\":\"Copy\"[\.,]\"type\":\"([^\"]*)\"[\.,]\"from\":([0-9]+)[\.,]\"to\".([0-9]+)}/\1\3<-\1\2\
+              //{\"op\":\"Swap\"[\.,]\"type\":\"([^\"]+)\"[\.,]\"a\":([0-9]+)[\.,]\"b\".([0-9]+)}/\1\3\\leftrightarrow{}\1\2\
+              //{\"op\":\"Drop\"[\.,]\"type\":\"([^\"]*)\"[\.,]\"reg\":([0-9]+)}/drop \1\2\
+              //gm";
+    replace: "//CLAUSES\[\]/NOTHING\
+              //CLAUSES\[{\"target\":([0-9]+)[\.,]\"args\":{([^}]*)}}\]/CLAUSE0{\\\"target\\\":\1.\\\"args\\\":{\2}}\
+              //gm";
+    replace: "//CLAUSE([0-9]*){\\*\"target\\*\":([0-9]+)[\.,]\\*\"args\\*\":{([^}]*)}}/tag\1(ARGS[\3])=>label\2\
+              //CLAUSE([*]){\\*\"target\\*\":([0-9]+)[\.,]\\*\"args\\*\":{([^}]*)}}/tag_*(ARGS[\3])=>label\2\
+              //gm";
+    replace: "//ARGS\[\"num\":\[\][\.,]\"ptr\":\[\]\]/NOTHING\
+              //ARGS\[\"num\":\[([0-9]+)\][\.,]\"ptr\":\[\]\]/num\1\
+              //ARGS\[\"num\":\[([0-9]+)\][\.,]\"ptr\":\[([0-9]+)\]\]/num\1,ptr\2\
+              //ARGS\[\"num\":\[([0-9]+)[\.,]([0-9]*)\][\.,]\"ptr\":\[\]\]/num\1,num\2\
+              //ARGS\[\"num\":\[([0-9]+)[\.,]([0-9]*)\][\.,]\"ptr\":\[([0-9]+)\]\]/num\1,num\2,ptr\3\
+              //ARGS\[\"num\":\[([0-9]+)[\.,]([0-9]*)[\.,]([0-9]*)\][\.,]\"ptr\":\[\]\]/num\1,num\2,num\3\
+              //ARGS\[\"num\":\[([0-9]+)[\.,]([0-9]+)[\.,]([0-9]+)\][\.,]\"ptr\":\[([0-9]+)\]\]/num\1,num\2,num\3,ptr\4\
+              //ARGS\[\"num\":\[\][\.,]\"ptr\":\[([0-9]+)\]\]/ptr\1\
+              //gm";
+    replace: "/NOTHING//g";
+    before: "$";
+    after: "$";
+    color: Green;
+}
+.jit-block-name {
+    font-size: 3pt;
+    color: Gray;
+}
+.jit-block-index {
+    before: "$label";
+    after: "$";
+    font-size: 3pt;
+    color: Gray;
+}
+.jit-instruction-index {
+    after: "";
+    before: "+";
+    font-size: 3pt;
+    color: Gray;
+}
+.rpython-instruction {
+    replace: "/ \[[^\]]*\]$//gm";
+    replace: "//([a-z0-9]+) = getarrayitem_gc_[ir]\(([a-z0-9]+), ([0-9]+),[^)]*\)/\1 = \2[\3]\
+              //([a-z0-9]+) = getfield_gc_[ir]\(([a-z0-9]+), descr=<Field[SP] (?:[a-zA-Z0-9_]+\.)*([a-zA-Z0-9_]+)\.inst_([a-zA-Z0-9_]+) [^>]*>\)/\1 = (\2: \3).\4\
+              //guard_value\(([a-z0-9]*), ([^,]+),[^)]*\)/guard \1 == \2\
+              //guard_nonnull\(([a-z0-9]+),[^)]*\)/guard \1 != null\
+              //guard_isnull\(([a-z0-9]+),[^)]*\)/guard \1 == null\
+              //guard_true\(([a-z0-9]+),[^)]*\)/guard \1\
+              //guard_not_invalidated\([^)]*\)/guard not invalidated\
+              //label\([pi0-9, ]*descr=TargetToken\(([a-zA-Z0-9]*)\)\)/label \1:\
+              //jump\([pi0-9, ]*descr=TargetToken\(([a-zA-Z0-9]*)\)\)/jump \1\
+              //([a-z0-9]+) = int_([a-z]+)\(([a-z0-9]+), ([a-z0-9]+)\)/\1 = \3 OP\2 \1\
+              //gm";
+    replace: "//OPgt/>\
+              //OPsub/-\
+              //OPlt/<\
+              //gm";
+    font-size: 4pt;
+    indent: "2em";
+    tex-cmd-before: "\hspace{&indent;}";
+    before: "```";
+    after: "```";
+    color: Gray;
+}
+.jit-trace-comment {
+    font-size: 8pt;
+    text-align: left;
+}
+
+RPythonTrace {
+    skip-jit-instructions: "Copy|Swap|Drop";
+    skipped-jit-text: "skipped register movement";
+    skipped-jit-replacement: "&nl;| [...]{ font-family: serif; } ||| [&skipped-jit-text;]{ font-family: serif; font-color: gray; font-size: 2pt; } |";
+    replace: "/\n(?:[^\n]*debug_merge_point\([^{]*{\"op\":\s*\"(&skip-jit-instructions;)\"[^\n]*}[^\n]*\n)+/&skipped-jit-replacement;&nl;/g";
+    replace: "//debug_merge_point\([0-9\s,]*\'([0-9]*)<(.*)>\+([0-9]*)[\s:]*(.*)\'\)/| [\1]{ .jit-block-index } | [\2]{ .jit-block-name } | [\3]{ .jit-instruction-index } | [\4]{ .jit-instruction} |\
+              //guard_([^\n]*)(\n)/| ||| [guard_\1]{.rpython-instruction} |\2\
+              //(?:\+[0-9]+:)\s*([^\n]*)(\n)?/| ||| [\1]{.rpython-instruction} |\2\
+              //---*\s*([^\n]*)(\n)?/| [\1]{.jit-trace-comment} ||||\2\
+              //@@*([^@]+)@/\1\
+              //gm";
+    before: "|~~~:|:~~~:|~~~:|:~~~|&nl;";
+    font-size: 5pt;
+    font-family: monospace;
+    tight:true;
+}
+
+.jit-block-label {
+    replace: "/_/ /g";
+    before: "[";
+    after: "]{ .jit-block-name }";
+}
+SkippedJITCode {
+    @jitcode;
+    before: "&nl;~~ Begin SkippedJITCodeContinued&nl;";
+    after: "&nl;~~ End SkippedJITCodeContinued&nl;";
+}
+SkippedJITCodeContinued {
+    replace: "/\"label\"\s*:\s*\"\?entrypoint\"//"; /* Hack to fix 0-based indices */
+    replace: "/^(?:(?!\"label\")[\s\S])*$//";
+    replace: "/(?:(?!\"label\")[\s\S])*\"label\"\s*:\s*\"([^\"]*)\"(?:(?!\"label\")[\s\S])*/&nl;~~ SkippedJITBlock&nl;\1&nl;~~&nl;/g";
+}
+SkippedJITBlocks {
+    replace: "/(\S+)\s*/&nl;~~ SkippedJITBlock&nl;\1&nl;~~&nl;/g"
+}
+SkippedJITBlock {
+    @jitcode-jitblock;
+    label: "label@jitcode-jitblock";
+    color: gray;
+    replace:;
+}
+.hspace-indent {
+    tex-cmd-before: "\hspace{";
+    tex-cmd-after: "}\strut{}";
+}
+JITBlock {
+    @jitcode-jitblock;
+    label: "label@jitcode-jitblock";
+    name: "?";
+    instruction-indent: "[3em]{ .hspace-indent }";
+    skip-jit-instructions: "";
+    skipped-jit-text: "...";
+    skipped-jit-replacement:"&skipped-jit-text;";
+    replace: "/(?:\s*{\"op\"\s*:\s*\"(?:&skip-jit-instructions;)\"[^\n]*},?)+\s*/&br;INSTRUCTION_INDENT&skipped-jit-replacement;&nl;/g";
+    replace: "/\s*({.*}),?\s*/&br;INSTRUCTION_INDENT[\1]{ .jit-instruction }&nl;/g";
+    replace: "/INSTRUCTION_INDENT/&instruction-indent;/g";
+    before: "$&label;$: [\"&name;\"]{ color: gray; }&nl;";
+}
+JITCode {
+    @jitcode;
+    skipped-blocks:;
+    before: "&nl;~~ Begin SkippedJITBlocks&nl;&skipped-blocks;&nl;~~ End SkippedJITBlocks&nl;~~ Begin JITCodeContinued&nl;";
+    after: "&nl;~~ End JITCodeContinued&nl;";
+}
+JITCodeContinued {
+    skipped-blocks:;
+    skip-jit-instructions: "";
+    skipped-jit-text: "...";
+    block-args: "skip-jit-instructions:&skip-jit-instructions;; skipped-jit-text:&skipped-jit-text;;";
+    replace: "/^(?:(?!{\"label\")[\s\S])*\{\"label\"\s*:\s*\"([^\"]*)\",(?:[\s\S](?!\"instructions\"))*\s*\"instructions\"\s*:\s*\[/~~ Begin JITBlock { name:\1; &block-args; }&nl;/";
+    replace: "/\]},\s*{\"label\"\s*:\s*\"([^\"]*)\",(?:[\s\S](?!\"instructions\"))*\s*\"instructions\"\s*:\s*\[/&nl;~~ End JITBlock&nl;~~ Begin JITBlock { name:\1; &block-args; }&nl;/g";
+    replace: "/\]}\],\s*\"frameSize\"\s*:\s*{[^}]*}}/&nl;~~ End JITBlock&nl;&nl;/";
+    replace: "/~~ Begin JITBlock(?![\s\S]*~~ End JITBlock)[\s\S]*$/&nl;~~ SkippedJitBlock&nl;~~&nl;/";
+    text-align: left;
+}

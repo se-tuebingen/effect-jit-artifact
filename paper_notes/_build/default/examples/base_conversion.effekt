@@ -1,0 +1,15 @@
+import immutable/list
+
+effect AddDigit(d: Int, n: Int): Int
+effect Read(): Int
+
+def fromDigits(base: Int): Int / Read = {
+    def loop(acc: Int): Int / {AddDigit, Read} = {
+        loop(do AddDigit(do Read(), acc))
+    }
+    try {
+        loop(0)
+    } with AddDigit { (d: Int, n: Int) => 
+        resume(n * base + d)
+    }
+}

@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+
+cd $(dirname $0)
+
+~/dev/effekt/eff/eff/eff.exe --no-stdlib --compile-plain-ocaml ../primes.eff | opam exec -- ocamlformat - --name=temp.ml --enable-outside-detected-project > ./generated_eff_primes.ml
+dune build
+chmod +x ./primes

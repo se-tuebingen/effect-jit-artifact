@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit' '/Users/gaisseml/dev/effect-jit/.helium-out/helium-rpyeffect:product_early_71bfcf38-3071-4793-8b85-3627db93e4ea/main.he.rpyeffect' "$@"

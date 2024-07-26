@@ -1,0 +1,682 @@
+[INCLUDE=styles/acmart]
+[INCLUDE=styles/common]
+[INCLUDE=styles/colors]
+[INCLUDE=styles/todos]
+[INCLUDE=styles/math]
+[INCLUDE=styles/timings]
+[INCLUDE=styles/traces]
+
+Prelude : plaintex
+
+Acm Format  : acmsmall,screen,10pt
+Bibliography: bibliography.bib
+
+<!-- For tables -->
+Package         : booktabs
+Package         : [bb=boondox]mathalfa
+Package         : threeparttable
+
+Colorizer       : effekt
+
+<!-- languages -->
+@tex lang       : $\mathsf{Effekt}$
+@tex core       : $\mathsf{System}\;\mathcal{C}$
+@tex oldcore       : $\mathsf{System}\;\Xi$
+@tex sysf       : $\mathsf{System}\;\mathsf{F}$
+@tex fsub       : $\mathsf{System}\;\mathsf{F}_{lt:}$
+@tex tunnel     : $\lambdadownup$
+@tex lambda12   : $\lambda^{1/2}$
+
+@tex highlightstart : [\highlightsmall{]{.texraw}
+@tex highlightend : [}]{.texraw}
+@tex codeellipsis : $\ldots$
+
+.labelcol { width: 22% }
+.vcol { width: 2%; }
+.defcol { width: 45% }
+
+.code1, .pre-indented, .pre-fenced3 {
+  language: effekt;
+  .code-replacements;
+}
+
+.codesub {
+  tex-cmd: "\textsubscript"
+}
+
+exists : [$\exists$]{.texraw}
+
+.code-replacements {
+  replace: "//\(\|(\d+)\|\)/\((\1)|[\1]{.code-index}\)\
+            //=>/\(=>|[&rArr;]{.serif}\)\
+            //->/\(->|[&rarr;]{.serif}\)\
+            //~>/\(xx|$\rightsquigarrow$\)\
+            //>>>/\(xx|&highlightstart;\)\
+            //\bexists\b/\(=>|&exists;\)\
+            //>=/\(>=|&ge;\)\
+            //>=/\(>=|&ge;\)\
+            //<=/\(<=|&le;\)\
+            //_s\b/\(x|~[s]{.codesub}~\)\
+            //\btau\b/\(t|[&tau;]{.serif}\)\
+            //([a-zA-Z_-]+)(\d+)\b/\1\(\1|~[\2]{.codesub}~\)\
+            //\.\.\./\(...|&codeellipsis;\)\
+            //gm";
+}
+
+<!-- Configure replacements in math, see math.mdk -->
+.replacements {
+
+  replace: "//@->/\looparrowright\
+            //<-@/\looparrowleft\
+            //there/1\
+            //=>/\Rightarrow{}\
+            //here/0\
+            //dom/\mathrm{dom}\
+            //gm";
+
+  constants: "true|false";
+
+  keywords: "def|val|return|try|with|finally|resume|on|suspend|cap|push|primitive|shift|if|then|else|jump|stack|new|match|drop|reset|Evi|Stack|&constants;";
+
+  nonterminals: "//\bstmt(?![a-zA-Z])/s\
+                 //\bprogram(?![a-zA-Z])/P\
+                 //\blabel(?![a-zA-Z])/l\
+                 //\bmarker(?![a-zA-Z])/\ell\
+                 //\bmemory(?![a-zA-Z])/X\
+                 //\btag(?![a-zA-Z])/t";
+
+  judgements: "//\s::(?!\S)/\;\;\mathrel{\metameta{:}}\
+               //<:/\mathrel{<:}\
+               //\s\/\/(?!\S)/\;\mathrel{\metameta{\vertrule}}";
+
+  statemachines: "//</\mathrel{\metameta{\langle}}\
+                  //>/\mathrel{\metameta{\rangle}}\
+                  //•/\cdot{}";
+
+  runtime-prompts: "//\s#/~{\\#}\
+                    //_#/_{\\#}\
+                    //^#/{\\#}\
+                    //\(#/{(\\#}";
+
+  other-replacements: "&runtime-prompts;&nonterminals;&judgements;&statemachines;";
+}
+
+@tex .todo-style {
+  %display : none;
+}
+
+.tr { display: none; }
+
+Notes {
+  display: none;
+}
+
+strong {
+  font-family: sans-serif;
+}
+
+.indent {
+  tex-env-outer: codeintext;
+}
+
+.kk {
+  language: kokax;
+  replace:"/^:/\(:|\)/";
+}
+
+.math-inline {
+  input: mathpre;
+}
+
+.small {
+  font-size: small;
+}
+
+@tex pre {
+  font-size:small;
+}
+
+.sf {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.token.comment.doc {
+  font-size: smaller;
+  //tex-cmd-before: "\fbox{\ \strut ";
+  //tex-cmd-after: "\ }";
+}
+
+@if TeX {
+  pre { tex-cmd-outer:"{\def~{\nobreakspace{}}"; }
+}
+
+DefinitionList {
+  tex-env-outer: "definitionlist";
+}
+
+Tex Header:
+  \newenvironment{definitionlist}%
+    {\begin{minipage}[t]{\linewidth}\vspace{-0.4em}}%
+    {\end{minipage}\vspace{0.6em}}
+
+<!-- Automatically defines &time_benchmark_backend; with suffix ' ms' from csv contents -->
+~ CSVEntities { name-prefix: "time_"; name-sep: "_"; value-suffix: "\ ms"; }
+[INCLUDE=../timings.csv]
+~
+<!-- Automatically defines &slowdown_benchmark_backend; with suffix from csv contents -->
+~ CSVEntities { name-prefix: "slowdown_"; name-sep: "_"; value-suffix: ""; }
+[INCLUDE=../timings_normalized.csv]
+~
+
+~TexRaw
+\author{Marcial Gaißert}%
+\affiliation{%
+  \institution{University of Tübingen}
+  \country{Germany}
+}
+\author{Carl Friedrich Bolz-Tereick}
+\affiliation{
+  \institution{University of Düsseldorf}
+  \country{Germany}
+}
+\author{Jonathan Immanuel Brachth\"auser}%
+\affiliation{%
+  \institution{University of Tübingen}
+  \country{Germany}
+}
+\authorsaddresses{}
+\def\shortauthors{Gaißert, Bolz-Tereick and Brachthäuser}
+~
+
+~ Abstract
+
+<!-- TODO Rewrite -->
+Effect systems are a programming language feature that has gained in popularity recently.
+However, most implementations still incur significant performance overhead for stack operations.
+Tracing JITs are an approach to just-in-time compilation that uses dynamic execution traces.
+On microbenchmarks,
+we show that, by leveraging the existing RPython toolkit for generating tracing jits to implement a bytecode interpreter,
+many stack operations are optimized away.
+This causes significant speedups, also when comparing to a backend compiling directly to machine code ahead-of-time via LLVM.
+~
+
+~ TexOnly
+[INCLUDE=acmclassify]
+~
+
+~ TexRaw
+\title{Too hot to handle}
+\subtitle{Just-in-time compilation for effects and handlers.}
+\maketitle
+~
+
+# Introduction
+~ TODO
+Introduction with references
+
+- Effekt (lexical effect handlers)
+- Pypy/RPython (tracing JITs)
+~
+
+~ Begin Figure { #fig-ex-running; caption: "Running example program"; }
+~ Begin Small
+~ Begin Columns
+~ Begin Column
+~~ Begin SubFigure { caption: "in Effekt"; }
+```effekt
+[INCLUDE=examples/running.effekt]
+```
+~~ End SubFigure
+~ End Column
+~ Begin Column
+~~ Begin SubFigure { caption: "in JIT bytecode"; }
+~ SkippedJITCode
+[INCLUDE=examples/running.rpyeffect:1-91]
+~
+...
+~ JITCodeContinued { skip-jit-instructions: "Drop|Copy|Swap"; skipped-jit-text: "... register movements"; }
+[INCLUDE=examples/running.rpyeffect:92-167]
+~
+~ SkippedJITCodeContinued
+[INCLUDE=examples/running.rpyeffect:168-180]
+~
+...
+~ JITCodeContinued { skip-jit-instructions: "Drop|Copy|Swap"; skipped-jit-text: "... register movements"; }
+[INCLUDE=examples/running.rpyeffect:180-200]
+~
+~~ End SubFigure
+~ End Column
+~ End Columns
+~ End Small
+~ End Figure
+
+## Compilation of Effekt
+~ Begin Figure
+~ TODO
+Overview of the Effekt compiler (?)
+~
+~ End Figure
+
+~ TODO
+How to get from Effekt to jit bytecode
+
+- evidence (reference lift-inference)
+~
+
+# Formal Presentation
+~ TODO
+Explain the syntax and semantics
+
+- Stack of stacks
+- Constructs left out of the formal presentation?
+- Unenforced restriction: Evidence corresponds to metastack
+~
+<!-- Stack of stacks -->
+Since --- thanks to lift inference --- we always know how many markers on the stack we would have to skip in a canonical semantic representation, <!-- Canonical/Classical/...? -->
+it is natural to represent the stack in a segmented fashion.
+This way, instead of searching for the $k$th marker, we can "just" access the $k$th stack segment.
+In effect<!-- i.e., in Effekt :) -->, we have a stack of stacks.
+To distinguish the two levels, we call the outer level stack the "metastack", in analogy to metacontinuations 
+[useful reference for metacontinuations, maybe some additional relation to them]{ .todo-style }.
+Where canonical representations would push some marker on the stack, we start a new stack.
+In notation, this looks quite similar if we annotate the stack bottom symbol with the marker.
+
+<!-- Metastack operations ~ Evidence -->
+In the presented calculus, the computations of evidence and the management of the metastack are mostly independent,
+and this corresponds to the implementation.
+However, they will always be closely related syntactically.
+That is, there are two kinds of uses for $push stack$:
+One corresponds to a $reset$ operation, and occurs together with a $new stack$ and the instantiation of matching evidence.
+The other corresponds to a $resume$, and is directly followed by a $return$.
+This restriction is not enforced by the implementation, which could allow for additional static optimizations. [ Really? ]{ .todo-style }
+
+~ Begin Figure { #fig-jit-syntax; caption: "Syntax of the jit bytecode."; tex-float-placement: "h" }
+
+~ Begin Small
+
+~ Begin Figblock { caption: "Program Syntax"; .small }
+
+~ TODO
+- Remove last column (just for own documentation)
+- Should $push stack$ return evidence?
+~
+
+|:~~{.labelcol}~~~~~~~~~~|~~{.vcol}~|~~~~~~~~|~~{.defcol}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~{.desccol}~~~~~~~~~~~~~~|~{.desccol}~|
+| Program                | $program$| $::=$  | $\many{B_i}$                                            | programs                 | `Program`  | <!-- I don't like this.. -->
+| Blocks                 | $B$      | $::=$  | $\{ label(\many{x_i}): stmt \}$                    | basic blocks             | `Block`    |
+|                        |          | $\pip$ | $label$                                                 | block labels             |            |
+| Statements             | $stmt$   | $::=$  | $x <- v; stmt$                                          | literals / constants     | `CONST_`*  |
+|                        |          | $\pip$ | $\many{x_i} <- primitive f(\many{x_j}); stmt$           | primitive calls          | `PRIM_OP`  |
+|                        |          | $\pip$ | $x <- here; stmt \pip x <- there; stmt$                 | evidence zero / one      | `CONST_INT`|
+|                        |          | $\pip$ | $x_1 <- x_2 \oplus x_3; stmt$                           | evidence composition     | `ADD`      |
+|                        |          ||| __jumps:__
+|                        |          | $\pip$ | $jump B$                                                | jump                     | `JUMP`     |
+|                        |          | $\pip$ | $if x_1 then B(\many{x_i}) else stmt$                   | conditional jump         | `IFZERO`   |
+|                        |          ||| __stack management:__
+|                        |          | $\pip$ | $push B (\many{x_i}); stmt$                             | push a frame             | `PUSH`     |
+|                        |          | $\pip$ | $return (\many{x_i})$                                   | return                   | `RETURN`   |
+|                        |          ||| __metastack management:__
+|                        |          | $\pip$ | $x_1 <- shift x_2; stmt$                                | capturing stacks         | `SHIFT_DYN`|
+|                        |          | $\pip$ | $x <- shift v; stmt$                                    | capturing stacks         | `SHIFT`|
+|                        |          | $\pip$ | $x <- new stack B(\many{x_i}); stmt$                    | creating new stacks      | `NEW_STACK`|
+|                        |          | $\pip$ | $push stack x; stmt$                                    | pushing a stack          | `PUSH_STACK`|
+|                        |          ||| __codata:__
+|                        |          | $\pip$ | $x <- new V(\many{x_j}); stmt$                          | object creation          | `NEW`      |
+|                        |          | $\pip$ | $x.m(\many{x_i})$                                       | method invocation        | `INVOKE`   |
+|                        |          ||| __data:__
+|                        |          | $\pip$ | $x <- tag(\many{x_i}); stmt$                            | data construction        | `CONSTRUCT`|
+|                        |          | $\pip$ | $x match \{\many{tag(\many{x_i}) => B}\}$               | matching                 | `MATCH`    |
+|                        |          ||| __register management:__
+|                        |          | $\pip$ | $x_1 <- x_2; stmt$                                      | copying                  | `COPY`     |
+|                        |          | $\pip$ | $x_1 \leftrightarrow x_2; stmt$                         | swapping                 | `SWAP`     |
+|                        |          | $\pip$ | $drop x; stmt$                                          | dropping                 | `DROP`     |
+| VTables                | $V$      | $::=$  | $\{\many{m_i \mapsto B_i}\}$                            | virtual table            | `VTable`
+| Labels and tags        | $label$, $tag$, $m$ | 
+| Variables              | $x$ |
+
+
+~ End Figblock
+
+~ Begin Figblock { caption: "Stack syntax"; .small }
+
+|:~{.labelcol}~~~~~~~~~~~|~~{.vcol}~|~~~~~~~~|~~{.defcol}~~~~~~~~~|~~{.desccol}~~~~~~~~~|
+| Stacks                 | $k$      | $::=$  | $\#_{marker}$      | empty stack         |
+|                        |          | $\pip$ | $B(\many{v_i})::k$ | stack frame         |
+| Metastacks             | $M$      | $::=$  | $\circ$            | empty metastack     |
+|                        |          | $\pip$ | $k:::M$            | stack |
+~ End Figblock
+
+~ Begin Figblock { caption: "Abstract machine syntax"; .small }
+
+|:~{.labelcol}~~~~~~~~~~~|~~{.vcol}~|~~~~~~~~|~~{.defcol}~~~~~~~~~|~~{.desccol}~~~~~~~~~|
+| Abstract machine       | $m$      | $::=$  | $< program // memory // stmt // M >$ | abstract machine tuple |
+|                        |          | $\pip$ | $< program // memory // stmt // M <-@ M >_{<-@}$ | (unwinding) |
+|                        |          | $\pip$ | $< program // memory // stmt // M @-> M >_{@->}$ | (rewinding) |
+| Register file          | $memory$ | $::=$  | $\{\many{x_i \mapsto v_i}\}$        |
+~ End Figblock
+
+~ End Small
+~ End Figure
+
+~ Begin Figure { #fig-jit-semantics-machine; caption: "Abstract machine semantics for the jit bytecode.";  }
+~ Begin Small
+<!-- ~ Begin Figblock { caption: "Stacks and continuations"; .small }
+
+|:~~{ .labelcol }~~~~~~~~|~{.vcol}~~|~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| Context               | $K$      | $::=$  | $\square \pip val x = K; stmt$   | $\pip #_{marker} \{ K \} with \{ (\many{x_i}, k) => stmt \}$ &tableskip;  |
+~ End Figblock -->
+
+~ Begin Figblock { caption: "Reductions without program or stack context" }
+
+|:~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(const)_   | $< memory // x <- v; stmt >$                                | $-->$ | $< memory\{x \mapsto v\} // stmt >$             |                                      |
+| _(prim)_    | $< memory // \many{x_i} <- primitive f(\many{x_j}); stmt >$ | $-->$ | $< memory\{\many{x_i\mapsto v_i}\} // stmt>$    | if $f(\many{memory(x_j)}) = \many{v_i}$ |
+| _(evi here)_ | $< memory // x <- here; stmt > $ | $-->$ | $< memory\{x \mapsto here\} // stmt >$ | | <!-- = CONST_INT, but may be nicer to have this here, too? -->
+| _(evi there)_ | $< memory // x <- there; stmt > $ | $-->$ | $< memory\{x \mapsto there\} // stmt >$ | | <!-- = CONST_INT, but may be nicer to have this here, too? -->
+| _(evi add)_ | $< memory // x_1 <- x_2 \oplus x_3; stmt >$                      | $-->$ | $< memory\{x_1 \mapsto v\} // stmt >$           | if $v = memory(x_2) \oplus memory(x_3)$         | <!-- Alternatively, drop this and treat as primitive? -->
+
+_Register Management_
+
+<!-- Maybe even drop this from the calculus? This does not add much and is quite natural for an actual bytecode implementation -->
+
+|:~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(copy)_    | $< memory // x_1 <- x_2; stmt >$                            | $-->$ | $< memory\{x_1 \mapsto v\} // stmt >$                     | if $v = memory(x_2)$                    |
+| _(swap)_    | $< memory // x_1 \leftrightarrow x_2; stmt >$               | $-->$ | $< memory\{x_1 \mapsto v_1, x_2 \mapsto v_2\} // stmt >$  | if $v_1 = memory(x_1), v_2 = memory(x_2)$  |
+| _(drop)_    | $< memory // drop x; stmt >$                                | $-->$ | $< memory\vert_{dom(memory)- x} // stmt >$                    | if $v = memory(x_2)$                    |
+
+_Data and codata_
+
+|:~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(new)_    | $< memory // x <- new V(\many{x_j}); stmt >$  | $-->$ | $< memory\{x \mapsto <V,\many{v_j}>\} // stmt >$ | if $v_j = memory(x_j)$    |
+| _(invoke)_ | $< memory // x.m(\many{x_i}) >$  | $-->$ | $< \{\many{x_k \mapsto v_k}\} // stmt' >$ | if $\many{v_k} = \many{memory(x_i)}, \many{v_j}$ |
+|            | | |                                                                            | and $\{ l(\many{x_k}): stmt' \} = V(m)$ |
+|            | | |                                                                            | and $memory(x) = <V,\many{v_j}>$ |
+| _(cons)_   | $< memory // x <- tag(\many{x_i}); stmt >$ | $-->$ | $< memory\{x \mapsto <tag,\many{v_i}>\} // stmt >$ | if $v_i = memory(x_i)$ |
+| _(match)_  | $< memory // x match \{ \many{tag_c(\many{x_{ic}}) => B_c} \} >$ | $-->$ | $< memory\{\many{x_{ic} \mapsto v_i}\} // jump B_c >$ | if $tag_c = tag$ and $memory(x) = <tag,\many{v_i}>$
+
+_Jumps_
+
+|:~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(jump)_      | $< memory // jump \{label(\many{x_j}): stmt\} >$                       | $-->$ | $< memory\vert_{\many{x_j}} // stmt >$                     |           |
+| _(if t)_      | $< memory // if x_1 then \{label(\many{x_i'}): stmt_1\}(\many{x_i}) else stmt_2 >$ | $-->$ | $< \{\many{x_i' \mapsto v_i}\} // stmt_1 >$ | if $v_i = memory(x_i)$ |
+| | | | | and $memory(x_1) = \top$ |
+| _(if f)_      | $< memory // if x_1 then \{label(\many{x_i'}): stmt_1\}(\many{x_i}) else stmt_2 >$ | $-->$ | $< memory // stmt_2 >$ | if $memory(x_1) = \bot$ |
+
+_Metastack management_
+
+|:~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(new stack)_ | $< memory // x <- new stack B(\many{x_j}); stmt >$ | $-->$ | $<memory\{ x \mapsto B(\many{v_j})::\#_{marker} ::: \circ \} // stmt >$ | if $v_j = memory(x_j)$ |
+| _(shift dyn)_  | $< memory // x_1 <- shift x_2; stmt >$ | $-->$ | $< memory // x_1 <- shift v; stmt >$ | if $v = memory(x_2)$ |
+
+~ End Figblock
+
+~ Begin Figblock { caption: "Reductions with stack, but without program context " }
+
+<!-- TODO fix typesetting -->
+
+|:~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(kcong)_  | $< memory // stmt // k ::: M >$ | $-->$ | $< memory' // stmt' // k ::: M >$  | if $< memory // stmt > --> < memory' // stmt'>$ |
+
+_Classical stack management_
+
+|:~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(push)_   | $< memory // push B(\many{x_j}); stmt // k ::: M>$ | $-->$ | $< memory // stmt // B(\many{v_j})::k ::: M >$ | if $v_j = memory(x_j)$ |
+| _(Mret)_    | $< memory // return(\many{x_i}) // \#_{marker} ::: M>$ | $-->$ | $< memory // return(\many{x_i}) // M >$ |
+| _(ret)_    | $< memory // return(\many{x_i}) // \{label(\many{x_j}): stmt\}(\many{v_k})::k ::: M>$ | $-->$ | $< \{\many{x_j \mapsto v_j}\} // stmt // k ::: M >$ | for $\many{v_j} = \many{memory(x_i)}, \many{v_k}$ |
+
+_Metastack management_
+
+|:~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(shift)_      | $< memory // x <- shift v; stmt // M>$ | $-->$ | $< memory // x <- shift v; stmt // \circ <-@ M>_{<-@}$ |
+| _(unwind $there$)_     | $< memory // x <- shift (v\oplus there); stmt // M <-@ k ::: M'>_{<-@}$ | $-->$ | $< memory // x <- shift v; stmt // k ::: M <-@ M'>_{<-@}$ | <!-- Do we really want to formalize unwinding/rewinding directly? like this? -->
+| _(unwind $here$)_   | $< memory // x <- shift here; stmt // M' <-@ k' ::: M>_{<-}$ | $-->$ | $< memory\{ x \mapsto k' ::: M' \} // stmt // M>$ |
+
+|:~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(push stack)_ | $< memory // push stack x; stmt // M>$ | $-->$ | $< memory // stmt // M' @-> M>_{@->}$ | if $M' = memory(x)$ |
+| _(rewind $there$)_     | $< memory // stmt // k' ::: M' @-> M>_{->}$ | $-->$ | $< memory // stmt // M' @-> k' ::: M >_{@->}$
+| _(rewind $here$)_   | $< memory // stmt // \circ @-> M>_{@->}$ | $-->$ | $< memory // stmt // M >$
+
+~ End Figblock
+
+~ Begin Figblock { caption: "Handling of program context" }
+
+<!-- TODO fix typesetting -->
+<!-- This is just for having a "global" map of labels to blocks. We need something like this for recursion,
+     But it might be easier to read if we just state this informally
+ -->
+
+|:~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~|
+| _(Pcong)_  | $< program // memory // stmt // M >$ | $-->$ | $< program // memory' // stmt' // M' >$  | if $< memory // stmt // M > --> < memory' // stmt' // M' >$ |
+| _(lookup)_ | $< program // memory // stmt // M >$ | $-->$ | $< program // memory // stmt[label \mapsto B] // M >$ | if $B = \{ label(\many{x_i}) : stmt \} \in program$ 
+
+~ End Figblock
+~ End Small
+~ End Figure
+
+# Implementation
+
+~ TODO
+General remarks, RPython
+~
+
+~ TODO
+- Expand
+- Update code snippets, rules
+~
+Many of the abstract machine rules correspond directly to the RPython implementation.
+For example, the rule
+
+|:~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(new)_    | $< memory // x <- new V(\many{x_j}); stmt >$  | $-->$ | $< memory\{x \mapsto <V,\many{v_j}>\} // stmt >$ | if $v_j = memory(x_j)$    |
+directly corresponds to the following code:
+```Python
+    elif isinstance(op, NEW):
+        env.set_codata(op.out, CoData.make(op.args, env, op.vtable))
+```
+
+Looking at the rules
+~ Small
+
+|:~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:|~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+| _(shift)_      | $< memory // x <- shift v; stmt // M>$ | $-->$ | $< memory // x <- shift v; stmt // \circ <-@ M>_{<-@}$ |
+| _(unwind $there$)_     | $< memory // x <- shift (v\oplus there); stmt // M <-@ k ::: M'>_{<-@}$ | $-->$ | $< memory // x <- shift v; stmt // k ::: M <-@ M'>_{<-@}$ | <!-- Do we really want to formalize unwinding/rewinding directly? like this? -->
+| _(unwind $here$)_   | $< memory // x <- shift here; stmt // M' <-@ k' ::: M>_{<-@}$ | $-->$ | $< memory\{ x \mapsto k' ::: M' \} // stmt // M>$ |
+~
+we have the following implementation:
+```Python
+    elif isinstance(op, SHIFT_DYN):
+        n = promote(env.get_int(op.n))
+        (cont, metastack) = split_metastack_n(MetaStack(stack, None, metastack), n+1)
+        env.set_cont(op.out, cont)
+        record_exact_value(metastack is not None, True)
+        if metastack is not None:
+            stack = metastack.stack
+            metastack = metastack.tail
+        else:
+            stack = None
+        context = get_context(pc_block, pc_instruction, stack, metastack)
+```
+This just merges _(unwind $here$)_ and _(unwind $there$)_ into the implementation
+as a function call to make the code more readable.
+Additionally, it provides the jit with the (statically ensured) invariant
+that we will not try to capture more stack than we have.
+
+~ TODO
+can_enter_jit heuristics
+~
+
+## Optimizations
+~ TODO
+For all of the below:
+
+- Maybe we should measure the performance effect of those (i.e. compare with vs without)
+~
+### Specializing by environment shape
+~ TODO
+Box and pointer diagrams?
+~
+Stack frames, data values, and codata values (i.e., objects) all internally
+have to store an environment.
+Since we cannot have RPython data types with inlined arrays,
+and the sizes of those environments are not known at the compile time of the implementation, 
+this results in allocations for $2$ arrays --- one for numbers and one for references.
+This is undesirable for common cases like, e.g., the cons cells of a list.
+Thus, for all of those, we have specialized variants for common cases, namely for:
+~ TODO
+List of how much we specialize
+~
+
+To prevent dynamic dispatch for those specialized versions, we declare the correct
+specialization to the jit using program information.
+We can easily get at those in all cases by 
+caching the frame type by return program counter (for stacks),
+caching codata sizes by virtual table (for codata), or
+using the form of the match clause (for data).
+
+### Additional JIT entry points
+RPython requires us to call into the JIT at some program points in a way that ensures
+that we do this at least once in every loop.
+An easy heuristic is to do this on every (textually) backwards transfer of control.
+
+For breaking all loops (and thus, all hot ones), it would be enough to just
+allow entering the JIT on those control transfer operations.
+However, for RPython's allocation removal to work well,
+it is desirable to cut the loop *before* values are allocated and *after* they are used.
+Thus, we additionally enter the jit after each `push` (which allocates a stack frame).
+
+### Fake loops
+RPython would usually detect a loop whenever it reaches the same (smaller) program location again,
+in this case whenever we return to the same location.
+If we now, e.g., call a library function twice in a row,
+we will potentially trace a false loop that will never execute more than once.
+This problem is well known for tracing jits [Reference]{.todo-style}.
+To aleviate it, it is useful to consider some of the calling context.
+Thus, we also consider the target of the topmost stack frame when determining the program location.
+Note that, since we do not push for tail calls, this corresponds to a distinction about
+the immediate 
+
+# Evaluation
+
+
+~ TODO
+Threats to validity
+~
+
+## Quantitative Evaluation of Performance
+~ Begin Figure { #fig-timings; caption: "Execution times of the benchmarks." }
+~ Begin SubFigureRow { vertical-align: bottom;}
+~~ SubFigure { #subfig-timings-plot; caption: "Plot of execution times as factors of fastest measured time, lower is better."}
+~ CSVBarPlot { data: "timings_normalized.csv"; label-column: "benchmark"; axis: "ymajorgrids, ytick={0,1,2,5,10,20,30,40}"; plot-height: "0.4\textwidth"; }
+Effekt JIT=JIT+-JIT err;
+Effekt Chez-lift=Chez-lift;
+Eff=Eff;
+Koka=Koka;
+~
+~~
+~~ SubFigure { caption: "Table of execution times in milliseconds."; }
+~~ Begin Small
+~ CSVTable { #subfig-timings-table; \
+    column-specifier: ":---,---:,:---,---:,---:,---:,---:,---:,---:"; \
+    replace:"/[^,|]* err/$\pm$/g"; \
+    before: "| | Effekt ||||| - | - &nl;" \
+    }
+[INCLUDE=timings.csv]
+~
+~~ End Small
+~~
+~ End SubFigureRow
+~ End Figure
+
+We evaluated the combined Effekt implementation with the JIT backend against different implementations of languages with effect handlers.
+For this, we used a set of community-developed microbenchmarks found at [Reference effect-handlers-bench].
+~ TODO
+Hardware and system information
+~
+Figure [#fig-timings] shows the results of benchmarking the implementation on those benchmarks.
+
+~ TODO
+Re-Check the following with the final measurement results
+~
+In all benchmarks, we are within a factor of at most &slowdown_simple_counter_JIT; of the best implementation available for that benchmark. 
+For `triples`, we are best by a factor of &slowdown_triples_Eff;.
+Thus, the resulting backend is competitive with the state-of-the-art.
+~ TODO
+Describe measurements
+Test nqueens for JIT: &time_nqueens_JIT;
+~
+
+~ TODO
+Quantitative Evaluation
+- Figure and table with times
+- Compare vs others regarding time
+~
+
+## Qualitative Evaluation of Performance
+~ TODO
+Qualitative Evaluation / Result
+- Sketch why certain patterns are ("always") removed by the JIT
+~
+
+~ TODO
+How we generated the simplified trace
+
+- remove non-effect-overhead
+- remove movement operations
+- remove constant-foldable evidence computations
+- remove region operations
+- remove obviously unused allocations (will be removed)
+- manually rename identifiers
+- manually rewrite syntax
+~
+~~ Begin Figure { caption: "Example trace"; }
+~ Begin Columns
+~ Begin Column
+~ Begin RPythonTrace
+[INCLUDE=linear_effect_operation_in_a_loop.log:834-902]
+~ End RPythonTrace
+~ End Column
+~ Begin Column
+~ Begin RPythonTrace
+[INCLUDE=linear_effect_operation_in_a_loop.log:903-993]
+~ End RPythonTrace
+~ End Column
+~ End Columns
+~~ End Figure
+
+### Linear handlers
+We call a handler linear if it will always resume exactly once.
+~ TODO
+Argue informally, why the effect call overhead will always be optimized away.
+~
+
+## Evaluation of the Approach
+~ TODO
+(Qualitative) Evaluation of Implementation
+
+- Compare vs others regarding:
+    - effort
+      - backend: reasonable (LOC? Rough time estimate?)
+    - expressive power (if possible)
+      - All of Effekt-lifted
+      - Easily extends to almost anything
+    - approach
+      - bytecode-vm with jit after compiling well-ish
+~
+
+# Conclusion and Future Work
+
+~ TODO
+TODO
+~
+
+~ TODO
+Future Work
+
+- Evaluate vs no-evidence jit
+- More detailed loop heuristics
+~
+
+~ Begin TexRaw
+\bibliography{bibliography}
+~ End TexRaw

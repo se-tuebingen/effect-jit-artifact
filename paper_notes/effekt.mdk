@@ -1,0 +1,318 @@
+[INCLUDE=styles/acmart]
+[INCLUDE=styles/common]
+[INCLUDE=styles/colors]
+[INCLUDE=styles/todos]
+[INCLUDE=styles/math]
+
+Prelude : plaintex
+
+Acm Format  : acmsmall,screen,10pt
+Bibliography: bibliography.bib
+Bibliography: additional.bib
+
+<!-- For tables -->
+Package         : booktabs
+Package         : [bb=boondox]mathalfa
+Package         : threeparttable
+Package         : tikz
+
+Colorizer       : effekt
+
+<!-- languages -->
+@tex lang       : $\mathsf{Effekt}$
+@tex core       : $\mathsf{System}\;\mathcal{C}$
+@tex oldcore       : $\mathsf{System}\;\Xi$
+@tex sysf       : $\mathsf{System}\;\mathsf{F}$
+@tex fsub       : $\mathsf{System}\;\mathsf{F}_{lt:}$
+@tex tunnel     : $\lambdadownup$
+@tex lambda12   : $\lambda^{1/2}$
+
+@tex highlightstart : [\highlightsmall{]{.texraw}
+@tex highlightend : [}]{.texraw}
+@tex codeellipsis : $\ldots$
+
+.labelcol { width: 22% }
+.vcol { width: 2%; }
+.defcol { width: 45% }
+
+.code1, .pre-indented, .pre-fenced3 {
+  language: effekt;
+  .code-replacements;
+}
+
+.codesub {
+  tex-cmd: "\textsubscript"
+}
+
+exists : [$\exists$]{.texraw}
+
+.code-replacements {
+  replace: "//\(\|(\d+)\|\)/\((\1)|[\1]{.code-index}\)\
+            //=>/\(=>|[&rArr;]{.serif}\)\
+            //->/\(->|[&rarr;]{.serif}\)\
+            //~>/\(xx|$\rightsquigarrow$\)\
+            //>>>/\(xx|&highlightstart;\)\
+            //\bexists\b/\(=>|&exists;\)\
+            //>=/\(>=|&ge;\)\
+            //>=/\(>=|&ge;\)\
+            //<=/\(<=|&le;\)\
+            //_s\b/\(x|~[s]{.codesub}~\)\
+            //\btau\b/\(t|[&tau;]{.serif}\)\
+            //([a-zA-Z_-]+)(\d+)\b/\1\(\1|~[\2]{.codesub}~\)\
+            //\.\.\./\(...|&codeellipsis;\)\
+            //gm";
+}
+
+<!-- Configure replacements in math, see math.mdk -->
+.replacements {
+
+  replace: "//@->/\looparrowright\
+            //<-@/\looparrowleft\
+            //there/1\
+            //=>/\Rightarrow{}\
+            //here/0\
+            //dom/\mathrm{dom}\
+            //gm";
+
+  constants: "true|false";
+
+  keywords: "def|val|return|try|with|finally|resume|on|suspend|cap|push|primitive|shift|if|then|else|jump|stack|new|match|drop|reset|Evi|Stack|let|letrec|in|construct|project|invoke|letref|at|load|store|fresh|label|control|resumed|&constants;";
+
+  nonterminals: "//\bstmt(?![a-zA-Z])/s\
+                 //\bprogram(?![a-zA-Z])/P\
+                 //\bfn(?![a-zA-Z])/\lambda\
+                 //\bdefi(?![a-zA-Z])/D\
+                 //\bterm(?![a-zA-Z])/t";
+
+  judgements: "//\s::(?!\S)/\;\;\mathrel{\metameta{:}}\
+               //<:/\mathrel{<:}\
+               //\s\/\/(?!\S)/\;\mathrel{\metameta{\vertrule}}";
+
+  statemachines: "//</\mathrel{\metameta{\langle}}\
+                  //>/\mathrel{\metameta{\rangle}}\
+                  //•/\cdot{}";
+
+  runtime-prompts: "//\s#/~{\\#}\
+                    //_#/_{\\#}\
+                    //^#/{\\#}\
+                    //\(#/{(\\#}";
+
+  other-replacements: "&runtime-prompts;&nonterminals;&judgements;&statemachines;";
+}
+
+@tex .todo-style {
+  %display : none;
+}
+
+.tr { display: none; }
+
+Notes {
+  display: none;
+}
+
+strong {
+  font-family: sans-serif;
+}
+
+.indent {
+  tex-env-outer: codeintext;
+}
+
+.kk {
+  language: kokax;
+  replace:"/^:/\(:|\)/";
+}
+
+.math-inline {
+  input: mathpre;
+}
+
+.small {
+  font-size: small;
+}
+
+@tex pre {
+  font-size:small;
+}
+
+.sf {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
+.token.comment.doc {
+  font-size: smaller;
+  //tex-cmd-before: "\fbox{\ \strut ";
+  //tex-cmd-after: "\ }";
+}
+
+@if TeX {
+  pre { tex-cmd-outer:"{\def~{\nobreakspace{}}"; }
+}
+
+DefinitionList {
+  tex-env-outer: "definitionlist";
+}
+
+Tex Header:
+  \newenvironment{definitionlist}%
+    {\begin{minipage}[t]{\linewidth}\vspace{-0.4em}}%
+    {\end{minipage}\vspace{0.6em}}
+
+~TexRaw
+\author{Marcial Gaißert}%
+\affiliation{%
+  \institution{University of Tübingen}
+  \country{Germany}
+}
+\authorsaddresses{}
+\def\shortauthors{Gaißert}
+\def\shorttitle{}
+~
+
+# Structure
+
+~ Begin Figure { #fig-structure; caption: "Structure"; tex-float-placement: "h" }
+
+~ TexRaw
+\begin{tikzpicture}
+\node (mcore) at (0,-2) {Mcore};
+\node (asm) at (2,-2) {ASM};
+\node (rpyeffect) at (4,-2) {RPyeffect};
+\node[draw,align=center] (jit) at (5,-4) {implemented in\\RPython-based JIT\\\texttt{rpyeffect-jit}};
+\node[draw,align=center] (rpyeffectasm) at (1,-4) {"straightforward"\\\texttt{rpyeffect-asm}};
+\draw[-latex] (mcore) to (asm); \draw[-latex] (asm) to (rpyeffect);
+\draw (rpyeffect) to (jit);
+\draw[-latex] (rpyeffectasm) to (1,-2.1);
+\draw[-latex] (rpyeffectasm) to (2.8,-2.1);
+\node (helium) at (-3,-2) {\bfseries{}Helium};\draw[-latex,dashed] (helium) to (mcore.west);
+\node (effekt) at (-3,-3) {\bfseries{}Effekt};\draw[-latex,dashed] (effekt) to (mcore.west);
+\node (koka) at (-3,-4) {\bfseries{}Koka};\draw[-latex,dotted] (koka) to node{\bfseries{}?} (mcore.west);
+\node (dots) at (-3,-5) {\bfseries{}$\cdots$};\draw[-latex,dotted] (dots) to (mcore.west);
+\end{tikzpicture}
+~
+
+~ End Figure
+
+
+# Mcore
+(actual format JSON-based or sexp)
+
+~ Begin Figure { #fig-mcore-syntax-complete; caption: "Syntax of MCore"; tex-float-placement: "h" }
+~ Begin Figblock { caption: "Program Syntax"; .small }
+
+|:~~{.labelcol}~~~~~~~~~~|~~{.vcol}~|~~~~~~~~|~~{.defcol}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~{.desccol}~~~~~~~~~~~~~~|
+| Terms                  | $term$   | $::=$  | $x : T$                                                 | (typed) variables        |
+|                        |          | $\pip$ | $fn (\many{x : T}). term$                               | abstraction              |
+|                        |          | $\pip$ | $term term$                                             | application              |
+|                        |          | $\pip$ | $\many{term}; term$                                     | sequencing               |
+|                        |          | $\pip$ | $let \many{defi} in term$                               |                          |
+|                        |          | $\pip$ | $letrec \many{defi} in term$                            |                          |
+|                        | *control:*                                                              ||                          |
+|                        |          | $\pip$ | $fresh label$      | generating labels |
+|                        |          | $\pip$ | $reset L at x : T with (\many{x : T}) term in term$      | reset/prompt |
+|                        |          | $\pip$ | $let x:T = shift L n in term$      | shift |
+|                        |          | $\pip$ | $let x:T = control L n in term$      | control |
+|                        |          | $\pip$ | $resume term (\many{term})$      | resume (with args) |
+|                        |          | $\pip$ | $resumed term in term$      | resume (with program that returns) |
+|                        | *data, codata:*                                                            ||                          |
+|                        |          | $\pip$ | $construct C (\many{term})$                             | data type construction   |
+|                        |          | $\pip$ | $project {term} C f$                                    | data type projection   |
+|                        |          | $\pip$ | $match {term} \{\many{ C(\many{x}): term}\}$            | data type match       |
+|                        |          | $\pip$ | $new I \{\many{M(\many{x : T}) => term}\}$      | codata/object construction|
+|                        |          | $\pip$ | $invoke term I.M (\many{term})$      | method invokation |
+|                        | *references:*                                                              ||                          |
+|                        |          | $\pip$ | $letref x : T = term at term in term$      | allocation in region |
+|                        |          | $\pip$ | $load term$      | load from reference |
+|                        |          | $\pip$ | $store term term$      | store in reference |
+|                        | ... *primitives, literals, if0, switch*                                                              ||                          |
+| Definitions            | $defi$   | $::=$  | $x : T = term$
+| Types                  | $T$      |        |                                                         |                          |
+
+~ End Figblock
+~ End Figure
+
+# Asm
+(actual format similar or JSON-based)
+
+~ Begin Figure { #fig-asm-syntax-complete; caption: "Syntax of ASM"; tex-float-placement: "h" }
+~ Begin Figblock { caption: "Program Syntax"; .small }
+
+|:~~{.labelcol}~~~~~~~~~~|~~{.vcol}~|~~~~~~~~|~~{.defcol}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~{.desccol}~~~~~~~~~~~~~~|
+| Instructions           | $stmt$   | $::=$  | $let \many{x <- y}$                                     | register movement        |
+|                        |          | $\pip$ | $let const x <- n$                                      | constant integers        |
+|                        |          | $\pip$ | $\many{y} <- primitive N (\many{x})$                    | primitive operations/"FFI" |
+|                        |          | *if0, switch, other constants ...*                              ||                          |
+|                        | *control:*                                                                |||                          |
+|                        |          | $\pip$ | $push l(\many{x})$                                      | pushing a frame          |
+|                        |          | $\pip$ | $return (\many{x})$                                     |                          |
+|                        |          | $\pip$ | $jump l(\many{x})$                                      |                          |
+|                        |                                                                           |||                          |
+|                        |          | $\pip$ | $y <- shift x_{n} x_{p}$                                | shift (w. label + offset) |
+|                        |          | $\pip$ | $y <- control x_{n} x_{p}$                              | control (ditto)          |
+|                        |          | $\pip$ | $y, y_{r} <- new stack x_{p} l (\many{x})$              | (meta)stack creation (with region and prompt)     |
+|                        |          | $\pip$ | $push stack x$                                          | pushing a stack          |
+|                        | *data, codata:*                                                           |||                          |
+|                        |          | $\pip$ | $y <- construct C (\many{x})$                           | data type construction   |
+|                        |          | $\pip$ | $y <- project x C f$                                    | data type projection     |
+|                        |          | $\pip$ | $match x \{\many{C(\many{y}): l(\many{x})}\}$           | data type match          |
+|                        |          | $\pip$ | $y <- new I \{\many{M: l}\} (\many{x})$                 | codata/object creation   |
+|                        |          | $\pip$ | $invoke x M (\many{x})$                                 | method invokation        |
+|                        | *references:*                                                             |||                          |
+|                        |          | *(new stack, see above)*                                        ||                          |
+|                        |          | $\pip$ | $y <- allocate x_{r} (x)$                               | allocation in region     |
+|                        |          | $\pip$ | $y <- load x$                                           | load from reference      |
+|                        |          | $\pip$ | $store x x$                                             | store in reference       |
+~ End Figblock
+~ End Figure
+
+# RPyeffect
+(actual format JSON-based)
+
+Very similar to ASM. Most notable differences: Registers are indices, some restrictions on arguments for jumps etc, register movement in explicit small instructions.
+
+~ Begin Figure { #fig-jit-syntax-complete; caption: "Syntax of the bytecode format &BC;."; tex-float-placement: "h" }
+
+~ Begin Small
+
+~ Begin Figblock { caption: "Program Syntax"; .small }
+
+|:~~{.labelcol}~~~~~~~~~~|~~{.vcol}~|~~~~~~~~|~~{.defcol}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|~~{.desccol}~~~~~~~~~~~~~~|
+| Program                | $program$| $::=$  | $\many{B_i}$                                            | programs                 |
+| Blocks                 | $B$      | $::=$  | $\{ label(\many{x_i}): stmt \}$                    | basic blocks             |
+|                        |          | $\pip$ | $label$                                                 | block labels             |
+| Statements             | $stmt$   | $::=$  | $x <- v; stmt$                                          | literals / constants     |
+|                        |          | $\pip$ | $\many{x_i} <- primitive f(\many{x_j}); stmt$           | primitive calls          |
+| $\quad$_jumps_ |||||
+|                        |          | $\pip$ | $jump B$                                                | jump                     |
+|                        |          | $\pip$ | $if x_1 then B(\many{x_i}) else stmt$                   | conditional jump         |
+| $\quad$_stack management_ |||||
+|                        |          | $\pip$ | $push B (\many{x_i}); stmt$                             | push a frame             |
+|                        |          | $\pip$ | $return (\many{x_i})$                                   | return                   |
+| $\quad$_metastack management_ |||||
+|                        |          | $\pip$ | $x_1 <- shift x_2; stmt$                                | capturing stacks         |
+|                        |          | $\pip$ | $x <- new stack B(\many{x_i}); stmt$                    | creating new stacks      |
+|                        |          | $\pip$ | $push stack x; stmt$                                    | pushing a stack          |
+| $\quad$_objects_ |||||
+|                        |          | $\pip$ | $x <- new V(\many{x_j}); stmt$                          | object creation          |
+|                        |          | $\pip$ | $x.m(\many{x_i})$                                       | method invocation        |
+| $\quad$_data_ |||||
+|                        |          | $\pip$ | $x <- tag(\many{x_i}); stmt$                            | data construction        |
+|                        |          | $\pip$ | $x match \{\many{tag(\many{x_i}) => B}\}$               | matching                 |
+| $\quad$_register management_ |||||
+|                        |          | $\pip$ | $x_1 <- x_2; stmt$                                      | copying                  |
+|                        |          | $\pip$ | $x_1 \leftrightarrow{} x_2; stmt$                         | swapping                 |
+|                        |          | $\pip$ | $drop x; stmt$                                          | dropping                 |
+| VTables                | $V$      | $::=$  | $\{\many{m_i \mapsto B_i}\}$                            | virtual table            |
+| Labels and tags        | $label$, $tag$, $m$ |
+| Variables              | $x$ |
+
+~ End Figblock
+
+~ End Small
+~ End Figure
+
+&newpage;
+~ Begin TexRaw
+\bibliography{bibliography}
+~ End TexRaw

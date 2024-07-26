@@ -1,0 +1,115 @@
+Description:
+    Tools to directly work with CSV data from madoko.
+    Does only what's needed for benchmarks.
+    Allows:
+        - Generating madoko tables (CSVTable)
+        - Generating pgfplots bar chars (CSVBarPlot)
+        - Generating madoko entity definitions (CSVEntities)
+    Also has the utility DefineEntities to dynamically define new madoko entities in a simple way
+
+Package   : pgfplots
+Package   : pgfplotstable
+Package   : tikz
+
+Tex Header:
+    \makeatletter
+    \pgfplotsset{
+        /pgfplots/flexible xticklabels from table/.code n args={3}{%
+            \pgfplotstableread[#3]{#1}\coordinate@table
+            \pgfplotstablegetcolumn{#2}\of{\coordinate@table}\to\pgfplots@xticklabels
+            \let\pgfplots@xticklabel=\pgfplots@user@ticklabel@list@x
+        }
+    }
+    \pgfplotsset{
+        /pgfplots/flexible yticklabels from table/.code n args={3}{%
+            \pgfplotstableread[#3]{#1}\coordinate@table
+            \pgfplotstablegetcolumn{#2}\of{\coordinate@table}\to\pgfplots@yticklabels
+            \let\pgfplots@yticklabel=\pgfplots@user@ticklabel@list@y
+        }
+    }
+    \makeatother
+
+CSVTable {
+    column-specifier: "--|--";
+    replace: "/^(.*)$/\1&nl;&column-specifier;/m";
+    replace: "/,/ | /gm";
+    replace: "/^(.*)$/|\1|/gm";
+    tight:true;
+}
+.make-column-specifier {
+    tag:false;
+    tight:true;
+}
+CSVBarPlot {
+    data: "timings.csv";
+    plot-type: "&data-axis;bar";
+    data-axis: "y";
+    label-axis: "x";
+    input-format: "col sep=comma";
+    label-column: "label";
+    plot-width: "\textwidth";
+    plot-height: "0.3\textwidth";
+    axis: "ymajorgrids, ytick={0,1,2,5,10,15}";
+    axis-all-options: "&plot-type;, &label-axis;tick=data,\
+      flexible &label-axis;ticklabels from table={../&data;}{&label-column;}{&input-format;},\
+      width=&plot-width;,height=&plot-height;,\
+      &axis;";
+    addplot-config: "error bars/.cd, &data-axis; dir=both, &data-axis; explicit, error bar style={black}";
+    before: "~ TexRaw&nl;\
+         \pgfplotsset{compat=1.18}\
+         \makeatother\
+         \pgfplotstableread[&input-format;]{../&data;}\datatable&nl;\
+         \begin{tikzpicture}\begin{axis}[&axis-all-options;]&nl;";
+    after: "&nl;\end{axis}\end{tikzpicture}&nl;~";
+    replace: "//^\s*([^\\=]*)=((?:(?!\+-)[^=])*)\+-([^=]*);/\\addplot+[&addplot-config;] table[&label-axis; expr=\\coordindex,&data-axis;={\2},&data-axis; error={\3}]{\\datatable};\\addlegendentry{\1};\
+              //^\s*([^\\=]*)=((?:(?!\+-)[^=])*);/\\addplot+[&addplot-config;] table[&label-axis; expr=\\coordindex,&data-axis;={\2}]{\\datatable};\\addlegendentry{\1}\
+              //gm"
+}
+DefineEntities {
+    replace: "/[()\s]+(?=[^\n]*=)/_/g";
+    replace: "/^([^=]*)=(.*)$/~ Begin TexRaw&nl;\\mdDefineEntity{\1}{\2}&nl;~ End TexRaw&nl;/gm";
+    tag:false;
+    tight:true;
+}
+CSVEntities {
+    name-prefix: "data";
+    name-sep: "";
+    value-prefix: "";
+    value-suffix: "";
+    bequeathing: "name-prefix: &name-prefix;; name-sep:&name-sep;; value-prefix:&value-prefix;; value-suffix:&value-suffix;;";
+    replace: "/^([^,]*),(.*)$/~~ Begin CSVEntitiesBody { &bequeathing; columns:\2; }/m";
+    after: "&nl;~~ End CSVEntitiesBody";
+    tag:false;
+    tight:true;
+}
+CSVEntitiesBody {
+    name-prefix: "data";
+    name-sep: "";
+    columns: "";
+    value-prefix: "";
+    value-suffix: "";
+    bequeathing: "value-prefix:&value-prefix;; value-suffix:&value-suffix;;";
+    replace: "/\n*([^,]*),([^\n]*)/~~ Begin CSVEntitiesRow { &bequeathing; name-prefix:&name-prefix;\1&name-sep;; }&nl;&columns;&nl;\2&nl;~~ End CSVEntitiesRow&nl;/gm";
+    tag:false;
+    tight:true;
+}
+CSVEntitiesRow {
+    name-prefix: "datarow";
+    value-prefix: "";
+    value-suffix: "";
+    bequeathing: "name-prefix:&name-prefix;; value-prefix:&value-prefix;; value-suffix:&value-suffix;;";
+    replace: "/^([^,]*),([^\n]*)\n([^,]*),(.*)$/&nl;\
+    ~~ Begin DefineEntities&nl;\
+    &name-prefix;\1=&value-prefix;\3&value-suffix;&nl;\
+    ~~ End DefineEntities&nl;\
+    ~~ Begin CSVEntitiesRow { &bequeathing; }&nl;\
+    \2&nl;\
+    \4&nl;\
+    ~~ End CSVEntitiesRow/";
+    replace: "/^([^,\n]*)\n([^,\n]*)$/&nl;\
+    ~~ Begin DefineEntities&nl;\
+    \1=&value-prefix;\2&value-suffix;&nl;\
+    ~~ End DefineEntities&nl;/";
+    tag:false;
+    tight:true;
+}

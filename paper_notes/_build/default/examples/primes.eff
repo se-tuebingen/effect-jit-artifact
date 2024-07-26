@@ -1,0 +1,30 @@
+effect Emit : int -> unit
+effect Pred : int -> bool
+
+let main =
+    let rec unfaithful_sieve start endp =
+        let filtered = handler
+            | effect (Pred i) k ->
+                if (i mod start = 0) then (k false) else k (perform (Pred i))
+        in
+        if (start >= endp) then () else
+        if (perform (Pred start)) then 
+            perform (Emit start);
+            with filtered handle 
+                unfaithful_sieve (start + 1) endp
+        else
+            unfaithful_sieve (start + 1) endp
+    in
+    
+    let summing = handler
+            | _x -> 0
+            | effect (Emit i) k -> i + (k ())
+    in
+    
+    let all = handler
+        | effect (Pred i) k -> k true
+    in
+    
+    with summing handle
+    with all handle
+        unfaithful_sieve 2 20000

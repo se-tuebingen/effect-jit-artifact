@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit' '/Users/gaisseml/dev/effect-jit/.eff-out/eff-jit:parsing_dollars_7a83e91a-0e7c-46dd-a7db-1e49b08d6d5d/wrapper.rpyeffect' "$@"

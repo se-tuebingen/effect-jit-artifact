@@ -1,0 +1,71 @@
+import immutable/list
+import immutable/option
+
+effect Emit{ def emit(i: Int): Unit }
+
+def reversing[R](){ body: => R / Emit }: R / Emit = try {
+    body()
+} with Emit { def emit(i: Int) ={ val r = resume(()); do emit(i); r } }
+
+def delaying[R](){ body: => R / Emit }: R / Emit = {
+    reversing[R]{ reversing[R]{body} }
+}
+
+def collecting(){ body: => Unit / Emit }: List[Int] = try {
+    body(); Nil()
+} with Emit {  def emit(i: Int) ={ 
+    Cons(i, resume(()))
+}}
+def printing(){ body: => Unit / Emit }: Unit = try {
+    body()
+} with Emit {
+    def emit(i: Int) = { println(i); resume(()) }
+}
+effect Search {
+    def flip(): Boolean
+    def fail(): Bottom
+}
+def chooseInt(max: Int): Int / Search = {
+    if (max == 0) { max } else
+    if (do flip()) { max } else
+    chooseInt(max-1)
+}
+def runSearch[R](){ body: => R / Search }: Option[R] = try {
+    Some(body())
+} with Search {
+    def flip() = {
+        resume(true) match {
+            case Some(res) => Some(res)
+            case None() => resume(false)
+        }
+    }
+    def fail() = { None() }
+}
+
+def emitPartition(of: Int, minlength: Int, orig_minlength: Int): Int / {Emit, Search} = {
+    if(of == 0) { 
+        if (minlength > 0) { do fail() }
+        orig_minlength - minlength
+    } else {
+        val x = 1+chooseInt(of-1);
+        do emit(x);
+        emitPartition(of - x, minlength-1, orig_minlength)
+    }
+}
+
+def emitLongerPartitions(n: Int, of: Int, fstlen: Int): Unit / {Emit, Search} = {
+    if(n == 0) { () } else {
+        val nxtlen = delaying { emitPartition(of, fstlen, fstlen) }
+        do emit(0)
+        emitLongerPartitions(n-1, of, nxtlen+1)
+    }
+}
+
+def main() = printing{
+    runSearch[Unit]{
+        emitLongerPartitions(1000, 100000, 1)
+    } match {
+        case Some(s) => ()
+        case None() => println("No solution"); exit(1)
+    }
+}

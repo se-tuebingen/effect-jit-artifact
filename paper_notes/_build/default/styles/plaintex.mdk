@@ -1,0 +1,196 @@
+<!-- Based on prelude.mdk -->
+Package : plaintex
+
+Heading Base: 2
+
+Tex Section Num : True
+Bib Label       : True
+Name Figure     : Fig.
+
+@tex newpage : [\newpage]{.snippet}
+@tex pagebreak : [\pagebreak]{.snippet}
+
+eg: _e.g._
+ie: _i.e._
+cf: _cf._
+
+<!-- special input -->
+.TexRaw         { input: texraw }
+.HtmlRaw        { input: htmlraw }
+.MathInline     { input: math }
+MathDisplay     { input: math; .para-block }
+MathPre         { input: mathpre; .para-block }
+MathDefs        { input: mathdefs; }
+HtmlOnly        { input: htmlonly; tag: false }
+Tex             { input: tex; tag: false }
+TexOnly         { input: texonly; tag: false }
+Bib             { input: tex }
+math-inline     { input: math }
+math-display    { input: math }
+
+.hidden         { display: none }
+.noindent       { text-indent: 0em }
+.align-center   { text-align: center }
+.texturl        { .monospace }
+
+.BibItem {
+  tex-label-inner-before: '&id;';
+}
+.bibinfo[field="ISSN"] { display: none; }
+.bibinfo[field="ISBNx"] { display: none; }
+
+<!-- TODO use original subfigure environments -->
+.SubFigureCaption {
+  font-family: sans-serif;
+  font-size: small;
+  margin-top: clear;
+}
+
+.caption-text {
+  tex-cmd: "\caption";
+}
+
+<!-------------------------------------------------------------------
+   Code
+--------------------------------------------------------------------->
+
+Pre       { input: pre; .para-block; display:block; tex-env-outer: mdpre }
+Code      { input: pre }
+
+
+.token.keyword        { color: blue }
+.token.string.escape  { color: gray }
+.token.comment        { color: darkgreen }
+.token.constant       { color: purple }
+.token.constructor    { color: purple }
+.token.type           { color: teal }
+.token.type.delimiter { color: teal }
+.token.special        { color: navy }
+.token.doc            { color: gray }
+.token.meta           { color: gray }
+.token.tag            { color: navy }
+.token.attribute      { color: purple }
+.token.namespace      { color: navy }
+.token.title          { font-weight: bold }
+
+.token.string,.token.regexp   { color: maroon }
+.token.error,.token.invalid   { color: red }
+
+.token.number, .token.literal { .constant }
+
+.token.emphasis,.token.italic { font-style: italic }
+.token.strong,.token.bold     { font-weight: bold  }
+
+pre.pretty, code.pretty       { .serif }
+
+.ptoken.identifier    { font-style: italic }
+.ptoken.constructor   { font-style: italic }
+.ptoken.operator      { tex-cmd: "\ppreop" }
+.ptoken.comment       { color: gray }
+.ptoken.keyword       { .sans-serif }
+
+@if not tex {
+  pre.pretty, code.pretty { font-size: 100% }
+}
+
+@if tex {
+  .token.keyword      { color: navy }
+}
+
+
+<!-------------------------------------------------------------------
+   Tex commands
+--------------------------------------------------------------------->
+
+Abstract   { tex-env: abstract }
+
+H0,H1,H2,H3,H4,H5,H6  { display: block; }
+H0.clearnum, H1.clearnum, H2.clearnum, H3.clearnum, H4.clearnum, H5.clearnum, H6.clearnum {
+  tex-cmd-postfix:"*";
+}
+
+@if heading-base<=0 {
+  H0     { tex-cmd:"\part" }
+  H1     { tex-cmd:"\part" }
+  H2     { tex-cmd:"\chapter" }
+  H3     { tex-cmd:"\section" }
+  H4     { tex-cmd:"\subsection" }
+  H5     { tex-cmd:"\subsubsection" }
+  H6     { tex-cmd:"\paragraph" }
+}
+@if heading-base==1 {
+  H0     { tex-cmd:"\part" }
+  H1     { tex-cmd:"\chapter" }
+  H2     { tex-cmd:"\section" }
+  H3     { tex-cmd:"\subsection" }
+  H4     { tex-cmd:"\subsubsection" }
+  H5,H6  { tex-cmd:"\paragraph" }
+}
+@if heading-base==2 {
+  H0     { tex-cmd:"\chapter" }
+  H1     { tex-cmd:"\section" }
+  H2     { tex-cmd:"\subsection" }
+  H3     { tex-cmd:"\subsubsection" }
+  H4,H5,H6  { tex-cmd:"\paragraph" }
+}
+@if heading-base>=3 {
+  H0     { tex-cmd:"\section" }
+  H1     { tex-cmd:"\subsection" }
+  H2     { tex-cmd:"\subsubsection" }
+  H3,H4,H5,H6  { tex-cmd:"\paragraph" }
+}
+
+Figure          {
+  tex-env-outer: "figure[&tex-float-placement;]";
+  tex-float-placement: "t!";
+  after: '&nl;[&caption;]{.caption-text}&nl;'
+}
+TableFigure     {
+  tex-env-outer: "table[&tex-float-placement;]";
+  tex-float-placement: "tbp"
+}
+.figure-caption { tex-cmd: "\caption" }
+.wide           { tex-env-outer-postfix: "*" }
+.figure-label   { tex-cmd: "\label" }
+.table-label    { tex-cmd: "\label" }
+
+Li       { tex-cmd-before: "\item" }
+Ul       { tex-env: "itemize"  }
+Ol       { tex-env: "enumerate"  }
+Dl       { tex-env: "mddefinitions" }
+Dt       { tex-cmd: "\mddefterm"; .noindent }
+Dd       { tex-env: "mddefdata" }
+Code     { tex-cmd: "\mdcode" }
+
+Strong   { tex-cmd: "\textbf" }
+Em       { tex-cmd: "\emph" }
+BlockQuote{ tex-env: "quote" }
+
+
+<!-- Use original theorem and proof commands -->
+Theorem, Corollary, Lemma, Definition, Example {
+  @h1-Theorem;
+  label: '@h1.@h1-Theorem';
+  caption: "";
+  display: inline;
+}
+Theorem {
+  tex-env-outer: "theorem[&caption;]";
+}
+Corollary {
+  tex-env-outer: "corollary[&caption;]";
+}
+Lemma {
+  tex-env-outer: "lemma[&caption;]";
+}
+Definition {
+  tex-env-outer: "definition[&caption;]";
+}
+Example {
+  tex-env-outer: "example";
+}
+Proof {
+  caption: "Proof";
+  tex-env-outer: "proof[&caption;]";
+  display: inline;
+}

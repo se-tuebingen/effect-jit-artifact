@@ -1,0 +1,341 @@
+Package: mathtools
+Package: relsize
+Package: stackengine
+
+<!------------------------------------------------------------------
+  Math Package
+  ------------------------------------------------------------------
+  This is a collection of most math-features we have used in our
+  papers.
+
+  It relies on `colors.mdk`, as it can be found in most papers.
+
+
+  ## Math- and Math-example mode
+
+  The latter mode is designed to give examples where the identifiers
+  are rendered upright, and not in italics.
+  ------------------------------------------------------------------>
+.math-inline, mathpre, mathdisplay {
+  .all-replacements;
+}
+
+.code2, MathExample, Core {
+  input: mathpre;
+  tex-env-outer: stlcexamplemode;
+  .para-block;
+  .all-replacements;
+}
+
+Tex Header:
+  \def\sfmathmode{%
+    \renewcommand{\mathid}[1]{\textsf{##1}}%
+  }
+  \newenvironment{examplemode}{\sfmathmode}{}
+  \def\stlcmode{%
+    \renewcommand{\mathid}[1]{\textsf{##1}}%
+    \renewcommand{\mathkw}[1]{\textsf{\color{black}{\textbf{##1}}}}%
+  }
+  \newenvironment{stlcexamplemode}{\stlcmode}{}
+
+
+<!------------------------------------------------------------------
+  Replacements
+  ------------------------------------------------------------------
+  Here we first only define the replacements; they still need to be applied
+  using "replace", like in .all-replacements above.
+
+  If certain replacements are not desired, or need to be customized,
+  it is easy to override them. For example, the following class
+  extends all-replacements and changes the keywords and greeks:
+
+    .my-replacements {
+      .all-replacements;
+      keywords: "function|throw|return|if";
+      greek: "//\bG(?![a-zA-Z])/\Gamma{}";
+    }
+
+  The first replacement "maintain-commands" is necessary to avoid
+  replacing into TeX-commands. Otherwise, `syntax` needs to before
+  `identifiers` to first replace keywords; and `highlights` needs
+  to be before `operators` to not confuse >>> with arrows.
+  ------------------------------------------------------------------>
+
+.all-replacements {
+  .replacements;
+
+  replace: "//&maintain-commands;&dots;&syntax;&identifier;&highlights;&operators;&other-replacements;&semantics;&greek;&context-replace;&meta;//g";
+}
+
+.replacements {
+  types: "Boolean|Int|Void|Unit|String";
+  types-style: "\textsf{\1}";
+  types-replace: "//\b(&types;)(?![a-zA-Z])/&types-style;";
+
+  keywords: "true|false|resume|new|val|fun|def";
+  keywords-style: "\textsf{\1}";
+  keywords-replace: "//\b(&keywords;)(?![a-zA-Z])/&keywords-style;";
+
+  syntax: "&types-replace;&keywords-replace;";
+
+  tt-identifier: "//@([a-zA-Z0-9]+)(?![a-zA-Z])/\texttt{\1}";
+
+  identifier: "&tt-identifier;";
+
+  semantic-functions: "[A-Z]";
+  semantics: "//(&semantic-functions;)\[\[/{\mathcal{\1}\llbracket}\
+              //\[\[/{\llbracket}\
+              //\]\]/{\rrbracket}";
+
+  contexts: "[EH]";
+  context-style: "\textsf{\0}";
+  context-replace: "//\b&contexts;(?![a-zA-Z])/&context-style;";
+
+  equalities:  "//==/{\equiv}\
+                //!==/{\not\equiv}\
+                //::=/{\mathrel{\metameta{::=}}}\
+                //!=/{\neq}\
+                //~==/{\,\cong\,}\
+                //!~=/{\,\not\equiv\,}\
+                //\.=/\doteq{}";
+
+  arrows:  "//->([a-zA-Z']+)/{ \overset{\1}{\rightarrow} }\
+            //~>([a-zA-Z']+)/{ \overset{\1}{\rightsquigarrow} }\
+            //<=>/{\Leftrightarrow}\
+            //!-->\*/{ \longmapsto^* }\
+            //--o/{\multimap}\
+            //-->>/{ \longrightarrow^* }\
+            //<<--/{^*\!{\longleftarrow}}\
+            //!-->1/{ \longmapsto_1 }\
+            //!-->/{\metameta{\longmapsto}}\
+            //-->/{\metameta{\longrightarrow}}\
+            //<--/{\longleftarrow}\
+            //!->/{\mapsto}\
+            //!~>/{\mapsto}\
+            //->/{\rightarrow}\
+            //~>/{\mathrel{\metameta\rightsquigarrow}}\
+            //<-/{\leftarrow}";
+
+  comparator: "//>=/\geqslant{}\
+               //<=/\leqslant{}\
+               //\[=/\sqsubseteq{}";
+
+  turnstiles: "//\|\-([a-z]+)/\mathrel{\metameta{\vdash^{\mathsf{\1}}}}\
+               //\|\-/\mathrel{\vdash{}}\
+               //\|=/\vDash{}\
+               //\|\|\-/\Vdash{}";
+
+  operators: "&equalities;&arrows;&turnstiles;&comparator;";
+
+  greek: "//\bG(?![a-zA-Z])/\Gamma{}\
+          //\bS(?![a-zA-Z])/\Sigma{}\
+          //\bD(?![a-zA-Z])/\Delta{}\
+          //\bP(?![a-zA-Z])/\Psi{}\
+          //\bL(?![a-zA-Z])/\Xi{}\
+          //\bd(?![a-zA-Z])/\delta{}\
+          //\bt(?![a-zA-Z])/\tau{}\
+          //\bs(?![a-zA-Z])/\sigma{}\
+          //\ba(?![a-zA-Z])/\alpha{}\
+          //\bK(?![a-zA-Z])/\kappa{}";
+
+  meta: "//\b(LIFT)(?![a-zA-Z])/\textsc{Lift}\
+         //\b(CPS)(?![a-zA-Z])/\textsc{Cps}\
+         //\b(SHIFT)(?![a-zA-Z])/\textsc{Shift}\
+         //\b(RESET)(?![a-zA-Z])/\textsc{Reset}";
+
+  dots: "//\.\.\./{...}\
+         //(\s)\.(?!\S)/\1\cdot{}";
+
+  highlights: "//>>>>/{\highlightsmall{\
+               //<<<</}}\
+               //>>>/{\highlight{{\strut}\
+               //<<</}}";
+
+
+  maintain-commands: "\\([a-zA-Z0-9_]+){/\\\1{";
+
+  other-replacements: "";
+}
+
+
+<!------------------------------------------------------------------
+  Inference Rules & Derivations
+  ------------------------------------------------------------------
+  The following rules add a two-dimensional syntax for inference
+  rules.
+
+  Class .rule is useful to refer to rulenames in text, such as
+
+    [Abs]{.rule}
+
+  ------------------------------------------------------------------>
+
+.rule {
+  font-variant: small-caps;
+}
+
+.inference {
+  .floatable;
+}
+
+infer {
+  <!-- This is to prevent that empty lines break floating -->
+  tag: false;
+  replace:"/([\s\S]*?)\n *----+ *(?:\[([^\]]*)\])? *\n([\s\S]*)/\\infer{\1}{\3}{\textsc{\2}}/m";
+  replace:"/([\s\S]*?)\n *----+ *(?:\(([^\]]*)\))? *\n([\s\S]*)/\\reduce{\1}{\3}{\textit{\2}}/m";
+  replace:"~Begin MathPre { .inference; additional-keywords: &additional-keywords;; }&nl;&source;&nl;~ End MathPre";
+}
+
+derive {
+  replace: "//^\s*\[([a-zA-Z\-0-9]+)\]\s*{\s(.*)$/\inferenceNamed{\textsc{\1}}{\2}{\
+            //^\s*{\s(.*)$/\inference{\1}{\
+            //^\s*(.*)$/\axiom{\1}//gm";
+  replace:"~Begin Math {.infereq; display:inline-block;}&nl;&source;&nl;~ End Math";
+}
+
+<!-- Colors -->
+Tex Header:
+  \definecolor{judgement}{RGB}{0, 0, 0}
+
+Tex Header:
+  \newlength\mdxwidth
+  %
+  \newcommand\ifnowidth[3]{
+     \settowidth{\mdxwidth}{#1}%
+     \ifdim\mdxwidth>0pt\relax#3\else#2\fi
+  }
+  %
+  \newcommand{\rulename}[1]{\mbox{\textrm{\smaller[1]{\textsc{#1}}}}}
+  %
+  \newcommand{\infer}[3]{\dfrac{\begin{array}{llll}#1\end{array}}{\begin{array}{llll}#2\end{array}}\ifnowidth{#3}{}{\;[\rulename{#3}]}}
+  %
+  \newcommand{\reduce}[3]{\dfrac{\begin{array}{llll}#1\end{array}}{\begin{array}{llll}#2\end{array}}\ifnowidth{#3}{}{\;(#3)}}
+  %
+  \newcommand{\inference}[2]{\dfrac{\begin{array}{llll}#2\end{array}}{\begin{array}{llll}#1\end{array}}}
+  %
+  \newcommand{\inferenceNamed}[3]{\dfrac{\begin{array}{llll}#3\end{array}}{\begin{array}{llll}#2\end{array}}\ifnowidth{#1}{}{\;[\rulename{#1}]}}
+  %
+  \newcommand{\axiom}[1]{{\begin{array}{llll}#1\end{array}}}
+
+<!--------------------------------------------
+  Vector notation: define overrightharpoon
+  ------------------------------------------->
+Tex Header:
+  \makeatletter
+  \DeclareFontFamily{U}{MnSymbolA}{}
+  \DeclareFontShape{U}{MnSymbolA}{m}{n}{
+       <-6>  MnSymbolA5
+      <6-7>  MnSymbolA6
+      <7-8>  MnSymbolA7
+      <8-9>  MnSymbolA8
+      <9-10> MnSymbolA9
+     <10-12> MnSymbolA10
+     <12->   MnSymbolA12}{}
+  \DeclareFontShape{U}{MnSymbolA}{b}{n}{
+       <-6>  MnSymbolA-Bold5
+      <6-7>  MnSymbolA-Bold6
+      <7-8>  MnSymbolA-Bold7
+      <8-9>  MnSymbolA-Bold8
+      <9-10> MnSymbolA-Bold9
+     <10-12> MnSymbolA-Bold10
+     <12->   MnSymbolA-Bold12}{}
+  \DeclareSymbolFont{MnSyA}{U}{MnSymbolA}{m}{n}
+  \SetSymbolFont{MnSyA}{bold}{U}{MnSymbolA}{b}{n}
+  \DeclareRobustCommand{\overleftharpoon}{\mathpalette{\overarrow@\leftharpoonfill@}}
+  \DeclareRobustCommand{\overrightharpoon}{\mathpalette{\overarrow@\rightharpoonfill@}}
+  \def\leftharpoonfill@{\arrowfill@\leftharpoondown\mn@relbar\mn@relbar}
+  \def\rightharpoonfill@{\arrowfill@\mn@relbar\mn@relbar\rightharpoonup}
+  \DeclareMathSymbol{\leftharpoondown}{\mathrel}{MnSyA}{'112}
+  \DeclareMathSymbol{\rightharpoonup}{\mathrel}{MnSyA}{'100}
+  \DeclareMathSymbol{\mn@relbar}{\mathrel}{MnSyA}{'320}
+  \makeatother
+
+<!------------------------------------------------------------------
+  Highlighting
+  ------------------------------------------------------------------>
+Tex Header:
+  \definecolor{light-gray}{gray}{0.92}
+  %
+  \newcommand{\gray}[1]{\colorbox{light-gray}{$#1$}}
+  \newcommand{\highlightTex}[1]{\colorbox{light-gray}{#1}}
+  \newcommand{\highlight}[1]{\highlightTex{$\displaystyle #1$}}
+  %
+  % line height preserving highlighting
+  \newcommand{\highlightsmallTex}[1]{\colorbox{light-gray}{#1}}
+  \newcommand{\highlightsmall}[1]{\highlightsmallTex{$#1$}} %\smash{\highlightsmallTex{$\displaystyle #1$}}}
+  %
+  \newcommand{\highlightInline}[1]{%
+    \begingroup
+    \setlength{\fboxsep}{1pt}%
+    \smash{\colorbox{light-gray}{#1}}%
+    \endgroup
+  }
+  %
+  \newcommand{\bluebox}[1]{\colorbox{coeffect-blue-bg}{\color{coeffect-blue}{$#1$}}}
+
+
+<!--------------------------------------------
+  Judgments
+  ------------------------------------------->
+Tex Header:
+  % command to color a judgment
+  \newcommand{\metameta}[1]{\color{judgement}{#1}}
+  %
+  % command to color unused portions of a judgment
+  \newcommand{\unused}[1]{#1} % {\metameta{#1}}}
+  %
+  \newcommand{\turnstile}[0]{\metameta{\vdash{}}} % TODO improve spacing, it is different for \emptyset and L!
+  %
+  \newcommand\relin[1]{\underset{{\color{gray}{\scriptscriptstyle\uparrow}}}{{\strut}#1}}
+  \newcommand\relout[1]{\underset{{\color{gray}{\scriptscriptstyle\downarrow}}}{{\strut}#1}}
+  %
+  \newcommand{\vertrule}[1][1.2ex]{\mathrel{\metameta{\rule{.55pt}{#1}}}}
+  %
+  \newcommand{\pip}[0]{\mathrel{\metameta{\mid}}}
+
+<!--------------------------------------------
+  Other Math Commands
+  ------------------------------------------->
+Tex Header:
+  %
+  % Other math commands
+  % ===================
+  \newcommand\tr[1]{\lceil#1\rceil}
+  \newcommand{\tracked}[0]{\mathrel{\mathsf{ ? }}}
+  \newcommand\llangle{\langle\kern -0.6ex\langle}
+  \newcommand\rrangle{\rangle\kern -0.6ex\rangle}
+  \stackMath % for the indexed overbar
+  \newcommand\many[1]{\overrightharpoon{#1}} % \vphantom{f}
+  \newcommand\manyi[2]{\stackon[-4.5pt]{\overline{#2}}{\phantom{#2\;\;}^#1}} %
+  \newcommand\xlongmapsto{\longmapsto^*}%\hspace{-2.8ex}\rightarrow\;}
+  \newcommand\disjoint{\not\strut\hspace{-1.1ex}\cap\;}%
+  \appto\langle{\mkern-2mu}
+  \preto\rangle{\mkern-1mu}
+  \newcommand\total{\langle\mkern 3mu\rangle}
+  \renewcommand\notin{\not\strut\hspace{-1.2ex}\in}
+  %
+  % Manual syntax highlighting
+  % ==========================
+  \newcommand{\syntaxNumber}[1]{{\color{number-color}{#1}}}
+  \newcommand{\syntaxString}[1]{\mathtt{\color{string-color}{#1}}}
+  \newcommand{\syntaxKeyword}[1]{\mathbf{#1}}
+  \newcommand{\syntaxComment}[1]{\textit{\color{comment-color}{#1}}}
+  \newcommand{\annotation}[1]{\color{gray}{(#1)\mskip 8.0mu}}
+  %
+  % Effekt calculus
+  % ===============
+  \renewcommand{\mathkw}[1]{{\mathsf{#1}}}
+  \newcommand{\plain}[1]{{\color{black}{#1}}}
+  \newcommand{\LAMBDA}{\mathop{\rlap{$\lambda$}\mkern2.2mu\raisebox{.0ex}{$\lambda$}}}
+  \newcommand{\lambdanormal}[1]{{\lambda #1{\mskip -0mu}\mathrel{\Rightarrow}}}
+  \newcommand{\lambdabig}[1]{{\Lambda #1{\mskip -0mu}\mathrel{\Rightarrow}}}
+  \newcommand\llambda{\lambda\hspace{-1ex}\lambda}
+  \newcommand{\LPAREN}{\mathop{\rlap{$($}\mkern1.7mu\raisebox{.0ex}{$($}}}
+  \newcommand{\RPAREN}{\mathop{\rlap{$)$}\mkern1.7mu\raisebox{.0ex}{$)$}}}
+  \newcommand{\Fvar}[1]{\mathsf{\mathbb{F}}}
+  \newcommand{\term}[1]{\textsf{#1}}
+  %
+  % I have literally no clue what this was for
+  % ==========================================
+  %\renewcommand\mathspace{\mskip 3mu plus 0.5mu minus 0.5mu\smallstrut}
+  %\newcommand\itcorrect[1]{#1\hspace{0.15ex}}

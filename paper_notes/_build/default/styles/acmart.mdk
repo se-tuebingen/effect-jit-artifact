@@ -1,0 +1,107 @@
+Description:
+    Madoko settings for the ACM programming language style. (PACMPL)
+
+Short Title     : &Title;
+
+Doc class       : [&acm-format;]acmart.cls
+
+Tex Section Num : True
+Bib Label       : True
+Name Figure     : Fig.
+
+Package: subcaption
+
+Tex Header*:
+  %\settopmatter{printfolios=true,printccs=false,printacmref=false}
+  %%% If you see 'ACMUNKNOWN' in the 'setcopyright' statement below,
+  %%% please first submit your publishing-rights agreement with ACM (follow link on submission page).
+  %%% Then please update our instructions page and copy-and-paste the NEW commands into your article.
+  %%% Please contact us in case of questions; allow up to 10 min for the system to propagate the information.
+  %%%
+  %%% The following is specific to OOPSLA1 '22 and the paper
+  %%% 'Effects, Capabilities, and Boxes: From Scope-Based Reasoning to Type-Based Reasoning and Back'
+  %%% by Jonathan Immanuel Brachthäuser, Philipp Schuster, Edward Lee, and Aleksander Boruch-Gruszecki.
+  %%%
+  \setcopyright{rightsretained}
+  \acmPrice{}
+  \acmDOI{10.1145/3527320}
+  \acmYear{2022}
+  \copyrightyear{2022}
+  \acmSubmissionID{oopsla22main-p53-p}
+  \acmJournal{PACMPL}
+  \acmVolume{6}
+  \acmNumber{OOPSLA1}
+  \acmArticle{76}
+  \acmMonth{4}
+  %
+  \keywords{effect systems, effect polymorphism, second-class values, capabilities}
+  %
+  % Bibliography Style
+  % ==================
+  \bibliographystyle{ACM-Reference-Format}
+  \citestyle{acmauthoryear}
+  %
+  % Madoko Stuff
+  % ============
+  \def\shorttitle{&short-title;}
+  \def\acmshorttitle{&short-title;}
+
+AcmClassification {
+  input: texraw;
+}
+
+BibItem {
+  tex-label-inner-before: '&id;';
+}
+.bibinfo[field="ISSN"] { display: none; }
+.bibinfo[field="ISBNx"] { display: none; }
+
+<!-- Use original latex commands for figure captions -->
+.Floating, .Figure, TableFigure, SubFigure {
+  after: clear;
+  after: '&nl;[&caption;]{.caption-text}&nl;';
+}
+
+SubFigure {
+  after: clear;
+  after: '&nl;[&caption;]{.subcaption-text}&nl;';
+}
+
+<!-- TODO use original subfigure environments -->
+.subcaption-text  {
+  tex-cmd: "\subcaption";
+}
+
+.caption-text {
+  tex-cmd: "\caption";
+}
+
+<!-- Use original theorem and proof commands -->
+Theorem, Corollary, Lemma, Definition, Example {
+  @h1-Theorem;
+  label: '@h1.@h1-Theorem';
+  before: clear;
+  caption: "";
+  display: inline;
+}
+Example {
+  tex-env-outer: "example";
+}
+Theorem {
+  tex-env-outer: "theorem[&caption;]";
+}
+Corollary {
+  tex-env-outer: "corollary[&caption;]";
+}
+Lemma {
+  tex-env-outer: "lemma[&caption;]";
+}
+Definition {
+  tex-env-outer: "definition[&caption;]";
+}
+Proof {
+  caption: "Proof";
+  before: clear;
+  tex-env-outer: "proof[&caption;]";
+  display: inline;
+}

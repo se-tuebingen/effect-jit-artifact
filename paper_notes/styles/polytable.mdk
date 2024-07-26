@@ -1,0 +1,12 @@
+Package: polytable
+
+.polytable {
+  input: math;
+
+  <!-- Start each line with \>[B] and end each line with \\ -->
+  replace: "/^(.*)$/\\>[B]\1\\\\/gm";
+
+  <!-- this needs to be wrapped immediately around the content -->
+  before: "\begin{mdmathpre}\begin{pmboxed}%&nl;\column{B}{l}&columns;%&nl;";
+  after: "\end{pmboxed}\end{mdmathpre}";
+}

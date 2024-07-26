@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit' '/Users/gaisseml/dev/effect-jit/koka/.koka/v3.1.2/koka-vm:fibonacci_recursive_ffb33213-a5b7-4db5-bb7e-86899cb9a8de_vm-debug-3a5eef/_main.rpyeffect' "$@"

@@ -1,0 +1,118 @@
+{
+  "displayName": "Effekt",
+  "name": "effekt",
+  "mimeTypes": ["text/x-effekt"],
+  "fileExtensions": ["effekt"],
+
+  "editorOptions": { "tabSize": 2, "insertSpaces": true },
+
+  "lineComment":      "//",
+  "blockCommentStart": "/*",
+  "blockCommentEnd":   "*/",
+
+  "keywords": ["in", "box", "unbox", "fun", "at", "case", "catch", "region", "def", "do", "else", "extends", "false", "final", "initially", "finally", "for", "forSome", "if", "implicit", "import", "lazy", "macro", "match", "new", "null", "object", "override", "package", "private", "protected", "return", "sealed", "super", "this", "trait", "try", "true", "type", "val", "var", "while", "with", "resume", "interface", "_", ":", "=", "=>", "<-", "<:", "<%", ">:", "#", "@"],
+
+  "extraKeywords": [],
+
+  "typeKeywords": ["boolean", "double", "byte", "int", "short", "char", "void", "long", "float", "effect"],
+
+  "extraTypeKeywords": [],
+
+  "operators": [],
+
+  "extraOperators": [],
+  "symbols0": "[\\$%&\\*\\+@!\\/\\\\\\^~=\\.:\\-\\?]",
+  "symbols" : "(?:@symbols0|[\\|<>])+",
+  "escapes": "\\\\(?:[abfnrtv\\\\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})",
+
+  "tokenizer": {
+    "root": [
+      ["[a-z_$][\\w$]*",
+      {
+        "cases": {
+          "@typeKeywords": "keyword",
+          "@extraTypeKeywords": "keyword",
+          "@keywords": "keyword",
+          "@extraKeywords": "keyword",
+          "@default": "identifier"
+        }
+      }],
+      { "include": "@whitespace" },
+      ["[A-Z][\\w\\$]*", "type.identifier"],
+      ["[<>](?!@symbols)", "@brackets"],
+      ["@\"", { "token": "string.quote", "bracket": "@open", "next": "@litstring" } ],
+      ["@symbols",
+      {
+        "cases": {
+          "@keywords": "keyword.operator",
+          "@default": "operator"
+        }
+      }],
+      ["\\d*\\.\\d+([eE][\\-+]?\\d+)?[fFdD]?", "number.float"],
+      ["0[xX][0-9a-fA-F_]*[0-9a-fA-F][Ll]?", "number.hex"],
+      ["0[0-7_]*[0-7][Ll]?", "number.octal"],
+      ["0[bB][0-1_]*[0-1][Ll]?", "number.binary"],
+      ["\\d+[lL]?", "number"],
+      ["[;,.]", "delimiter"],
+      ["`([^`\\\\]|\\\\.)*$", "identifier.invalid"],
+      ["`", "identifier", "@quoted"],
+      ["\"([^\"\\\\]|\\\\.)*$", "string.invalid" ],
+      ["\"",  { "token": "string.quote", "bracket": "@open", "next": "@string" } ],
+      ["'",  { "token": "string.quote", "bracket": "@open", "next": "@char" } ]
+    ],
+
+    "whitespace": [
+      ["[ \\t\\r\\n]+", "white"],
+      ["\\/\\*",       "comment.doc", "@comment" ],
+      ["\\/\\/.*$",    "comment"]
+    ],
+
+    "comment": [
+      ["[^\\/*]+", "comment.doc" ],
+
+      ["\\/\\*",    "comment.invalid" ],
+      ["\\*/",    "comment.doc", "@pop"  ],
+      ["[\\/*]",   "comment" ]
+    ],
+
+    "line_comment": [
+      ["[^\"|]*$", "comment", "@pop" ],
+      ["[^\"|]+",  "comment" ],
+      ["(\")((?:[^\"]|\"\")*)(\")",
+        ["comment","comment.doc", { "cases": { "@eos":  { "token": "comment", "next": "@pop" },
+                                             "@default": "comment" }}]
+      ],
+      ["(\\|)((?:[^|]|\\|\\|)*)(\\|)",
+        ["comment","comment.doc", { "cases": { "@eos":  { "token": "comment", "next": "@pop" },
+                                             "@default": "comment" }}]
+      ],
+      [".*$", "comment", "@pop"]
+    ],
+
+    "string": [
+      ["[^\\\\\"]+",  "string"],
+      ["@escapes", "string.escape"],
+      ["\\\\.",      "string.escape.invalid"],
+      ["\"",        { "token": "string.quote", "bracket": "@close", "next": "@pop" } ]
+    ],
+
+    "char": [
+      ["[^\\\\']+",  "string"],
+      ["@escapes", "string.escape"],
+      ["'",        { "token": "string.quote", "bracket": "@close", "next": "@pop" } ]
+    ],
+
+    "litstring": [
+      ["[^\"]+",    "string"],
+      ["\"\"",       "string.escape"],
+      ["\"",        { "token": "string.quote", "bracket": "@close", "next": "@pop" } ]
+    ],
+
+    "quoted": [
+      ["[^`]+", "identifier"],
+      ["@escapes", "identifier.escape"],
+      ["\\\\.", "identifier.escape.invalid"],
+      ["`", "identifier", "@pop"]
+    ]
+  }
+}

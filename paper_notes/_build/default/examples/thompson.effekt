@@ -1,0 +1,72 @@
+type Char = Int
+type State = Int
+
+effect EmitNFA {
+    def state(): State
+    def transition(from: State, label: Char, to: State): Unit
+    def epsTransition(from: State, to: State): Unit
+}
+type Regex {
+    False()
+    Epsilon()
+    Char(c: Char)
+    Union(l: Regex, r: Regex)
+    Cat(l: Regex, r: Regex)
+    Many(r: Regex)
+}
+
+def thompson(start: State, r: Regex, accept: State): Unit / EmitNFA = r match {
+    case False() => ()
+    case Epsilon() => do epsTransition(start, accept)
+    case Char(c) => do transition(start, c, accept)
+    case Cat(l,r) => 
+        val mid = do state();
+        thompson(start, l, mid);
+        thompson(mid, r, accept)
+    case Union(l,r) => 
+        val lstart = do state();
+        val rstart = do state();
+        val laccept = do state();
+        val raccept = do state();
+        do epsTransition(start, lstart);
+        do epsTransition(start, rstart);
+        do epsTransition(laccept, accept);
+        do epsTransition(raccept, accept);
+        thompson(lstart, l, laccept);
+        thompson(rstart, r, raccept)
+    case Many(l) =>
+        val lstart = do state();
+        val laccept = do state();
+        do epsTransition(start, lstart);
+        do epsTransition(laccept, accept);
+        do epsTransition(laccept, lstart);
+        thompson(lstart, l, laccept)
+}
+
+def printDot(){ body: => Unit / EmitNFA }: Unit = {
+    var states = 0;
+    println("strict digraph {")
+    try { 
+        body() 
+    } with EmitNFA {
+        def state() = {
+            val r = states
+            states = states + 1
+            println("  state" ++ show(r))
+            resume(r)
+        }
+        def transition(from: State, via: Char, to: State) = {
+            println("  state" ++ show(from) ++ " -> state" ++ show(to) ++ " [label = \x22" ++ show(via) ++ "\x22]")
+            resume(())
+        }
+        def epsTransition(from: State, to: State) = {
+            println("  state" ++ show(from) ++ " -> state" ++ show(to) ++ " [label = \x22ε\x22]")
+            resume(())
+        }
+    }
+    println("}")
+}
+
+def main() = printDot {
+    thompson(do state(), Many(Union(Cat(Char(3),Epsilon()), False())), do state())
+}

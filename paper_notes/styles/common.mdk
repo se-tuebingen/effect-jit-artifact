@@ -1,0 +1,137 @@
+Description:
+    Settings common to most of our papers. It does not include the math settings
+    since those are difficult to override.
+
+
+<!-- for float barrier -->
+Package         : placeins
+
+<!-- For boxes with variable width and automatic alignment in figures -->
+Package         : varwidth
+
+<!-- spacing and breaking -->
+@tex tableskip : [\vspace{0.6em}]{.texraw}
+@tex bigskip : [\vspace{1.2em}]{.texraw}
+@tex newpage : [\newpage]{.texraw}
+@tex pagebreak : [\pagebreak]{.texraw}
+@tex clearpage : [\clearpage]{.texraw}
+@tex cleardoublepage : [\cleardoublepage]{.texraw}
+@tex linebreak : [\\]{.texraw}
+@tex noindent : [\noindent]{.texraw}
+@tex floatbarrier : [\FloatBarrier{}]{.texraw}
+@tex hfill : [\hfill{}]{.texraw}
+
+@tex hskip: [\hspace{1em}]{.texraw; before: "&nl;"; after: "&nl;"; tight: true;}
+@tex gap: [\hspace{1.5em}]{.texraw; before: "&nl;"; after: "&nl;"; tight: true;}
+@tex large-gap: [\hspace{2.5em}]{.texraw; before: "&nl;"; after: "&nl;"; tight: true;}
+
+
+
+<!-- Abbreviations -->
+eg: _e.g._
+ie: _i.e._
+cf: _cf._
+
+@tex yes : [\ding{51}]{.texraw}
+@tex no  : [\ding{55}]{.texraw}
+@tex na  : [\textemdash]{.texraw}
+@tex may : [\ding{109}]{.texraw}
+
+@tex .hidden { display: none; }
+
+.centering {
+  tex-cmd-before: "\centering{";
+  tex-cmd-after: "}";
+}
+
+FigBlock {
+  display: block;
+  before: "**&caption;:**&medskip;&nl;{text-indent:-1ex}&nl;";
+  text-align:left;
+  margin-bottom: 0.5ex;
+  line-adjust:-3;
+  padding-left:1ex;
+}
+
+.LeftAlign {
+  text-align:left;
+}
+
+<!-- A class that tries to float subsequent elements next to each other,
+     used on inference rules in figures.
+
+     Note: floating and FigRow are not compatible with amsmath!
+     The package amsmath defines \[ and \] (alias for displaymath) to
+     take the full textwidth! -->
+.floatable {
+  tight: true;
+  margin-left: 0em;
+  margin-right: 0em;
+  float-width: 1.0;
+  tex-env-outer: "varwidth{&float-width;\textwidth}";
+  tex-cmd-before: "\hspace{&margin-left;}";
+  tex-cmd-after: "\hspace{&margin-right;}";
+}
+
+.fill-right {
+  tex-cmd-outer-after: "\hfill{}"
+}
+
+<!-- puts a frame around an inline element -->
+.boxed {
+  tex-cmd-before: "\fbox{\ \strut ";
+  tex-cmd-after: "\ }";
+}
+<!-- puts a box on the right -->
+.box-right {
+  top: 1.0em;
+  tex-cmd-before: "\raisebox{&top;}[0cm][0pt]{\framebox{\ \strut ";
+  tex-cmd-after: "\ }}";
+  float: right;
+}
+.box-left {
+  top: 1.0em;
+  float: left;
+}
+
+FigureRow {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  before: "[\vspace{&margin-top;}]{.texraw}&nl;";
+  after: "&nl;[\vspace{&margin-bottom;}]{.texraw}";
+}
+
+<!-- Our standard Figure Intext environment -->
+FigureIntext {
+  tex-env-outer: "figureintext";
+}
+
+Tex Header:
+  \newenvironment{figureintext}%
+    {\begin{minipage}[t]{\linewidth}\vspace{-0.4em}\small}%
+    {\end{minipage}\vspace{0.6em}}%
+  \newenvironment{codeintext}{
+    \begin{minipage}[t]{\linewidth}%
+    \vspace{0.5em}%
+    \begin{mdpre}%
+  }{%
+   \end{mdpre}
+   \vspace{0.5em}
+   \end{minipage}
+  }
+
+<!-- The bibliography sometimes uses this command, which we define to be empty -->
+Tex Header:
+  \providecommand{\selfref}{}
+
+<!-- Define circled numbers that are used within code examples -->
+.code-index {
+  tex-cmd: "\codecircled";
+}
+.circled {
+  tex-cmd: "\circlednum";
+}
+
+Tex Header:
+  \providecommand{\circlednum}[1]{\textrm{\textcircled{#1}}}
+  \providecommand{\codecircled}[1]{\textsuperscript{\circlednum{#1}}}

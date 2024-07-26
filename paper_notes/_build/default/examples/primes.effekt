@@ -1,0 +1,43 @@
+effect Emit(i: Int): Unit
+effect Pred(i: Int): Boolean
+
+
+def unfaithful_sieve(start: Int, end: Int): Unit / {Emit, Pred} = {
+    if (start >= end) {
+        ()
+    } else {
+        if(do Pred(start)) {
+            do Emit(start);
+            try {
+                unfaithful_sieve(start+1, end)
+            } with Pred { (i: Int) => 
+                if(mod(i, start) == 0){
+                    resume(false)
+                } else { resume(do Pred(i)) }
+            }
+        } else {
+            unfaithful_sieve(start+1, end)
+        }
+    }
+}
+
+def printing[R](){ body: => R / Emit }: R = {
+    try {
+        body()
+    } with Emit { (i: Int) =>
+        println(i); 
+        resume(())
+    }
+}
+
+def summing(){ body: => Unit / Emit }: Int = {
+    try {
+        body(); 0
+    } with Emit { (i: Int) => i + resume(()) }
+}
+
+def all[R](){ body: => R / Pred }: R = try { body() } with Pred { (i: Int) => resume(true)}
+
+def main() = println(summing{ all {
+    unfaithful_sieve(2, 2000)
+}})

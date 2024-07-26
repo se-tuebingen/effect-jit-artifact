@@ -1,0 +1,919 @@
+[3cbd27] {jit-log-opt-loop
+# Loop 2 (37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump", "target": 4}) : loop with 59 ops
+[p0, p1, p2, p3, p4]
++232: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_num 16>)
++240: i7 = getarrayitem_gc_i(p5, 0, descr=<ArrayS 8>)
++244: i9 = getarrayitem_gc_i(p5, 1, descr=<ArrayS 8>)
++248: i11 = getarrayitem_gc_i(p5, 2, descr=<ArrayS 8>)
++252: i13 = getarrayitem_gc_i(p5, 3, descr=<ArrayS 8>)
++256: p14 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 24>)
++260: p16 = getarrayitem_gc_r(p14, 0, descr=<ArrayP 8>)
++264: p18 = getarrayitem_gc_r(p14, 1, descr=<ArrayP 8>)
++268: p20 = getarrayitem_gc_r(p14, 2, descr=<ArrayP 8>)
++272: p22 = getarrayitem_gc_r(p14, 3, descr=<ArrayP 8>)
++276: p24 = getarrayitem_gc_r(p14, 4, descr=<ArrayP 8>)
++280: label(p0, p1, p2, p3, p4, i7, i9, i11, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507040464))
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++308: guard_not_invalidated(descr=<Guard0x1483ee3e8>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++312: guard_nonnull(p1, descr=<Guard0x1483f0ba0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++324: i25 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++332: guard_value(i25, 36, descr=<Guard0x1483f0be0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++344: i27 = int_eq(i7, i9)
+guard_false(i27, descr=<Guard0x1483f0c20>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++352: i28 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++356: p29 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+0: {"op": "IfZero". "cond": 0. "then": {"tag": null. "target": 35. "args": {"num": []. "ptr": []}}}')
++360: guard_nonnull(p29, descr=<Guard0x1483f0c60>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++368: i30 = getfield_gc_i(p29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++372: guard_value(i30, 30, descr=<Guard0x1483f0ca0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+0: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+1: {"op": "Push". "target": 34. "args": {"num": [1]. "ptr": []}}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+2: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++384: i33 = int_eq(i28, 1)
+guard_true(i33, descr=<Guard0x1483f0ce0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+2: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+3: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++392: i34 = getfield_gc_i(p29, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++396: p35 = getfield_gc_r(p29, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++400: guard_nonnull(p35, descr=<Guard0x1483f0d20>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++408: i36 = getfield_gc_i(p35, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++412: guard_value(i36, 29, descr=<Guard0x1483f0d60>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+0: {"op": "Push". "target": 29. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++424: p38 = new_with_vtable(descr=<SizeDescr 48>)
++528: p39 = new_with_vtable(descr=<SizeDescr 48>)
++540: setfield_gc(p39, p35, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++544: setfield_gc(p39, 29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++552: setfield_gc(p39, 1, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++560: setfield_gc(p38, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++568: setfield_gc(p38, i34, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++572: setfield_gc(p38, p39, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++608: jump(p0, p38, p2, p3, p4, i34, 0, i11, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507040464))
++624: --end of the loop--
+[3ddde4] jit-log-opt-loop}
+[449e91] {jit-log-opt-loop
+# Loop 3 (35<main.rpyeffect:35([then#45])>+2: {"op": "Swap", "type": "num", "a": 1, "b", 0}) : entry bridge with 57 ops
+[p0, p1, p2, p3, p4]
++200: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_num 16>)
++208: i7 = getarrayitem_gc_i(p5, 0, descr=<ArrayS 8>)
++212: i9 = getarrayitem_gc_i(p5, 1, descr=<ArrayS 8>)
++216: i11 = getarrayitem_gc_i(p5, 2, descr=<ArrayS 8>)
++220: i13 = getarrayitem_gc_i(p5, 3, descr=<ArrayS 8>)
++224: p14 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 24>)
++228: p16 = getarrayitem_gc_r(p14, 0, descr=<ArrayP 8>)
++232: p18 = getarrayitem_gc_r(p14, 1, descr=<ArrayP 8>)
++236: p20 = getarrayitem_gc_r(p14, 2, descr=<ArrayP 8>)
++240: p22 = getarrayitem_gc_r(p14, 3, descr=<ArrayP 8>)
++244: p24 = getarrayitem_gc_r(p14, 4, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+2: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
++248: guard_not_invalidated(descr=<Guard0x1483ee4f0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
++252: guard_nonnull(p1, descr=<Guard0x1483f0e60>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++264: i25 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++272: guard_value(i25, 34, descr=<Guard0x1483f0ea0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++284: i27 = int_eq(i9, i7)
+guard_false(i27, descr=<Guard0x1483f0ee0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++292: i28 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++296: p29 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
++300: guard_nonnull(p29, descr=<Guard0x1483f0f20>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++308: i30 = getfield_gc_i(p29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++312: guard_value(i30, 30, descr=<Guard0x1483f0f60>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+0: {"op": "Const". "type": "num". "out": 1. "value": 1}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+1: {"op": "Push". "target": 32. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+2: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++324: i33 = int_sub(i28, 1)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+0: {"op": "Const". "type": "num". "out": 2. "value": 2}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+1: {"op": "Push". "target": 31. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+2: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+3: {"op": "Copy". "type": "num". "from": 2. "to". 1}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+4: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++328: i35 = int_sub(i28, 2)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+0: {"op": "Push". "target": 30. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++332: p36 = new_with_vtable(descr=<SizeDescr 48>)
++444: p37 = new_with_vtable(descr=<SizeDescr 48>)
++456: setfield_gc(p37, p29, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++460: setfield_gc(p37, 30, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++468: setfield_gc(p37, i35, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++472: setfield_gc(p36, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++480: setfield_gc(p36, i33, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++484: setfield_gc(p36, p37, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++520: jump(p0, p36, p2, p3, p4, i33, 0, 2, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507040464))
++648: --end of the loop--
+[4538b4] jit-log-opt-loop}
+[495134] {jit-log-opt-loop
+# Loop 4 (4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp", "name": "infixEq(Int, Int): Boolean", "out": {"num": [0], "ptr": []}, "in": {"num": [0, 1], "ptr": []}}) : entry bridge with 55 ops
+[p0, p1, p2, p3, p4]
++200: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_num 16>)
++208: i7 = getarrayitem_gc_i(p5, 0, descr=<ArrayS 8>)
++212: i9 = getarrayitem_gc_i(p5, 1, descr=<ArrayS 8>)
++216: i11 = getarrayitem_gc_i(p5, 2, descr=<ArrayS 8>)
++220: i13 = getarrayitem_gc_i(p5, 3, descr=<ArrayS 8>)
++224: p14 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 24>)
++228: p16 = getarrayitem_gc_r(p14, 0, descr=<ArrayP 8>)
++232: p18 = getarrayitem_gc_r(p14, 1, descr=<ArrayP 8>)
++236: p20 = getarrayitem_gc_r(p14, 2, descr=<ArrayP 8>)
++240: p22 = getarrayitem_gc_r(p14, 3, descr=<ArrayP 8>)
++244: p24 = getarrayitem_gc_r(p14, 4, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++248: guard_not_invalidated(descr=<Guard0x1483ee5a0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++252: i25 = int_eq(i7, i9)
+guard_false(i25, descr=<Guard0x1483f0fa0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++260: guard_nonnull(p1, descr=<Guard0x1483f0fe0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++272: i26 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++280: guard_value(i26, 34, descr=<Guard0x1483f1020>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++292: i28 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++296: p29 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
++300: guard_nonnull(p29, descr=<Guard0x1483f1060>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++308: i30 = getfield_gc_i(p29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++312: guard_value(i30, 29, descr=<Guard0x1483f10a0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+0: {"op": "Const". "type": "num". "out": 1. "value": 1}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+1: {"op": "Push". "target": 32. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+2: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++324: i33 = int_sub(i28, 1)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+0: {"op": "Const". "type": "num". "out": 2. "value": 2}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+1: {"op": "Push". "target": 31. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+2: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+3: {"op": "Copy". "type": "num". "from": 2. "to". 1}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+4: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++328: i35 = int_sub(i28, 2)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+0: {"op": "Push". "target": 30. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++332: p36 = new_with_vtable(descr=<SizeDescr 48>)
++444: p37 = new_with_vtable(descr=<SizeDescr 48>)
++456: setfield_gc(p37, p29, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++460: setfield_gc(p37, 30, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++468: setfield_gc(p37, i35, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++472: setfield_gc(p36, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++480: setfield_gc(p36, i33, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++484: setfield_gc(p36, p37, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++520: jump(p0, p36, p2, p3, p4, i33, 0, 2, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507040464))
++648: --end of the loop--
+[49ebd4] jit-log-opt-loop}
+[508afa] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f0ce0 with 53 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++136: guard_not_invalidated(descr=<Guard0x1483ee5f8>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++140: guard_nonnull(p11, descr=<Guard0x1483f10e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++148: i14 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++152: guard_value(i14, 36, descr=<Guard0x1483f1120>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++164: i16 = int_eq(i1, i2)
+guard_false(i16, descr=<Guard0x1483f1160>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++172: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++176: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+0: {"op": "IfZero". "cond": 0. "then": {"tag": null. "target": 35. "args": {"num": []. "ptr": []}}}')
++180: guard_nonnull(p18, descr=<Guard0x1483f11a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++188: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++192: guard_value(i19, 30, descr=<Guard0x1483f11e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+0: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+1: {"op": "Push". "target": 34. "args": {"num": [1]. "ptr": []}}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+2: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++204: i22 = int_eq(i17, 1)
+guard_false(i22, descr=<Guard0x1483f1220>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+0: {"op": "Const". "type": "num". "out": 1. "value": 1}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+1: {"op": "Push". "target": 32. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+2: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++212: i24 = int_sub(i17, 1)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+0: {"op": "Const". "type": "num". "out": 2. "value": 2}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+1: {"op": "Push". "target": 31. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+2: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+3: {"op": "Copy". "type": "num". "from": 2. "to". 1}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+4: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++216: i26 = int_sub(i17, 2)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+0: {"op": "Push". "target": 30. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++220: p27 = new_with_vtable(descr=<SizeDescr 48>)
++324: p28 = new_with_vtable(descr=<SizeDescr 48>)
++336: setfield_gc(p28, p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++340: setfield_gc(p28, 30, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++348: setfield_gc(p28, i26, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++352: setfield_gc(p27, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++360: setfield_gc(p27, i24, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++364: setfield_gc(p27, p28, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++400: jump(p10, p27, p0, p12, p13, i24, 0, 2, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507040464))
++440: --end of the loop--
+[511da0] jit-log-opt-bridge}
+[565c12] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f0ca0 with 53 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++136: guard_not_invalidated(descr=<Guard0x1483ee650>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++140: guard_nonnull(p11, descr=<Guard0x1483f1260>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++148: i14 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++152: guard_value(i14, 36, descr=<Guard0x1483f12a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++164: i16 = int_eq(i1, i2)
+guard_false(i16, descr=<Guard0x1483f12e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++172: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++176: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+0: {"op": "IfZero". "cond": 0. "then": {"tag": null. "target": 35. "args": {"num": []. "ptr": []}}}')
++180: guard_nonnull(p18, descr=<Guard0x1483f1320>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++188: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++192: guard_value(i19, 29, descr=<Guard0x1483f1360>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+0: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+1: {"op": "Push". "target": 34. "args": {"num": [1]. "ptr": []}}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+2: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++204: i22 = int_eq(i17, 1)
+guard_false(i22, descr=<Guard0x1483f13a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+0: {"op": "Const". "type": "num". "out": 1. "value": 1}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+1: {"op": "Push". "target": 32. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '33<main.rpyeffect:33([then#51])>+2: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++212: i24 = int_sub(i17, 1)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+0: {"op": "Const". "type": "num". "out": 2. "value": 2}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+1: {"op": "Push". "target": 31. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+2: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+3: {"op": "Copy". "type": "num". "from": 2. "to". 1}')
+debug_merge_point(0, 0, '32<main.rpyeffect:32([k@[then#51]#55])>+4: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++216: i26 = int_sub(i17, 2)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub104))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+0: {"op": "Push". "target": 30. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '31<main.rpyeffect:31([k@[k@[then#51]#55]#60])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++220: p27 = new_with_vtable(descr=<SizeDescr 48>)
++324: p28 = new_with_vtable(descr=<SizeDescr 48>)
++336: setfield_gc(p28, p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++340: setfield_gc(p28, 30, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++348: setfield_gc(p28, i26, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++352: setfield_gc(p27, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++360: setfield_gc(p27, i24, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++364: setfield_gc(p27, p28, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++400: jump(p10, p27, p0, p12, p13, i24, 0, 2, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507040464))
++440: --end of the loop--
+[56ddcb] jit-log-opt-bridge}
+[5ab1ef] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f0c20 with 42 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++136: guard_not_invalidated(descr=<Guard0x1483ee6a8>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++140: guard_nonnull(p11, descr=<Guard0x1483f13e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++148: i14 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++152: guard_value(i14, 36, descr=<Guard0x1483f1420>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++164: i16 = int_eq(i1, i2)
+guard_true(i16, descr=<Guard0x1483f1460>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++172: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++172: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+0: {"op": "IfZero". "cond": 0. "then": {"tag": null. "target": 35. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+1: {"op": "Const". "type": "num". "out": 0. "value": 0}')
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+2: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++176: guard_nonnull(p18, descr=<Guard0x1483f14a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++184: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++188: guard_value(i19, 29, descr=<Guard0x1483f14e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++200: i21 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++204: p22 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++208: guard_nonnull(p22, descr=<Guard0x1483f1520>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++216: i23 = getfield_gc_i(p22, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++220: guard_value(i23, 30, descr=<Guard0x1483f1560>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++232: i25 = getfield_gc_i(p22, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++236: p26 = getfield_gc_r(p22, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+0: {"op": "Push". "target": 29. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++240: p27 = new_with_vtable(descr=<SizeDescr 48>)
++344: p28 = new_with_vtable(descr=<SizeDescr 48>)
++356: setfield_gc(p28, p26, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++360: setfield_gc(p28, 29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++368: setfield_gc(p28, i21, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++372: setfield_gc(p27, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++380: setfield_gc(p27, i25, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++384: setfield_gc(p27, p28, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++420: jump(p10, p27, p0, p12, p13, i25, 0, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507040464))
++452: --end of the loop--
+[5b2df5] jit-log-opt-bridge}
+[5da384] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f0ee0 with 38 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++136: guard_not_invalidated(descr=<Guard0x1483ee700>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
++140: guard_nonnull(p11, descr=<Guard0x1483f15a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++148: i14 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++152: guard_value(i14, 34, descr=<Guard0x1483f15e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++164: i16 = int_eq(i2, i1)
+guard_true(i16, descr=<Guard0x1483f1620>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++172: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++172: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+2: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+3: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++176: guard_nonnull(p18, descr=<Guard0x1483f1660>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++184: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++188: guard_value(i19, 30, descr=<Guard0x1483f16a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++200: i21 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++204: p22 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++208: guard_nonnull(p22, descr=<Guard0x1483f16e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++216: i23 = getfield_gc_i(p22, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++220: guard_value(i23, 30, descr=<Guard0x1483f1720>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+0: {"op": "Push". "target": 29. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++232: p25 = new_with_vtable(descr=<SizeDescr 48>)
++344: p26 = new_with_vtable(descr=<SizeDescr 48>)
++356: setfield_gc(p26, p22, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++360: setfield_gc(p26, 29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++368: setfield_gc(p26, 1, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++376: setfield_gc(p25, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++384: setfield_gc(p25, i21, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++388: setfield_gc(p25, p26, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++424: jump(p10, p25, p0, p12, p13, i21, 0, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507040464))
++548: --end of the loop--
+[5e0d26] jit-log-opt-bridge}
+[6114dd] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f0fa0 with 43 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++136: guard_not_invalidated(descr=<Guard0x1483ee758>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++140: i14 = int_eq(i1, i2)
+guard_true(i14, descr=<Guard0x1483f1760>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++148: guard_nonnull(p11, descr=<Guard0x1483f17a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++160: i15 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++168: guard_value(i15, 34, descr=<Guard0x1483f17e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++180: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++180: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+2: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+3: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++184: guard_nonnull(p18, descr=<Guard0x1483f1820>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++192: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++196: guard_value(i19, 29, descr=<Guard0x1483f1860>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++208: i21 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++212: p22 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++216: guard_nonnull(p22, descr=<Guard0x1483f18a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++224: i23 = getfield_gc_i(p22, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++228: guard_value(i23, 30, descr=<Guard0x1483f18e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++240: i26 = int_add(i21, 1)
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++244: i27 = getfield_gc_i(p22, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++248: p28 = getfield_gc_r(p22, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+0: {"op": "Push". "target": 29. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++252: p29 = new_with_vtable(descr=<SizeDescr 48>)
++364: p30 = new_with_vtable(descr=<SizeDescr 48>)
++376: setfield_gc(p30, p28, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++380: setfield_gc(p30, 29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++388: setfield_gc(p30, i26, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++392: setfield_gc(p29, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++400: setfield_gc(p29, i27, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++404: setfield_gc(p29, p30, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++440: jump(p10, p29, p0, p12, p13, i27, 0, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507040464))
++560: --end of the loop--
+[6187ef] jit-log-opt-bridge}
+[663b39] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f0d60 with 46 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++152: guard_not_invalidated(descr=<Guard0x1483ee7b0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++156: guard_nonnull(p11, descr=<Guard0x1483f1920>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++164: i14 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++168: guard_value(i14, 36, descr=<Guard0x1483f1960>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++180: i16 = int_eq(i1, i2)
+guard_false(i16, descr=<Guard0x1483f19a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++188: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++192: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+0: {"op": "IfZero". "cond": 0. "then": {"tag": null. "target": 35. "args": {"num": []. "ptr": []}}}')
++196: guard_nonnull(p18, descr=<Guard0x1483f19e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++204: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++208: guard_value(i19, 30, descr=<Guard0x1483f1a20>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+0: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+1: {"op": "Push". "target": 34. "args": {"num": [1]. "ptr": []}}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+2: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++220: i22 = int_eq(i17, 1)
+guard_true(i22, descr=<Guard0x1483f1a60>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+2: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+3: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++228: i23 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++232: p24 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++236: guard_nonnull(p24, descr=<Guard0x1483f1aa0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++244: i25 = getfield_gc_i(p24, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++248: guard_value(i25, 30, descr=<Guard0x1483f1ae0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+0: {"op": "Push". "target": 29. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++260: p27 = new_with_vtable(descr=<SizeDescr 48>)
++364: p28 = new_with_vtable(descr=<SizeDescr 48>)
++376: setfield_gc(p28, p24, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++380: setfield_gc(p28, 29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++388: setfield_gc(p28, 1, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++396: setfield_gc(p27, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++404: setfield_gc(p27, i23, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++408: setfield_gc(p27, p28, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++444: jump(p10, p27, p0, p12, p13, i23, 0, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507040464))
++476: --end of the loop--
+[66aec8] jit-log-opt-bridge}
+[682e15] {jit-log-opt-loop
+# Loop 11 (30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy", "type": "num", "from": 1, "to", 0}) : entry bridge with 22 ops
+[p0, p1, p2, p3, p4]
++168: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_num 16>)
++176: i7 = getarrayitem_gc_i(p5, 0, descr=<ArrayS 8>)
++180: i9 = getarrayitem_gc_i(p5, 1, descr=<ArrayS 8>)
++184: i11 = getarrayitem_gc_i(p5, 2, descr=<ArrayS 8>)
++188: i13 = getarrayitem_gc_i(p5, 3, descr=<ArrayS 8>)
++192: p14 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 24>)
++196: p16 = getarrayitem_gc_r(p14, 0, descr=<ArrayP 8>)
++200: p18 = getarrayitem_gc_r(p14, 1, descr=<ArrayP 8>)
++204: p20 = getarrayitem_gc_r(p14, 2, descr=<ArrayP 8>)
++208: p22 = getarrayitem_gc_r(p14, 3, descr=<ArrayP 8>)
++212: p24 = getarrayitem_gc_r(p14, 4, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
++216: guard_not_invalidated(descr=<Guard0x1483ee860>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++220: p25 = new_with_vtable(descr=<SizeDescr 48>)
++332: setfield_gc(p25, p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++340: setfield_gc(p25, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++348: setfield_gc(p25, i9, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++368: jump(p0, p25, p2, p3, p4, i9, 0, i11, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507040464))
++492: --end of the loop--
+[6862a8] jit-log-opt-loop}
+[6d2d61] {jit-log-opt-loop
+# Loop 12 (6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp", "name": "infixAdd(Int, Int): Int", "out": {"num": [0], "ptr": []}, "in": {"num": [0, 1], "ptr": []}}) : loop with 39 ops
+[p0, p1, p2, p3, p4]
++216: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_num 16>)
++224: i7 = getarrayitem_gc_i(p5, 0, descr=<ArrayS 8>)
++228: i9 = getarrayitem_gc_i(p5, 1, descr=<ArrayS 8>)
++232: i11 = getarrayitem_gc_i(p5, 2, descr=<ArrayS 8>)
++236: i13 = getarrayitem_gc_i(p5, 3, descr=<ArrayS 8>)
++240: p14 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 24>)
++244: p16 = getarrayitem_gc_r(p14, 0, descr=<ArrayP 8>)
++248: p18 = getarrayitem_gc_r(p14, 1, descr=<ArrayP 8>)
++252: p20 = getarrayitem_gc_r(p14, 2, descr=<ArrayP 8>)
++256: p22 = getarrayitem_gc_r(p14, 3, descr=<ArrayP 8>)
++260: p24 = getarrayitem_gc_r(p14, 4, descr=<ArrayP 8>)
++264: label(p0, p1, p2, p3, p4, i7, i9, i11, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507041424))
++292: guard_not_invalidated(descr=<Guard0x1483ee910>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++296: i25 = int_add(i7, i9)
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++300: guard_nonnull(p1, descr=<Guard0x1483f1b20>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++312: i26 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++320: guard_value(i26, 29, descr=<Guard0x1483f1b60>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++332: i28 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++336: p29 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
++340: guard_nonnull(p29, descr=<Guard0x1483f1ba0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++348: i30 = getfield_gc_i(p29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++352: guard_value(i30, 29, descr=<Guard0x1483f1be0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++364: label(p0, p29, p2, p3, p4, i28, i25, i11, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507041504))
++364: guard_not_invalidated(descr=<Guard0x1483ee968>) [p2, i28, i25, i11, i13, p16, p18, p20, p22, p24, p0, p29, p3, p4]
++368: i32 = int_add(i28, i25)
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++372: i33 = getfield_gc_i(p29, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++376: p34 = getfield_gc_r(p29, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
++380: guard_nonnull(p34, descr=<Guard0x1483f1c20>) [p2, i28, i25, i11, i13, p16, p18, p20, p22, p24, p0, p29, p3, p4]
++388: i35 = getfield_gc_i(p34, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++392: guard_value(i35, 29, descr=<Guard0x1483f1c60>) [p2, i28, i25, i11, i13, p16, p18, p20, p22, p24, p0, p29, p3, p4]
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++404: jump(p0, p34, p2, p3, p4, i33, i32, i11, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507041504))
++420: --end of the loop--
+[6da362] jit-log-opt-loop}
+[72c365] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f16a0 with 45 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++136: guard_not_invalidated(descr=<Guard0x1483ee9c0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
++140: guard_nonnull(p11, descr=<Guard0x1483f1ca0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++148: i14 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++152: guard_value(i14, 34, descr=<Guard0x1483f1ce0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++164: i16 = int_eq(i2, i1)
+guard_true(i16, descr=<Guard0x1483f1d20>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++172: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++172: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+2: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+3: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++176: guard_nonnull(p18, descr=<Guard0x1483f1d60>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++184: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++188: guard_value(i19, 29, descr=<Guard0x1483f1da0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++200: i21 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++204: p22 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++208: guard_nonnull(p22, descr=<Guard0x1483f1de0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++216: i23 = getfield_gc_i(p22, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++220: guard_value(i23, 30, descr=<Guard0x1483f1e20>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++232: i26 = int_add(i21, 1)
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++236: i27 = getfield_gc_i(p22, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++240: p28 = getfield_gc_r(p22, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+0: {"op": "Push". "target": 29. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++244: p29 = new_with_vtable(descr=<SizeDescr 48>)
++356: p30 = new_with_vtable(descr=<SizeDescr 48>)
++368: setfield_gc(p30, p28, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++372: setfield_gc(p30, 29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++380: setfield_gc(p30, i26, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++384: setfield_gc(p29, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++392: setfield_gc(p29, i27, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++396: setfield_gc(p29, p30, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++432: jump(p10, p29, p0, p12, p13, i27, 0, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507040464))
++556: --end of the loop--
+[73e351] jit-log-opt-bridge}
+[7991e8] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f13a0 with 53 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++152: guard_not_invalidated(descr=<Guard0x1483eea18>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++156: guard_nonnull(p11, descr=<Guard0x1484203e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++164: i14 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++168: guard_value(i14, 36, descr=<Guard0x148420420>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++180: i16 = int_eq(i1, i2)
+guard_false(i16, descr=<Guard0x148420460>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++188: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++192: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+0: {"op": "IfZero". "cond": 0. "then": {"tag": null. "target": 35. "args": {"num": []. "ptr": []}}}')
++196: guard_nonnull(p18, descr=<Guard0x1484204a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++204: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++208: guard_value(i19, 29, descr=<Guard0x1484204e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+0: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+1: {"op": "Push". "target": 34. "args": {"num": [1]. "ptr": []}}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+2: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++220: i22 = int_eq(i17, 1)
+guard_true(i22, descr=<Guard0x148420520>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+2: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+3: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++228: i23 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++232: p24 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++236: guard_nonnull(p24, descr=<Guard0x148420560>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++244: i25 = getfield_gc_i(p24, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++248: guard_value(i25, 30, descr=<Guard0x1484205a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++260: i28 = int_add(i23, 1)
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++264: i29 = getfield_gc_i(p24, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++268: p30 = getfield_gc_r(p24, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+0: {"op": "Push". "target": 29. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++272: p31 = new_with_vtable(descr=<SizeDescr 48>)
++376: p32 = new_with_vtable(descr=<SizeDescr 48>)
++388: setfield_gc(p32, p30, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++392: setfield_gc(p32, 29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++400: setfield_gc(p32, i28, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++404: setfield_gc(p31, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++412: setfield_gc(p31, i29, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++416: setfield_gc(p31, p32, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++452: jump(p10, p31, p0, p12, p13, i29, 0, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507040464))
++484: --end of the loop--
+[7a16b8] jit-log-opt-bridge}
+[7bcefc] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f1560 with 25 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++136: guard_not_invalidated(descr=<Guard0x1483eea70>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++140: guard_nonnull(p11, descr=<Guard0x1484205e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++148: i14 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++152: guard_value(i14, 36, descr=<Guard0x148420620>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++164: i16 = int_eq(i1, i2)
+guard_true(i16, descr=<Guard0x148420660>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++172: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++172: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+0: {"op": "IfZero". "cond": 0. "then": {"tag": null. "target": 35. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+1: {"op": "Const". "type": "num". "out": 0. "value": 0}')
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+2: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++176: guard_nonnull(p18, descr=<Guard0x1484206a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++184: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++188: guard_value(i19, 29, descr=<Guard0x1484206e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++200: i21 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++204: p22 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++208: guard_nonnull(p22, descr=<Guard0x148420720>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++216: i23 = getfield_gc_i(p22, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++220: guard_value(i23, 29, descr=<Guard0x148420760>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++232: jump(p10, p22, p0, p12, p13, i21, 0, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507041504))
++324: --end of the loop--
+[7c1288] jit-log-opt-bridge}
+[7e9f87] {jit-log-opt-loop
+# Loop 16 (6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp", "name": "infixAdd(Int, Int): Int", "out": {"num": [0], "ptr": []}, "in": {"num": [0, 1], "ptr": []}}) : entry bridge with 35 ops
+[p0, p1, p2, p3, p4]
++184: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_num 16>)
++192: i7 = getarrayitem_gc_i(p5, 0, descr=<ArrayS 8>)
++196: i9 = getarrayitem_gc_i(p5, 1, descr=<ArrayS 8>)
++200: i11 = getarrayitem_gc_i(p5, 2, descr=<ArrayS 8>)
++204: i13 = getarrayitem_gc_i(p5, 3, descr=<ArrayS 8>)
++208: p14 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 24>)
++212: p16 = getarrayitem_gc_r(p14, 0, descr=<ArrayP 8>)
++216: p18 = getarrayitem_gc_r(p14, 1, descr=<ArrayP 8>)
++220: p20 = getarrayitem_gc_r(p14, 2, descr=<ArrayP 8>)
++224: p22 = getarrayitem_gc_r(p14, 3, descr=<ArrayP 8>)
++228: p24 = getarrayitem_gc_r(p14, 4, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++232: guard_not_invalidated(descr=<Guard0x1483eeb20>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++236: i25 = int_add(i7, i9)
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++240: guard_nonnull(p1, descr=<Guard0x1484207a0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++252: i26 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++260: guard_value(i26, 30, descr=<Guard0x1484207e0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++272: i28 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++276: p29 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+0: {"op": "Push". "target": 29. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++280: p30 = new_with_vtable(descr=<SizeDescr 48>)
++392: p31 = new_with_vtable(descr=<SizeDescr 48>)
++404: setfield_gc(p31, p29, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++408: setfield_gc(p31, 29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++416: setfield_gc(p31, i25, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++420: setfield_gc(p30, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++428: setfield_gc(p30, i28, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++432: setfield_gc(p30, p31, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++468: jump(p0, p30, p2, p3, p4, i28, 0, i11, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507040464))
++592: --end of the loop--
+[7eec06] jit-log-opt-loop}
+[8359a6] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f1c60 with 33 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++120: guard_not_invalidated(descr=<Guard0x1483eeb78>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++124: i14 = int_add(i1, i2)
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++128: guard_nonnull(p11, descr=<Guard0x148420820>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++136: i15 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++140: guard_value(i15, 29, descr=<Guard0x148420860>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++152: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++156: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
++160: guard_nonnull(p18, descr=<Guard0x1484208a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++168: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++172: guard_value(i19, 30, descr=<Guard0x1484208e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++184: i21 = int_add(i17, i14)
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++188: i22 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++192: p23 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+0: {"op": "Push". "target": 29. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+1: {"op": "Copy". "type": "num". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '30<main.rpyeffect:30([k@[k@[k@[then#51]#55]#60]#63])>+2: {"op": "Jump". "target": 37}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+0: {"op": "Const". "type": "num". "out": 1. "value": 0}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+1: {"op": "Push". "target": 36. "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '37<main.rpyeffect:37(Name(fibonacci2631))>+2: {"op": "Jump". "target": 4}')
++196: p24 = new_with_vtable(descr=<SizeDescr 48>)
++300: p25 = new_with_vtable(descr=<SizeDescr 48>)
++312: setfield_gc(p25, p23, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++316: setfield_gc(p25, 29, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++324: setfield_gc(p25, i21, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++328: setfield_gc(p24, 36, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++336: setfield_gc(p24, i22, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++340: setfield_gc(p24, p25, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++376: jump(p10, p24, p0, p12, p13, i22, 0, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507040464))
++468: --end of the loop--
+[839e02] jit-log-opt-bridge}
+[853419] {jit-log-opt-bridge
+# bridge out of Guard 0x1483f18e0 with 25 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++136: guard_not_invalidated(descr=<Guard0x1483eebd0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++140: i14 = int_eq(i1, i2)
+guard_true(i14, descr=<Guard0x148420920>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++148: guard_nonnull(p11, descr=<Guard0x148420960>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++156: i15 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++160: guard_value(i15, 34, descr=<Guard0x1484209a0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++172: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++172: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+2: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+3: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++176: guard_nonnull(p18, descr=<Guard0x1484209e0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++184: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++188: guard_value(i19, 29, descr=<Guard0x148420a20>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++200: i21 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++204: p22 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++208: guard_nonnull(p22, descr=<Guard0x148420a60>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++216: i23 = getfield_gc_i(p22, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++220: guard_value(i23, 29, descr=<Guard0x148420aa0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++232: jump(p10, p22, p0, p12, p13, i21, 1, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507041504))
++356: --end of the loop--
+[857316] jit-log-opt-bridge}
+[8879d3] {jit-log-opt-loop
+# Loop 19 (35<main.rpyeffect:35([then#45])>+0: {"op": "Const", "type": "num", "out": 0, "value": 1}) : entry bridge with 36 ops
+[p0, p1, p2, p3, p4]
++200: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_num 16>)
++208: i7 = getarrayitem_gc_i(p5, 0, descr=<ArrayS 8>)
++212: i9 = getarrayitem_gc_i(p5, 1, descr=<ArrayS 8>)
++216: i11 = getarrayitem_gc_i(p5, 2, descr=<ArrayS 8>)
++220: i13 = getarrayitem_gc_i(p5, 3, descr=<ArrayS 8>)
++224: p14 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 24>)
++228: p16 = getarrayitem_gc_r(p14, 0, descr=<ArrayP 8>)
++232: p18 = getarrayitem_gc_r(p14, 1, descr=<ArrayP 8>)
++236: p20 = getarrayitem_gc_r(p14, 2, descr=<ArrayP 8>)
++240: p22 = getarrayitem_gc_r(p14, 3, descr=<ArrayP 8>)
++244: p24 = getarrayitem_gc_r(p14, 4, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+0: {"op": "Const". "type": "num". "out": 0. "value": 1}')
++248: guard_not_invalidated(descr=<Guard0x1483eec80>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+1: {"op": "Push". "target": 34. "args": {"num": [1]. "ptr": []}}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+2: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++252: i26 = int_eq(i9, 1)
+guard_true(i26, descr=<Guard0x148420ae0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+2: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+3: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++260: guard_nonnull(p1, descr=<Guard0x148420b20>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++272: i27 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++280: guard_value(i27, 29, descr=<Guard0x148420b60>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++292: i29 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++296: p30 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++300: guard_nonnull(p30, descr=<Guard0x148420ba0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
++308: i31 = getfield_gc_i(p30, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++312: guard_value(i31, 29, descr=<Guard0x148420be0>) [p2, i7, i9, i11, i13, p16, p18, p20, p22, p24, p0, p1, p3, p4]
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++324: jump(p0, p30, p2, p3, p4, i29, 1, i11, i13, p16, p18, p20, p22, p24, descr=TargetToken(5507041504))
++448: --end of the loop--
+[88d0bd] jit-log-opt-loop}
+[8bdbdf] {jit-log-opt-bridge
+# bridge out of Guard 0x1484205a0 with 35 ops
+[p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++152: guard_not_invalidated(descr=<Guard0x1483eecd8>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++156: guard_nonnull(p11, descr=<Guard0x148420c20>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++164: i14 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++168: guard_value(i14, 36, descr=<Guard0x148420c60>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++180: i16 = int_eq(i1, i2)
+guard_false(i16, descr=<Guard0x148420ca0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++188: i17 = getfield_gc_i(p11, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++192: p18 = getfield_gc_r(p11, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '36<main.rpyeffect:36([k@Name(fibonacci2631)#43])>+0: {"op": "IfZero". "cond": 0. "then": {"tag": null. "target": 35. "args": {"num": []. "ptr": []}}}')
++196: guard_nonnull(p18, descr=<Guard0x148420ce0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++204: i19 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++208: guard_value(i19, 29, descr=<Guard0x148420d20>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+0: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+1: {"op": "Push". "target": 34. "args": {"num": [1]. "ptr": []}}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+2: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '35<main.rpyeffect:35([then#45])>+3: {"op": "Jump". "target": 4}')
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++220: i22 = int_eq(i17, 1)
+guard_true(i22, descr=<Guard0x148420d60>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq71))>+1: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 33. "args": {"num": []. "ptr": []}}}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+2: {"op": "Const". "type": "num". "out": 0. "value": 1}')
+debug_merge_point(0, 0, '34<main.rpyeffect:34([k@[then#45]#49])>+3: {"op": "Return". "args": {"num": [0]. "ptr": []}}')
++228: i23 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__1_0.inst_values_num_0 40 pure>)
++232: p24 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb_arb.inst_tail 8 pure>)
++236: guard_nonnull(p24, descr=<Guard0x148420da0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++244: i25 = getfield_gc_i(p24, descr=<FieldS rpyeffect.stored_environment.Stack__arb_arb.inst_target 16 pure>)
++248: guard_value(i25, 29, descr=<Guard0x148420de0>) [p0, i1, i2, i3, i4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+0: {"op": "Swap". "type": "num". "a": 1. "b". 0}')
+debug_merge_point(0, 0, '29<main.rpyeffect:29([k@[k@[k@[k@[then#51]#55]#60]#63]#65])>+1: {"op": "Jump". "target": 6}')
+debug_merge_point(0, 0, '6<main.rpyeffect:6(Name(infixAdd95))>+0: {"op": "PrimOp". "name": "infixAdd(Int. Int): Int". "out": {"num": [0]. "ptr": []}. "in": {"num": [0. 1]. "ptr": []}}')
++260: jump(p10, p24, p0, p12, p13, i23, 1, i3, i4, p5, p6, p7, p8, p9, descr=TargetToken(5507041504))
++352: --end of the loop--
+[8c3564] jit-log-opt-bridge}
+[101db91ea] {jit-summary
+Tracing:      	19	0.002695
+Backend:      	19	0.000945
+TOTAL:      		4.340326
+ops:             	12781
+heapcached ops:  	2043
+recorded ops:    	2160
+  calls:         	591
+guards:          	498
+opt ops:         	759
+opt guards:      	144
+opt guards shared:	122
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	0
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	7
+Total # of bridges:	12
+Freed # of loops:	0
+Freed # of bridges:	0
+[101dbc26a] jit-summary}
