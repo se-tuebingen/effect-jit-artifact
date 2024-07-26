@@ -1,0 +1,19 @@
+import Sys
+import Int
+
+let rec run n =
+  if (n = 0)
+    then 0
+    else if (n = 1)
+      then 1
+      else run (n - 1) + run (n - 2) 
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n)
+    | _ => printInt (run 5)
+    end
+  with
+  | parse_error _ => printInt (run 5)
+  end

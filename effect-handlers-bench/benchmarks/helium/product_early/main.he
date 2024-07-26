@@ -1,0 +1,47 @@
+import Sys
+import Int
+
+signature Abort =
+| done : {X : Type}, Int => X
+
+data rec List = Nil | Cons of Int, List
+
+let product xs =
+  let rec go xs =
+    match xs with
+    | Nil => 0
+    | Cons y ys => if (y = 0) then done 0 else y * (go ys)
+    end
+  in go xs
+
+let enumerate i =
+  let rec go i =
+    if (i < 0)
+       then Nil
+       else Cons i (go (i - 1))
+  in go i
+
+let run_product xs =
+  handle
+    product xs
+  with
+  | done x => x
+  end
+
+let rec run n =
+  let xs = enumerate 1000 in
+  let rec loop i a =
+    if (i = 0)
+       then a
+       else loop (i - 1) (a + run_product xs)
+  in loop n 0
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n)
+    | _ => printInt (run 5)
+    end
+  with
+  | parse_error _ => printInt (run 5)
+  end

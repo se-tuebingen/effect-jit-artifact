@@ -1,0 +1,77 @@
+import Sys
+import Int
+
+signature Choose =
+| choose : Unit => Bool
+
+signature State =
+| get : Unit => Int
+| set : Int => Unit
+
+data rec Tree =
+| Leaf
+| Node of Tree, Int, Tree
+
+let abs x = if x < 0 then -x else x
+
+let operator x y = abs (x - (503 * y) + 37) % 1009
+
+let make n =
+  let rec go n =
+    if (n = 0)
+      then Leaf
+      else (let t = go (n - 1) in
+            Node t n t)
+  in go n
+
+let max a b = if (a > b) then a else b
+
+let rec maxl acc xs = match xs with
+  | nil => acc
+  | y :: ys => maxl (max y acc) ys
+  end
+
+let run n =
+  let tree = make n in
+  
+  let explore t =
+    let rec go t = match t with
+    | Leaf => get ()
+    | Node l v r =>
+        let next = if choose () then l else r in
+        let state = get () in
+        let q = operator state v in
+        (set q; operator v (go next))
+    end
+  in go t in
+  
+  let paths () i = (handle
+      handle
+        explore tree
+      with
+      | return x => [x]
+      | choose () => (resume True) @ (resume False)
+      end
+    with
+    | return x => fn _ => x
+    | get () => fn s => resume s s
+    | set s => fn _ => resume () s
+    end) i in
+
+  let rec loop s i =
+    if (i = 0) then s else (
+        let s = maxl 0 (paths () s) in
+        loop s (i - 1)
+    ) in
+
+  loop 0 10
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n)
+    | _ => printInt (run 5)
+    end
+  with
+  | parse_error _ => printInt (run 5)
+  end

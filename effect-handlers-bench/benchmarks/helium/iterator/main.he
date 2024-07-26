@@ -1,0 +1,39 @@
+import Sys
+import Int
+
+signature Emit =
+| emit : Int => Unit
+signature State =
+| get : Unit => Int
+| set : Int => Unit
+
+let range l u =
+  let rec go l u =
+    if (l > u) then () else
+        emit l;
+        go (l + 1) u
+  in go l u
+
+let rec run n =
+  (handle
+    handle
+      range 0 n;
+      get ()
+    with
+    | emit e => (set ((get ()) + e); resume ())
+    end
+  with
+  | return x => fn _ => x
+  | get _ => fn s => resume s s
+  | set s => fn _ => resume () s
+  end) 0
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n)
+    | _ => printInt (run 5)
+    end
+  with
+  | parse_error _ => printInt (run 5)
+  end

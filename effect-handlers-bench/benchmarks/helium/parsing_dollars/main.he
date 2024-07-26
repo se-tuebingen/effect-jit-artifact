@@ -1,0 +1,70 @@
+(*TODO*)
+import Sys
+import Int
+
+type Char = Int
+
+signature Read =
+| read : Unit => Char
+
+signature Emit =
+| emit : Int => Unit
+
+signature Stop =
+| stop : {X : Type}, Unit => X
+
+let newline: Char = 10
+let is_newline (c: Char) = (c = 10)
+let dollar: Char = 36
+let is_dollar (c: Char) = (c = 36)
+
+let parse a =
+  let rec go a =
+    let c = read () in
+    if (is_dollar c)
+      then go (a + 1)
+      else if (is_newline c)
+        then (emit a; go 0)
+        else stop ()
+  in go a
+
+let sum action =
+  (handle `c in
+    action `c ()
+  with
+  | emit e => fn s => resume () (s + e)
+  | return _ => fn s => s
+  end) 0
+
+let catch action =
+  handle `b in
+    action `b ()
+  with
+  | stop () => ()
+  end
+
+let feed n action =
+  (handle `a in
+    action `a ()
+  with
+  | return x => fn i j => x
+  | read () => fn i j =>
+     if (i > n)
+       then stop ()
+       else if (j = 0)
+         then resume newline (i + 1) (i + 1)
+         else resume dollar i (j - 1)
+  end) 0 0
+
+let run n =
+  sum (fn `c () => catch (fn `b () => feed n (fn `a () => parse 0)))
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n)
+    | _ => printInt (run 5)
+    end
+  with
+  | parse_error _ => printInt (run 5)
+  end

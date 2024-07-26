@@ -1,0 +1,39 @@
+import Sys
+import Int
+
+signature Operator =
+| operator : Int => Unit
+
+let abs x = if x < 0 then -x else x
+
+let loop i s =
+  let rec go i s =
+    if (i = 0)
+       then s
+       else (operator i; go (i - 1) s)
+  in go i s
+
+let run n s =
+  handle
+    loop n s
+  with
+  | operator x => let y = resume () in
+                  abs (x - (503 * y) + 37) % 1009
+  end
+
+let repeat n =
+  let rec step l s =
+    if (l = 0)
+       then s
+       else step (l - 1) (run n s)
+  in step 1000 0
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (repeat n)
+    | _ => printInt (repeat 5)
+    end
+  with
+  | parse_error _ => printInt (repeat 5)
+  end
