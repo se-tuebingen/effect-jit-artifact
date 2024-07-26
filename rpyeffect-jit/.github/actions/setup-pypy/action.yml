@@ -1,0 +1,25 @@
+name: 'Setup Pypy/RPython'
+description: 'Setup Pypy/RPython environment'
+inputs:
+  token:
+    description: 'PAT for pypy'
+    required: true
+    default: ${{github.token}}
+runs:
+  using: "composite"
+  steps:
+    - uses: MatteoH2O1999/setup-python@v4
+      with:
+        python-version: '2.7'
+        cache: 'pip'
+    - run: pip install -r requirements.txt
+      shell: bash
+    - uses: actions/checkout@v3
+      with:
+        repository: 'mozillazg/pypy'
+        ref: 'release-pypy2.7-v7.x'
+        path: './pypy'
+        token: ${{inputs.token}}
+    - uses: trevorlloydelliott/set-environment-variables@master
+      with:
+        PYTHONPATH: .

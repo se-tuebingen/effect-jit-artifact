@@ -1,0 +1,41 @@
+{"blocks": [
+{"label": "main",
+ "frameDescriptor": {"regs_num": 3},
+ "instructions": [
+   {"op": "Const", "out": 1, "value": 1},
+   {"op": "Mul", "out": 0, "in1": 1, "in2": 0},
+   {"op": "Subst", "args": {"num": [0,2,2,2,2]}},
+   {"op": "Jump", "target": 1}
+ ]},
+{"label": "fib",
+ "frameDescriptor": {"regs_num": 4},
+ "instructions": [
+   {"op": "IfZero", "cond": 0, "then": {"target": 4, "args": {}}},
+   {"op": "Const", "out": 1, "value": -1},
+   {"op": "Add", "out": 2, "in1": 0, "in2": 1},
+   {"op": "IfZero", "cond": 2, "then": {"target": 4, "args": {}} },
+   {"op": "Push", "target": 2, "args": {"num": [0]}},
+   {"op": "Subst", "args": {"num": [2,3,3,3,3]}},
+   {"op": "Jump", "target": 1}
+ ]},
+{"label": "l1",
+ "frameDescriptor": {"regs_int": 5},
+ "instructions": [
+   {"op": "Const", "out": 2, "value": -2},
+   {"op": "Add", "out": 3, "in1": 0, "in2": 2},
+   {"op": "Push", "target": 3, "args": {"num": [1]}},
+   {"op": "Subst", "args": {"num": [3,4,4,4,4]}},
+   {"op": "Jump", "target": 1}
+ ]},
+{"label": "l2",
+ "frameDescriptor": {"regs_int": 3},
+ "instructions": [
+   {"op": "Add", "out": 2, "in1": 0, "in2": 1},
+   {"op": "Return", "args": {"num": [2]}}
+ ]},
+{"label": "id",
+ "frameDescriptor": {"regs_num": 1},
+ "instructions": [
+   {"op": "Return", "args": {"num": [0]}}
+ ]}
+]}

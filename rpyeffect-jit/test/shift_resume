@@ -1,0 +1,22 @@
+{"blocks": [
+{"label": "main",
+ "frameDescriptor": {"regs_num": 2, "regs_ptr": 1},
+ "instructions": [
+   {"op": "Reset"},
+   {"op": "Subst", "args": {"num": [0,1], "ptr": [0]}},
+   {"op": "Jump", "target": 1}
+ ]},
+{"label": "loop",
+ "frameDescriptor": {"regs_num": 2, "regs_ptr": 1},
+ "instructions": [
+   {"op": "Const", "out": 1, "value": -1},
+   {"op": "Add", "out": 0, "in1": 0, "in2": 1},
+   {"op": "IfZero", "cond": 0, "then": {"target": 2}},
+   {"op": "Shift", "out": 0, "n": 1},
+   {"op": "Resume", "cont": 0},
+   {"op": "Push", "target": 1, "args": {"num": [0,1], "ptr": [0]}},
+   {"op": "Return"}
+ ]},
+{"label": "end",
+ "frameDescriptor": {}}
+]}

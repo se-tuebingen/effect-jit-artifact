@@ -1,0 +1,28 @@
+{"blocks": [
+{"label": "main",
+ "frameDescriptor": {"regs_num": 5, "regs_ptr": 1},
+ "instructions": [
+   {"op": "PrimOp", "name": "get_arg(Int): String", "out": {"ptr": [0]}, "in": {"num": [0]}},
+   {"op": "PrimOp", "name": "read(String): Int", "out": {"num": [0]}, "in": {"ptr": [0]}},
+   {"op": "Const", "type": "num", "format": "int", "out": 1, "value": -1},
+   {"op": "Mul", "out": 2, "in1": 1, "in2": 0},
+   {"op": "Const", "out": 3, "value": 0},
+   {"op": "Const", "out": 4, "value": 1},
+   {"op": "Copy", "ty": "num", "from": 1, "to": 0},
+   {"op": "Copy", "ty": "num", "from": 2, "to": 1},
+   {"op": "Copy", "ty": "num", "from": 3, "to": 2},
+   {"op": "Copy", "ty": "num", "from": 4, "to": 3},
+   {"op": "Copy", "ty": "num", "from": 2, "to": 4},
+   {"op": "Jump", "target": 1}
+ ]},
+{"label": "loop",
+ "frameDescriptor": {"regs_num": 5},
+ "instructions": [
+   {"op": "Add", "out": 2, "in1": 2, "in2": 3},
+   {"op": "Add", "out": 4, "in1": 2, "in2": 1},
+   {"op": "IsZero", "out": 4, "arg": 4},
+   {"op": "IfZero", "cond": 4, "then": {"target": 1, "args": {}}},
+   {"op": "Print", "arg": 2}
+ ]
+}
+]}
