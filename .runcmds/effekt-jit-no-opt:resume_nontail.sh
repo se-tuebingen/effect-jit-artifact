@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-no-opt' '/Users/gaisseml/dev/effect-jit/.effekt-out/effekt-jit-no-opt:resume_nontail_e7141870-6514-4b91-9578-0a559b14ee05/main.rpyeffect' "$@"

@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-no-specialization' '/Users/gaisseml/dev/effect-jit/.effekt-out/effekt-jit-no-specialization:fibonacci_recursive_f560a251-5a8e-4032-8005-657cd484f73e/main.rpyeffect' "$@"

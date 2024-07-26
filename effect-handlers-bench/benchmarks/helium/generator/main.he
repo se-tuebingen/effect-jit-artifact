@@ -1,0 +1,54 @@
+import Sys
+import Int
+
+signature Yield =
+  | yield : Int => Unit
+
+data rec Tree = Leaf | Node of Tree, Int, Tree
+
+data rec Generator = Empty | Thunk of Int, (Unit -> Generator)
+
+let rec make n =
+  if n = 0 
+    then Leaf
+    else (let t = make (n - 1) in
+         Node t n t)
+
+let iterate t =
+  let rec go t = 
+     match t with
+     | Leaf => ()
+     | Node l v r =>
+         go l; yield v; go r
+     end
+  in go t
+
+let generate g =
+  handle `a in
+    g `a ()
+  with
+  | return _ => Empty
+  | yield(x) => Thunk x (fn _ => resume())
+  end
+
+let sum a g =
+  let rec go a g = 
+    match g with
+    | Empty => a
+    | Thunk v f => go (v + a) (f ())
+    end
+  in go a g
+     
+
+let run n =
+  sum 0 (generate (fn (`a : Yield) _ => iterate `a (make n)))
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n)
+    | _ => printInt (run 5)
+    end
+  with
+  | parse_error _ => printInt (run 5)
+  end

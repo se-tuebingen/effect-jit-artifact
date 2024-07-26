@@ -1,0 +1,131 @@
+(* This example is described in Section 6.9 of "Programming with Algebraic Effects and
+   Handlers" by A. Bauer and M. Pretnar. *)
+
+(* We represent finite distributions as lists of pairs (x,p) where
+   p is the probability of event x. *)
+effect Pick : float -> bool
+
+(* Picks uniformly from given list of events. *)
+let rec uniform_pick = function
+  | [x] -> x
+  | x :: xs ->
+      let n = length xs + 1 in
+      let p = 1.0 /. float_of_int n in
+      if perform (Pick p) then x else uniform_pick xs
+;;
+
+(* Picks according to distribution from a distribution list.
+   It is assumed that the distribution makes sense. *)
+
+let rec distribution_pick l =
+  let rec pick_aux acc = function
+  | [(x, _)] -> x
+  | (x, p)::xs ->
+    let adjusted_p = (p/.(1. -. acc)) in
+    if perform (Pick adjusted_p) then x else pick_aux (acc +. p) xs
+  in
+  pick_aux 0. l
+;;
+
+(* Combine two outcome distributions where the first outcome distribution is
+   chosen with the probability p and the second with probability 1-p. *)
+
+let combine p dist1 dist2 =
+  let scale p dist = map (fun (x, q) -> (x, p *. q)) dist in
+  let rec add (x, p) = function
+    | [] -> [(x, p)]
+    | (y, q) :: dist ->
+      if x = y then (x, p +. q) :: dist else (y, q) :: add (x, p) dist
+  in
+  let dist1 = scale p dist1 in
+  let dist2 = scale (1.0 -. p) dist2 in
+  fold_right add dist1 dist2
+;;
+
+(* This handler computes the distribution of outcomes of a probabilisitic
+   computation. *)
+let distribution = handler
+      (* Distribution of only one value. *)
+  | v -> [(v, 1.0)]
+      (* Combine possible distributions. *)
+  | effect (Pick p) k -> combine p (k true) (k false)
+;;
+
+(* The handler computing the expected value of a probabilistic computation
+   of type float. *)
+let expectation = handler
+  | v -> v
+  | effect (Pick p) k ->
+    p *. (k true) +. (1.0 -. p) *. (k false)
+;;
+
+(* Examples. *)
+
+(* A random walk of n steps where the probability of going left is p and probability of
+   going right is q. *)
+
+(* Set up a state to keep track of position. *)
+effect Get: float
+effect Set: float -> unit
+
+let state = handler
+  | y -> (fun _ -> y)
+  | effect Get k -> (fun s -> (k s) s)
+  | effect (Set s') k -> (fun _ -> (k ()) s')
+  | finally g -> g 0.
+;;
+
+(* A function that simulates a walk. *)
+let walk n p q =
+  let s = 1.0 -. p -. q in
+  with state handle
+  (let rec step_maker m =
+     let new_pos =
+       perform Get +. distribution_pick [(-1.0, p); (0.0, s); (1.0, q)]
+     in
+     perform (Set new_pos);
+     if m > 0 then step_maker (m-1) else perform Get
+   in
+   step_maker n)
+;;
+
+(* Where do we expect to land after 5 steps in a symmetric walk? (Answer: 0.0) *)
+with expectation handle
+  walk 5 (1.0 /. 3.0) (1.0 /. 3.0)
+;;
+
+(* Instead of the expected value we can calculate the distribution. *)
+with distribution handle
+  walk 5 (1.0 /. 3.0) (1.0 /. 3.0)
+;;
+
+(* Finally, let us solve the Monty Hall problem, see
+   http://en.wikipedia.org/wiki/Monty_Hall_problem *)
+
+(* We first define a function which runs the Monty Hall game. As input
+   it takes a flag indicating whether we change our mind. The function
+   return true if we get the prize, and false otherwise. *)
+
+let monty_hall change =
+  let doors = ["A"; "B"; "C"] in
+  (* The prize goes behind one of the doors. *)
+  let prize = (uniform_pick doors) in
+  (* We make random guess. *)
+  let guess = (uniform_pick doors) in
+  (* The host shows what is behind a door which does not contain the prize. *)
+  let show = (uniform_pick (complement doors [prize; guess])) in
+  (* What is our final answer? *)
+  let final = (if change then hd (complement doors [guess; show]) else guess) in
+  (* Did we get the prize? *)
+  final = prize
+;;
+
+(* The distribution if we stay with our initial guess. *)
+with distribution handle
+  monty_hall false
+;;
+
+(* The distribution if we switch the door. *)
+with distribution handle
+  monty_hall true
+;;

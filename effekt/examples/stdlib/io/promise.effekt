@@ -1,0 +1,13 @@
+import io
+
+def main() = {
+
+  val p = promise::make[String]()
+
+  spawn(box { println("Resolved 1: " ++ p.await()) });
+  spawn(box { println("Resolved 2: " ++ p.await()) });
+  spawn(box { println("Resolved 3: " ++ p.await()) });
+
+  p.resolve("42")
+
+}

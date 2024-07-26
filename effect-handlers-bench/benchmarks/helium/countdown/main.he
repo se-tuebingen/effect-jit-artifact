@@ -1,0 +1,35 @@
+import Sys
+import Int
+
+signature State =
+| get : Unit => Int
+| set : Int => Unit
+
+let countdown _ =
+  let rec go _ =
+    let i = (get ()) in
+    if (i = 0)
+        then i
+        else (
+            set (i - 1);
+            go ()) 
+  in go ()
+
+let run n =
+  (handle
+    countdown ()
+  with
+  | return x => fn _ => x
+  | get _ => fn s => resume s s
+  | set n => fn _ => resume () n
+  end) n
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n)
+    | _ => printInt (run 5)
+    end
+  with
+  | parse_error _ => printInt (run 5)
+  end

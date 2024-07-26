@@ -1,0 +1,730 @@
+[3fe33eb] {jit-log-opt-loop
+# Loop 1 (_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST) : loop with 92 ops
+[p0, p1]
++328: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++336: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++340: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++344: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++348: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++352: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++356: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++360: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++364: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++368: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++372: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++376: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++380: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
++384: p23 = getarrayitem_gc_r(p7, 7, descr=<ArrayP 8>)
++388: p25 = getarrayitem_gc_r(p7, 8, descr=<ArrayP 8>)
++392: p27 = getarrayitem_gc_r(p7, 9, descr=<ArrayP 8>)
++396: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, descr=TargetToken(4839583968))
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++428: guard_value(i4, 6, descr=<Guard0x12074e1d0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++440: guard_isnull(p5, descr=<Guard0x1207df2b0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++448: guard_nonnull_class(p17, ConstClass(W_IntObject), descr=<Guard0x12074e218>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
++472: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x12074e260>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
++496: i31 = getfield_gc_i(p17, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++500: i32 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++504: i33 = int_le(i31, i32)
+guard_true(i33, descr=<Guard0x1207df2e0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#58 LOAD_CONST')
++516: guard_value(p3, ConstPtr(ptr34), descr=<Guard0x1207df310>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#60 LOAD_FAST')
++524: guard_nonnull_class(p9, ConstClass(W_ListObject), descr=<Guard0x12074e2a8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#62 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#64 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#66 BINARY_SUBTRACT')
++548: i37 = int_sub_ovf(i31, 1)
+guard_no_overflow(descr=<Guard0x1207df340>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#68 STORE_SUBSCR')
++556: p38 = getfield_gc_r(p9, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++560: guard_class(p38, 4415957504, descr=<Guard0x1207df370>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++580: p40 = getfield_gc_r(p9, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++584: i41 = getfield_gc_i(p40, descr=<FieldS list.length 8>)
++588: i42 = uint_ge(i37, i41)
+guard_false(i42, descr=<Guard0x1207df3a0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++596: p43 = getfield_gc_r(p40, descr=<FieldP list.items 16>)
++724: setarrayitem_gc(p43, i37, ConstPtr(ptr44), descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#70 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#72 LOAD_FAST')
++732: guard_nonnull_class(p15, ConstClass(W_IntObject), descr=<Guard0x12074e2f0>) [p0, p6, p9, p11, p13, p15, p17, p19, p1]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#74 INPLACE_ADD')
++756: i46 = getfield_gc_i(p15, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++760: i47 = int_add_ovf(i31, i46)
+guard_no_overflow(descr=<Guard0x1207df3d0>) [p0, p6, p9, p11, p13, p15, p17, p19, p1]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#76 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#78 JUMP_ABSOLUTE')
++768: guard_not_invalidated(descr=<Guard0x1207df400>) [p0, p6, p9, p11, p13, p15, p17, p19, p1]
++772: i49 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++788: i51 = int_lt(i49, 0)
+guard_false(i51, descr=<Guard0x1207df430>) [p0, p6, p9, p11, p13, p15, p17, p19, p1]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++796: label(p0, p1, p6, p9, p11, p13, p15, i47, p19, i32, p40, i41, p43, i46, descr=TargetToken(4839584032))
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
++812: i52 = int_le(i47, i32)
+guard_true(i52, descr=<Guard0x12074e338>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i32]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#58 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#60 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#62 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#64 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#66 BINARY_SUBTRACT')
++820: i54 = int_sub_ovf(i47, 1)
+guard_no_overflow(descr=<Guard0x1207df460>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i32]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#68 STORE_SUBSCR')
++828: i55 = uint_ge(i54, i41)
+guard_false(i55, descr=<Guard0x1207df490>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i32]
++960: setarrayitem_gc(p43, i54, ConstPtr(ptr56), descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#70 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#72 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#74 INPLACE_ADD')
++968: i57 = int_add_ovf(i47, i46)
+guard_no_overflow(descr=<Guard0x12074e380>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i46]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#76 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#78 JUMP_ABSOLUTE')
++976: guard_not_invalidated(descr=<Guard0x1207df4c0>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i46]
++980: i59 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++996: i61 = int_lt(i59, 0)
+guard_false(i61, descr=<Guard0x1207df4f0>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i46]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++1004: jump(p0, p1, p6, p9, p11, p13, p15, i57, p19, i32, p40, i41, p43, i46, descr=TargetToken(4839584032))
++1012: --end of the loop--
+[401727c] jit-log-opt-loop}
+[409238f] {jit-log-opt-loop
+# Loop 2 (_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER) : loop with 85 ops
+[p0, p1]
++328: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++336: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++340: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++344: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++348: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++352: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++356: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++360: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++364: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++368: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++372: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++376: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++380: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
++384: p23 = getarrayitem_gc_r(p7, 7, descr=<ArrayP 8>)
++388: p25 = getarrayitem_gc_r(p7, 8, descr=<ArrayP 8>)
++392: p27 = getarrayitem_gc_r(p7, 9, descr=<ArrayP 8>)
++396: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, descr=TargetToken(4839584096))
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++436: guard_value(i4, 6, descr=<Guard0x12074e3c8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++448: guard_isnull(p5, descr=<Guard0x1207df970>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++456: guard_class(p19, 4415800168, descr=<Guard0x1207df9a0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++476: i30 = getfield_gc_i(p19, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++480: i31 = getfield_gc_i(p19, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeStepOneIterator.inst_stop 40 pure>)
++484: i32 = int_lt(i30, i31)
+guard_true(i32, descr=<Guard0x1207df9d0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++492: i34 = int_add(i30, 1)
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#20 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#22 LOAD_FAST')
++496: setfield_gc(p19, i34, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++500: guard_nonnull_class(p9, ConstClass(W_ListObject), descr=<Guard0x12074e410>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
++528: guard_value(p3, ConstPtr(ptr36), descr=<Guard0x1207dfa00>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
++536: i38 = int_sub_ovf(i30, 1)
+guard_no_overflow(descr=<Guard0x1207dfa30>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++544: p39 = getfield_gc_r(p9, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++548: guard_class(p39, 4415957504, descr=<Guard0x1207dfa60>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++568: p41 = getfield_gc_r(p9, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++572: i42 = getfield_gc_i(p41, descr=<FieldS list.length 8>)
++576: i43 = uint_ge(i38, i42)
+guard_false(i43, descr=<Guard0x1207dfa90>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++584: p44 = getfield_gc_r(p41, descr=<FieldP list.items 16>)
++596: p45 = getarrayitem_gc_r(p44, i38, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++604: guard_class(p45, ConstClass(W_BoolObject), descr=<Guard0x1207dfac0>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++624: i47 = getfield_gc_i(p45, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++628: i48 = int_is_true(i47)
+guard_false(i48, descr=<Guard0x1207dfaf0>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++636: guard_not_invalidated(descr=<Guard0x1207dfb20>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++640: i50 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++656: i52 = int_lt(i50, 0)
+guard_false(i52, descr=<Guard0x1207dfb50>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++664: i53 = same_as_i(i34)
++664: label(p0, p1, p6, p9, p11, p13, i30, p17, p19, p27, i53, i31, p41, i42, p44, descr=TargetToken(4839584160))
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++676: i54 = int_lt(i53, i31)
+guard_true(i54, descr=<Guard0x12074e458>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, i31, i30]
++684: i56 = int_add(i53, 1)
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#20 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#22 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
++688: setfield_gc(p19, i56, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++692: i58 = int_sub_ovf(i53, 1)
+guard_no_overflow(descr=<Guard0x12074e4a0>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++700: i60 = uint_ge(i58, i42)
+guard_false(i60, descr=<Guard0x1207dfb80>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
++716: p61 = getarrayitem_gc_r(p44, i58, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++724: guard_class(p61, ConstClass(W_BoolObject), descr=<Guard0x1207dfbb0>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
++744: i63 = getfield_gc_i(p61, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++748: i64 = int_is_true(i63)
+guard_false(i64, descr=<Guard0x1207dfbe0>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
++756: guard_not_invalidated(descr=<Guard0x1207dfc10>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
++760: i66 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++776: i68 = int_lt(i66, 0)
+guard_false(i68, descr=<Guard0x1207dfc40>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++784: i69 = arraylen_gc(p44, descr=<ArrayP 8>)
++784: jump(p0, p1, p6, p9, p11, p13, i53, p17, p19, p27, i56, i31, p41, i42, p44, descr=TargetToken(4839584160))
++796: --end of the loop--
+[40a122b] jit-log-opt-loop}
+[4120894] {jit-log-opt-bridge
+# bridge out of Guard 0x12074e338 with 11 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, i8, i9]
++104: i10 = int_le(i8, i9)
+guard_false(i10, descr=<Guard0x12074e650>) [p0, p1, p2, p3, p4, p5, p6, p7, i8, i9]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
++112: guard_not_invalidated(descr=<Guard0x120753400>) [p0, p1, p2, p3, p4, p5, p6, p7, i8, i9]
++116: i12 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++132: i14 = int_lt(i12, 0)
+guard_false(i14, descr=<Guard0x120753430>) [p0, p1, p2, p3, p4, p5, p6, p7, i8, i9]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++140: p15 = new_with_vtable(descr=<SizeDescr 16>)
++244: setfield_gc(p15, i8, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++252: jump(p0, p7, 18, ConstPtr(ptr17), 6, ConstPtr(null), p1, p2, p3, p4, p5, p15, p6, ConstPtr(null), ConstPtr(null), ConstPtr(null), ConstPtr(null), descr=TargetToken(4839584096))
++420: --end of the loop--
+[412418b] jit-log-opt-bridge}
+[4167c10] {jit-log-opt-bridge
+# bridge out of Guard 0x1207dfbe0 with 38 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++152: i11 = int_sub_ovf(i9, 1)
+guard_no_overflow(descr=<Guard0x12074e698>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++160: p12 = getfield_gc_r(p2, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++168: guard_class(p12, 4415957504, descr=<Guard0x120753550>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++188: p14 = getfield_gc_r(p2, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++192: i15 = getfield_gc_i(p14, descr=<FieldS list.length 8>)
++196: i16 = uint_ge(i11, i15)
+guard_false(i16, descr=<Guard0x120753580>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++204: p17 = getfield_gc_r(p14, descr=<FieldP list.items 16>)
++216: p18 = getarrayitem_gc_r(p17, i11, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++224: guard_class(p18, ConstClass(W_BoolObject), descr=<Guard0x1207535b0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++244: i20 = getfield_gc_i(p18, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++248: i21 = int_is_true(i20)
+guard_true(i21, descr=<Guard0x1207535e0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#34 LOAD_FAST')
++256: guard_nonnull_class(p4, ConstClass(W_IntObject), descr=<Guard0x12074e6e0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#36 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#38 INPLACE_ADD')
++284: i23 = getfield_gc_i(p4, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++288: i25 = int_add_ovf(i23, 1)
+guard_no_overflow(descr=<Guard0x120753610>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#40 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#42 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#44 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#46 BINARY_ADD')
++296: i26 = int_add_ovf(i9, i9)
+guard_no_overflow(descr=<Guard0x120753640>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#48 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++304: p27 = new_with_vtable(descr=<SizeDescr 16>)
++408: p28 = new_with_vtable(descr=<SizeDescr 16>)
++420: setfield_gc(p27, i25, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++424: p29 = new_with_vtable(descr=<SizeDescr 16>)
++436: setfield_gc(p28, i9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++440: setfield_gc(p29, i26, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++448: jump(p0, p8, 48, ConstPtr(ptr31), 6, ConstPtr(null), p1, p2, p3, p27, p28, p29, p6, ConstPtr(null), ConstPtr(null), ConstPtr(null), p7, descr=TargetToken(4839583968))
++604: --end of the loop--
+[416e123] jit-log-opt-bridge}
+[418fb10] {jit-log-opt-bridge
+# bridge out of Guard 0x1207df2e0 with 18 ops
+[p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++152: guard_value(i3, 6, descr=<Guard0x12074e728>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++164: guard_isnull(p4, descr=<Guard0x1207537f0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++172: guard_nonnull_class(p10, ConstClass(W_IntObject), descr=<Guard0x12074e770>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
++196: guard_nonnull_class(p7, ConstClass(W_IntObject), descr=<Guard0x12074e7b8>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
++220: i20 = getfield_gc_i(p10, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++224: i21 = getfield_gc_i(p7, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++228: i22 = int_le(i20, i21)
+guard_false(i22, descr=<Guard0x120753820>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
++236: guard_not_invalidated(descr=<Guard0x120753850>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++240: i24 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++256: i26 = int_lt(i24, 0)
+guard_false(i26, descr=<Guard0x120753880>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++268: guard_value(p2, ConstPtr(ptr27), descr=<Guard0x1207538b0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++276: jump(p0, p16, 18, ConstPtr(ptr29), 6, ConstPtr(null), p5, p6, p7, p8, p9, p10, p11, ConstPtr(null), ConstPtr(null), p14, p15, descr=TargetToken(4839584096))
++432: --end of the loop--
+[419437d] jit-log-opt-bridge}
+[4905449] {jit-log-opt-bridge
+# bridge out of Guard 0x1207dfaf0 with 43 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
++168: guard_nonnull_class(p3, ConstClass(W_ListObject), descr=<Guard0x12074e800>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
++196: guard_value(p1, ConstPtr(ptr14), descr=<Guard0x120753e80>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
++204: i16 = int_sub_ovf(i12, 1)
+guard_no_overflow(descr=<Guard0x120753eb0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++212: p17 = getfield_gc_r(p3, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++216: guard_class(p17, 4415957504, descr=<Guard0x120753ee0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
++236: p19 = getfield_gc_r(p3, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++240: i20 = getfield_gc_i(p19, descr=<FieldS list.length 8>)
++244: i21 = uint_ge(i16, i20)
+guard_false(i21, descr=<Guard0x120753f10>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
++252: p22 = getfield_gc_r(p19, descr=<FieldP list.items 16>)
++264: p23 = getarrayitem_gc_r(p22, i16, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++272: guard_class(p23, ConstClass(W_BoolObject), descr=<Guard0x120753f40>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
++292: i25 = getfield_gc_i(p23, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++296: i26 = int_is_true(i25)
+guard_true(i26, descr=<Guard0x120753f70>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#34 LOAD_FAST')
++304: guard_nonnull_class(p5, ConstClass(W_IntObject), descr=<Guard0x12074e848>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#36 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#38 INPLACE_ADD')
++332: i28 = getfield_gc_i(p5, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++336: i30 = int_add_ovf(i28, 1)
+guard_no_overflow(descr=<Guard0x120753fa0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#40 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#42 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#44 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#46 BINARY_ADD')
++344: i31 = int_add_ovf(i12, i12)
+guard_no_overflow(descr=<Guard0x120753fd0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#48 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++352: p32 = new_with_vtable(descr=<SizeDescr 16>)
++456: p33 = new_with_vtable(descr=<SizeDescr 16>)
++468: setfield_gc(p32, i30, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++472: p34 = new_with_vtable(descr=<SizeDescr 16>)
++484: setfield_gc(p33, i12, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++488: setfield_gc(p34, i31, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++492: jump(p0, p11, 48, ConstPtr(ptr36), 6, ConstPtr(null), p2, p3, p4, p32, p33, p34, p7, ConstPtr(null), ConstPtr(null), ConstPtr(null), p10, descr=TargetToken(4839583968))
++644: --end of the loop--
+[490eba7] jit-log-opt-bridge}
+[4925e18] {jit-log-opt-bridge
+# bridge out of Guard 0x12074e458 with 12 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11]
++120: i12 = int_lt(i9, i10)
+guard_false(i12, descr=<Guard0x12074e890>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-42~#80 LOAD_FAST')
++128: guard_nonnull(p4, descr=<Guard0x110038380>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11]
+debug_merge_point(0, 0, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-42~#82 RETURN_VALUE')
++140: guard_isnull(p1, descr=<Guard0x1100383b0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11]
++152: leave_portal_frame(23)
++152: p14 = force_token()
++156: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++232: setfield_gc(p0, p14, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++236: guard_not_forced_2(descr=<Guard0x12075d010>) [p0, p2, p3, p4, p5, p7, i11]
++244: finish(p4, descr=<DoneWithThisFrameDescrRef object at 0x107a03108>)
++328: --end of the loop--
+[4928a0a] jit-log-opt-bridge}
+[6807c8f] {jit-log-opt-loop
+# Loop 8 (<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER) : loop with 361 ops
+[p0, p1]
++632: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++640: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++644: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++648: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++652: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++656: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++660: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++664: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++668: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++672: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, descr=TargetToken(4563682656))
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER')
++684: guard_value(i4, 1, descr=<Guard0x12074e968>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++696: guard_nonnull(p5, descr=<Guard0x110039340>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++704: p15 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_f_trace 32>)
++708: guard_isnull(p15, descr=<Guard0x110039370>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++716: guard_class(p9, 4415799600, descr=<Guard0x1100393a0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++736: i17 = getfield_gc_i(p9, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++740: i18 = getfield_gc_i(p9, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeOneArgIterator.inst_stop 40 pure>)
++744: i19 = int_lt(i17, i18)
+guard_true(i19, descr=<Guard0x1100393d0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++752: i21 = int_add(i17, 1)
++756: i22 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.pyframe.FrameDebugData.inst_is_being_profiled 58>)
++760: setfield_gc(p9, i21, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++764: guard_value(i22, 0, descr=<Guard0x12074e9b0>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#44 STORE_NAME')
++780: guard_value(p3, ConstPtr(ptr24), descr=<Guard0x110039400>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
++788: p25 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_locals 48>)
++796: guard_value(p25, ConstPtr(ptr26), descr=<Guard0x12074e9f8>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
++804: guard_not_invalidated(descr=<Guard0x110039430>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
++808: p27 = getfield_gc_r(p25, descr=<FieldP pypy.objspace.std.dictmultiobject.W_ModuleDictObject.inst_mstrategy 16 pure>)
++816: guard_value(p27, ConstPtr(ptr28), descr=<Guard0x12074ea40>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#46 LOAD_NAME')
++824: p29 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_globals 40>)
++832: setfield_gc(ConstPtr(ptr30), i17, descr=<FieldS pypy.objspace.std.typeobject.IntMutableCell.inst_intvalue 8>)
++840: i32 = instance_ptr_eq(ConstPtr(ptr31), p29)
+guard_true(i32, descr=<Guard0x12074ea88>) [p0, p5, p6, p9, p13, p1, i32, None]
++856: guard_value(p29, ConstPtr(ptr34), descr=<Guard0x12074ead0>) [p0, p5, p6, p9, p13, p1, i32, None]
++864: p35 = getfield_gc_r(p29, descr=<FieldP pypy.objspace.std.dictmultiobject.W_ModuleDictObject.inst_mstrategy 16 pure>)
++868: guard_value(p35, ConstPtr(ptr36), descr=<Guard0x12074eb18>) [p0, p5, p6, p9, p13, p1, i32, None]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#48 LOAD_METHOD')
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#50 CALL_METHOD')
++876: guard_isnull(p13, descr=<Guard0x110039490>) [p0, p5, p6, p9, p13, p1, i32, None]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#52 LOAD_METHOD')
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#54 CALL_METHOD')
++884: p39 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++892: p40 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++896: p41 = force_token()
++900: p42 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++904: guard_value(p42, ConstPtr(null), descr=<Guard0x12074eb60>) [p0, p5, p6, p9, p1, p39, p42, p41, p40, None]
++916: i44 = getfield_gc_i(p39, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++920: i46 = int_eq(i44, 0)
+guard_true(i46, descr=<Guard0x1100394c0>) [p0, p5, p6, p9, p1, p39, p42, p41, p40, None]
++928: enter_portal_frame(23, 6728)
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#0 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#2 BUILD_LIST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#4 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#6 BINARY_MULTIPLY')
++928: p49 = new(descr=<SizeDescr 24>)
++1044: p51 = new_array_clear(1, descr=<ArrayP 8>)
++1068: setarrayitem_gc(p51, 0, ConstPtr(ptr53), descr=<ArrayP 8>)
++1072: setfield_gc(p49, 1, descr=<FieldS list.length 8>)
++1080: setfield_gc(p49, p51, descr=<FieldP list.items 16>)
++1084: p57 = call_r(ConstClass(ll_mul_trampoline__v1335___simple_call__function_), p49, 5000, descr=<Callr 8 ri EF=5>)
++1252: guard_no_exception(descr=<Guard0x12074eba8>) [p0, p5, p6, p9, p1, p39, p57, p49, p41, p40, None]
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#8 STORE_FAST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#10 LOAD_FAST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#12 LOAD_METHOD')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#14 LOAD_FAST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#16 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#18 CALL_METHOD')
++1276: p58 = force_token()
++1280: enter_portal_frame(23, 6732)
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-32~#0 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-32~#2 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#4 LOAD_GLOBAL')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#6 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#8 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#10 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#12 BINARY_ADD')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#14 CALL_FUNCTION')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#16 GET_ITER')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#20 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#22 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++1280: i61 = getfield_gc_i(p57, descr=<FieldS list.length 8>)
++1284: i63 = uint_ge(1, i61)
+guard_false(i63, descr=<Guard0x1100394f0>) [p0, p5, p6, p9, p1, p39, p57, p49, p41, p40, None]
++1296: p64 = getfield_gc_r(p57, descr=<FieldP list.items 16>)
++1300: p66 = getarrayitem_gc_r(p64, 1, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++1304: guard_class(p66, ConstClass(W_BoolObject), descr=<Guard0x110039520>) [p0, p5, p6, p9, p1, p39, p57, p49, p41, p40, None]
++1324: i68 = getfield_gc_i(p66, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1328: i69 = int_is_true(i68)
+guard_true(i69, descr=<Guard0x110039550>) [p0, p5, p6, p9, p1, p39, p57, p49, p41, p40, None]
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#34 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#36 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#38 INPLACE_ADD')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#40 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#42 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#44 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#46 BINARY_ADD')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#48 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#58 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#60 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#62 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#64 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#66 BINARY_SUBTRACT')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#68 STORE_SUBSCR')
++1336: i71 = uint_ge(3, i61)
+guard_false(i71, descr=<Guard0x110039580>) [p0, p5, p6, p9, p1, p39, p57, p49, p41, p40, None]
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#70 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#72 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#74 INPLACE_ADD')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#76 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#78 JUMP_ABSOLUTE')
++1348: i73 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++1484: setarrayitem_gc(p64, 3, ConstPtr(ptr75), descr=<ArrayP 8>)
++1488: i77 = int_lt(i73, 0)
+guard_false(i77, descr=<Guard0x12074ebf0>) [p0, p5, p6, p9, p1, p39, i73, p58, p57, None, p41, p40, None]
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++1496: p78 = force_token()
++1500: p79 = new_with_vtable(descr=<SizeDescr 104>)
++1612: p80 = new_with_vtable(descr=<SizeDescr 24>)
++1624: setfield_gc(p80, p41, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1632: setfield_gc(p80, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1640: p83 = new_array_clear(10, descr=<ArrayP 8>)
++1684: p84 = new_with_vtable(descr=<SizeDescr 24>)
++1696: setfield_gc(p84, p57, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++1704: setfield_gc(p84, ConstPtr(ptr85), descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++1708: setarrayitem_gc(p83, 0, p84, descr=<ArrayP 8>)
++1716: setarrayitem_gc(p83, 1, ConstPtr(ptr88), descr=<ArrayP 8>)
++1720: p89 = new_with_vtable(descr=<SizeDescr 16>)
++1732: setfield_gc(p89, 1, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1740: setarrayitem_gc(p83, 2, p89, descr=<ArrayP 8>)
++1744: p92 = new_with_vtable(descr=<SizeDescr 16>)
++1756: setfield_gc(p92, 2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1764: setarrayitem_gc(p83, 3, p92, descr=<ArrayP 8>)
++1768: p95 = new_with_vtable(descr=<SizeDescr 16>)
++1780: setfield_gc(p95, 6, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1788: setarrayitem_gc(p83, 4, p95, descr=<ArrayP 8>)
++1792: p98 = new_with_vtable(descr=<SizeDescr 48>)
++1808: setfield_gc(p98, 3, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++1816: setfield_gc(p98, 2, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_start 24>)
++1824: setfield_gc(p98, 1, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_step 32>)
++1832: setfield_gc(p98, 5001, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeStepOneIterator.inst_stop 40 pure>)
++1840: setarrayitem_gc(p83, 5, p98, descr=<ArrayP 8>)
++1844: p104 = new_with_vtable(descr=<SizeDescr 24>)
++1856: setfield_gc(p104, p58, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1860: setfield_gc(p104, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1936: setfield_gc(p39, p104, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2008: setfield_gc(p0, p78, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++2012: setfield_gc(p79, p80, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2020: setfield_gc(p79, ConstPtr(ptr105), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++2024: setfield_gc(p79, 50, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2032: setfield_gc(p79, p83, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++2040: setfield_gc(p79, ConstPtr(ptr107), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++2044: setfield_gc(p79, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2052: setfield_gc(p79, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2060: setfield_gc(p79, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++2324: p111 = call_assembler_r(p79, p39, descr=<Loop1>)
+guard_not_forced(descr=<Guard0x12075d0b0>) [p0, p5, p6, p9, p80, p79, p104, p1, p39, p111, p84, None, None, None, None, p40, None]
++2660: keepalive(p79)
++2660: guard_no_exception(descr=<Guard0x12074ec38>) [p0, p5, p6, p9, p80, p79, p104, p1, p39, p111, p84, None, None, None, None, p40, None]
++2684: leave_portal_frame(23)
++2684: guard_not_invalidated(descr=<Guard0x1100395b0>) [p0, p5, p6, p9, p80, p79, p104, p1, p39, p111, p84, None, None, None, None, p40, None]
++2688: p113 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2696: p114 = getfield_gc_r(p79, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2704: i115 = getfield_gc_i(p79, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2772: setfield_gc(p39, p114, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2776: guard_false(i115, descr=<Guard0x12074ec80>) [p0, p5, p6, p9, p80, p79, p104, p1, p39, p111, i115, p113, p84, None, None, None, None, p40, None]
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#20 RETURN_VALUE')
++2784: leave_portal_frame(23)
++2784: setfield_gc(p104, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++2796: i117 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.pyframe.FrameDebugData.inst_is_being_profiled 58>)
++2804: setfield_gc(p39, p40, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2812: setfield_gc(p80, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++2824: guard_value(i117, 0, descr=<Guard0x12074ecc8>) [p0, p5, p6, p9, p111, i117, p1, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#56 POP_TOP')
++2836: p119 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_f_trace 32>)
++2840: guard_isnull(p119, descr=<Guard0x1100395e0>) [p0, p5, p6, p9, p111, i117, p1, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#58 JUMP_ABSOLUTE')
++2848: i121 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++2864: i123 = int_lt(i121, 0)
+guard_false(i123, descr=<Guard0x110039610>) [p0, p5, p6, p9, p111, i117, p1, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER')
++2872: label(p0, p1, p5, p6, p9, i18, p39, p40, descr=TargetToken(4563682720))
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER')
++2872: i124 = getfield_gc_i(p9, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++2880: i125 = int_lt(i124, i18)
+guard_true(i125, descr=<Guard0x12074ed10>) [p0, p5, p6, p9, p1, i124, i18]
++2892: i127 = int_add(i124, 1)
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#44 STORE_NAME')
++2896: p128 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_locals 48>)
++2900: setfield_gc(p9, i127, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++2908: guard_value(p128, ConstPtr(ptr129), descr=<Guard0x12074ed58>) [p0, p5, p6, p9, p1, p128, i124]
++2916: guard_not_invalidated(descr=<Guard0x110106590>) [p0, p5, p6, p9, p1, p128, i124]
++2920: p130 = getfield_gc_r(p128, descr=<FieldP pypy.objspace.std.dictmultiobject.W_ModuleDictObject.inst_mstrategy 16 pure>)
++2928: guard_value(p130, ConstPtr(ptr131), descr=<Guard0x12074f1d8>) [p0, p5, p6, p9, p1, p128, i124]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#46 LOAD_NAME')
++2936: p132 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_globals 40>)
++2944: setfield_gc(ConstPtr(ptr133), i124, descr=<FieldS pypy.objspace.std.typeobject.IntMutableCell.inst_intvalue 8>)
++2952: i135 = instance_ptr_eq(ConstPtr(ptr134), p132)
+guard_true(i135, descr=<Guard0x12074f148>) [p0, p5, p6, p9, p1, i135, None]
++2968: guard_value(p132, ConstPtr(ptr136), descr=<Guard0x12074f070>) [p0, p5, p6, p9, p1, i135, None]
++2976: p137 = getfield_gc_r(p132, descr=<FieldP pypy.objspace.std.dictmultiobject.W_ModuleDictObject.inst_mstrategy 16 pure>)
++2980: guard_value(p137, ConstPtr(ptr138), descr=<Guard0x12074ef98>) [p0, p5, p6, p9, p1, i135, None]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#48 LOAD_METHOD')
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#50 CALL_METHOD')
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#52 LOAD_METHOD')
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#54 CALL_METHOD')
++2988: p139 = force_token()
++2992: enter_portal_frame(23, 6728)
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#0 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#2 BUILD_LIST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#4 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#6 BINARY_MULTIPLY')
++2992: p142 = new(descr=<SizeDescr 24>)
++3100: p144 = new_array_clear(1, descr=<ArrayP 8>)
++3124: setarrayitem_gc(p144, 0, ConstPtr(ptr146), descr=<ArrayP 8>)
++3128: setfield_gc(p142, 1, descr=<FieldS list.length 8>)
++3136: setfield_gc(p142, p144, descr=<FieldP list.items 16>)
++3140: p150 = call_r(ConstClass(ll_mul_trampoline__v1335___simple_call__function_), p142, 5000, descr=<Callr 8 ri EF=5>)
++3296: guard_no_exception(descr=<Guard0x12074ef50>) [p0, p5, p6, p9, p1, p39, p150, p142, p139, p40, None]
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#8 STORE_FAST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#10 LOAD_FAST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#12 LOAD_METHOD')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#14 LOAD_FAST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#16 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#18 CALL_METHOD')
++3320: p151 = force_token()
++3324: enter_portal_frame(23, 6732)
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-32~#0 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-32~#2 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#4 LOAD_GLOBAL')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#6 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#8 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#10 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#12 BINARY_ADD')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#14 CALL_FUNCTION')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#16 GET_ITER')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#20 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#22 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++3324: i154 = getfield_gc_i(p150, descr=<FieldS list.length 8>)
++3328: i156 = uint_ge(1, i154)
+guard_false(i156, descr=<Guard0x110106380>) [p0, p5, p6, p9, p1, p39, p150, p142, p139, p40, None]
++3340: p157 = getfield_gc_r(p150, descr=<FieldP list.items 16>)
++3344: p159 = getarrayitem_gc_r(p157, 1, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++3348: guard_class(p159, ConstClass(W_BoolObject), descr=<Guard0x110106350>) [p0, p5, p6, p9, p1, p39, p150, p142, p139, p40, None]
++3368: i161 = getfield_gc_i(p159, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3372: i162 = int_is_true(i161)
+guard_true(i162, descr=<Guard0x110106320>) [p0, p5, p6, p9, p1, p39, p150, p142, p139, p40, None]
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#34 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#36 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#38 INPLACE_ADD')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#40 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#42 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#44 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#46 BINARY_ADD')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#48 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#58 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#60 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#62 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#64 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#66 BINARY_SUBTRACT')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#68 STORE_SUBSCR')
++3380: i164 = uint_ge(3, i154)
+guard_false(i164, descr=<Guard0x1101062c0>) [p0, p5, p6, p9, p1, p39, p150, p142, p139, p40, None]
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#70 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#72 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#74 INPLACE_ADD')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#76 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#78 JUMP_ABSOLUTE')
++3392: i166 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++3528: setarrayitem_gc(p157, 3, ConstPtr(ptr168), descr=<ArrayP 8>)
++3532: i170 = int_lt(i166, 0)
+guard_false(i170, descr=<Guard0x12074ef08>) [p0, p5, p6, p9, p1, p39, i166, p151, p150, None, p139, p40, None]
+debug_merge_point(2, 2, '_sieve;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++3540: p171 = force_token()
++3544: p172 = new_with_vtable(descr=<SizeDescr 104>)
++3656: p173 = new_with_vtable(descr=<SizeDescr 24>)
++3668: setfield_gc(p173, p139, descr=<FieldP JitVirtualRef.virtual_token 8>)
++3676: setfield_gc(p173, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++3684: p175 = new_array_clear(10, descr=<ArrayP 8>)
++3728: p176 = new_with_vtable(descr=<SizeDescr 24>)
++3740: setfield_gc(p176, p150, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++3748: setfield_gc(p176, ConstPtr(ptr177), descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++3752: setarrayitem_gc(p175, 0, p176, descr=<ArrayP 8>)
++3760: setarrayitem_gc(p175, 1, ConstPtr(ptr180), descr=<ArrayP 8>)
++3764: p181 = new_with_vtable(descr=<SizeDescr 16>)
++3776: setfield_gc(p181, 1, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3784: setarrayitem_gc(p175, 2, p181, descr=<ArrayP 8>)
++3788: p184 = new_with_vtable(descr=<SizeDescr 16>)
++3800: setfield_gc(p184, 2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3808: setarrayitem_gc(p175, 3, p184, descr=<ArrayP 8>)
++3812: p187 = new_with_vtable(descr=<SizeDescr 16>)
++3824: setfield_gc(p187, 6, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3832: setarrayitem_gc(p175, 4, p187, descr=<ArrayP 8>)
++3836: p190 = new_with_vtable(descr=<SizeDescr 48>)
++3852: setfield_gc(p190, 3, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++3860: setfield_gc(p190, 2, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_start 24>)
++3868: setfield_gc(p190, 1, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_step 32>)
++3876: setfield_gc(p190, 5001, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeStepOneIterator.inst_stop 40 pure>)
++3884: setarrayitem_gc(p175, 5, p190, descr=<ArrayP 8>)
++3888: p196 = new_with_vtable(descr=<SizeDescr 24>)
++3900: setfield_gc(p196, p151, descr=<FieldP JitVirtualRef.virtual_token 8>)
++3904: setfield_gc(p196, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++3980: setfield_gc(p39, p196, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++4052: setfield_gc(p0, p171, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++4056: setfield_gc(p172, p173, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++4064: setfield_gc(p172, ConstPtr(ptr197), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++4068: setfield_gc(p172, 50, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++4076: setfield_gc(p172, p175, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++4084: setfield_gc(p172, ConstPtr(ptr199), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++4088: setfield_gc(p172, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++4096: setfield_gc(p172, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++4104: setfield_gc(p172, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++4364: p203 = call_assembler_r(p172, p39, descr=<Loop1>)
+guard_not_forced(descr=<Guard0x12075d290>) [p0, p5, p6, p9, p173, p172, p196, p1, p39, p203, p176, None, None, None, None, p40, None]
++4704: keepalive(p172)
++4704: guard_no_exception(descr=<Guard0x12074eec0>) [p0, p5, p6, p9, p173, p172, p196, p1, p39, p203, p176, None, None, None, None, p40, None]
++4728: leave_portal_frame(23)
++4728: guard_not_invalidated(descr=<Guard0x1100f35b0>) [p0, p5, p6, p9, p173, p172, p196, p1, p39, p203, p176, None, None, None, None, p40, None]
++4732: p205 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++4740: p206 = getfield_gc_r(p172, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++4748: i207 = getfield_gc_i(p172, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++4816: setfield_gc(p39, p206, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++4820: guard_false(i207, descr=<Guard0x12074ee78>) [p0, p5, p6, p9, p173, p172, p196, p1, p39, p203, i207, p205, p176, None, None, None, None, p40, None]
+debug_merge_point(1, 1, 'benchmark;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#20 RETURN_VALUE')
++4828: leave_portal_frame(23)
++4828: setfield_gc(p196, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++4840: i209 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.pyframe.FrameDebugData.inst_is_being_profiled 58>)
++4848: setfield_gc(p39, p40, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++4856: setfield_gc(p173, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++4868: guard_value(i209, 0, descr=<Guard0x12074ee30>) [p0, p5, p6, p9, p203, i209, p1, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#56 POP_TOP')
++4880: p211 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_f_trace 32>)
++4884: guard_isnull(p211, descr=<Guard0x1100f33d0>) [p0, p5, p6, p9, p203, i209, p1, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#58 JUMP_ABSOLUTE')
++4892: i213 = getfield_raw_i(4429117248, descr=<FieldS pypysig_long_struct.c_value 0>)
++4908: i215 = int_lt(i213, 0)
+guard_false(i215, descr=<Guard0x1100f3370>) [p0, p5, p6, p9, p203, i209, p1, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/Users/gaisseml/dev/effect-jit/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER')
++4916: jump(p0, p1, p5, p6, p9, i18, p39, p40, descr=TargetToken(4563682720))
++4932: --end of the loop--
+[6880063] jit-log-opt-loop}
+[18b20338] {jit-summary
+Tracing:      	8	0.003728
+Backend:      	8	0.000952
+TOTAL:      		0.348855
+ops:             	2214
+heapcached ops:  	1738
+recorded ops:    	600
+  calls:         	86
+guards:          	156
+opt ops:         	633
+opt guards:      	143
+opt guards shared:	89
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	104
+nvholes:         	36
+nvreused:        	26
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	3
+Total # of bridges:	5
+Freed # of loops:	0
+Freed # of bridges:	0
+[18b22cb9] jit-summary}

@@ -1,0 +1,46 @@
+import list
+import option
+import args
+import string
+
+// force the computation to be io, so we don't optimize it out
+extern io def forceNonpure(): Unit =
+  jit "nop(): Unit"
+
+interface Fun {
+  def fn(): Unit
+}
+
+def inner() = {
+  forceNonpure()
+  do fn()
+}
+
+def after() = forceNonpure()
+
+def loop(n: Int): Unit / Fun
+= {
+  if (n > 0) {
+    inner()
+    loop(n - 1)
+  } else { () }
+}
+
+def outer(n: Int) = try {
+  loop(n)
+} with Fun {
+  def fn() = { 
+    resume(()); after()
+  }
+}
+
+def run(n: Int) = {
+  outer(n); 0
+}
+
+
+def main() = {
+  val n = on[WrongFormat].default{5}{ commandLineArgs().headOption.getOrElse{ "" }.toInt };
+  val r = run(n);
+  println(r)
+}

@@ -1,0 +1,73 @@
+(* Yield from http://parametricity.net/dropbox/yield.subc.pdf *)
+
+(* The type is output_type -> input_type. *)
+effect Yield : int -> int
+
+type ('i, 'o, 'r) iterator =
+  (* Final result of iterator. *)
+  | Result of 'r
+  (* Suspended value encapsulating the yielded value and the updated iterator. *)
+  | Susp of 'o * ('i -> ('i, 'o, 'r) iterator)
+;;
+
+let run = handler
+    (* Return the value of yield and the continuation as the updated iterator. *)
+  | effect (Yield x) k -> Susp (x, k)
+    (* The iterator has finished. *)
+  | x -> Result x
+;;
+
+(* Example of depthWalk presented in the original paper. *)
+
+type 'a tree = Node of 'a tree * 'a tree | Leaf of 'a;;
+
+(* A function that traverses the tree and transforms the leaves by using the
+   iterator. *)
+let rec depthWalk = function
+  | Node (l, r) ->
+      let l' = depthWalk l in
+      let r' = depthWalk r in
+      Node (l', r')
+  | Leaf a ->
+      let b = perform (Yield a) in
+      Leaf b
+;;
+
+(* The actual iterator behaviour is defined in the handler. *)
+let rec renum = function
+  | Susp(x,k) -> renum (k (x+1))
+  | Result r -> r
+;;
+
+let iter_tree =
+  (with run handle
+  depthWalk (Node (Leaf 10, Leaf 20)))
+in
+renum iter_tree
+;;
+
+
+(* Translation of yield to shift and reset.
+   [Doesn't work without better types for #Yield.]
+
+let shift f = perform (Yield f)
+;;
+
+let rec reset thunk =
+  interp (with run handle thunk ())
+and interp = function
+  | Result r -> r
+  | Susp (f, k) -> reset (fun () -> f (fun i -> interp (k i)))
+;;
+
+*)
+(* To run this example, you have to turn off type checking with --no-types:
+
+        eff --no-types yield.eff
+*)
+(*
+reset (fun () ->
+let yin = (fun k -> perform (Print "@"); k) (shift (fun k -> k k)) in
+let yang = (fun k -> perform (Print "*"); k) (shift (fun k -> k k)) in
+  yin yang);;
+*)

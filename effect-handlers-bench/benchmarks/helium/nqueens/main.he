@@ -1,0 +1,54 @@
+import Sys
+import Int
+
+signature Search =
+| pick : Int => Int
+| fail : {X : Type}, Unit => X
+
+data rec Rows = RowsEmpty | RowsCons of Int, Rows
+
+let safe queen diag xs =
+  let rec go queen diag xs =
+    match xs with
+    | RowsEmpty => True
+    | RowsCons q qs => if ((not (queen = q)) && (not (queen = q + diag)) && (not (queen = q - diag)))
+         then go queen (diag + 1) qs
+         else False
+    end
+  in go queen diag xs
+
+let place size column =
+  let rec go size column =
+    if (column = 0)
+      then RowsEmpty
+      else
+        (let rest = go size (column - 1) in
+        let next = pick size in
+        if (safe next 1 rest)
+           then RowsCons next rest
+           else fail())
+  in go size column
+
+let rec run n =
+  handle
+    place n n
+  with
+  | return _ => 1
+  | fail () => 0
+  | pick size =>
+      let rec loop i a =
+        if (i = size)
+           then a + resume i
+           else loop (i + 1) (a + resume i)
+      in loop 1 0
+  end
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n)
+    | _ => printInt (run 5)
+    end
+  with
+  | parse_error _ => printInt (run 5)
+  end

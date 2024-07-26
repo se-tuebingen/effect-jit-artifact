@@ -1,0 +1,71 @@
+(* In this example we pretend that int is the type of natural numbers. *)
+
+type nat = int
+
+(* A modulus-of-continuity functional is a function mu which accepts a
+   functional f : (nat -> nat) -> nat and a sequence a : nat -> nat
+   and returns a number m such that the value (f a) depends on at most
+   the first m terms of a. In other words, if a and b agree up to the
+   m-th term, then f a = f b. *)
+
+(* We can implement modulus of continuity as usual with a reference. *)
+
+effect Get : int
+effect Set : int -> unit
+
+let state initial = handler
+  | effect Get k -> (fun m -> k m m)
+  | effect (Set n) k -> (fun m -> k () n)
+  | x -> (fun _ -> x)
+  | finally g -> g initial
+;;
+
+let unhandled_ref_mu f a =
+  perform (Set 0);
+  (* The sequence "b" behaves the same as "a", except that it first
+     saves the largest i for which a lookup was made. *)
+  let b i =
+    let current = perform Get in
+    let new_i = max current i in
+    perform (Set new_i);
+    a i
+  in
+  ignore (f b); perform Get
+;;
+
+(* Handle it with the state handler. *)
+let ref_mu f a =
+  with state 0 handle
+    unhandled_ref_mu f a
+;;
+
+(* We can also modify the sequence itself, by wrapping it in a handler.
+   We transform the sequence "a" into a sequence of operations "Call",
+   where the transformed sequence also modifies the state. *)
+
+effect Call : int -> nat
+
+let sequence_transformer sequence = handler
+  (* (Call i) is the same as sequence i with state adjusting. *)
+  | effect (Call n) k ->
+    (fun i ->
+       let j = max i n in
+       (* Here j represents the largest seen lookup index. *)
+       k (sequence n) j)
+  | x -> (fun n -> n) (* We want the final state, not the result. *)
+  | finally g -> g 0
+;;
+
+let mu f a =
+  with sequence_transformer a handle
+  f (fun x -> perform (Call x))
+;;
+
+(* A couple of examples. *)
+let f a = 0 * a 10;;
+let g a = a (a 5);;
+
+ref_mu f (fun i -> 30 + i * i);;
+mu f (fun i -> 30 + i * i);;
+ref_mu g (fun i -> 30 + i * i);;
+mu g (fun i -> 30 + i * i);;

@@ -1,0 +1,78 @@
+module examples/pos/build
+
+type Key = String
+type Val = Int
+
+effect need(key: Key): Val
+effect needInput(key: Key): Val
+effect keyNotFound(key: Key): Nothing
+
+type Store = List[(Key,Val)]
+
+def find(store: Store, key: Key): Val / keyNotFound = {
+    store match {
+        case Nil() => do keyNotFound(key)
+        case Cons((k, v), xs) => if (k == key) { v } else { find(xs, key) }
+    }
+}
+
+def build(target: Key) { tasks: Key => Val / { need } }: Val / {} =
+    try { tasks(target) }
+    with need { requestedKey =>
+        resume(build(requestedKey) { k => tasks(k) })
+    }
+
+// effect transformer "memo"
+def memo[R] { prog: => R / { need } } = {
+    var store: Store = Nil();
+    try {
+        prog()
+    } with need { (key) =>
+        try {
+            resume(find(store, key))
+        } with keyNotFound { (k) =>
+            val v = do need(k);
+            store = Cons((k, v), store);
+            resume(v)
+        }
+    }
+}
+
+def supplyInput[R](store: Store) { prog: => R / { needInput } } = {
+    try { prog() } with needInput { (key) => resume(find(store, key)) }
+}
+
+
+
+// Spreadsheet example from "Build systems ala Carte"
+//  |  A | B
+// 1| 10 | A1 + A2
+// 2| 20 | B1 * 2
+def example1(key: Key): Val / { need, needInput } = {
+    println(key);
+    if (key == "B1") do need("A1") + do need("A2")
+    else if (key == "B2") do need("B1") * 2
+    else do needInput(key)
+}
+
+// needing the same key twice
+def example2(key: Key) = {
+    println(key);
+    if (key == "B1") do need("A1") + do need("A2")
+    else if (key == "B2") do need("B1") * do need("B1")
+    else do needInput(key)
+}
+
+def main() = {
+    val inputs = [("A1", 10), ("A2", 20)];
+    try {
+        val result1 = supplyInput(inputs) { build ("B2") { (key) => example1(key) } };
+        println(result1);
+        println("");
+        val result2 = supplyInput(inputs) { build ("B2") { (key) => example2(key) } };
+        println(result2);
+        println("");
+        val result3 = supplyInput(inputs) { build ("B2") { (key) => memo { example2(key) } } };
+        println(result3)
+    } with keyNotFound { (key) => println("Key not found: " ++ key) }
+}

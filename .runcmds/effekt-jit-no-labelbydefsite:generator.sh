@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-no-labelbydefsite' '/Users/gaisseml/dev/effect-jit/.effekt-out/effekt-jit-no-labelbydefsite:generator_98a116d7-c982-443f-ab4c-1449400301bf/main.rpyeffect' "$@"

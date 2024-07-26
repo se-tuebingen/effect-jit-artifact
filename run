@@ -1,0 +1,762 @@
+#!/usr/bin/env nix-shell
+#! nix-shell -i python -p "python3.withPackages (ps: [ps.rich ps.matplotlib ps.numpy])" hyperfine
+from argparse import ArgumentParser
+from dataclasses import dataclass
+from abc import ABC, abstractmethod
+from typing import TypeVar
+import subprocess, re, os, sys
+import uuid
+import shutil
+import rich, rich.table, rich.console
+from rich import box
+import json
+import re
+import os
+import matplotlib.pyplot as plt
+import numpy as np
+from runtool.util import *
+from runtool.config import SYSTEM, jit_path, timeout, hyperfine_opts
+from runtool.language.all import Language, langs, getlangs
+from runtool.suite.all import Benchmark, getbenchmarks
+from runtool.suite import get_benchmark_path, getcmd, docompile
+from statistics import geometric_mean
+import hashlib
+from runtool.language.adjusted_jit import adjustment_index
+
+extended_handler_suite = "suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers"
+paper_tables = {
+    "table.tex": 
+        { "langs": "eff-jit,eff-plain-ocaml,oldeff-plain-ocaml,effekt-jit,effekt-js,effekt-llvm,effekt-ml,koka-vm,koka-c,koka-js",
+            "benchmarks": extended_handler_suite },
+    "table_baseline.tex": 
+        { "langs": "effekt-jit,js-v8,python-cpython,python-pypy,lua-lua,lua-luajit",
+            "benchmarks": "suite:are-we-fast-yet" },
+    "table_effects_in_other_languages.tex":
+        { "langs": "eff-jit,effekt-jit,ocaml5,js-v8,koka-vm,python-cpython,python-pypy",
+            "benchmarks": "countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup" },
+    "eff_ablation_table.tex": { "langs": "/eff-jit.*", "benchmarks": extended_handler_suite },
+    "effekt_ablation_table.tex": { "langs": "/effekt-jit.*", "benchmarks": extended_handler_suite },
+    "koka_ablation_table.tex": { "langs": "/koka-vm.*", "benchmarks": extended_handler_suite },
+}
+
+# Change working directory to the directory containing this file
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
+def log_output(lang: Language, benchmark: Benchmark, args: list[str] | None, handle: str, out: list[str]):
+    os.makedirs("./.outputs", exist_ok=True)
+    argstr = ""
+    if args is not None and args != benchmark.inputs:
+        argstr = "_" + "_".join(args)
+    with open(f"./.outputs/{lang.name}_{benchmark.name}{argstr}.{handle}.out", "w") as f:
+        f.writelines(out) 
+
+def dorun(runcmd: list[str], lang: Language, benchmark: Benchmark, args: list[str] | None = None, env = os.environ) -> list[str] | None:
+    if args is None:
+        args = benchmark.inputs
+    print(f"RUNNING {runcmd + args}")
+    log(benchmark.name, lang.name, None)
+    log(benchmark.name, lang.name, "args", args)
+
+    if runcmd[0].startswith("PWD="):
+        pwd = runcmd[0].split("=", 1)[1]
+        env["PWD"] = pwd
+        os.chdir(pwd)
+        runcmd = runcmd[1:]
+    
+    try:
+        proc = run((["timeout", timeout] if timeout is not None else [])+ runcmd + args, env=env)
+        output = tee(proc, "[green]run[/green] | ")
+        log_output(lang, benchmark, args, "run", output)
+        if proc.returncode == 124:
+            print("TIMEOUT")
+            log(benchmark.name, lang.name, "run", f"timed out (> {timeout})")
+        elif proc.returncode != 0:
+            log(benchmark.name, lang.name, "run", f"returned {proc.returncode}")
+    except FileNotFoundError:
+        log(benchmark.name, lang.name, "run", "failed")
+        print("FAILED")
+        return list()
+    
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+    print("DONE")
+    if args == benchmark.inputs and benchmark.expected is not None:
+        fail = False
+        for got, exp in zip(output, benchmark.expected):
+            if got.strip() != exp.strip():
+                fail = True
+                print(f'+ {got}')
+                print(f'- {exp}')
+        if not fail and len(output) == len(benchmark.expected):
+            print("OK")
+            return output
+        else:
+            if "js" in lang.name and any(("Maximum call stack size exceeded" in l) for l  in output):
+                log(benchmark.name, lang.name, "run", "stack overflowed")
+                print("STACK OVERFLOW")
+            else:
+                log(benchmark.name, lang.name, "run-result", "differs")
+                print("OUTPUT DIFFERS")
+            return None
+    return output
+
+def numeric_results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language], param = None) -> tuple[float, float]:
+    benchmark_name = benchmark.name
+    if sargs is not None:
+        benchmark_name += "_" + "_".join(sargs)
+
+    # Check run/compile result
+    try:
+        if logdict is not None:
+            j = logdict.copy()
+        else:
+            with open(f"./.runlog.json") as f:
+                j = json.load(f)
+    except Exception:
+        return np.nan, np.nan
+    if benchmark_name in j and l.name in j[benchmark_name]:
+        res = j[benchmark_name][l.name]
+        if "benchmark" in res:
+            return np.nan, np.nan
+        elif "compile" in res:
+            return np.nan, np.nan
+        elif "run" in res:
+            return np.nan, np.nan
+        elif "run-result" in res:
+            return np.nan, np.nan
+    else:
+        return np.nan, np.nan
+        
+    # Check actual benchmark times
+    try:
+        with open(f"./.results/.{benchmark_name}-results.json") as jf:
+            j = json.load(jf)
+    except Exception:
+        return np.nan, np.nan
+    results_by_name = {r["command"]: r["mean"] for r in j["results"]}
+    try:
+        fastest = min((results_by_name.get(f'{c.name}:{benchmark.name}') for c in columns if f'{c.name}:{benchmark.name}' in results_by_name))
+    except ValueError: pass
+    if f"{l.name}:{benchmark_name}" in results_by_name:
+        a = float(results_by_name.get(f'{l.name}:{benchmark_name}'))
+        return a, a/fastest
+    else:
+        return np.nan, np.nan
+
+def numeric_results_with_timeout_str(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language], param = None) -> tuple[float, float]:
+    benchmark_name = benchmark.name
+    if sargs is not None:
+        benchmark_name += "_" + "_".join(sargs)
+
+    # Check run/compile result
+    try:
+        if logdict is not None:
+            j = logdict.copy()
+        else:
+            with open(f"./.runlog.json") as f:
+                j = json.load(f)
+    except Exception:
+        return np.nan, np.nan
+    if benchmark_name in j and l.name in j[benchmark_name]:
+        res = j[benchmark_name][l.name]
+        if "benchmark" in res:
+            return "-", np.nan
+        elif "compile" in res:
+            return f"x-{benchmark_name}-{l.name}", np.nan
+        elif "run" in res:
+            if res["run"].startswith("timed out"):
+                return f"> {timeout}", np.nan
+            return res["run"], np.nan
+        elif "run-result" in res:
+            return np.nan, np.nan
+    else:
+        return np.nan, np.nan
+        
+    # Check actual benchmark times
+    try:
+        with open(f"./.results/.{benchmark_name}-results.json") as jf:
+            j = json.load(jf)
+    except Exception:
+        return np.nan, np.nan
+    results_by_name = {r["command"]: r["mean"] for r in j["results"]}
+    try:
+        fastest = min((results_by_name.get(f'{c.name}:{benchmark.name}') for c in columns if f'{c.name}:{benchmark.name}' in results_by_name))
+    except ValueError: pass
+    if f"{l.name}:{benchmark_name}" in results_by_name:
+        a = float(results_by_name.get(f'{l.name}:{benchmark_name}'))
+        return a, a/fastest
+    else:
+        return np.nan, np.nan
+
+def results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language]) -> tuple[str, str]:
+    benchmark_name = benchmark.name
+    if sargs is not None:
+        benchmark_name += "_" + "_".join(sargs)
+
+    # Check run/compile result
+    try:
+        if logdict is not None:
+            j = logdict.copy()
+        else:
+            with open(f"./.runlog.json") as f:
+                j = json.load(f)
+    except Exception:
+        return "[blue]?[/blue]", "[blue]?[/blue]"
+    if benchmark_name in j and l.name in j[benchmark_name]:
+        res = j[benchmark_name][l.name]
+        if "benchmark" in res:
+            m = "[grey50]not implemented[/grey50]"
+            return m,m
+        elif "compile" in res:
+            m = "[bold red]compile {}[/bold red]".format(res["compile"])
+            return m,m
+        elif "run" in res:
+            color = "red"
+            if res["run"].startswith("timed out"):
+                color = "dark_orange"
+            m = "[{color}]run {msg}[/{color}]".format(msg=res["run"], color=color)
+            return m,m
+        elif "run-result" in res:
+            m = "[bold red]run result {}[/bold red]".format(res["run-result"])
+            return m,m
+    else:
+        return "[blue]?[/blue]", "[blue]?[/blue]" 
+        
+    # Check actual benchmark times
+    try:
+        with open(f"./.results/.{benchmark_name}-results.json") as jf:
+            j = json.load(jf)
+    except Exception:
+        return "[blue]?[/blue]", "[blue]?[/blue]"
+    results_by_name = {r["command"]: r["mean"] for r in j["results"]}
+    try:
+        fastest = min((results_by_name.get(f'{c.name}:{benchmark.name}') for c in columns if f'{c.name}:{benchmark.name}' in results_by_name))
+    except ValueError: pass
+    if f"{l.name}:{benchmark_name}" in results_by_name:
+        a = results_by_name.get(f'{l.name}:{benchmark_name}')
+        if a > fastest * 5:
+            fmt = "[yellow]{}[/yellow]"
+        elif a == fastest:
+            fmt = "[bold green]{}[/bold green]"
+        else:
+            fmt = "[white]{}[/white]"
+            
+        return (fmt.format(f"{a:.3f}"), fmt.format(f"{a/fastest:.3f}"))
+    else:
+        return "[blue]?[/blue]", "[blue]?[/blue]"
+        
+
+def doreport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None) -> None:
+    table_rel = rich.table.Table("Benchmark results (relative)", box=box.SIMPLE_HEAD)
+    table_abs = rich.table.Table("Benchmark results (s)       ", box=box.SIMPLE_HEAD)
+    columns = sorted(list(clangs), key=lambda x: x.name)
+    for backend in columns:
+        table_rel.add_column(backend.name, justify="right")
+        table_abs.add_column(backend.name, justify="right")
+    for idx, benchmark in enumerate(sorted(list(cbenchmarks), key=lambda x: x.name)):
+        style = "on gray3" if idx % 2 == 0 else "on gray11"
+        benchmark_name = benchmark.name
+        if sargs is not None:
+            benchmark_name += "_" + "_".join(sargs)
+        results_abs, results_rel = list(zip(*[results(benchmark, l, sargs, columns) for l in columns]))
+        table_rel.add_row(benchmark_name, *(r for r in results_rel), style=style)
+        table_abs.add_row(benchmark_name, *(r for r in results_abs), style=style)
+    rich.console.Console().print(table_rel)
+    rich.console.Console().print(table_abs)
+
+def doexport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None) -> None:
+    os.makedirs("./.exported", exist_ok=True)
+    export_dir = f"./.exported/{'_'.join(sorted(b.name for b in cbenchmarks))}/{'_'.join(sorted(l.name for l in clangs))}"
+    os.makedirs(export_dir, exist_ok=True)
+    fname_abs = f"{export_dir}/abs.dat"
+    fname_rel = f"{export_dir}/rel.dat"
+    columns = sorted(list(clangs), key=lambda x: x.name)
+    with open(fname_abs, "w") as f_abs:
+        with open(fname_rel, "w") as f_rel:
+            f_abs.write("benchmark")
+            f_rel.write("benchmark")
+            for lang in columns:
+                f_abs.write(f"\t{lang.name}")
+                f_rel.write(f"\t{lang.name}")
+                
+            for benchmark in cbenchmarks:
+                f_abs.write(f"\n{benchmark.name}")
+                f_rel.write(f"\n{benchmark.name}")
+                for lang in columns:
+                    abs_result, rel_result = numeric_results(benchmark, lang, sargs, columns)
+                    f_abs.write(f"\t{abs_result}")
+                    f_rel.write(f"\t{rel_result}")
+    
+    return fname_abs, fname_rel
+
+def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None) -> None:
+    os.makedirs("./.exported", exist_ok=True)
+    export_dirname = '_'.join(sorted(b.name for b in cbenchmarks))
+    if len(export_dirname) > 250:
+        export_dirname = f"{export_dirname[:150]}__{hashlib.md5(export_dirname.encode('utf-8')).hexdigest()}"
+    export_subdirname = '_'.join(sorted(l.name for l in clangs))
+    if len(export_subdirname) > 250:
+        export_subdirname = f"{export_subdirname[:150]}__{hashlib.md5(export_subdirname.encode('utf-8')).hexdigest()}"
+    export_dir = f"./.exported/{export_dirname}/{export_subdirname}"
+    os.makedirs(export_dir, exist_ok=True)
+    fname_abs = f"{export_dir}/table.tex"
+    columns_dict = {}
+    for lang in clangs:
+        lang_name = lang.lang_name.replace("old","")
+        if lang_name not in columns_dict:
+            columns_dict[lang_name] = []
+        columns_dict[lang_name].append(lang)
+    for key in columns_dict:
+        columns_dict[key].sort(key=lambda x: (not ("jit" in x.name or "vm" in x.name), adjustment_index(x), x.name))
+    supercolumns = sorted(columns_dict.keys(), key = lambda x: (not ("eff" in x or "koka" in x), x))
+
+    columns = [be for lang in supercolumns for be in columns_dict[lang]]
+    with open(fname_abs, "w") as f:
+        f.write(f"\\begin{{tabular}}{{l{' r' * len(columns)}}}\n\\toprule")
+        if len(supercolumns) > 1:
+            for lang in supercolumns:
+                f.write(f" & \\multicolumn{{{len(columns_dict[lang])}}}{{c}}{{{lang.replace('_','-')}}}")
+            f.write(" \\\\\n")
+            last_end = 1
+            for lang in supercolumns:
+                end = last_end + len(columns_dict[lang])
+                f.write(f"\\cmidrule(l){{{last_end+1}-{end}}}")
+                last_end = end
+            f.write(" \n")
+        else:
+            f.write(" ")
+            f.write(supercolumns[0].replace('_','-'))
+        for lang in supercolumns:
+            for be in columns_dict[lang]:
+                bname = re.sub(f'^{lang}-', "", be.name)
+                f.write(f" & {bname}")
+        f.write(" \\\\\n\\midrule")
+
+        geomean_data = {lang: {be: dict() for be in columns_dict[lang]} for lang in supercolumns}
+        for benchmark in sorted(cbenchmarks, key=lambda x: x.name):
+            f.write(f"\n{benchmark.name.replace('_','-')}")
+            for lang in supercolumns:
+                for be in columns_dict[lang]:
+                    abs_result, rel_result = numeric_results_with_timeout_str(benchmark, be, sargs, columns)
+                    if isinstance(abs_result, str):
+                        f.write(f" & {abs_result}")
+                    elif np.isnan(abs_result):
+                        f.write(f" & ")
+                    elif rel_result == 1.0:
+                        f.write(f" & $\\mathbf{{{abs_result:.3f}}}$")
+                        geomean_data[lang][be][benchmark] = abs_result
+                    else:
+                        f.write(f" & ${abs_result:.3f}$")
+                        geomean_data[lang][be][benchmark] = abs_result
+            f.write(" \\\\")
+
+        # geometric mean vs JIT
+        f.write("\n\\midrule")
+        f.write("\n geomean slowdown")
+        if all(len(geomean_data[lang]) > 1 for lang in supercolumns):
+            # within group
+            for lang in supercolumns:
+                base_be = columns_dict[lang][0]
+                for be in columns_dict[lang]:
+                    speedups = [geomean_data[lang][be][bm] / geomean_data[lang][base_be][bm] for bm in geomean_data[lang][be].keys() if bm in geomean_data[lang][base_be]]
+                    if len(speedups) == 0:
+                        f.write(" & ")
+                        continue
+                    geomean = geometric_mean(speedups)
+                    f.write(f" & ${geomean:.3f}$")
+        else:
+            # globally
+            base_lang = "effekt"
+            base_be = columns_dict[base_lang][0]
+            for lang in supercolumns:
+                for be in columns_dict[lang]:
+                    speedups = [geomean_data[lang][be][bm] / geomean_data[base_lang][base_be][bm] for bm in geomean_data[lang][be].keys() if bm in geomean_data[base_lang][base_be]]
+                    if len(speedups) == 0:
+                        f.write(" & ")
+                        continue
+                    geomean = geometric_mean(speedups)
+                    f.write(f" & ${geomean:.3f}$")
+            
+        f.write(" \\\\")
+
+        # end of table
+        f.write(f"\n\\bottomrule\n\\end{{tabular}}")
+    
+    return fname_abs
+
+def doplot(cbenchmark: Benchmark, clangs: list[Language], sargs: list[str] | None, params) -> None:
+    x = params
+    for lang in sorted(clangs, key=lambda x: x.name):
+        y = [numeric_results(cbenchmark, lang, sargs, clangs, param)[0] for param in params]
+        plt.plot(x, y, label=lang.name)
+    plt.xlabel('Param')
+    plt.ylabel('Runtime [absolute]')
+    plt.legend()
+    plt.show()
+    
+    x = params
+    for lang in sorted(clangs, key=lambda x: x.name):
+        y = [numeric_results(cbenchmark, lang, sargs, clangs, param)[1] for param in params]
+        plt.plot(x, y, label=lang.name)
+    plt.xlabel('Param')
+    plt.ylabel('Runtime [relative]')
+    plt.legend()
+    plt.show()
+
+def mkcmd(runcmd: list[str], benchmark: Benchmark, args: list[str] | None = None, param = None) -> str:
+    cd = ""
+    final_runcmd = runcmd
+    if runcmd[0].startswith("PWD="):
+        cd = f"cd {runcmd[0].split('=', 1)[1]}; "
+        final_runcmd = runcmd[1:]
+    if args is None:
+        args = benchmark.inputs
+    if param is not None:
+        args = [re.sub(r"[$]p=(.*)", str(param), arg) for arg in args]
+    else:
+        args = [re.sub(r"[$]p=(.*)", lambda m: m[1], arg) for arg in args]
+    return (f"{cd}timeout {timeout} " if timeout is not None else "") + " ".join(c.replace(" ", "\\ ").replace('"', "\\\"") for c in (final_runcmd + args))
+
+def dobenchmarkall(cbenchmarks, clangs, sargs):
+    # Compile
+    runcmds: dict[Benchmark,dict[Language,list[str] | None]] = dict()
+    for benchmark in cbenchmarks:
+        runcmds[benchmark] = {}
+        for lang in clangs:
+            runcmd = docompile(lang, benchmark)
+            runcmds[benchmark][lang] = runcmd
+
+    # Do a test run
+    for benchmark in cbenchmarks:
+        for lang in clangs:
+            runcmd = runcmds[benchmark][lang]
+            res = None
+            if runcmd is not None:
+                res = dorun(runcmd, lang, benchmark, sargs)
+            if res is None:
+                runcmds[benchmark][lang] = None  # TODO error reporting
+    
+    os.makedirs("./.results/", exist_ok=True)
+    
+    # Run and benchmark
+    for benchmark in cbenchmarks:
+        print("Unsupported: " + ",".join(l.name for l, rc in runcmds[benchmark].items() if rc is None))
+        benchmark_name = benchmark.name
+        if sargs is not None:
+            benchmark_name += "_" + "_".join(sargs)
+        hargs = [x for lang, runcmd in runcmds[benchmark].items() if runcmd is not None for x in ["-n", f"{lang.name}:{benchmark_name}", mkcmd(runcmd, benchmark, sargs)]]
+        cmd = (["hyperfine", *hyperfine_opts, "-i", "--export-json", f"./.results/.{benchmark_name}-results.json", *hargs])
+        ecmd = [f"'{c}'" for c in cmd]
+        print(f"cmd: {' '.join(ecmd)}")
+        subprocess.run(cmd)
+
+if __name__ == "__main__":
+    sargs = None
+    if "--" in sys.argv:
+        myargs = sys.argv[2:sys.argv.index("--")]
+        sargs = sys.argv[sys.argv.index("--")+1:]
+    else:
+        myargs = sys.argv[2:]
+        sargs = None
+    if sys.argv[1:] == ["Forrest", "run"]:
+      print("Life is like a box of chocolates: You never know what you get.")
+      sys.exit(0)
+    match sys.argv[1]:
+      case "run":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+
+        clangs = getlangs(args.langs)
+        cbenchmarks = getbenchmarks(args.benchmarks)
+
+        # Compile
+        runcmds: dict[Benchmark,dict[Language,list[str] | None]] = dict()
+        for benchmark in cbenchmarks:
+            runcmds[benchmark] = {}
+            for lang in clangs:
+                runcmd = docompile(lang, benchmark)
+                runcmds[benchmark][lang] = runcmd
+
+        # Do a test run
+        for benchmark in cbenchmarks:
+            for lang in clangs:
+                runcmd = runcmds[benchmark][lang]
+                res = None
+                if runcmd is not None:
+                    res = dorun(runcmd, lang, benchmark, sargs)
+                if res is None:
+                    runcmds[benchmark][lang] = None  # TODO error reporting
+      case "benchmark":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+
+        clangs = getlangs(args.langs)
+        cbenchmarks = getbenchmarks(args.benchmarks)
+
+        dobenchmarkall(cbenchmarks, clangs, sargs)
+
+        # Report
+        doreport(cbenchmarks, clangs, sargs)
+
+      case "benchmark-for-paper":
+        clangs = set()
+        cbenchmarks = set()
+        for name, conf in paper_tables.items():
+            clangs |= getlangs(conf['langs'])
+            cbenchmarks |= getbenchmarks(conf['benchmarks'])
+        
+        a = dobenchmarkall(cbenchmarks, clangs, sargs)
+
+        for name, conf in paper_tables.items():
+            lclangs = getlangs(conf['langs'])
+            lcbenchmarks = getbenchmarks(conf['benchmarks'])
+            doreport(lcbenchmarks, lclangs, sargs)
+
+      case "bm-param":
+          parser = ArgumentParser()
+          parser.add_argument("langs")
+          parser.add_argument("benchmarks")
+          parser.add_argument("params")
+          args = parser.parse_args(myargs)
+
+          clangs = getlangs(args.langs)
+          cbenchmarks = getbenchmarks(args.benchmarks)
+          params = eval(args.params)
+          
+          # Compile
+          runcmds: dict[Benchmark,dict[Language,list[str] | None]] = dict()
+          for benchmark in cbenchmarks:
+              runcmds[benchmark] = {}
+              for lang in clangs:
+                  runcmd = docompile(lang, benchmark)
+                  runcmds[benchmark][lang] = runcmd
+                  
+          # Do a test run
+          for benchmark in cbenchmarks:
+              for lang in clangs:
+                  runcmd = runcmds[benchmark][lang]
+                  res = None
+                  if runcmd is not None:
+                      res = dorun(runcmd, lang, benchmark, sargs)
+                  if res is None:
+                      runcmds[benchmark][lang] = None  # TODO error reporting
+          
+          os.makedirs("./.results/", exist_ok=True)
+
+          # Run and benchmark
+          for param in params:
+            for benchmark in cbenchmarks:
+              print("Unsupported: " + ",".join(l.name for l, rc in runcmds[benchmark].items() if rc is None))
+              benchmark_name = benchmark.name
+              if sargs is not None:
+                  benchmark_name += "_" + "_".join(sargs)
+              hargs = [x for lang, runcmd in runcmds[benchmark].items() if runcmd is not None for x in ["-n", f"{lang.name}:{benchmark_name}", mkcmd(runcmd, benchmark, sargs, param=param)]]
+              cmd = (["hyperfine", *hyperfine_opts, "-i", "--export-json", f"./.results/.{benchmark_name}-{param}-results.json", *hargs])
+              ecmd = [f"'{c}'" for c in cmd]
+              print(f"cmd: {' '.join(ecmd)}")
+              subprocess.run(cmd)
+
+          for benchmark in cbenchmarks:
+              doplot(benchmark, clangs, sargs, params)
+
+      case "bm-param-plot":
+          parser = ArgumentParser()
+          parser.add_argument("langs")
+          parser.add_argument("benchmarks")
+          parser.add_argument("params")
+          args = parser.parse_args(myargs)
+
+          clangs = getlangs(args.langs)
+          cbenchmarks = getbenchmarks(args.benchmarks)
+          params = eval(args.params)
+          
+          for benchmark in cbenchmarks:
+              doplot(benchmark, clangs, sargs, params)
+
+      case "rerun":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+        langs = getlangs(args.langs)
+        benchmarks = getbenchmarks(args.benchmarks)
+
+        for lang in langs:
+            for benchmark in benchmarks:
+                runcmd = getcmd(lang, benchmark)
+                if runcmd is not None:
+                    dorun(runcmd, lang, benchmark, sargs)
+                else:
+                    print(f"Unsupported: {benchmark.name} for {lang.name}")
+        store_logdict()
+        
+      case "report":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+
+        clangs = getlangs(args.langs)
+        cbenchmarks = getbenchmarks(args.benchmarks)
+
+        doreport(cbenchmarks, clangs, sargs)
+        sys.exit(0)
+
+      case "export-tables":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+
+        clangs = getlangs(args.langs)
+        cbenchmarks = getbenchmarks(args.benchmarks)
+
+        a,b = doexport(cbenchmarks, clangs, sargs)
+        print(a)
+        print(b)
+        sys.exit(0)
+
+      case "export-tex-tables":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+
+        clangs = getlangs(args.langs)
+        cbenchmarks = getbenchmarks(args.benchmarks)
+
+        a = doexport_tex(cbenchmarks, clangs, sargs)
+        print(a)
+        sys.exit(0)
+
+      case "export-all-paper-tables":
+        parser = ArgumentParser()
+        parser.add_argument("--target", default=None, required=False, help="Prefix to prepend to the output filename (i.e. target directory + /)")
+        args = parser.parse_args(myargs)
+
+        if args.target is None:
+            os.makedirs("./.exported", exist_ok=True)
+            os.makedirs("./.exported/paper_tables", exist_ok=True)
+            target = "./.exported/paper_tables/"
+        else:
+            target = args.target
+
+        for name, conf in paper_tables.items():
+            clangs = getlangs(conf['langs'])
+            cbenchmarks = getbenchmarks(conf['benchmarks'])
+            a = doexport_tex(cbenchmarks, clangs, sargs)
+            shutil.copy(a, target + name)
+
+        print(target)
+        sys.exit(0)
+
+      case "export-all-paper-tables-tsv":
+        parser = ArgumentParser()
+        parser.add_argument("--target", default=None, required=False, help="Prefix to prepend to the output filename (i.e. target directory + /)")
+        args = parser.parse_args(myargs)
+
+        if args.target is None:
+            os.makedirs("./.exported", exist_ok=True)
+            os.makedirs("./.exported/paper_tables", exist_ok=True)
+            target = "./.exported/paper_tables/"
+        else:
+            target = args.target
+
+        for name, conf in paper_tables.items():
+            clangs = getlangs(conf['langs'])
+            cbenchmarks = getbenchmarks(conf['benchmarks'])
+            a,b = doexport(cbenchmarks, clangs, sargs)
+            shutil.copy(a, target + name)
+            shutil.copy(b, target + "rel-" + name)
+
+        print(target)
+        sys.exit(0)
+
+      case "getcmd":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+
+        clangs = getlangs(args.langs)
+        cbenchmarks = getbenchmarks(args.benchmarks)
+
+        cmds = [getcmd(lang, benchmark) for benchmark in cbenchmarks for lang in clangs]
+        for cmd in cmds: # TODO args
+            print(" ".join(map(shell_escape, cmd)))
+        sys.exit(0)
+
+      case "jitlog":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        parser.add_argument("-v", action="store_true", help="Enable verbose traces")
+        args = parser.parse_args(myargs)
+        langs = getlangs(args.langs)
+        benchmarks = getbenchmarks(args.benchmarks)
+
+        os.makedirs("./.jitlogs", exist_ok=True)
+
+        for lang in langs:
+            for benchmark in benchmarks:
+                runcmd = getcmd(lang, benchmark)
+                benchmark_name = benchmark.name
+                if sargs is not None:
+                    benchmark_name += "_" + "_".join(sargs)
+                if runcmd is not None:
+                    env = os.environ.copy()
+                    logtypes = "jit" if args.v else "jit-log-opt,jit-summary"
+                    env["PYPYLOG"] = f"{logtypes}:./.jitlogs/{lang.name}_{benchmark_name}.log"
+                    dorun(runcmd, lang, benchmark, sargs, env=env)
+                else:
+                    print(f"Unsupported: {benchmark.name} for {lang.name}")
+
+      case "list-benchmarks":
+        for bm in getbenchmarks("all"):
+            print(bm.name)
+        sys.exit(0)
+
+      case "debug":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+        langs = getlangs(args.langs)
+        benchmarks = getbenchmarks(args.benchmarks)
+
+        for lang in langs:
+            for benchmark in benchmarks:
+                runcmd = getcmd(lang, benchmark)
+                if sargs is None:
+                    runargs = " ".join(benchmark.inputs) # FIXME escape
+                else:
+                    runargs = " ".join(sargs) # FIXME escape
+                if runcmd is None:
+                    print(f"Was not compiled: {benchmark.name} for {lang.name}")
+                elif runcmd[0] != jit_path:
+                    print(f"Not a jit backend: {lang.name}")
+                else:
+                    path = runcmd[1]
+                    sys.exit(subprocess.run(["nix-shell", "--command", f"rpyeffect/debugger/__main__.py {path} {runargs}"], cwd="./rpyeffect-jit").returncode)
+
+      case "backup-results":
+          parser = ArgumentParser()
+          parser.add_argument("to")
+          args = parser.parse_args(myargs)
+          
+          to_copy = [ "./.results", "./.jitlogs", "./.outputs", "./.runcmds", "./.runlog.json" ]
+          dst = args.to
+          os.makedirs(dst, exist_ok=True)
+          for d in to_copy:
+            if os.path.isdir(d):
+              shutil.copytree(d, os.path.join(dst, d), dirs_exist_ok=True)
+            else:
+              shutil.copy(d, os.path.join(dst, d))
+
+      case _:
+          print("Available subcommands: run, benchmark")
+
+    store_logdict()

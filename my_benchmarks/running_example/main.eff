@@ -1,0 +1,50 @@
+(* BEGIN:helpers *)
+let isValueTooBig n = n > 39
+let measure t = ((t + 30) mod 42)
+(* END:helpers *)
+
+(* BEGIN:effect *)
+effect Emit: int -> unit
+(* END:effect *)
+
+(* BEGIN:transformer *)
+let filter p b =
+  handle
+    b ()
+  with
+  | effect (Emit x) k -> 
+      if (p x) then (perform (Emit x)) else ();
+      k ()
+  | _ -> ()
+(* END:transformer *)
+
+(* push producer *)
+(* BEGIN:producer *)
+let generateMeasurements n = 
+  let rec loop t =
+    if t > 0
+      then 
+        perform (Emit (measure t));
+        loop (t - 1)
+      else ()
+  in loop n
+(* END:producer *)
+
+(* consumer *)
+(* BEGIN:consumer *)
+let count = handler
+  | effect (Emit x) k -> 1 + (k ())
+  | _ -> 0
+(* END:consumer *)
+
+(* BEGIN:pipeline *)
+let countTooBig b =
+  with count handle
+    filter isValueTooBig b
+
+(* END:pipeline *)
+
+let run n =
+(* BEGIN:main *)
+    countTooBig (fun () -> generateMeasurements n)
+(* END:main *)

@@ -1,0 +1,15 @@
+effect Fun : unit
+
+let inner () = perform Fun
+
+let rec loop n = 
+  if n >= 0 then (inner (); loop (n - 1)) else ()
+
+let outer n = handle
+    loop n
+  with 
+    | effect Fun k -> k ()
+    | x -> x
+
+
+let run n = (outer n; 0)

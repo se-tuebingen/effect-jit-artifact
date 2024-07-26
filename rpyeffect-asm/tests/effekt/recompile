@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# Config
+SCRIPT_DIR=$(dirname $(realpath $0))
+EFFEKT_DIR=$SCRIPT_DIR/../../../effekt
+
+function compile_effekt {
+    local FILE=$(realpath $1)
+    local OFILE=$(realpath $(dirname $2))/$(basename $2)
+    local EOFILE=out/$(basename $FILE | sed 's/\.effekt$/.mcore.json/g')
+    cd $EFFEKT_DIR
+    if [ -f $EOFILE ]; then rm $EOFILE; fi
+    sbt "effektJVM/run --backend jit --compile $FILE"
+    if [ ! -f $EOFILE ]; then
+        >&2 echo "Compilation of $FILE failed"
+        EXIT_CODE=1
+    else
+        cp $EOFILE $OFILE
+    fi
+}
+
+# Find effekt files (*.effekt) in this directory (as absolute paths)
+EFFEKT_FILES=$(find . -name "*.effekt" -type f | xargs realpath)
+
+# Flag for exit code
+EXIT_CODE=0
+
+# Also output some compiler metadata
+cd $EFFEKT_DIR
+mkdir -p $SCRIPT_DIR/.metadata
+date -u -Iseconds > $SCRIPT_DIR/.metadata/date
+echo "EFFEKT_DIR=$EFFEKT_DIR" > $SCRIPT_DIR/.metadata/env
+echo "$EFFEKT_FILES" > $SCRIPT_DIR/.metadata/compiled-files
+git rev-parse HEAD > $SCRIPT_DIR/.metadata/effekt-commit
+git diff --patch > $SCRIPT_DIR/.metadata/effekt-diff.patch
+cd $SCRIPT_DIR
+git rev-parse HEAD > $SCRIPT_DIR/.metadata/src-commit
+git diff --patch --binary --no-ext-diff -- $SCRIPT_DIR > $SCRIPT_DIR/.metadata/src-diff.patch
+
+# For each, run the compiler and copy the a.out file here with name *.mcore.json
+cd $EFFEKT_DIR
+for EFFEKT_FILE in $EFFEKT_FILES
+do
+    echo "Compiling $(basename $EFFEKT_FILE)"
+    OUT_FILE=$(echo $EFFEKT_FILE | sed 's/\.effekt$/.mcore.json/g')
+    compile_effekt "$EFFEKT_FILE" "$OUT_FILE"
+done
+
+# Output output SHAs
+sha256sum $EFFEKT_FILES > $SCRIPT_DIR/.metadata/result.sha256sum
+
+exit $EXIT_CODE

@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Config
+SCRIPT_DIR=$(dirname $(realpath $0))
+KOKA_DIR=$SCRIPT_DIR/../../../koka
+KOKA_CMD="stack exec koka -- --target=vm "
+
+# Find helium files (*.he) in this directory (as absolute paths)
+KK_FILES=$(find . -name "*.kk" -type f | xargs realpath)
+
+# Flag for exit code
+EXIT_CODE=0
+
+# Also output some compiler metadata
+cd $KOKA_DIR
+mkdir -p $SCRIPT_DIR/.metadata
+date -u -Iseconds > $SCRIPT_DIR/.metadata/date
+echo "KOKA_DIR=$KOKA_DIR" > $SCRIPT_DIR/.metadata/env
+echo "KOKA_CMD=$KOKA_CMD" >> $SCRIPT_DIR/.metadata/env
+echo "$KK_FILES" > $SCRIPT_DIR/.metadata/compiled-files
+git rev-parse HEAD > $SCRIPT_DIR/.metadata/koka-commit
+git diff --patch > $SCRIPT_DIR/.metadata/koka-diff.patch
+cd $SCRIPT_DIR
+git rev-parse HEAD > $SCRIPT_DIR/.metadata/src-commit
+git diff --patch --binary --no-ext-diff -- $SCRIPT_DIR > $SCRIPT_DIR/.metadata/src-diff.patch
+
+# For each, run the compiler and copy the a.out file here with name *.mcore.json
+cd $KOKA_DIR
+for KK_FILE in $KK_FILES
+do
+    echo "Compiling $(basename $KK_FILE)"
+    OUT_FILE=$(echo $KK_FILE | sed 's/\.kk$//g') # .mcore.json added by koka
+    if [ -f a.out ]; then rm a.out; fi
+    if bash -c "$KOKA_CMD -c $KK_FILE -o $OUT_FILE"; then
+        true
+    else
+        >&2 echo "Compilation of $KK_FILE failed"
+        EXIT_CODE=1
+    fi
+done
+
+# Output output SHAs
+sha256sum $KK_FILES > $SCRIPT_DIR/.metadata/result.sha256sum
+
+exit $EXIT_CODE

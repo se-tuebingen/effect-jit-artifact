@@ -1,0 +1,10 @@
+equal : (V, V) -> V
+int : V
+tt : V
+uu : V -> V
+vv : V -> V
+ 
+pub alias equal<a,b> :: (V, V) -> V = forall<c> (c<a>) -> c<b> = 1
+pub alias tt = equal<int,int> = 2
+pub alias uu<a> :: V -> V = equal<int,a> = 2
+pub alias vv<a> :: V -> V = equal<a,a> = 2

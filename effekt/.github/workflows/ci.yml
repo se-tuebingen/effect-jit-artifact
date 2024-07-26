@@ -1,0 +1,100 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+env:
+  JAVA_VERSION: '11'
+  NODE_VERSION: '16.x'
+
+jobs:
+  run-hello-world:
+    strategy:
+      matrix:
+        os: [windows-latest]
+
+    name: Build Effekt compiler and run one test
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'true'
+
+    - name: Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'zulu'
+        cache: 'sbt'
+
+    - name: Setup SBT
+      uses: sbt/setup-sbt@v1
+
+    - name: Set up NodeJS ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Run tests
+      run: sbt "effektJVM/clean; effektJVM/testOnly effekt.JavaScriptTests -- --tests=.*examples[\\/]*pos[\\/]*sideeffects.*; effektJVM/testOnly effekt.JavaScriptTests -- --tests=.*examples[\\/]*neg[\\/]*coverage.*"
+
+  build-jar:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    name: Build Effekt compiler and run tests
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'true'
+
+    - name: Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'zulu'
+        cache: 'sbt'
+
+    - name: Setup SBT
+      uses: sbt/setup-sbt@v1
+
+    - name: Update apt database
+      if: matrix.os != 'windows-latest'
+      run: sudo apt-get update
+
+    - name: Install Chez Scheme
+      if: matrix.os != 'windows-latest'
+      run: sudo apt-get install chezscheme
+
+    - name: Install LLVM 15
+      if: matrix.os != 'windows-latest'
+      run: sudo apt-get install llvm-15
+
+    - name: Install Valgrind
+      if: matrix.os != 'windows-latest'
+      run: sudo apt-get install valgrind
+
+    - name: Install libuv
+      run: sudo apt-get install libuv1-dev
+
+    - name: Set up NodeJS ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Run tests
+      run: EFFEKT_VALGRIND=1 EFFEKT_DEBUG=1 sbt clean test
+
+    - name: Assemble fully optimized js file
+      run: sbt effektJS/fullOptJS
+
+    - name: Try installing effekt binary
+      run: sbt install
+
+    - name: Run effekt binary
+      run: effekt.sh --help

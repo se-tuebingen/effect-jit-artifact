@@ -1,0 +1,19 @@
+caught on inner level: masked
+caught on outer level: masked
+caught on outer level: masked
+caught on outer level: masked
+tried0: exn: False
+caught on inner level: outer1
+tried2: exn: False
+caught on inner level: outer1
+tried3: exn: False
+caught on inner level: outer1
+caught on inner level: outer1
+ 
+mask/inject-behind1/bar: forall<a,e> (f : (a) -> <console,exn,exn|e> (), action : a) -> <console|e> ()
+mask/inject-behind1/foo0: forall<a,e> (action : () -> <console,exn,exn|e> a) -> <console,exn|e> a
+mask/inject-behind1/foo1: forall<a,e> (action : () -> <console,exn|e> a) -> <console,exn|e> a
+mask/inject-behind1/foo2: forall<a,e> (action : () -> <console,exn|e> a) -> <console,exn|e> a
+mask/inject-behind1/foo3: forall<a,e> (action : () -> <console,exn|e> a) -> <console,exn|e> a
+mask/inject-behind1/main: () -> console ()
+mask/inject-behind1/test: forall<a,b,e,e1> (f : (() -> <exn,exn|e> a) -> <console,exn,exn|e1> (), err : () -> <exn,exn|e> b) -> <console|e1> ()

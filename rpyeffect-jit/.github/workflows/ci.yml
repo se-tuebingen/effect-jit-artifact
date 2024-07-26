@@ -1,0 +1,100 @@
+name: CI
+
+on: [push]
+
+permissions:
+  deployments: write
+  contents: write
+  packages: "write"
+  pull-requests: "read"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Detect architecture and OS
+        run: |
+          echo "ARCH=$(uname -m)" >> $GITHUB_ENV
+          echo "OS=$(uname -s)" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-pypy
+      - run: make out/bin/${{env.ARCH}}-${{env.OS}}/rpyeffect-jit
+      - uses: actions/upload-artifact@v3
+        with:
+          name: interpreter-with-jit-${{env.ARCH}}-${{env.OS}}
+          path: ./out/bin/${{env.ARCH}}-${{env.OS}}/rpyeffect-jit
+  release:
+    name: Release
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Detect architecture and OS
+        run: |
+          echo "ARCH=$(uname -m)" >> $GITHUB_ENV
+          echo "OS=$(uname -s)" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+        with:
+          name: interpreter-with-jit-${{env.ARCH}}-${{env.OS}}
+      - name: Rename result
+        run: mv rpyeffect-jit rpyeffect-jit-${{env.ARCH}}-${{env.OS}}
+      - uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            rpyeffect-jit-${{env.ARCH}}-${{env.OS}}
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-pypy
+      - run: make test
+  benchmark:
+    name: Benchmark
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Detect architecture and OS
+        run: |
+          echo "ARCH=$(uname -m)" >> $GITHUB_ENV
+          echo "OS=$(uname -s)" >> $GITHUB_ENV
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-pypy
+      - uses: actions/download-artifact@v3
+        with:
+          name: interpreter-with-jit-${{env.ARCH}}-${{env.OS}}
+      - uses: actions/download-artifact@v3
+        with:
+          name: interpreter-${{env.ARCH}}-${{env.OS}}
+      - run: chmod +x rpyeffect-interpret rpyeffect-jit
+      - run: mkdir -p out/bin/${{env.ARCH}}-${{env.OS}}
+      - run: |
+          mv rpyeffect-interpret ./out/bin/${{env.ARCH}}-${{env.OS}}/rpyeffect-interpret
+          mv rpyeffect-jit ./out/bin/${{env.ARCH}}-${{env.OS}}/rpyeffect-jit
+      - run: sudo apt-get install jq
+      - run: timeout 19m make benchmark
+      - uses: actions/cache@v1
+        with:
+          path: ./cache
+          key: ${{ runner.os }}-benchmark
+      - uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: 'customSmallerIsBetter'
+          output-file-path: benchmark_results.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          comment-on-alert: true
+          alert-comment-cc-users: '@marzipankaiser'
+          fail-on-alert: true
+      - uses: actions/upload-artifact@v3
+        with:
+          name: jit-logs
+          path: results/*.log

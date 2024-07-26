@@ -1,0 +1,143 @@
+# This is a copy-and-paste version of ci.yml but additionally creating a release
+name: Release Artifacts
+
+on:
+  push:
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+  workflow_run:
+    workflows: ["Create Version and Tag"] # 'autorelease.yml'
+    types:
+      - completed
+
+env:
+  JAVA_VERSION: '11'
+  NODE_VERSION: '16.x'
+
+jobs:
+  build-jar:
+    name: Build and assemble the Effekt compiler
+    runs-on: ubuntu-latest
+    if: >
+      (github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')) ||
+      (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        submodules: 'true'
+
+    - name: Set up JDK ${{ env.JAVA_VERSION }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ env.JAVA_VERSION }}
+        distribution: 'zulu'
+        cache: 'sbt'
+
+    - name: Setup SBT
+      uses: sbt/setup-sbt@v1
+
+    - name: Set up NodeJS ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Get the version
+      id: get_version
+      run: |
+        if [ "${{ github.event_name }}" = "push" ]; then
+          echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event_name }}" = "workflow_run" ]; then
+          # For workflow_run event, we need to fetch the tag created in the previous workflow
+          git fetch --tags
+          LATEST_TAG=$(git describe --tags --abbrev=0)
+          echo "VERSION=${LATEST_TAG#v}" >> $GITHUB_OUTPUT
+        else
+          echo "Unsupported event type: ${{ github.event_name }}"
+          exit 1
+        fi
+
+    - name: Assemble jar file
+      run: sbt clean deploy
+
+    - name: Generate npm package
+      run: mv $(npm pack) effekt.tgz
+
+    - name: Upload Effekt binary
+      uses: actions/upload-artifact@v4
+      with:
+        name: effekt
+        path: bin/effekt
+
+    - name: Upload the npm package
+      uses: actions/upload-artifact@v4
+      with:
+        name: effekt-npm-package
+        path: effekt.tgz
+
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: [build-jar]
+    steps:
+      # Login as a GitHub App in order to bypass GitHub's rules about automatic releases
+      - name: Get GitHub App token
+        uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.EFFEKT_UPDATER_GH_APP_ID }}
+          private-key: ${{ secrets.EFFEKT_UPDATER_GH_CREDENTIALS_TOKEN }}
+
+      - name: Checkout code with token
+        uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: effekt
+          path: distribution/
+
+      - name: Download npm package
+        uses: actions/download-artifact@v4
+        with:
+          name: effekt-npm-package
+          path: distribution/
+
+      - name: Create Release and Upload Assets
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          TAG: v${{ needs.build-jar.outputs.version }}
+        run: |
+          gh release create "$TAG" \
+            -t "Release $TAG" \
+            --verify-tag \
+            --generate-notes \
+            "./distribution/effekt#effekt.jar" \
+            "./distribution/effekt.tgz#effekt.tgz"
+
+  publish-npm:
+    name: Publish NPM Package
+    runs-on: ubuntu-latest
+    needs: [build-jar, release]
+    steps:
+      - name: Download npm package
+        uses: actions/download-artifact@v4
+        with:
+          name: effekt-npm-package
+
+      - name: Set up NodeJS ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Publish to NPM as @effekt-lang/effekt
+        run: npm publish effekt.tgz --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,0 +1,9 @@
+interface Eff[A] {
+  def op[B](x: A): A
+}
+
+def main() =
+  try {
+    val msg: String = eff.op[Int]("hello");
+    println(msg)
+  } with eff: Eff[Int] { def op[B](x) = resume(x / 1) }

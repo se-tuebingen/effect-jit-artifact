@@ -1,0 +1,41 @@
+import Sys
+import Int
+
+signature Prime =
+| prime : Int => Bool
+
+let primes i n a =
+  let rec go i n a =
+    if (i >= n)
+    then a
+    else
+      if prime i then
+        handle
+          go (i + 1) n (a + i)
+        with
+        | prime e =>
+          if (e % i = 0) then
+            resume False
+          else
+            resume (prime e)
+        end
+      else
+        go (i + 1) n a
+  in go i n a
+
+let rec run n =
+  handle
+    primes 2 n 0
+  with
+  | prime e => resume True
+  end
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n)
+    | _ => printInt (run 5)
+    end
+  with
+  | parse_error _ => printInt (run 5)
+  end

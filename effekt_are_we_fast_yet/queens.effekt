@@ -1,0 +1,77 @@
+import args
+import bench
+import array
+
+interface Break[T] {
+  def break(result: T): Nothing
+}
+
+def run(n: Int) = {
+
+  var freeRows: Array[Bool] = array(0, true);
+  var freeMaxs: Array[Bool] = array(0, true);
+  var freeMins: Array[Bool] = array(0, true);
+  var queenRows: Array[Int] = array(0, -1);
+
+  def getRowColumn(r: Int, c: Int): Bool =
+    freeRows.unsafeGet(r) && freeMaxs.unsafeGet(c + r) && freeMins.unsafeGet(c - r + (n - 1))
+
+  def setRowColumn(r: Int, c: Int, v: Bool) = {
+    freeRows.unsafeSet(r, v);
+    freeMaxs.unsafeSet(c + r, v);
+    freeMins.unsafeSet(c - r + (n - 1), v)
+  }
+
+  def placeQueen(c: Int): Bool =
+    try {
+      each(0, n) { r =>
+        if (getRowColumn(r, c)) {
+          queenRows.unsafeSet(r, c);
+          setRowColumn(r, c, false);
+
+          if (c == (n - 1)) {
+            do break(true);
+          }
+
+          if (placeQueen(c + 1)) {
+            do break(true);
+          }
+          setRowColumn(r, c, true);
+        }
+      };
+      false
+    } with Break[Bool] {
+        def break(value) = value
+    }
+
+  def queens() = {
+    freeRows = array(n, true);
+    freeMaxs = array(2 * n, true);
+    freeMins = array(2 * n, true);
+    queenRows = array(n, -1);
+
+    placeQueen(0)
+  }
+
+  var j = true
+  each(1, 10) { i =>
+    j = j && queens()
+  }
+  j
+}
+
+def main() = {
+  val n = on[WrongFormat].default{10}{ commandLineArgs().headOption.getOrElse{ "" }.toInt };
+  each(0, n - 1) { i => relevant(run(8)) }
+  val r = run(8)
+  println(if (r) { "True" } else { "False" })
+}
+
+/**
+ * The inliner might remove unused computation (if pure), which is not desired
+ * for benchmarking. Since externs are opaque to the optimizer, just wrap the
+ * result of the computation to benchmark in `relevant`.
+ */
+extern io def relevant(value: Bool): Unit =
+  default { () }
+

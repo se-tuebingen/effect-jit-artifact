@@ -1,0 +1,30 @@
+effect Get : unit -> int
+effect Set : int -> unit
+effect Yield : int -> unit
+
+let rec countdown () =
+  let i = perform (Get ()) in
+  if (i = 0)
+    then i
+    else (
+      perform (Set (i - 1));
+      countdown ())
+
+let ignore b =
+    handle b () with
+    | x -> x
+    | effect (Yield _) k -> k ()
+
+let handled n d = 
+    let rec go n d =
+        if d = 0 then countdown ()
+        else ignore (fun _ -> go n (d - 1))
+    in go n d
+
+let run n d =
+  (handle
+    handled n d
+  with
+  | x -> fun _ -> x
+  | effect (Get ()) k -> fun s -> (k s) s
+  | effect (Set s) k -> fun _ -> (k ()) s) n

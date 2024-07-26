@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-no-context' '/Users/gaisseml/dev/effect-jit/.effekt-out/effekt-jit-no-context:permute_be9b0ea3-5c59-43e5-bff2-79bc49114a56/permute.rpyeffect' "$@"

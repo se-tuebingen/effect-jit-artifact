@@ -1,0 +1,248 @@
+module io/filesystem
+
+import bytearray
+
+import io
+import io/error
+
+
+/// Represents the file opening modes with their respective flags
+/// Backends rely on the order of these
+type Mode {
+  // Most common modes
+  ReadOnly()            // 'r'  exception if does not exist
+  WriteOnly()           // 'w'  created if does not exist, truncated if exists
+  AppendOnly()          // 'a'  created if does not exist
+
+  // Other modes
+  ReadWrite()           // 'w+' created if does not exist, truncated if exists
+  ReadAppend()          // 'a+' created if does not exist
+  AppendExclusive()     // 'ax' created if does not exist, fails if exists
+  ReadAppendExclusive() // 'ax+' created if does not exist, fails if exists
+  AppendSync()          // 'as' created if does not exist, append in synchronous mode
+  ReadAppendSync()      // 'as+' created if does not exist, append in synchronous mode
+  ReadSync()            // 'rs' exception if does not exist, read in synchronous mode
+  ReadWriteSync()       // 'rs+' exception if does not exist, read/write in synchronous mode
+  WriteExclusive()      // 'wx' created if does not exist, truncated if exists, fails if exists
+  ReadWriteExclusive()  // 'wx+' created if does not exist, truncated if exists, fails if exists
+}
+
+
+/// A file descriptor. Should not be inspected.
+type File = Int
+
+
+/// Reads a file at given path as utf8 encoded string.
+def readFile(path: String): String / Exception[IOError] = {
+  val file = open(path, ReadOnly());
+  with on[IOError].finalize { close(file) }
+
+  val chunkSize = 1048576 // 1MB
+  var buffer = bytearray::allocate(chunkSize)
+  var offset = 0
+
+  def go(): String = {
+    read(file, buffer, offset, chunkSize, -1) match {
+      case 0 =>
+        buffer.resize(offset).toString
+      case n =>
+        offset = offset + n
+        if (offset + chunkSize > buffer.size) {
+          buffer = buffer.resize(2 * buffer.size)
+        }
+        go()
+    }
+  }
+
+  go()
+}
+
+/// Writes the (utf8 encoded) string `contents` into the specified file.
+def writeFile(path: String, contents: String): Unit / Exception[IOError] = {
+  val file = open(path, WriteOnly());
+  with on[IOError].finalize { close(file) }
+
+  val chunkSize = 1048576 // 1MB
+  val buffer = contents.fromString
+  var offset = 0;
+
+  def go(): Unit = {
+    val n = write(file, buffer, offset, min(buffer.size - offset, chunkSize), -1)
+    offset = offset + n
+    if (offset < buffer.size) { go() }
+  }
+
+  go()
+}
+
+
+/// An abstract interface applications can program against.
+///
+/// Can be interpreted with the `filesystem` handler, or virtualized etc.
+///
+/// See example below.
+interface Files {
+  def readFile(path: String): String
+  def writeFile(path: String, contents: String): Unit
+}
+
+/// Using the file system via node.js
+def filesystem[R] { program: => R / Files }: R / Exception[IOError] = // TODO move Exception to be bidirectional
+  try { program() }
+  with Files {
+    def readFile(path) = resume(readFile(path))
+    def writeFile(path, contents) = resume(writeFile(path, contents))
+  }
+
+
+def open(path: String, mode: Mode): File / Exception[IOError] =
+  internal::checkResult(internal::open(path, mode))
+
+def read(file: File, buffer: ByteArray, offset: Int, size: Int, position: Int): Int / Exception[IOError] =
+  internal::checkResult(internal::read(file, buffer, offset, size, position))
+
+def write(file: File, buffer: ByteArray, offset: Int, size: Int, position: Int): Int / Exception[IOError] =
+  internal::checkResult(internal::write(file, buffer, offset, size, position))
+
+def close(file: File): Unit / Exception[IOError] = {
+  internal::checkResult(internal::close(file)); ()
+}
+
+namespace internal {
+
+  extern js """
+    function modeName(mode) {
+      switch (mode.__tag) {
+      case 0: // ReadOnly()
+        return 'r';
+      case 1: // WriteOnly()
+        return 'w';
+      case 2: // AppendOnly()
+        return 'a';
+      case 3: // ReadWrite()
+        return 'w+';
+      case 4: // ReadAppend()
+        return 'a+';
+      case 5: // AppendExclusive()
+        return 'ax';
+      case 6: // ReadAppendExclusive()
+        return 'ax+';
+      case 7: // AppendSync()
+        return 'as';
+      case 8: // ReadAppendSync()
+        return 'as+';
+      case 9: // ReadSync()
+        return 'rs';
+      case 10: // ReadWriteSync()
+        return 'rs+';
+      case 11: // WriteExclusive()
+        return 'wx';
+      case 12: // ReadWriteExclusive()
+        return 'wx+';
+      default:
+        // Invalid tag value
+        return null;
+      }
+    }
+
+    /**
+     * Nodejs file operations expect buffers, but we represent buffers as typed arrays.
+     * This function converts between the two without copying.
+     */
+    function toBuffer(buffer) {
+      return Buffer.from(buffer.buffer, buffer.byteOffset, buffer.byteLength)
+    }
+  """
+
+  extern jsNode """
+    const fs = require("fs");
+
+    function open(path, mode, callback) {
+      fs.open(path, modeName(mode), (err, file) => {
+        if (err) { callback(err.errno) } else { callback(file) }
+      })
+    }
+
+    function read(file, buffer, offset, size, position, callback) {
+      let positionOrNull = position === -1 ? null : position;
+      fs.read(file, toBuffer(buffer), offset, size, positionOrNull, (err, bytesRead) => {
+        if (err) { callback(err.errno) } else { callback(bytesRead) }
+      })
+    }
+
+    function write(file, buffer, offset, size, position, callback) {
+      let positionOrNull = position === -1 ? null : position;
+      fs.write(file, toBuffer(buffer), offset, size, positionOrNull, (err, bytesWritten) => {
+        if (err) { callback(err.errno) } else { callback(bytesWritten) }
+      })
+    }
+
+    function close(file, callback) {
+      fs.close(file, (err) => {
+        if (err) { callback(err.errno) } else { callback(0) }
+      })
+    }
+  """
+
+  extern llvm """
+    declare void @c_fs_open(%Pos, %Pos, %Stack)
+    declare void @c_fs_read(%Int, %Pos, %Int, %Int, %Int, %Stack)
+    declare void @c_fs_write(%Int, %Pos, %Int, %Int, %Int, %Stack)
+    declare void @c_fs_close(%Int, %Stack)
+  """
+
+  extern async def open(path: String, mode: Mode): Int =
+    jsNode "$effekt.capture(callback => open(${path}, ${mode}, callback))"
+    llvm """
+      call void @c_fs_open(%Pos ${path}, %Pos ${mode}, %Stack %stack)
+      ret void
+    """
+
+  /// The buffer must be kept alive by using it after the call
+  extern async def read(file: Int, buffer: ByteArray, offset: Int, size: Int, position: Int): Int =
+    jsNode "$effekt.capture(callback => read(${file}, ${buffer}, ${offset}, ${size}, ${position}, callback))"
+    llvm """
+      call void @c_fs_read(%Int ${file}, %Pos ${buffer}, %Int ${offset}, %Int ${size}, %Int ${position}, %Stack %stack)
+      ret void
+    """
+
+  /// The buffer must be kept alive by using it after the call
+  extern async def write(file: Int, buffer: ByteArray, offset: Int, size: Int, position: Int): Int =
+    jsNode "$effekt.capture(callback => write(${file}, ${buffer}, ${offset}, ${size}, ${position}, callback))"
+    llvm """
+      call void @c_fs_write(%Int ${file}, %Pos ${buffer}, %Int ${offset}, %Int ${size}, %Int ${position}, %Stack %stack)
+      ret void
+    """
+
+  extern async def close(file: Int): Int =
+    jsNode "$effekt.capture(callback => close(${file}, callback))"
+    llvm """
+      call void @c_fs_close(%Int ${file}, %Stack %stack)
+      ret void
+    """
+
+  def checkResult(result: Int): Int / Exception[IOError] =
+    if (result < 0) {
+      val ioError = fromNumber(internal::errorNumber(result));
+      do raise[IOError](ioError, message(ioError))
+    } else {
+      result
+    }
+}
+
+namespace examples {
+
+  // Example illustrating using abstract files interface
+  // and interpreting it into asynchronous IO
+  def copy(from: String, to: String): Unit / Files = {
+    val contents = do readFile(from)
+    do writeFile(to, contents)
+  }
+
+  def main() = {
+    with on[IOError].panic;
+    with filesystem;
+
+    copy("README.md", "out/test.md")
+  }
+}

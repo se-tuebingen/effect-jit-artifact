@@ -1,0 +1,41 @@
+import args
+
+interface State {
+  def getS(): Int
+  def putS(n: Int): Unit
+}
+
+def countdown(): Int / State = {
+  val i = do getS();
+  if (i == 0) {
+    i
+  } else {
+    do putS(i - 1);
+    countdown()
+  }
+}
+
+def handler[R](n: Int){body: => R / State}: R = {
+  var v = n;
+  try { body() } with State {
+    def getS() = { resume(v) }
+    def putS(n) = { v = n; resume(()) }
+  }
+}
+
+def pad[R](d: Int){body: => R}: R = {
+  if (d == 0) {
+    body()
+  } else {
+    handler(-377){ pad(d - 1){body} }
+  }
+}
+
+def run(n: Int, d: Int) = handler(n){ pad(d){ countdown() } }
+
+def main() = {
+  val n = on[WrongFormat].default{5}{ commandLineArgs().headOption.getOrElse{ "" }.toInt };
+  val d = on[WrongFormat].default{10}{ => on[OutOfBounds].default{10}{ commandLineArgs().get(1).toInt } };
+  val r = run(n, d);
+  println(r)
+}

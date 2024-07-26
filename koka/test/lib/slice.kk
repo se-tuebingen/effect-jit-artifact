@@ -1,0 +1,91 @@
+import std/text/regex
+
+fun test-advance()
+  val s = "Hello".slice
+  val s1 = s.advance(1)
+  val s2 = s1.advance(1)
+  val s3 = s2.advance(1)
+  val s4 = s3.advance(1)
+  val s5 = s.advance(4)
+  val s6 = s4.advance(1)
+  val res = s.string.find(regex("Hello"))
+  val res1 = s1.string.find(regex("ello"))
+  val res2 = s2.string.find(regex("llo"))
+  val res3 = s3.string.find(regex("lo"))
+  val res4 = s4.string.find(regex("o"))
+  val res5 = s5.string.find(regex("o"))
+  println(res.default("") == "Hello")
+  println(res1.default("") == "ello")
+  println(res2.default("") == "llo")
+  println(res3.default("") == "lo")
+  println(res4.default("") == "o")
+  println(res5.default("") == "o")
+  println(s6.string == "")
+
+fun test-first()
+  val h = "Hello"
+  val s = h.last
+  val s1 = h.last(2)
+  val s2 = h.last(3)
+  val s3 = h.last(4)
+  val s4 = h.last(4).advance(-1)
+  val s5 = s4.advance(-1)
+  val res = s.string.find(regex("o"))
+  val res1 = s1.string.find(regex("lo"))
+  val res2 = s2.string.find(regex("llo"))
+  val res3 = s3.string.find(regex("ello"))
+  val res4 = s4.string.find(regex("Hell"))
+  val res5 = s5.string.find(regex("Hell"))
+  val res6 = s5.string.find(regex("Hel"))
+  println(res.default("") == "o")
+  println(res1.default("") == "lo")
+  println(res2.default("") == "llo")
+  println(res3.default("") == "ello")
+  println(res4.default("") == "Hell")
+  println(res5.default("") == "")
+  println(res6.default("") == "Hel")
+
+fun test-subslice()
+  println("Hello".slice.subslice(1, 3).string == "el")
+  println("Hello".slice.subslice(-3, 4).string == "Hello")
+  println("Hello".slice.subslice(-3, -1).string == "Hello")
+  println("Hello ☺ World".slice.subslice(6, 7).string == "☺")
+  println("Hello ☺ World".slice.subslice(5, 8).string == " ☺ ")
+
+fun test-drop()
+  println("Hello".slice.drop(3).string == "lo")
+  println("Hello".slice.drop(-3).string == "Hello")
+  println("Hello".slice.drop(0).string == "Hello")
+  println("Hello ☺ World".slice.drop(6).string == "☺ World")
+
+fun test-take()
+  println("Hello".slice.take(3).string == "Hel")
+  println("Hello".slice.take(-3).string == "Hello")
+  println("Hello ☺ World".slice.take(7).string == "Hello ☺")
+
+fun test-equality()
+  val v1 = "Hello".slice
+  val v2 = "abcabc".slice
+  println("Hello".slice.advance(1) == "ello".slice)
+  println("Hello".slice.extend(-3) == "He".slice)
+  println(v1.advance(1) == v1.advance(1))
+  println(v1.advance(1) != v1.extend(-1))
+  println(v1.advance(2) != v1.advance(1))
+  println(v2.advance(3) == v2.extend(-3)) // Different locations in the string but have same content
+  println("Hello".slice === v1)
+  println("Hello".slice.advance(1) === v1.advance(1))
+  println("Hello".slice.advance(1) !== "ello".slice)
+  // Expected false
+  println(v1.advance(1) == v1.advance(2))
+  println(v1.advance(1) != v1.advance(1))
+  println(v2.advance(3) != v2.extend(-3)) // Different locations in the string but have same content
+  println("Hello".slice !== v1)
+
+
+fun main()
+  test-advance()
+  test-first()
+  test-subslice()
+  test-drop()
+  test-take()
+  test-equality()

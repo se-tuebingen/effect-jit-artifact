@@ -1,0 +1,33 @@
+effekt/shared/src/main/scala/effekt/generator/jit/PrettyPrinter.scala --- Scala
+File permissions changed from 100600 to 100644.
+43   def toDoc(s: String): Doc = string(s"\"${escape(s)}\"")                                                                    43   def toDoc(s: String): Doc = string(s"\"${escape(s)}\"")
+44                                                                                                                              44 
+45                                                                                                                              45 
+46   def toDoc(id: Id): Doc = toDoc(id.toString)                                                                                46   def toDoc(id: Id): Doc = toDoc(id.show)
+47                                                                                                                              47 
+48   def toDoc(m: Method): Doc = m match {                                                                                      48   def toDoc(m: Method): Doc = m match {
+49     case Method(tag, params, ret) => jsonObjectSmall(ListMap(                                                                49     case Method(tag, params, ret) => jsonObjectSmall(ListMap(
+
+effekt/shared/src/main/scala/effekt/generator/jit/Transformer.scala --- Scala
+File permissions changed from 100600 to 100644.
+162       val tBody = transform(body)                                                                                           162       val tBody = transform(body)
+163       jit.LetRec(promptIds.map{ x =>                                                                                        163       jit.LetRec(promptIds.map{ x =>
+164         jit.Definition(jit.Var(x, jit.Base.Label), jit.FreshLabel())                                                        164         jit.Definition(jit.Var(x, jit.Base.Label), jit.FreshLabel())
+165       } ++ (cparams zip promptIds zip handlers).map{ case ((c, p), h) =>                                                    165       } ++ (cparams zip promptIds zip (handlers zip bparams)).map{ case ((c, p), (h, bc)) =>
+166         jit.Definition(jit.Var(c, Codata(c, h.operations.map {                                                              166         jit.Definition(jit.Var(bc.id, transform(bc.tpe)), jit.New(c, h.operations.map {
+167           case core.Operation(name, tparams, cparams, vparams, bparams, resume, body) =>                                    ... 
+168             jit.Method(name, (((vparams ++ bparams) map transform) ++ capabilityParamsFor(cparams)).map(_.tpe), jit.Top) // ... 
+...  TODO                                                                                                                       ... 
+169         })), jit.New(c, h.operations.map {                                                                                  ... 
+170           case core.Operation(name, tparams, cparams, vparams, bparams, resume, body) =>                                    167           case core.Operation(name, tparams, cparams, vparams, bparams, resume, obody) =>
+171             val args = (((vparams ++ bparams) map transform) ++ capabilityParamsFor(cparams))                               168             val args = (((vparams ++ bparams) map transform) ++ capabilityParamsFor(cparams))
+...                                                                                                                             169             val rtpe = resume.map(_.tpe) match {
+...                                                                                                                             170               case Some(core.BlockType.Function(_, _, List(r), _, _)) => transform(r)
+...                                                                                                                             171               case _ => jit.Top
+...                                                                                                                             172             }
+172             val r = jit.Var(TmpValue(), jit.Top)                                                                            173             val r = jit.Var(TmpValue(), rtpe)
+173             (name, jit.Clause(args, jit.DOp(jit.Var(p, jit.Base.Label), name, args, jit.Clause(List(r), r), jit.Top)))      174             (name, jit.Clause(args, jit.DOp(jit.Var(p, jit.Base.Label), name, args, jit.Clause(List(r), r), rtpe)))
+174         }))                                                                                                                 175         }))
+175       }, handlers.zip(promptIds).foldRight(tBody){ case ((core.Implementation(itpe, ops), id), b) =>                        176       }, handlers.zip(promptIds).foldRight(tBody){ case ((core.Implementation(itpe, ops), id), b) =>
+176         jit.DHandle(jit.HandlerType.Deep, jit.Var(id, jit.Base.Label),                                                      177         jit.DHandle(jit.HandlerType.Deep, jit.Var(id, jit.Base.Label),
+

@@ -1,0 +1,317 @@
+[99a79c] {jit-log-opt-loop
+# Loop 1 (8<main.rpyeffect:8(Name(infixSub105))>+0: {"op": "PrimOp", "name": "infixSub(Int, Int): Int", "out": {"any": [0]}, "in": {"any": [0, 1]}}) : loop with 282 ops
+[p0, p1, p2, p3, p4]
++824: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 16>)
++832: p7 = getarrayitem_gc_r(p5, 0, descr=<ArrayP 8>)
++836: p9 = getarrayitem_gc_r(p5, 1, descr=<ArrayP 8>)
++840: p11 = getarrayitem_gc_r(p5, 2, descr=<ArrayP 8>)
++844: p13 = getarrayitem_gc_r(p5, 3, descr=<ArrayP 8>)
++848: p15 = getarrayitem_gc_r(p5, 4, descr=<ArrayP 8>)
++852: p17 = getarrayitem_gc_r(p5, 5, descr=<ArrayP 8>)
++856: p19 = getarrayitem_gc_r(p5, 6, descr=<ArrayP 8>)
++860: label(p0, p1, p2, p3, p4, p7, p9, p11, p13, p15, p17, p19, descr=TargetToken(5240706272))
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub105))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"any": [0]}. "in": {"any": [0. 1]}}')
++880: guard_not_invalidated(descr=<Guard0x1385eaf08>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++884: i20 = getfield_gc_i(p7, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
++888: i21 = getfield_gc_i(p9, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
++892: i22 = int_sub(i20, i21)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub105))>+1: {"op": "Return". "args": {"any": [0]}}')
++896: guard_nonnull(p1, descr=<Guard0x138606620>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++908: i23 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++916: guard_value(i23, 146, descr=<Guard0x138606650>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++928: p25 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_values_ptr 24 pure>)
++932: i26 = arraylen_gc(p25, descr=<ArrayP 8>)
++936: guard_value(i26, 2, descr=<Guard0x138606680>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++948: p29 = getarrayitem_gc_pure_r(p25, 0, descr=<ArrayP 8>)
++952: p31 = getarrayitem_gc_pure_r(p25, 1, descr=<ArrayP 8>)
++956: p32 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '146<main.rpyeffect:146([k@[then#294]#298])>+0: {"op": "Push". "target": 145. "args": {"any": [1. 2]}}')
+debug_merge_point(0, 0, '146<main.rpyeffect:146([k@[then#294]#298])>+1: {"op": "Invoke". "receiver": 2. "tag": Interned(Set2832). "args" : {"any": [0]}}')
++960: p33 = getfield_gc_r(p31, descr=<FieldP rpyeffect.codata.CoData.inst_vtable 8 pure>)
++968: guard_value(p33, ConstPtr(ptr34), descr=<Guard0x1386066b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++976: p35 = getfield_gc_r(p31, descr=<FieldP rpyeffect.stored_environment.CoData__arb.inst_values_ptr 16 pure>)
++980: i36 = arraylen_gc(p35, descr=<ArrayP 8>)
++984: guard_value(i36, 2, descr=<Guard0x1386066e0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++996: p39 = getarrayitem_gc_pure_r(p35, 0, descr=<ArrayP 8>)
++1000: p41 = getarrayitem_gc_pure_r(p35, 1, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+0: {"op": "Const". "type": "ptr". "out": 3. "format": "int". "value": "<IntValue object at 0x1385ddf20>"}')
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+1: {"op": "ShiftDyn". "out": 1. "n": 3. "label": 1}')
++1008: i43 = instance_ptr_eq(p4, ConstPtr(ptr42))
+guard_true(i43, descr=<Guard0x138606710>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1020: i44 = instance_ptr_eq(p0, p39)
+guard_false(i44, descr=<Guard0x138606740>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1032: p45 = getfield_gc_r(p3, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1040: guard_isnull(p45, descr=<Guard0x138606770>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1048: p46 = getfield_gc_r(p3, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1052: i47 = instance_ptr_eq(p46, p39)
+guard_false(i47, descr=<Guard0x1386067a0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1060: p48 = getfield_gc_r(p3, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1064: p49 = getfield_gc_r(p48, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1068: guard_isnull(p49, descr=<Guard0x1386067d0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1076: p50 = getfield_gc_r(p48, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1080: i51 = instance_ptr_eq(p50, p39)
+guard_false(i51, descr=<Guard0x138606800>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1088: p52 = getfield_gc_r(p48, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1092: p53 = getfield_gc_r(p52, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1100: guard_isnull(p53, descr=<Guard0x138606830>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1108: p54 = getfield_gc_r(p52, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1112: i55 = instance_ptr_eq(p54, p39)
+guard_false(i55, descr=<Guard0x138606860>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1120: p56 = getfield_gc_r(p52, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1128: p57 = getfield_gc_r(p56, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1136: guard_isnull(p57, descr=<Guard0x138606890>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1144: p58 = getfield_gc_r(p56, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1148: i59 = instance_ptr_eq(p58, p39)
+guard_false(i59, descr=<Guard0x1386068c0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1156: p60 = getfield_gc_r(p56, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1164: p61 = getfield_gc_r(p60, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1168: guard_isnull(p61, descr=<Guard0x1386068f0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1176: p62 = getfield_gc_r(p60, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1180: i63 = instance_ptr_eq(p62, p39)
+guard_false(i63, descr=<Guard0x138606920>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1188: p64 = getfield_gc_r(p60, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1192: p65 = getfield_gc_r(p64, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1200: guard_isnull(p65, descr=<Guard0x138606950>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1208: p66 = getfield_gc_r(p64, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1212: i67 = instance_ptr_eq(p66, p39)
+guard_false(i67, descr=<Guard0x138606980>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1220: p68 = getfield_gc_r(p64, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1228: p69 = getfield_gc_r(p68, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1236: guard_isnull(p69, descr=<Guard0x1386069b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1244: p70 = getfield_gc_r(p68, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1248: i71 = instance_ptr_eq(p70, p39)
+guard_false(i71, descr=<Guard0x1386069e0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1256: p72 = getfield_gc_r(p68, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1264: p73 = getfield_gc_r(p72, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1272: guard_isnull(p73, descr=<Guard0x138606a10>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1280: p74 = getfield_gc_r(p72, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1284: i75 = instance_ptr_eq(p74, p39)
+guard_false(i75, descr=<Guard0x138606a40>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1292: p76 = getfield_gc_r(p72, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1300: p77 = getfield_gc_r(p76, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1308: guard_isnull(p77, descr=<Guard0x138606a70>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1316: p78 = getfield_gc_r(p76, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1320: i79 = instance_ptr_eq(p78, p39)
+guard_false(i79, descr=<Guard0x138606aa0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1328: p80 = getfield_gc_r(p76, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1336: p81 = getfield_gc_r(p80, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++1344: guard_isnull(p81, descr=<Guard0x138606ad0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1352: p82 = getfield_gc_r(p80, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1356: i83 = instance_ptr_eq(p82, p39)
+guard_true(i83, descr=<Guard0x138606b00>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1364: p84 = getfield_gc_r(p80, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1372: guard_class(p80, 4374297560, descr=<Guard0x138606b30>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1388: p86 = getfield_gc_r(p80, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++1392: p87 = getfield_gc_r(p76, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1400: guard_class(p76, 4374297560, descr=<Guard0x138606b60>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1416: p89 = getfield_gc_r(p72, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1420: guard_class(p72, 4374297560, descr=<Guard0x138606b90>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1436: p91 = getfield_gc_r(p68, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1440: guard_class(p68, 4374297560, descr=<Guard0x138606bc0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1456: p93 = getfield_gc_r(p64, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1460: guard_class(p64, 4374297560, descr=<Guard0x138606bf0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1476: p95 = getfield_gc_r(p60, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1480: guard_class(p60, 4374297560, descr=<Guard0x138606c20>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1496: p97 = getfield_gc_r(p56, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1500: guard_class(p56, 4374297560, descr=<Guard0x138606c50>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1516: p99 = getfield_gc_r(p52, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1520: guard_class(p52, 4374297560, descr=<Guard0x138606c80>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1536: p101 = getfield_gc_r(p48, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1540: guard_class(p48, 4374297560, descr=<Guard0x138606cb0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1556: p103 = getfield_gc_r(p3, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1560: guard_class(p3, 4374297560, descr=<Guard0x138606ce0>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1576: guard_nonnull_class(p86, 4374297560, descr=<Guard0x1385eaf50>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1600: p106 = getfield_gc_r(p86, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++1608: p107 = getfield_gc_r(p86, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++1616: p108 = getfield_gc_r(p86, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+2: {"op": "Store". "ref": 2. "type": "any". "value": 0}')
++1620: p109 = getfield_gc_r(p41, descr=<FieldP rpyeffect.region.Ref.inst_allocation_site 8 pure>)
++1636: guard_value(p109, ConstPtr(ptr110), descr=<Guard0x138606d10>) [p2, p7, p9, p11, p13, p15, p17, p19, p0, p1, p3, p4]
++1644: p111 = getfield_gc_r(p41, descr=<FieldP rpyeffect.region.Ref.inst_value 16>)
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+3: {"op": "Construct". "out": 0. "type": Interned(Unit). "tag": Interned(unit). "args": {"any": []}}')
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+4: {"op": "Construct". "out": 0. "type": Interned(Unit). "tag": Interned(unit). "args": {"any": []}}')
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+5: {"op": "Jump". "target": 162}')
+debug_merge_point(0, 0, '162<main.rpyeffect:162(Name(resume2841))>+0: {"op": "PushStack". "arg": 1}')
+debug_merge_point(0, 0, '162<main.rpyeffect:162(Name(resume2841))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '145<main.rpyeffect:145([k@[k@[then#294]#298]#301])>+0: {"op": "Copy". "type": "any". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '145<main.rpyeffect:145([k@[k@[then#294]#298]#301])>+1: {"op": "Copy". "type": "any". "from": 2. "to". 1}')
+debug_merge_point(0, 0, '145<main.rpyeffect:145([k@[k@[then#294]#298]#301])>+2: {"op": "Jump". "target": 150}')
+debug_merge_point(0, 0, '150<main.rpyeffect:150(Name(countdown2822))>+0: {"op": "Push". "target": 149. "args": {"any": [0. 1]}}')
+debug_merge_point(0, 0, '150<main.rpyeffect:150(Name(countdown2822))>+1: {"op": "Invoke". "receiver": 0. "tag": Interned(Get2830). "args" : {"any": []}}')
++1648: p112 = getfield_gc_r(p29, descr=<FieldP rpyeffect.codata.CoData.inst_vtable 8 pure>)
++1652: setfield_gc(p111, i22, descr=<FieldS rpyeffect.value.UnboxedIntValueRef.inst_value 8>)
++1660: guard_value(p112, ConstPtr(ptr113), descr=<Guard0x1385eaf98>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1668: p114 = getfield_gc_r(p29, descr=<FieldP rpyeffect.stored_environment.CoData__arb.inst_values_ptr 16 pure>)
++1672: i115 = arraylen_gc(p114, descr=<ArrayP 8>)
++1680: guard_value(i115, 2, descr=<Guard0x138606d40>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1692: p118 = getarrayitem_gc_pure_r(p114, 0, descr=<ArrayP 8>)
++1696: p120 = getarrayitem_gc_pure_r(p114, 1, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x1385dd240>"}')
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+1: {"op": "ShiftDyn". "out": 0. "n": 2. "label": 0}')
++1700: i121 = instance_ptr_eq(p0, p118)
+guard_false(i121, descr=<Guard0x138606d70>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1708: i122 = instance_ptr_eq(p46, p118)
+guard_false(i122, descr=<Guard0x138606da0>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1724: i123 = instance_ptr_eq(p50, p118)
+guard_false(i123, descr=<Guard0x138606dd0>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1740: i124 = instance_ptr_eq(p54, p118)
+guard_false(i124, descr=<Guard0x138606e00>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1756: i125 = instance_ptr_eq(p58, p118)
+guard_false(i125, descr=<Guard0x138606e30>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1772: i126 = instance_ptr_eq(p62, p118)
+guard_false(i126, descr=<Guard0x138606e60>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1788: i127 = instance_ptr_eq(p66, p118)
+guard_false(i127, descr=<Guard0x138606e90>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1804: i128 = instance_ptr_eq(p70, p118)
+guard_false(i128, descr=<Guard0x138606ec0>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1820: i129 = instance_ptr_eq(p74, p118)
+guard_false(i129, descr=<Guard0x138606ef0>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1836: i130 = instance_ptr_eq(p78, p118)
+guard_false(i130, descr=<Guard0x138606f20>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1852: i131 = instance_ptr_eq(p82, p118)
+guard_true(i131, descr=<Guard0x138606f50>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+2: {"op": "Load". "out": 1. "type": "any". "ref": 1}')
++1860: p132 = getfield_gc_r(p120, descr=<FieldP rpyeffect.region.Ref.inst_allocation_site 8 pure>)
++1868: guard_value(p132, ConstPtr(ptr133), descr=<Guard0x138606f80>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
++1876: p134 = getfield_gc_r(p120, descr=<FieldP rpyeffect.region.Ref.inst_value 16>)
++1880: i135 = getfield_gc_i(p134, descr=<FieldS rpyeffect.value.UnboxedIntValueRef.inst_value 8>)
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+3: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+4: {"op": "Jump". "target": 161}')
+debug_merge_point(0, 0, '161<main.rpyeffect:161(Name(resume2839))>+0: {"op": "PushStack". "arg": 1}')
+debug_merge_point(0, 0, '161<main.rpyeffect:161(Name(resume2839))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '149<main.rpyeffect:149([k@Name(countdown2822)#286])>+0: {"op": "Const". "type": "ptr". "out": 3. "format": "int". "value": "<IntValue object at 0x1385dd4e0>"}')
+debug_merge_point(0, 0, '149<main.rpyeffect:149([k@Name(countdown2822)#286])>+1: {"op": "Push". "target": 148. "args": {"any": [1. 2. 0]}}')
+debug_merge_point(0, 0, '149<main.rpyeffect:149([k@Name(countdown2822)#286])>+2: {"op": "Copy". "type": "any". "from": 3. "to". 1}')
+debug_merge_point(0, 0, '149<main.rpyeffect:149([k@Name(countdown2822)#286])>+3: {"op": "Jump". "target": 4}')
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq72))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"any": [0]}. "in": {"any": [0. 1]}}')
++1884: i137 = int_eq(i135, 0)
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq72))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '148<main.rpyeffect:148([k@[k@Name(countdown2822)#286]#290])>+0: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '148<main.rpyeffect:148([k@[k@Name(countdown2822)#286]#290])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 147. "args": {"any": []}}}')
+guard_false(i137, descr=<Guard0x138606fb0>) [p2, p29, p31, p15, p17, p19, p0, p112, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p32]
+debug_merge_point(0, 0, '147<main.rpyeffect:147([then#294])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1385dd550>"}')
+debug_merge_point(0, 0, '147<main.rpyeffect:147([then#294])>+1: {"op": "Push". "target": 146. "args": {"any": [0. 2]}}')
+debug_merge_point(0, 0, '147<main.rpyeffect:147([then#294])>+2: {"op": "Copy". "type": "any". "from": 3. "to". 0}')
+debug_merge_point(0, 0, '147<main.rpyeffect:147([then#294])>+3: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub105))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"any": [0]}. "in": {"any": [0. 1]}}')
++1892: label(p0, p32, p29, p31, p2, p103, p46, p101, p50, p99, p54, p97, p58, p95, p62, p93, p66, p91, p70, p89, p74, p87, p78, p84, p82, p106, p107, p108, i135, p15, p17, p19, p39, p41, p118, p111, p120, p134, descr=TargetToken(5240706336))
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub105))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"any": [0]}. "in": {"any": [0. 1]}}')
++1896: guard_not_invalidated(descr=<Guard0x1385eafe0>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1900: i139 = int_sub(i135, 1)
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub105))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '146<main.rpyeffect:146([k@[then#294]#298])>+0: {"op": "Push". "target": 145. "args": {"any": [1. 2]}}')
+debug_merge_point(0, 0, '146<main.rpyeffect:146([k@[then#294]#298])>+1: {"op": "Invoke". "receiver": 2. "tag": Interned(Set2832). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+0: {"op": "Const". "type": "ptr". "out": 3. "format": "int". "value": "<IntValue object at 0x1385ddf20>"}')
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+1: {"op": "ShiftDyn". "out": 1. "n": 3. "label": 1}')
++1904: i140 = instance_ptr_eq(p0, p39)
+guard_false(i140, descr=<Guard0x138606fe0>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1920: i141 = instance_ptr_eq(p46, p39)
+guard_false(i141, descr=<Guard0x138607010>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1928: i142 = instance_ptr_eq(p50, p39)
+guard_false(i142, descr=<Guard0x138607040>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1936: i143 = instance_ptr_eq(p54, p39)
+guard_false(i143, descr=<Guard0x138607070>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1944: i144 = instance_ptr_eq(p58, p39)
+guard_false(i144, descr=<Guard0x1386070a0>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1952: i145 = instance_ptr_eq(p62, p39)
+guard_false(i145, descr=<Guard0x1386070d0>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1960: i146 = instance_ptr_eq(p66, p39)
+guard_false(i146, descr=<Guard0x138607100>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1968: i147 = instance_ptr_eq(p70, p39)
+guard_false(i147, descr=<Guard0x138607130>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1976: i148 = instance_ptr_eq(p74, p39)
+guard_false(i148, descr=<Guard0x138607160>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1984: i149 = instance_ptr_eq(p78, p39)
+guard_false(i149, descr=<Guard0x138607190>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
++1992: i150 = instance_ptr_eq(p82, p39)
+guard_true(i150, descr=<Guard0x1386071c0>) [p2, p31, p15, p17, p19, p0, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, i135]
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+2: {"op": "Store". "ref": 2. "type": "any". "value": 0}')
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+3: {"op": "Construct". "out": 0. "type": Interned(Unit). "tag": Interned(unit). "args": {"any": []}}')
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+4: {"op": "Construct". "out": 0. "type": Interned(Unit). "tag": Interned(unit). "args": {"any": []}}')
+debug_merge_point(0, 0, '169<main.rpyeffect:169([method_Set2832@Name(run2828)#346])>+5: {"op": "Jump". "target": 162}')
+debug_merge_point(0, 0, '162<main.rpyeffect:162(Name(resume2841))>+0: {"op": "PushStack". "arg": 1}')
+debug_merge_point(0, 0, '162<main.rpyeffect:162(Name(resume2841))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '145<main.rpyeffect:145([k@[k@[then#294]#298]#301])>+0: {"op": "Copy". "type": "any". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '145<main.rpyeffect:145([k@[k@[then#294]#298]#301])>+1: {"op": "Copy". "type": "any". "from": 2. "to". 1}')
+debug_merge_point(0, 0, '145<main.rpyeffect:145([k@[k@[then#294]#298]#301])>+2: {"op": "Jump". "target": 150}')
+debug_merge_point(0, 0, '150<main.rpyeffect:150(Name(countdown2822))>+0: {"op": "Push". "target": 149. "args": {"any": [0. 1]}}')
+debug_merge_point(0, 0, '150<main.rpyeffect:150(Name(countdown2822))>+1: {"op": "Invoke". "receiver": 0. "tag": Interned(Get2830). "args" : {"any": []}}')
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x1385dd240>"}')
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+1: {"op": "ShiftDyn". "out": 0. "n": 2. "label": 0}')
++2000: setfield_gc(p111, i139, descr=<FieldS rpyeffect.value.UnboxedIntValueRef.inst_value 8>)
++2008: i151 = instance_ptr_eq(p0, p118)
+guard_false(i151, descr=<Guard0x1385eb028>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2028: i153 = instance_ptr_eq(p46, p118)
+guard_false(i153, descr=<Guard0x138607220>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2036: i154 = instance_ptr_eq(p50, p118)
+guard_false(i154, descr=<Guard0x138607250>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2044: i155 = instance_ptr_eq(p54, p118)
+guard_false(i155, descr=<Guard0x138607280>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2052: i156 = instance_ptr_eq(p58, p118)
+guard_false(i156, descr=<Guard0x1386072b0>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2060: i157 = instance_ptr_eq(p62, p118)
+guard_false(i157, descr=<Guard0x1386072e0>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2068: i158 = instance_ptr_eq(p66, p118)
+guard_false(i158, descr=<Guard0x138607310>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2076: i159 = instance_ptr_eq(p70, p118)
+guard_false(i159, descr=<Guard0x138607340>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2084: i160 = instance_ptr_eq(p74, p118)
+guard_false(i160, descr=<Guard0x138607370>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2092: i161 = instance_ptr_eq(p78, p118)
+guard_false(i161, descr=<Guard0x1386073a0>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
++2100: i162 = instance_ptr_eq(p82, p118)
+guard_true(i162, descr=<Guard0x1386073d0>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+2: {"op": "Load". "out": 1. "type": "any". "ref": 1}')
++2108: i163 = getfield_gc_i(p134, descr=<FieldS rpyeffect.value.UnboxedIntValueRef.inst_value 8>)
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+3: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '167<main.rpyeffect:167([method_Get2830@Name(run2828)#339])>+4: {"op": "Jump". "target": 161}')
+debug_merge_point(0, 0, '161<main.rpyeffect:161(Name(resume2839))>+0: {"op": "PushStack". "arg": 1}')
+debug_merge_point(0, 0, '161<main.rpyeffect:161(Name(resume2839))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '149<main.rpyeffect:149([k@Name(countdown2822)#286])>+0: {"op": "Const". "type": "ptr". "out": 3. "format": "int". "value": "<IntValue object at 0x1385dd4e0>"}')
+debug_merge_point(0, 0, '149<main.rpyeffect:149([k@Name(countdown2822)#286])>+1: {"op": "Push". "target": 148. "args": {"any": [1. 2. 0]}}')
+debug_merge_point(0, 0, '149<main.rpyeffect:149([k@Name(countdown2822)#286])>+2: {"op": "Copy". "type": "any". "from": 3. "to". 1}')
+debug_merge_point(0, 0, '149<main.rpyeffect:149([k@Name(countdown2822)#286])>+3: {"op": "Jump". "target": 4}')
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq72))>+0: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"any": [0]}. "in": {"any": [0. 1]}}')
++2112: i165 = int_eq(i163, 0)
+debug_merge_point(0, 0, '4<main.rpyeffect:4(Name(infixEq72))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '148<main.rpyeffect:148([k@[k@Name(countdown2822)#286]#290])>+0: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '148<main.rpyeffect:148([k@[k@Name(countdown2822)#286]#290])>+1: {"op": "IfZero". "cond": 1. "then": {"tag": null. "target": 147. "args": {"any": []}}}')
+guard_false(i165, descr=<Guard0x138607400>) [p2, p118, p120, p15, p17, p19, p0, i151, p31, p108, p107, p106, p82, p84, p78, p87, p74, p89, p70, p91, p66, p93, p62, p95, p58, p97, p54, p99, p50, p101, p46, p103, p29, p32, None]
+debug_merge_point(0, 0, '147<main.rpyeffect:147([then#294])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1385dd550>"}')
+debug_merge_point(0, 0, '147<main.rpyeffect:147([then#294])>+1: {"op": "Push". "target": 146. "args": {"any": [0. 2]}}')
+debug_merge_point(0, 0, '147<main.rpyeffect:147([then#294])>+2: {"op": "Copy". "type": "any". "from": 3. "to". 0}')
+debug_merge_point(0, 0, '147<main.rpyeffect:147([then#294])>+3: {"op": "Jump". "target": 8}')
+debug_merge_point(0, 0, '8<main.rpyeffect:8(Name(infixSub105))>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"any": [0]}. "in": {"any": [0. 1]}}')
++2120: jump(p0, p32, p29, p31, p2, p103, p46, p101, p50, p99, p54, p97, p58, p95, p62, p93, p66, p91, p70, p89, p74, p87, p78, p84, p82, p106, p107, p108, i163, p15, p17, p19, p39, p41, p118, p111, p120, p134, descr=TargetToken(5240706336))
++2136: --end of the loop--
+[9de6b0] jit-log-opt-loop}
+[2e493e40] {jit-summary
+Tracing:      	1	0.001170
+Backend:      	1	0.000489
+TOTAL:      		0.768792
+ops:             	1964
+heapcached ops:  	332
+recorded ops:    	869
+  calls:         	31
+guards:          	201
+opt ops:         	273
+opt guards:      	80
+opt guards shared:	75
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	52
+nvholes:         	11
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[2e496fe4] jit-summary}

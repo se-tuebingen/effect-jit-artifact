@@ -1,0 +1,14 @@
+effect Exc : unit
+
+let inner () = perform Exc
+
+let outer () = handle
+    inner ()
+  with 
+    | effect Exc k -> ()
+    | x -> x
+
+let rec loop n = 
+  if n >= 0 then (outer (); loop (n - 1)) else ()
+
+let run n = (loop n; 0)

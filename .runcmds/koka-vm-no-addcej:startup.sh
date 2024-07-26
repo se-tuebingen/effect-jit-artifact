@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-no-addcej' '/Users/gaisseml/dev/effect-jit/koka/.koka/v3.1.2/koka-vm-no-addcej:startup_ae3c47d7-9d2c-41b2-bd36-575e55af0b0f_vm-debug-778ea8/_main.rpyeffect' "$@"

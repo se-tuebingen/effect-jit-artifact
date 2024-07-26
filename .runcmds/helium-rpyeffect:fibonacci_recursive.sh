@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit' '/Users/gaisseml/dev/effect-jit/.helium-out/helium-rpyeffect:fibonacci_recursive_5f1607f3-f0de-4688-ba55-091f4f26d1bd/main.he.rpyeffect' "$@"

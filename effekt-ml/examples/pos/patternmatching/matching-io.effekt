@@ -1,0 +1,23 @@
+type TrafficLight {
+  Red()
+  Yellow()
+  Green()
+}
+
+def id(a: TrafficLight): TrafficLight = {
+  println("id")
+  a
+}
+
+def showLight(curr: TrafficLight) = curr match {
+  case Red() => println("red")
+  case _ and id(curr) is Yellow() => println("yellow")
+  case Green() => println("green")
+  case _ => ()
+}
+
+def main() = {
+  showLight(Red())
+  showLight(Yellow())
+  showLight(Green())
+}

@@ -1,0 +1,19 @@
+module examples/pos/arrays
+
+def main() = {
+    val arr = array::allocate[String](5);
+
+    arr.unsafeSet(0, "hello");
+    arr.unsafeSet(2, "world");
+    println(arr.unsafeGet(0));
+    println(arr.unsafeGet(2));
+
+    val arrWithVals: Array[String] = array(4, "Hello World");
+    println(arrWithVals)
+
+    val arrByF: Array[Int] = array::build(5){ i => i };
+    println(arrByF);
+
+    var arrByList: Array[Int] = array::fromList([1, 5, 17]);
+    println(arrByList)
+}

@@ -1,0 +1,10 @@
+(executable
+ (name jseff)
+ (libraries runtime js_of_ocaml utils loader)
+ (preprocess
+  (pps js_of_ocaml-ppx))
+ (modes js)
+ (promote
+  (until-clean)
+  (into ../../docs/try)
+  (only jseff.bc.js)))

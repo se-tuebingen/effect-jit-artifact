@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit' '/Users/gaisseml/dev/effect-jit/koka/.koka/v3.1.2/koka-vm:multiple_handlers_af3d75ad-6f13-4172-a469-3404081affec_vm-debug-778ea8/_main.rpyeffect' "$@"

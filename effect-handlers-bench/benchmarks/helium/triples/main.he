@@ -1,0 +1,42 @@
+import Sys
+import Int
+
+signature Nondet =
+| flip : Unit => Bool
+| fail : {X : Type}, Unit => X
+
+data Triple = MkTriple of Int, Int, Int
+
+let choice n = 
+    let rec go n = 
+        if (n < 1) then fail () 
+        else (if (flip ()) then n 
+              else (go (n - 1))) in 
+    go n
+
+let triple n s = 
+    let i = choice n in
+    let j = choice (i - 1) in
+    let k = choice (j - 1) in
+    if (i + j + k = s) then (MkTriple i j k) else fail ()
+
+let hash (MkTriple a b c) = 
+  (((53 * a) + 2809 * b + 148877 * c) % 1000000007)
+
+let run n s =
+  handle
+    hash (triple n s)
+  with
+  | flip () => ((resume True) + (resume False)) % 1000000007
+  | fail _ => 0
+  end
+
+let _ = 
+  handle
+    match Sys.args with
+    | [arg] => let n = Int.ofString arg in printInt (run n n)
+    | _ => printInt (run 5 5)
+    end
+  with
+  | parse_error _ => printInt (run 5 5)
+  end

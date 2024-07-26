@@ -1,0 +1,22 @@
+\begin{tabular}{l r r r r r r r r r r}
+\toprule & \multicolumn{3}{c}{eff} & \multicolumn{4}{c}{effekt} & \multicolumn{3}{c}{koka} \\
+\cmidrule(l){2-4}\cmidrule(l){5-8}\cmidrule(l){9-11} 
+ & jit & plain-ocaml & oldeff-plain-ocaml & jit & llvm & js & ml & vm & c & js \\
+\midrule
+countdown & $24.914$ & $7.941$ & $0.128$ & $0.412$ & $5.826$ & $63.065$ & $\mathbf{0.066}$ & $0.719$ & $3.229$ & $0.895$ \\
+counter & - & - & - & - & - & - & - & $0.611$ & $1.968$ & $\mathbf{0.572}$ \\
+fibonacci-recursive & $5.513$ & $40.176$ & $1.434$ & $5.437$ & $\mathbf{1.081}$ & > 90s & $2.105$ & $3.307$ & $1.302$ & $3.540$ \\
+generator & $3.963$ & $2.386$ & $1.930$ & $0.588$ & > 90s & $16.087$ & - & $\mathbf{0.565}$ & $50.620$ & $12.802$ \\
+handler-sieve & $2.988$ & $30.909$ & $10.184$ & $\mathbf{2.271}$ & $24.011$ & > 90s & x-handler_sieve-effekt-ml & $3.855$ & $3.835$ & stack overflowed \\
+iterator & $0.025$ & $3.048$ & $0.990$ & $\mathbf{0.019}$ & $0.682$ & $6.695$ & $0.191$ & $0.252$ & $0.344$ & $0.409$ \\
+multiple-handlers & $0.579$ & $10.057$ & x-multiple_handlers-oldeff-plain-ocaml & $\mathbf{0.526}$ & $2.378$ & $27.731$ & $0.643$ & $1.445$ & $12.322$ & $7.117$ \\
+nqueens & $1.127$ & x-nqueens-eff-plain-ocaml & $0.276$ & $0.567$ & > 90s & $7.515$ & $\mathbf{0.109}$ & $0.655$ & $8.133$ & $2.016$ \\
+parsing-dollars & $0.206$ & $17.001$ & $0.940$ & $0.417$ & $4.410$ & $32.799$ & $\mathbf{0.129}$ & $1.142$ & $3.511$ & $6.701$ \\
+product-early & $0.541$ & $5.551$ & $0.997$ & $\mathbf{0.362}$ & $5.809$ & $10.362$ & $0.372$ & $0.382$ & $10.247$ & $2.489$ \\
+resume-nontail & $0.245$ & $1.532$ & $0.223$ & $0.113$ & $0.247$ & stack overflowed & $\mathbf{0.112}$ & $0.353$ & $9.149$ & stack overflowed \\
+to-outermost-handler & - & - & - & $\mathbf{0.071}$ & $7.705$ & > 90s & x-to_outermost_handler-effekt-ml & $1.129$ & $3.978$ & $1.368$ \\
+tree-explore & $0.512$ & $1.243$ & $0.207$ & $0.324$ & $59.646$ & stack overflowed & $\mathbf{0.187}$ & $0.552$ & $0.825$ & $0.555$ \\
+triples & $0.930$ & $0.552$ & $0.140$ & $0.116$ & > 90s & $2.158$ & $\mathbf{0.042}$ & $0.473$ & $12.578$ & $2.584$ \\
+unused-handlers & $24.930$ & $8.046$ & x-unused_handlers-oldeff-plain-ocaml & $\mathbf{0.414}$ & $7.953$ & > 90s & x-unused_handlers-effekt-ml & $0.719$ & $3.228$ & $0.977$ \\
+\bottomrule
+\end{tabular}

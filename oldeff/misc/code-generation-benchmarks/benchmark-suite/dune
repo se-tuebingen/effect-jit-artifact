@@ -1,0 +1,42 @@
+(include dune.inc)
+
+(library
+ (name benchmark_suite)
+ (ocamlopt_flags
+  (:standard -O3))
+ (modes native)
+ (modules
+  (:standard \ generate_benchmark_rules))
+ (libraries
+  bechamel
+  ;;  ;; delimcc does not like mc ocaml and is uneeded since we don't use it in benchmarks
+  ;;  delimcc
+  ocamlHeader
+  (select
+   config.ml
+   from
+   (!nativeMulticore -> "config.plain.ml")
+   (nativeMulticore -> "config.multicore.ml"))))
+
+(executable
+ (modules generate_benchmark_rules)
+ (name generate_benchmark_rules))
+
+(env
+ (dev
+  (flags
+   (:standard -w -a))))
+
+(rule
+ (targets dune.gen)
+ (deps
+  (source_tree .))
+ (action
+  (with-stdout-to
+   %{targets}
+   (run ./generate_benchmark_rules.exe))))
+
+(rule
+ (alias generate_benchmarks)
+ (action
+  (diff dune.inc dune.gen)))
