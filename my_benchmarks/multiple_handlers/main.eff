@@ -1,0 +1,28 @@
+
+effect Emit : int -> unit
+
+let generator n =
+    let rec go i =
+        if i > n then () else (
+            perform (Emit i);
+            go (i + 1)
+        )
+    in go 0
+
+let summing fn = (handle fn () with
+  | x -> fun s -> s
+  | effect (Emit e) k -> fun a -> (k ()) ((a + e) mod 1009)) 0
+
+let counting fn = (handle fn () with
+  | x -> fun s -> s
+  | effect (Emit e) k -> fun a -> (k ()) ((a + 1) mod 1009)) 0
+
+let sq_summing fn = (handle fn () with
+  | x -> fun s -> s
+  | effect (Emit e) k -> fun a -> (k ()) ((a + e * e) mod 1009)) 0
+
+let run n =
+    let sqs = (sq_summing (fun () -> generator n)) in
+    let s = (summing (fun () -> generator n)) in
+    let c = (counting (fun () -> generator n)) in
+    sqs * 1009 + s * 103 + c

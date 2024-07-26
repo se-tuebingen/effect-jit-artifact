@@ -1,0 +1,61 @@
+import list
+import option
+import args
+import string
+
+interface Emit[A] {
+  def emit(x: A): Unit
+}
+
+def generator(n: Int): Unit / Emit[Int] = {
+  def go(i: Int): Unit = {
+    if (i > n) {
+      ()
+    } else {
+      do emit(i)
+      go(i + 1)
+    }
+  }
+  go(0)
+}
+
+def summing(){ body: => Unit / Emit[Int] }: Int = {
+  var res = 0
+  try { body() }
+  with Emit[Int] {
+    def emit(x) = { res = mod(res + x, 1009); resume(()) }
+  }
+  res
+}
+
+def counting(){ body: => Unit / Emit[Int] }: Int = {
+  var res = 0
+  try { body() }
+  with Emit[Int] {
+    def emit(x) = { res = mod(res + 1, 1009); resume(()) }
+  }
+  res
+}
+
+def sq_summing(){ body: => Unit / Emit[Int] }: Int = {
+  var res = 0
+  try { body() }
+  with Emit[Int] {
+    def emit(x) = { res = mod(res + x*x, 1009); resume(()) }
+  }
+  res
+}
+
+
+def run(n: Int): Int = {
+  val sqs = sq_summing { generator(n) }
+  val s = summing { generator(n) }
+  val c = counting { generator(n) }
+  return sqs * 1009 + s * 103 + c
+}
+
+def main() = {
+  val n = on[WrongFormat].default{5}{ commandLineArgs().headOption.getOrElse{ "" }.toInt };
+  val r = run(n);
+  println(r)
+}
