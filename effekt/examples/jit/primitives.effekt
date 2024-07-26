@@ -1,0 +1,34 @@
+import bench
+
+def assert(b: Bool, msg: String) = {
+  if(b) {
+    println("OK")
+  } else {
+    println(msg)
+  }
+}
+def assertNot(b: Bool, msg: String) = {
+  if(b) {
+    println(msg)
+  } else {
+    println("OK")
+  }
+}
+def main() = {
+    val start = timestamp();
+    println(0);
+    val x = 2;
+    val y = 40;
+    println(x+y);
+    println(x*y);
+    println(y/x);
+    println(x-y);
+    println(mod(x,y));
+    assert(x<y, "<");
+    assert(x<=y, "<=");
+    assertNot(x==y, "==");
+    assertNot(x>y, ">");
+    assert(x != y, "!=");
+    assertNot(x>=y, ">=");
+    assert((timestamp()-start) > 0, "time did not pass");
+}

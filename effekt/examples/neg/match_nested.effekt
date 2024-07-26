@@ -1,0 +1,20 @@
+module nested
+
+type Exp {
+  Lit(n: Int)
+  Add(l: Exp, r: Exp)
+  Mul(l: Exp, r: Exp)
+}
+
+def test(l: Exp) = l match {
+  case Add(Lit(n), r) => 0
+  case Add(Mul(_, Add(_, _)), r) => 1
+  // case Add(Mul(_, Mul(_, _)), r) => 2
+  case Add(Mul(_, Lit(42)), r) => 3
+  // case Add(Mul(_, Lit(_)), r) => 4
+  case Add(Add(_, _), _) => 5
+  case Mul(_, _) => 6
+  case Lit(_) => 7
+}
+
+def main() = ()
