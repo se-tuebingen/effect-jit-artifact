@@ -1,0 +1,23 @@
+data Stream (X : Type) =
+| MkStream of forall (State : Type), State, (State -> X), (State -> State)
+
+let const x =
+  data Unit = I in
+  MkStream Unit I (fn _ => x) (fn s => s)
+
+let head (MkStream _ s hd _) = hd s
+let tail (MkStream (type S) s hd tl) = MkStream S (tl s) hd tl
+
+let dup (MkStream (type S) s hd tl) =
+  data NewS = Fst of S | Snd of S
+  let newHd st =
+    match st with
+    | Fst s => hd s
+    | Snd s => hd s
+    end
+  let newTl st =
+    match st with
+    | Fst s => Snd s
+    | Snd s => Fst (tl s)
+    end in
+  MkStream NewS (Fst s) newHd newTl

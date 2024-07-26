@@ -1,0 +1,14 @@
+data Unit = I
+
+signature Reader (X : Type) =
+| ask : Unit => X
+
+let withReader1 x f =
+  handle `a in f `a I with
+  | ask I / r => r x
+  end
+
+let withReader2 (type X) x f =
+  handle `a : Reader X in f `a I with
+  | ask _ => resume x
+  end

@@ -1,0 +1,9 @@
+data rec List (X : Type) = [] | (::) of X, List X
+
+let rec map f xs =
+  match xs with
+  | [] => []
+  | x :: xs => f x :: map f xs
+  end
+
+let mapmap = map map

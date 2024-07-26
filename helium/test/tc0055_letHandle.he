@@ -1,0 +1,11 @@
+signature Id (X : Type) = id : X => X
+
+let module M = struct
+  let x = 13
+
+  let handle with
+      | id x => resume x
+      end
+
+  let r = id 42
+end

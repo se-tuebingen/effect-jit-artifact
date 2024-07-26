@@ -1,0 +1,23 @@
+data Unit = ()
+
+data rec List (X : Type) =
+| []
+| (::) of X, List X
+
+signature rec AtExit =
+| at_exit : ((`a : AtExit) -> Unit ->[`a] Unit) => Unit
+
+let rec iter f xs =
+  match xs with
+  | []      => ()
+  | x :: xs => let () = f x in iter f xs
+  end
+
+let rec hAtExit =
+  handler
+  | at_exit f => fn q => resume () (f :: q)
+  | return x  => fn q =>
+    let () = iter (fn f => handle `a in f `a () with hAtExit) q in
+    x
+  | finally f => f []
+  end

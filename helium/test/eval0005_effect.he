@@ -1,0 +1,25 @@
+data Unit = I
+
+signature State (X : Type) =
+| put : X => Unit
+| get : Unit => X
+
+data Bool = True | False
+
+let withState s0 f =
+  handle `a in f `a I with
+  | put s     => fn _ => resume I s
+  | get I     => fn s => resume s s
+  | return x  => fn _ => x
+  | finally f => f s0
+  end
+
+let bnot b =
+  match b with
+  | True  => False
+  | False => True
+  end
+
+let r = withState True (fn `s I =>
+  let _ = put `s (bnot (get `s I)) in
+  get `s I)

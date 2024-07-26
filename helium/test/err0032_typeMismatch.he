@@ -1,0 +1,5 @@
+data Unit = ()
+
+let foo (type T : Type) (bar : (T -> Unit) -> Unit) = bar (fn () => ())
+
+// @stderr::3:63-64: error: This pattern matches

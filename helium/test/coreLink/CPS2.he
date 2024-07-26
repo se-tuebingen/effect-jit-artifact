@@ -1,0 +1,13 @@
+import CPS1
+
+signature Id =
+| id : CPS1.X => CPS1.X
+
+let handle `e with
+  | id x => resume (CPS1.foo x)
+  end
+
+effect E = effect `e
+
+let bar x =
+  id `e (CPS1.foo x)

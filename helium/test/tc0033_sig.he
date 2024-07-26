@@ -1,0 +1,9 @@
+type Stream = sig
+  val X  : Type
+  val S  : Type
+  val hd : S -> X
+  val tl : S -> S
+end
+
+let snd (module S : Stream) (s : S.S) =
+  S.hd (S.tl s)

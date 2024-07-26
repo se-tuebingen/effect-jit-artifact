@@ -1,0 +1,181 @@
+(** build-in types *)
+let type Int    = extern "helium_Int"
+let type String = extern "helium_String"
+let type Char   = extern "helium_Char"
+
+(** datatypes *)
+data Unit = ()
+
+data Bool = False | True
+
+data Option (X : Type) =
+| None
+| Some of X
+
+data Pair (X Y : Type) =
+| (,) of X, Y
+
+data Either (X Y : Type) =
+| Left  of X
+| Right of Y
+
+data rec List (X : Type) =
+| []
+| (::) of X, List X
+
+data Ord =
+| LT
+| EQ
+| GT
+
+(** IO is implemented as an abstract pure effect. Type system only pretends
+that something is going on. *)
+effect IO = effect []
+
+(* Basic IO *)
+let readInt  = extern "helium_readInt"  : Unit ->[IO] Int
+let printInt = extern "helium_printInt" : Int ->[IO] Unit
+
+let readLine = extern "helium_readLine" : Unit ->[IO] String
+let printStr = extern "helium_printStr" : String ->[IO] Unit
+
+let exit {T : Type} = extern "helium_exit" : Int ->[IO] T
+
+(** Operations on strings *)
+let stringOfInt = extern "helium_string_of_int" : Int -> String
+
+let ( ++ ) = extern "helium_appendStr" : String -> String -> String
+
+(** Assertions **)
+let assertFalse {T : Type} = extern "helium_assertFalse" : String -> T
+
+let assert msg b =
+  if b then () else assertFalse msg
+
+(** Runtime errors *)
+signature RuntimeError =
+| runtimeError : {A : Type}, String => A
+
+(*
+(** TODO: I have no idea how to express that in a new setting *)
+let assertNoError s =
+  handler
+  | runtimeError s' =>
+    assertFalse (s ++ " Runtime error raised: " ++ s')
+  end
+
+let printAndExit =
+  handler
+  | runtimeError s =>
+    let _ = printStr ("Runtime error raised: " ++ s)
+    in exit 3
+  end
+*)
+let handle `re with
+    | runtimeError s =>
+      let _ = printStr ("Runtime error raised: " ++ s)
+      in exit 3
+    end
+
+effect RE = effect `re
+
+let runtimeError msg = runtimeError msg
+
+(** Error thrown in `ofString' functions *)
+signature ParseError =
+| parse_error : forall {a : Type}, Unit => a
+
+(** A generic error / checked exception *)
+signature Error (A : Type) =
+| error : forall {a : Type}, A => a
+signature NotFound = 
+| not_found : forall {a : Type}, Unit => a
+
+(** Arithmetics *)
+let ( =  ) = extern "helium_eqInt"  : Int -> Int -> Bool
+let ( <> ) = extern "helium_neqInt" : Int -> Int -> Bool
+let ( <  ) = extern "helium_ltInt"  : Int -> Int -> Bool
+let ( >  ) = extern "helium_gtInt"  : Int -> Int -> Bool
+let ( <= ) = extern "helium_leInt"  : Int -> Int -> Bool
+let ( >= ) = extern "helium_geInt"  : Int -> Int -> Bool
+
+let ( + ) = extern "helium_addInt" : Int -> Int -> Int
+let ( - ) = extern "helium_subInt" : Int -> Int -> Int
+let ( * ) = extern "helium_mulInt" : Int -> Int -> Int
+
+let ( / ) =
+  let div = extern "helium_divInt" : Int -> Int -> Int
+  in fn m n =>
+  if n = 0 then runtimeError "division by zero"
+  else div m n
+let ( % ) =
+  let mod = extern "helium_modInt" : Int -> Int -> Int
+  in fn m n =>
+  if n = 0 then runtimeError "division by zero"
+  else mod m n
+
+let ( - . ) = extern "helium_negInt" : Int -> Int
+let ( + . ) (x : Int) = x
+
+(** Bitwise operations *)
+let (&&&) = extern "helium_andInt" : Int -> Int -> Int
+let (|||) = extern "helium_orInt"  : Int -> Int -> Int
+let (^^^) = extern "helium_xorInt" : Int -> Int -> Int
+let (<<)  = extern "helium_lslInt" : Int -> Int -> Int
+let (>>)  = extern "helium_lsrInt" : Int -> Int -> Int
+let (>>>) = extern "helium_asrInt" : Int -> Int -> Int
+
+let lnot = extern "helium_notInt" : Int -> Int
+
+(** Operations on pairs and lists *)
+let fst (x, _) = x
+let snd (_, x) = x
+
+let ( @ ) xs ys =
+  let rec app xs =
+    match xs with
+    | []      => ys
+    | x :: xs => x :: app xs
+    end
+  in app xs
+
+(** Sequence *)
+let ( ; ) () x = x
+
+(** Ignoring the result *)
+let ignore _ = ()
+
+(** Boolean operations *)
+let not b =
+  if b then False else True
+
+let ( && ) b1 b2 =
+  if b1 then b2 else False
+
+let ( || ) b1 b2 =
+  if b1 then True else b2
+
+(** Input streams *)
+data InChannel = (* TODO: abstract types are not supported yet *)
+
+let stdin = extern "helium_stdin" : InChannel
+
+let openIn  = extern "helium_openIn"  : String ->[IO] InChannel
+let closeIn = extern "helium_closeIn" : InChannel ->[IO] Unit
+
+(** input channel n reads at most n bytes from channel and stores
+  result in string which length indicates number of read bytes.
+  Zero-length string means end of file. *)
+let input = extern "helium_input" : InChannel -> Int ->[IO] String
+
+(** Output streams *)
+data OutChannel = (* TODO: abstract types are not supported yet *)
+
+let stdout = extern "helium_stdout" : OutChannel
+let stderr = extern "helium_stderr" : OutChannel
+
+let openOut  = extern "helium_openOut"  : String ->[IO] OutChannel
+let closeOut = extern "helium_closeOut" : OutChannel ->[IO] Unit
+
+let outputString =
+  extern "helium_outputString" : OutChannel -> String ->[IO] Unit

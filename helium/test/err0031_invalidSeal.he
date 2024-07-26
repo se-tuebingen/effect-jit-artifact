@@ -1,0 +1,10 @@
+data Unit = ()
+
+type S =
+  fn (module M : Unit ->[] sig val T : Type end) =>
+  sig
+    open M ()
+    val x : T
+  end
+
+// @stderr::6:5-13: error: Existential sealing

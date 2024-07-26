@@ -1,0 +1,8 @@
+let type S = sig
+  val Id : Sig
+  val id : forall {`a : Id} (X : Type) -> X ->[`a] X
+end
+
+let module M : S = struct
+  signature Id = id : forall (X : Type), X => X
+end

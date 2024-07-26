@@ -1,0 +1,10 @@
+data T = A
+data U = B of T
+signature S = id : T => T
+let hId = handler
+          | id x => resume x
+          end
+let foo =
+  B (let handle with hId in B A)
+
+// @stderr::8:6-24: error: This handler provides

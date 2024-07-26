@@ -1,0 +1,5 @@
+let foo (effect A : Effect) (effect B : Effect) (type T)
+  (f : (T ->[A] T) -> T)
+  (g : T ->[A,B] T) =
+    f (fn x => g x)
+// @stderr:4:16-18: error: This expression has effect

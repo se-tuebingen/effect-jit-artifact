@@ -1,0 +1,13 @@
+data X = ()
+
+signature S = 
+| id : forall {A : Type}, A => A
+
+let handle `id with
+  | id x => resume x
+  end
+
+effect E = effect `id
+
+let foo = id `id
+let baz = ()

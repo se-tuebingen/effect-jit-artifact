@@ -1,0 +1,8 @@
+let type S = sig
+  val T : Type
+  val C : forall (S : Type) -> (S -> T) -> T
+end
+
+let module M : S = struct
+  data rec T = C of forall (S : Type), (S -> T)
+end

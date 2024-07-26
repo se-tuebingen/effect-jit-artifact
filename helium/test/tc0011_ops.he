@@ -1,0 +1,9 @@
+data Unit = I
+
+data Prod (A B : Type) = Pair of A, B
+
+signature State (A : Type) =
+| put : A    => Unit
+| get : Unit => A
+
+let ops x = Pair put get

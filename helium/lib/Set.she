@@ -1,0 +1,19 @@
+(* Finite sets based on 2-3 trees *)
+
+type Order = sig
+  type this : Type
+  val compare : this -> this -> Ord
+end
+
+module this : forall (Elt : Order) ->[] sig
+  type this : Type
+
+  val empty     : this
+  val singleton : Elt -> this
+  val add       : Elt -> this -> this
+  val remove    : Elt -> this -> this
+  val mem       : Elt -> this -> Bool
+  val iter      : forall {r : Effect} -> (Elt ->[r] Unit) -> this ->[r] Unit
+  val size      : this -> Int
+  val toList    : this -> List Elt
+end

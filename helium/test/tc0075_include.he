@@ -1,0 +1,12 @@
+let type Int = extern "helium_Int"
+
+let type S1 = sig
+  val foo : Int -> Int
+end
+
+let type S2 = sig
+  val bar : Int
+end
+
+let foobar (module M : sig include S1 include S2 end) =
+  M.foo M.bar

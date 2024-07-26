@@ -1,0 +1,18 @@
+(** Writer effect *)
+
+signature this (X : Type) =
+| tell : X => Unit
+
+val listHandler : forall {X : Type} {E : Effect} ->
+  handler of this X in [E] Unit =>[E] List X
+
+val accHandler : forall {X S : Type} {E : Effect} ->
+  S -> (X -> S ->[E] S) ->
+  handler of this X in [E] Unit =>[E] S
+
+val channelHandler : forall {T : Type} {E : Effect} ->
+  OutChannel -> handler of this String in [E] T =>[IO,E] T
+
+val workSetHandler : forall {X T : Type} {E : Effect} ->
+  ({`w : this X} -> X ->[`w,E] Unit) ->
+  handler of this X in [E] T =>[E] T

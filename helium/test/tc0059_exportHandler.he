@@ -1,0 +1,18 @@
+data Unit = ()
+data Bool = True | False
+
+signature State (X : Type) =
+| get : Unit => X
+| put : X    => Unit
+
+let handle `bs with
+    | get ()    => fn s => resume s  s
+    | put s     => fn _ => resume () s
+    | return  x => fn _ => x
+    | finally f => f True
+    end
+
+effect BoolState = effect `bs
+
+let putBool = put `bs
+let getBool = get `bs

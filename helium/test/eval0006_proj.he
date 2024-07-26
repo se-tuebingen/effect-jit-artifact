@@ -1,0 +1,19 @@
+let type S = sig
+  val T : Type
+  val x : T
+  val f : T -> T
+end
+
+let twice (module X : S) = X.f (X.f X.x)
+
+data Bool = True | False
+
+let r = twice (struct
+  let type T = Bool
+  let f x =
+    match x with
+    | True  => False
+    | False => True
+    end
+  let x = True
+end)

@@ -1,0 +1,16 @@
+data Unit = I
+signature State (X : Type) =
+| put : X    => Unit
+| get : Unit => X
+
+let hState s0 =
+  handler
+  | put s     => fn _ => resume I s
+  | get I     => fn s => resume s s
+  | return  x => fn _ => x
+  | finally f => f s0
+  end
+
+let ans =
+  handle get I with
+    hState 42

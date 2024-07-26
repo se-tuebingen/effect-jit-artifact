@@ -1,0 +1,107 @@
+module this = List
+
+let map f =
+  let rec map xs =
+    match xs with
+    | [] => []
+    | x :: xs => f x :: map xs
+    end
+  in map
+
+let mapi f xs =
+  let rec loop i xs =
+    match xs with
+    | []      => []
+    | x :: xs => f i x :: loop (i+1) xs
+    end
+  in loop 0 xs
+
+let iter f =
+  let rec iter xs =
+    match xs with
+    | []      => ()
+    | x :: xs => let _ = f x in iter xs
+    end
+  in iter
+
+let iteri f xs =
+  let rec loop i xs =
+    match xs with
+    | []      => ()
+    | x :: xs => let _ = f i x in loop (i+1) xs
+    end
+  in loop 0 xs
+
+let exists f =
+  let rec exists xs =
+    match xs with
+    | []      => False
+    | x :: xs =>
+      if f x then True
+      else exists xs
+    end
+  in exists
+
+let forAll f =
+  let rec forAll xs =
+    match xs with
+    | []      => True
+    | x :: xs =>
+      if f x then forAll xs
+      else False
+    end
+  in forAll
+
+let foldl f s xs =
+  let rec foldl s xs =
+    match xs with
+    | []      => s
+    | x :: xs => foldl (f s x) xs
+    end
+  in foldl s xs
+
+let foldr f xs s =
+  let rec foldr xs s =
+    match xs with
+    | [] => s
+    | x :: xs => f x (foldr xs s)
+    end
+  in foldr xs s
+
+let revAppend xs ys =
+  let rec revAppend xs ys =
+    match xs with
+    | []      => ys
+    | x :: xs => revAppend xs (x :: ys)
+    end
+  in revAppend xs ys
+
+let rev xs = revAppend xs []
+
+let take n xs =
+  let rec take n xs =
+    if n <= 0 then []
+    else
+      match xs with
+      | []      => []
+      | x :: xs => x :: take (n-1) xs
+      end
+  in take n xs
+
+let drop n xs =
+  let rec drop n xs =
+    if n <= 0 then xs
+    else
+      match xs with
+      | []      => []
+      | x :: xs => drop (n-1) xs
+      end
+  in drop n xs
+
+let length xs =
+  let rec loop n xs =
+    match xs with
+    | []      => n
+    | _ :: xs => loop (n + 1) xs
+    end
+  in loop 0 xs

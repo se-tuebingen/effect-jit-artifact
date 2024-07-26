@@ -1,0 +1,21 @@
+data Unit = ()
+data B = False | True
+
+signature Flag =
+| put : B    => Unit
+| get : Unit => B
+
+let tt = True
+let ff = False
+
+let handle `flag with
+  | put st    => fn _  => resume () st
+  | get ()    => fn st => resume st st
+  | return  x => fn _  => x
+  | finally f => f tt
+  end
+
+effect Flag = effect `flag
+
+let put = put `flag
+let get = get `flag

@@ -1,0 +1,21 @@
+data Unit = I
+data Bool = True | False
+
+signature BT =
+| flip : Unit => Bool
+| fail : forall (X : Type) => X
+
+data Option (X : Type) =
+| None
+| Some of X
+
+let withBT f =
+  handle `bt in f `bt I with
+  | return x => Some x
+  | flip _ / r =>
+    match r True with
+    | Some x => Some x
+    | None   => r False
+    end
+  | fail _ => None
+  end

@@ -1,0 +1,136 @@
+export handler of IO
+export handler of RE
+
+(** build-in types *)
+type Int    = extern "helium_Int"
+type String = extern "helium_String"
+type Char   = extern "helium_Char"
+
+(** datatypes *)
+data Unit = ()
+
+data Bool = False | True
+
+data Option (X : Type) =
+| None
+| Some of X
+
+data Pair (X Y : Type) =
+| (,) of X, Y
+
+data Either (X Y : Type) =
+| Left  of X
+| Right of Y
+
+data rec List (X : Type) =
+| []
+| (::) of X, List X
+
+data Ord =
+| LT
+| EQ
+| GT
+
+(** IO effect *)
+effect IO : Effect
+
+(** Runtime errors *)
+effect RE : Effect
+
+val runtimeError : {T : Type} -> String ->[RE] T
+
+(** Assertions *)
+
+val assert      : String -> Bool -> Unit
+val assertFalse : {T : Type} -> String -> T
+
+(** Error thrown in `ofString' functions *)
+signature ParseError =
+| parse_error : forall {a : Type}, Unit => a
+
+(** A generic error / checked exception *)
+signature Error (A : Type)  =
+| error : forall {a : Type}, A => a
+signature NotFound = 
+| not_found : forall {a : Type}, Unit => a
+
+(** Arithmetics *)
+val ( =  ) : Int -> Int -> Bool
+val ( <> ) : Int -> Int -> Bool
+val ( <  ) : Int -> Int -> Bool
+val ( >  ) : Int -> Int -> Bool
+val ( <= ) : Int -> Int -> Bool
+val ( >= ) : Int -> Int -> Bool
+
+val ( + ) : Int -> Int -> Int
+val ( - ) : Int -> Int -> Int
+val ( * ) : Int -> Int -> Int
+val ( / ) : Int -> Int ->[RE] Int
+val ( % ) : Int -> Int ->[RE] Int
+
+val ( - . ) : Int -> Int
+val ( + . ) : Int -> Int
+
+(** Bitwise operations *)
+val (&&&) : Int -> Int -> Int
+val (|||) : Int -> Int -> Int
+val (^^^) : Int -> Int -> Int
+val (<<)  : Int -> Int -> Int
+val (>>)  : Int -> Int -> Int
+val (>>>) : Int -> Int -> Int
+
+val lnot : Int -> Int
+
+(** Operations on strings *)
+val stringOfInt : Int -> String
+
+val ( ++ ) : String -> String -> String
+
+(** Operations on paris and lists *)
+val fst : {A B : Type} -> Pair A B -> A
+val snd : {A B : Type} -> Pair A B -> B
+
+val (@) : {A : Type} -> List A -> List A -> List A
+
+(** Sequence *)
+val ( ; ) : {A : Type} -> Unit -> A -> A
+
+(** Ignoring the result *)
+val ignore : {A : Type} -> A -> Unit
+
+(** Boolean operations *)
+
+val not    : Bool -> Bool
+val ( && ) : Bool -> Bool -> Bool
+val ( || ) : Bool -> Bool -> Bool
+
+(** Basic IO *)
+val readInt  : Unit ->[IO] Int
+val printInt : Int ->[IO] Unit
+
+val readLine : Unit ->[IO] String
+val printStr : String ->[IO] Unit
+
+(** Input streams *)
+type InChannel : Type
+
+val stdin : InChannel
+
+val openIn  : String ->[IO] InChannel
+val closeIn : InChannel ->[IO] Unit
+
+(** input channel n reads at most n bytes from channel and stores
+  result in string which length indicates number of read bytes.
+  Zero-length string means end of file. *)
+val input : InChannel -> Int ->[IO] String
+
+(** Output streams *)
+type OutChannel : Type
+
+val stdout : OutChannel
+val stderr : OutChannel
+
+val openOut  : String ->[IO] OutChannel
+val closeOut : OutChannel ->[IO] Unit
+
+val outputString : OutChannel -> String ->[IO] Unit

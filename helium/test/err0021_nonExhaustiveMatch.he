@@ -1,0 +1,11 @@
+data rec T = A | B | N of T, T
+
+let foo x =
+  match x with
+  | A     => B
+  | B     => A
+  | N A B => N B A
+  end
+
+// @stderr::(4:3)-(8:5): error: This pattern matching
+// @stderr:is not matched.
