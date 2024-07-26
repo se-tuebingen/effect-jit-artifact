@@ -9,7 +9,7 @@
 // internal exports
 const $std_core_console = { "_host": _host, "_trace": _trace }
 
-var _host = "unknown"
+export var _host = "unknown"
 
 if (typeof window !== 'undefined' && window.document) {
   _host = "browser";
