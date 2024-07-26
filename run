@@ -124,6 +124,8 @@ class KokaBackend(Language):
 
     def compile(self, path: str, name: str) -> list[str] | None:
         path = os.path.abspath(path)
+        proch = run(["stack", "build"], cwd="./koka")
+        outputh = tee(proch, "[blue]ghc [/blue]| ")
         proc = run(["stack", "exec", "koka", "--", f"--target={self.backend}", path], cwd="./koka")
         output = tee(proc, "[blue]comp[/blue]| ")
         c = output[-1]
