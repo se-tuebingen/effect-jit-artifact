@@ -1,8 +1,0 @@
-effect Get : unit -> int
-
-let run n =
-  (handle
-    perform (Get ())
-  with
-  | x -> fun _ -> x
-  | effect (Get ()) k -> fun s -> (k s) s) n
