@@ -1,0 +1,106 @@
+~ begin news
+News:
+
+* 2024-03-14: Xavier Leroy is teaching a fantastic
+  [lecture series](https://www.college-de-france.fr/fr/agenda/cours/structures-de-controle-de-goto-aux-effets-algebriques) on
+  control structures and algebraic effects at the Coll&egrave;ge de France with many invited talks available online.
+  March 14 will be a talk on the design and compilation of efficient effect handlers in Koka.
+
+* 2024-03-04: Koka v3.1.1 released with a language server crash fix.
+
+* 2024-02-14: Koka v3.1.0 released with a concurrent build system
+  and improved language service over the stdio protocol. Redesign of named effect
+  typing to match the formal system more closely. See `samples/handlers/named` for examples.
+
+* 2024-01-25: Koka v3.0.4 released with improved VS Code hover and inlay information.
+  Splits `std/core` in multiple modules, fixes bug in infinite expansion for implicits
+  and various other small improvements.
+
+* 2024-01-13: Koka v3.0.1 released with improved VS Code integration and inlay hints. Initial support for
+  locally qualified names and implicit parameters (see the `samples/syntax`). Various small bug fixes.
+
+* 2023-12-30: Koka v2.6.0 released with VS Code language integration with type information, jump to definition,
+  run test functions directly from the editor, automatic Koka installation, and many more things.
+  Special thanks to [Tim Whiting](https://github.com/TimWhiting) and [Fredrik Wieczerkowski](https://github.com/fwcd) for all their work on making this possible!
+
+* 2023-12-27: Update of the technical report on "[The functional essence of binary trees][fiptree-tr]" where we use fully-in-place programming and
+  the new hole contexts to create fully verified functional implementations of binary search tree
+  algorithms with performance on par with imperative C implementations.
+
+* 2023-07-03: Koka v2.4.2 released: add support for `fip` and `fbip` keywords described
+  in &ldquo;FP<sup>2</sup>: Fully in-Place Functional Programming&rdquo;
+  (ICFP'23) [[pdf](https://www.microsoft.com/en-us/research/uploads/prod/2023/05/fbip.pdf)].
+  Various fixes and performance improvements.
+
+* 2021-02-04 (pinned) The [Context Free](https://www.youtube.com/channel/UCS4FAVeYW_IaZqAbqhlvxlA)
+  youtube channel posted a short and fun [video](https://www.youtube.com/watch?v=olISecOUX1g&t=959s)
+  about effects in Koka (and 12 (!) other languages).
+
+* 2021-09-01 (pinned) The ICFP'21 tutorial
+  "_Programming with Effect Handlers and FBIP in Koka_" is now available on
+  [youtube](https://www.youtube.com/watch?v=6OFhD_mHtKA).
+
+* 2022-02-07: Koka v2.4.0 released: improved specialization and `int` operations, add `rbtree-fbip` sample,
+  improve grammar (`pub` (instead of ``public``, remove private (as everything is private by default now)),
+  `final ctl` (instead of `brk`), underscores in number literals, etc), rename `double` to `float64`, various bug fixes.
+
+* 2021-12-27: Koka v2.3.8 released: improved `int` performance, various bug fixes, update wasm backend,
+  initial conan support, fix js backend.
+
+* 2021-11-26: Koka v2.3.6 released:
+  `maybe`-like types are already value types, but now also no longer need heap allocation
+  if not nested (and `[Just(1)]` uses the same heap space as `[1]`),
+  improved atomic refcounting (by Anton Lorenzen), improved specialization (by Steven Fontanella),
+  various small fixes, add `std/os/readline`, fix build on freeBSD
+
+* 2021-10-15: Koka v2.3.2 released, with initial wasm support
+  (use `--target=wasm`, and install [emscripten] and [wasmtime]),
+  improved reuse specialization (by Anton Lorenzen), and various bug fixes.
+
+* 2021-09-29: Koka v2.3.1 released, with improved TRMC optimizations, and improved reuse
+  (the rbtree benchmark is as fast as C++ now), and
+  faster effect operations. Experimental: allow elision of `->` in anonymous
+  function expressions (e.g. `xs.map( fn(x) x + 1 )`) and operation clauses.
+  Command line options changed a bit with ``.koka`` as the standard output directory.
+
+* 2021-09-20: Koka v2.3.0 released, with new
+  [brace elision](https://koka-lang.github.io/koka/doc/book.html#sec-layout) and if/match
+  conditions without parenthesis. Updated the javascript backend
+  using ES6 modules and BigInt. new `module std/num/int64`, improved effect operation performance.
+
+* 2021-09-05: Koka v2.2.1 released, with initial parallel tasks, the binary-trees benchmark, and
+  [brace elision](https://koka-lang.github.io/koka/doc/book.html#sec-layout).
+
+* 2021-08-26: Koka v2.2.0 released, improved simplification (by Rashika B), cross-module specialization (Steven Fontanella),
+  and borrowing annotations with improved reuse analysis (Anton Lorenzen).
+
+* 2021-08-26: At 12:30 EST was the live Koka tutorial at
+  [ICFP'21](https://icfp21.sigplan.org/details/icfp-2021-tutorials/5/Programming-with-Effect-Handlers-and-FBIP-in-Koka),
+  see it on [youtube](https://www.youtube.com/watch?v=6OFhD_mHtKA).
+
+* 2021-08-23: "_Generalized Evidence Passing for Effect Handlers_", by Ningning Xie and Daan Leijen presented at ICFP'21.
+  See it on [youtube](https://www.youtube.com/watch?v=yAT0qYlD0UM&list=PLyrlk8Xaylp5ed_Yhg2oTdVhrtVohVaoa&index=40)
+  or read the [paper](https://www.microsoft.com/en-us/research/publication/generalized-evidence-passing-for-effect-handlers/).
+* 2021-08-22: "_First-class Named Effect Handlers_", by Youyou Cong, Ningning Xie, and Daan Leijen presented at HOPE'21.
+  See it on [youtube](https://www.youtube.com/watch?v=3HsI4__8RQM&list=PLyrlk8Xaylp6Q52MwsRZBUSIRL3wOk_k1&index=4)
+  or read the [paper](https://www.microsoft.com/en-us/research/publication/first-class-named-effect-handlers/).
+* 2021-06-23: Koka v2.1.9 released, initial cross-module specialization (by Steven Fontanella).
+* 2021-06-17: Koka v2.1.8 released, initial Apple M1 support.
+* The [Perceus] paper won a distinguished paper award at PLDI'21!
+* 2021-06-10: Koka v2.1.6 released.
+* 2021-05-31: Koka v2.1.4 released.
+* 2021-05-01: Koka v2.1.2 released.
+* 2021-03-08: Koka v2.1.1 released.
+* 2021-02-14: Koka v2.0.16 released.
+* 2020-12-12: Koka v2.0.14 released.
+* 2020-12-02: Koka v2.0.12 released.
+* 2020-11-29: Perceus technical report publised ([pdf][Perceus]).
+{.news-items}
+
+~ end news
+
+[released]:   https://koka-lang.github.io/koka/doc/book.html#install
+[emscripten]: https://emscripten.org/docs/getting_started/downloads.html
+[musl]:       https://musl.libc.org/
+[wasmtime]:   https://wasmtime.dev/
+[fiptree-tr]: https://www.microsoft.com/en-us/research/uploads/prod/2023/07/fiptree-tr-v4.pdf
