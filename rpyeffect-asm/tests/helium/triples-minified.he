@@ -1,0 +1,14 @@
+data Unit = I
+type Int    = extern "helium_Int"
+let printInt = extern "helium_printInt" : Int -> Unit
+
+signature Nondet =
+| flip : Unit => Int
+
+let foo _ = let x = (handle (
+            flip I
+        ) with
+          | flip I => 1
+        end) in printInt x
+
+let _ = (foo I)

@@ -1,0 +1,39 @@
+import Sys
+import Int
+
+signature Nondet =
+| flip : Unit => Bool
+| fail : {X : Type}, Unit => X
+
+data Triple = MkTriple of Int, Int, Int
+
+let hashTriple (MkTriple a b c) = (((53 * a) + 2809 * b + 148877 * c) % 1000000007)
+
+let choice n = 
+    let rec go n = if (n < 1) then fail () else (if (flip ()) then n else (go (n - 1))) in 
+    go n
+
+let triple n s = 
+    let i = choice n in
+    let j = choice (i - 1) in
+    let k = choice (j - 1) in
+    if (i + j + k = s) then (printInt i; printInt j; printInt k) else fail ()
+
+let sumTriples n s = handle (
+    (* let r = *) triple n s (* in
+    hashTriple r *)
+) with
+  | flip () => (resume True); (resume False)
+  | fail _ => ()
+  end
+
+let _ = 
+  handle
+    match [300, 10] with
+    | [n, s] => 
+        (sumTriples n s)
+    | _ => printStr "usage: triples <n> <s>"
+    end
+  with
+  | parse_error _ => printStr "usage: triples <n> <s> (could not parse arguments)"
+  end

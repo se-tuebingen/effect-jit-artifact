@@ -1,0 +1,12 @@
+signature Nondet =
+| flip : Unit => Bool
+| fail : Unit => Unit
+
+let _ = (handle (
+    let n = 5 in
+    let _ = (if flip () then n else 0) in
+    fail ()
+) with
+  | flip () => (resume False)
+  | fail _ => ()
+  end)
