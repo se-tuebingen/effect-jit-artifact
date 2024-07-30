@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from abc import ABC, abstractmethod
 from typing import TypeVar
 import subprocess, re, os, sys
-import unicodedata
 import uuid
 import shutil
 import rich, rich.table, rich.console
@@ -15,6 +14,7 @@ import re
 import os
 import matplotlib.pyplot as plt
 import numpy as np
+from runtool.util import *
 
 # Change working directory to the directory containing this file
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -44,15 +44,6 @@ def log(*parts: str | None | list[str]):
 SYSTEM="arm64-Darwin"
 jit_path = os.path.abspath(f"./rpyeffect-jit/out/bin/{SYSTEM}/rpyeffect-jit")
 
-def remove_control_characters(s):
-    return "".join(ch for ch in s if unicodedata.category(ch)[0]!="C" or ch in "\n\r")
-def styled(str):
-    cns = rich.console.Console()
-    with cns.capture() as cpt:
-        cns.print(str)
-    cpt = cpt.get()
-    if cpt[-1] == '\n': cpt = cpt[:-1]
-    return cpt
 
 def get_benchmark_path(lang: "Language", benchmark: "Benchmark"):
     return benchmark.suite.get_benchmark_path(lang, benchmark)
