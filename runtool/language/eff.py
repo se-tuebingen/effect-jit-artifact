@@ -1,4 +1,5 @@
 import os
+import uuid
 import shutil
 from runtool.language import Language
 from runtool.util import run, run_to_file, tee, tee_stderr
