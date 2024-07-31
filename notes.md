@@ -47,14 +47,21 @@
       - not optimized out statically, at least mask is still in generated code
   - results stored [here](./notes-ref/resback20240725/)
 - hnd.kk:668 makes tail resumption non-tail
-# 2024-07-31
+# 2024-07-31 / Meeting
 ## Questions to ask CF
 - opt from last time (first check label origin): Makes worse in equal case?
   - note: worst part in countdown is boxing
 - Trace too long problem (07-25)
 - polymorphic equals/RTTI and boxes (see 07-24) - did not get to that, ask later
 ## Notes from meeting
-- microbenchmark with dynamic number of handlers in between
+- microbenchmark with dynamic number of handlers in between - growing_cont
 - TODO benchmark to_outermost_handler fully
 - TODO trmc that fails statically?
   - future work: jit-trmc
+# 2024-07-31
+- Maybe create set/matrix of benchmarks for different (explicit!) scenarios:
+  - label dynamic/static
+  - handlers in between static/dynamic/limited/...
+  - handlers tail/nontail/... linear/...
+  - ...
+  - Potentially: parametrized (generated) benchmark code
