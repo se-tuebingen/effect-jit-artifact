@@ -51,10 +51,10 @@ class EffBackend(Language):
         elif self.backend == "jit":
             print(os.path.join(os.path.dirname(path), "./wrapper.mcore.sexp"))
             shutil.copy(os.path.join(os.path.dirname(path), "./wrapper.mcore.sexp"), os.path.join(result_path, "./wrapper.mcore.sexp"))
-            aw_proc = run(["rpyeffect-asm/target/universal/stage/bin/rpyeffectasm", "--debug", result_path + f"/wrapper.mcore.sexp", result_path + "/wrapper.rpyeffect"])
+            aw_proc = run(["rpyeffect-asm/target/universal/stage/bin/rpyeffectasm", result_path + f"/wrapper.mcore.sexp", result_path + "/wrapper.rpyeffect"])
             aw_output = tee(aw_proc, "[purple]rpy_wr[/purple]| ")
 
-            a_proc = run(["rpyeffect-asm/target/universal/stage/bin/rpyeffectasm", "--debug", result_path + f"/{fname}.{ext}", result_path + "/main.rpyeffect"])
+            a_proc = run(["rpyeffect-asm/target/universal/stage/bin/rpyeffectasm", result_path + f"/{fname}.{ext}", result_path + "/main.rpyeffect"])
             a_output = tee(a_proc, "[purple]rpyasm[/purple]| ")
             rpypath = result_path + f"/wrapper.rpyeffect"
             return [jit_path, rpypath] if os.path.exists(result_path + "/main.rpyeffect") else None

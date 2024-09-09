@@ -29,7 +29,7 @@ class HeliumBackend(Language):
             if not os.path.exists(h_result_path):
                 return None
             a_result_path = os.path.join(result_dir, os.path.basename(path + ".rpyeffect"))
-            a_proc = run(["rpyeffect-asm/target/universal/stage/bin/rpyeffectasm", "--debug", "--check-contracts", "--from", "mcore-json", h_new_result_path, a_result_path])
+            a_proc = run(["rpyeffect-asm/target/universal/stage/bin/rpyeffectasm", "--from", "mcore-json", h_new_result_path, a_result_path])
             a_output = tee(a_proc, "[purple]rpyasm[/purple]| ")
             if not os.path.exists(a_result_path): return None
             return [jit_path, a_result_path]
