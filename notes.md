@@ -65,3 +65,9 @@
   - handlers tail/nontail/... linear/...
   - ...
   - Potentially: parametrized (generated) benchmark code
+# 2024-09-18 / meeting with CF
+- for erased ptr type info
+  - guard_is_object ? - ask gc
+  - "implement a try_cast_erased function" newly committed to pypy
+  - TODO UPDATE PYPY!!
+- parser for jit logs: rpython/jit/tool/oparser.py
