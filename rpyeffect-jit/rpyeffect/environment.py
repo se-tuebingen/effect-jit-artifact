@@ -68,7 +68,7 @@ class Environment:
             res.values_ptr[i] = self.values_ptr[i]
         return res
 
-    @generic(["stored", "stack", "codata"])
+    @generic(["stored", "stack", "codata"]) # TODO can use objectmodel.specialize.argtype(...) instead?
     @unroll_safe
     @objectmodel.always_inline
     def setfrom(self, stored, parameter_index_start, program):

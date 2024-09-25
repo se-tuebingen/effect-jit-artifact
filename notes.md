@@ -69,5 +69,14 @@
 - for erased ptr type info
   - guard_is_object ? - ask gc
   - "implement a try_cast_erased function" newly committed to pypy
-  - TODO UPDATE PYPY!!
+  - TODO UPDATE PYPY!! - DONE
 - parser for jit logs: rpython/jit/tool/oparser.py
+# 2024-09-20
+- Updated Pypy => [results](./notes-ref/resback20240920_1/)
+- Started using try_cast_erased to optimize Ref to NumBox
+  - Problem: still allocates for the argument to try_cast_erased - @cf: hard to fix?
+    ```jit-log
+    +1108: p115 = new_with_vtable(descr=<SizeDescr 16>)
+    +1216: p117 = call_r(ConstClass(try_cast_erased__NumBox), p115, descr=<Callr 8 r EF=2>)
+    +1252: setfield_gc(p115, i114, descr=<FieldS rpyeffect.region.NumBox.inst_value 8 pure>)
+    ```
