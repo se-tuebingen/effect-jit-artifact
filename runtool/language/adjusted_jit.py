@@ -17,11 +17,11 @@ class AdjustedJitBackend(Language):
 
 adjustments = [
     "2-context",
-    # "debug",
+    # "debug", # not built rn.
     "no-addcej",
-    "no-addcej-no-context",
+    # "no-addcej-no-context", # not built rn.
     "no-context",
-    "no-opt",
+    # "no-opt", # not built rn.
     "no-specialization"
 ]
 
