@@ -1,7 +1,7 @@
 import os
 import uuid
 from runtool.language import Language
-from runtool.config import jit_path
+import runtool.config as cfg
 from runtool.util import run, tee
 
 class EffektBackend(Language):
@@ -12,7 +12,7 @@ class EffektBackend(Language):
         self.main_uppercase = False
         self.backend = backend
 
-    def compile(self, path: str, name: str) -> list[str] | None:
+    def compile(self, path: str, name: str, jit_path: str = cfg.jit_path) -> list[str] | None:
         path = os.path.abspath(path)
         fname = os.path.basename(path)
         if fname.endswith(".effekt"):

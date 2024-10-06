@@ -4,7 +4,7 @@ import os
 import uuid
 from runtool.language import Language
 from runtool.util import run, tee
-from runtool.config import jit_path
+import runtool.config as cfg
 
 class KokaBackend(Language):
     def __init__(self, backend):
@@ -14,7 +14,7 @@ class KokaBackend(Language):
         self.main_uppercase = False
         self.backend = "vm" if backend == "jit" else backend
 
-    def compile(self, path: str, name: str) -> list[str] | None:
+    def compile(self, path: str, name: str, jit_path: str = cfg.jit_path) -> list[str] | None:
         path = os.path.abspath(path)
         proch = run(["stack", "build"], cwd="./koka")
         outputh = tee(proch, "[blue]ghc [/blue]| ")

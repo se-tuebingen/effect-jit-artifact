@@ -9,12 +9,16 @@ from runtool.language.eff import EffBackend
 from runtool.language.helium import HeliumBackend
 from runtool.language.koka import KokaBackend
 
+from runtool.language.adjusted_jit import with_adjusted_jit_backends
 
 langs: list[Language] = [
-    EffektBackend("jit"), EffektBackend("llvm"), EffektBackend("js"), EffektBackend("ml"),
-    EffBackend("plain-ocaml"), EffBackend("jit"),
+    *with_adjusted_jit_backends(EffektBackend("jit")),
+    EffektBackend("llvm"), EffektBackend("js"), EffektBackend("ml"),
+    EffBackend("plain-ocaml"), 
+    *with_adjusted_jit_backends(EffBackend("jit")),
     HeliumBackend("rpyeffect"),
-    KokaBackend("js"), KokaBackend("vm"), KokaBackend("c"),
+    KokaBackend("js"), KokaBackend("c"),
+    *with_adjusted_jit_backends(KokaBackend("vm")),
 ]
 
 def getlang(lang: str) -> Language:

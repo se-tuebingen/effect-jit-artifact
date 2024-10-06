@@ -2,7 +2,7 @@ import os
 import uuid
 import shutil
 from runtool.util import tee, run
-from runtool.config import jit_path
+import runtool.config as cfg
 from runtool.language import Language
 
 class HeliumBackend(Language):
@@ -13,7 +13,7 @@ class HeliumBackend(Language):
         self.main_uppercase = False # TODO ?
         self.backend = backend
 
-    def compile(self, path: str, name: str) -> list[str] | None:
+    def compile(self, path: str, name: str, jit_path: str = cfg.jit_path) -> list[str] | None:
         path = os.path.abspath(path)
         uniq_prefix = name + "_" + str(uuid.uuid4())
         if self.backend == "rpyeffect":

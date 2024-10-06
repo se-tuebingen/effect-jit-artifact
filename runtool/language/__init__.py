@@ -9,7 +9,7 @@ class Language(ABC):
     main_uppercase: bool = False
     
     @abstractmethod
-    def compile(self, path: str, name: str) -> list[str] | None: ...
+    def compile(self, path: str, name: str, **kwargs: any) -> list[str] | None: ...
 
     def __hash__(self):
         return hash(self.name)
