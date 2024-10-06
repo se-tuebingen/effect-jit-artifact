@@ -84,7 +84,7 @@ def numeric_results(benchmark: Benchmark, l: Language, sargs: list[str] | None, 
             with open(f"./.runlog.json") as f:
                 j = json.load(f)
     except Exception:
-        return "[blue]?[/blue]", "[blue]?[/blue]"
+        return np.nan, np.nan
     if benchmark_name in j and l.name in j[benchmark_name]:
         res = j[benchmark_name][l.name]
         if "benchmark" in res:
@@ -100,7 +100,7 @@ def numeric_results(benchmark: Benchmark, l: Language, sargs: list[str] | None, 
         
     # Check actual benchmark times
     try:
-        with open(f"./.results/.{benchmark_name}-{param}-results.json") as jf:
+        with open(f"./.results/.{benchmark_name}-results.json") as jf:
             j = json.load(jf)
     except Exception:
         return np.nan, np.nan
@@ -189,6 +189,31 @@ def doreport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[s
         table_abs.add_row(benchmark_name, *(r for r in results_abs), style=style)
     rich.console.Console().print(table_rel)
     rich.console.Console().print(table_abs)
+
+def doexport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None) -> None:
+    os.makedirs("./.exported", exist_ok=True)
+    export_dir = f"./.exported/{'_'.join(sorted(b.name for b in cbenchmarks))}/{'_'.join(sorted(l.name for l in clangs))}"
+    os.makedirs(export_dir, exist_ok=True)
+    fname_abs = f"{export_dir}/abs.dat"
+    fname_rel = f"{export_dir}/rel.dat"
+    columns = sorted(list(clangs), key=lambda x: x.name)
+    with open(fname_abs, "w") as f_abs:
+        with open(fname_rel, "w") as f_rel:
+            f_abs.write("benchmark")
+            f_rel.write("benchmark")
+            for lang in columns:
+                f_abs.write(f"\t{lang.name}")
+                f_rel.write(f"\t{lang.name}")
+                
+            for benchmark in cbenchmarks:
+                f_abs.write(f"\n{benchmark.name}")
+                f_rel.write(f"\n{benchmark.name}")
+                for lang in columns:
+                    abs_result, rel_result = numeric_results(benchmark, lang, sargs, columns)
+                    f_abs.write(f"\t{abs_result}")
+                    f_rel.write(f"\t{rel_result}")
+    
+    return fname_abs, fname_rel
 
 def doplot(cbenchmark: Benchmark, clangs: list[Language], sargs: list[str] | None, params) -> None:
     x = params
@@ -390,6 +415,18 @@ if __name__ == "__main__":
         cbenchmarks = getbenchmarks(args.benchmarks)
 
         doreport(cbenchmarks, clangs, sargs)
+        sys.exit(0)
+
+      case "export-tables":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+
+        clangs = getlangs(args.langs)
+        cbenchmarks = getbenchmarks(args.benchmarks)
+
+        doexport(cbenchmarks, clangs, sargs)
         sys.exit(0)
 
       case "getcmd":

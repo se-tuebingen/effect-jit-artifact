@@ -12,7 +12,7 @@ class KokaBackend(Language):
         self.name = f"koka-{backend}"
         self.extension = "kk"
         self.main_uppercase = False
-        self.backend = backend
+        self.backend = "vm" if backend == "jit" else backend
 
     def compile(self, path: str, name: str) -> list[str] | None:
         path = os.path.abspath(path)
