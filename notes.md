@@ -39,13 +39,14 @@
 - When shifting, assume that there will be enough stack segments (by effect safety)
 - Don't store explicit type tags in data values
 ## 2023-03-15
-- Fake loops, detect using topmost stack target
-- Add "fake" can_enter_jit points beyond backjumps to make loop starts better
+- Fake loops, detect using topmost stack target [#insight]
+- Add "fake" can_enter_jit points beyond backjumps to make loop starts better [#insight]
+  - at pushes, so the stack is not allocated
   - We want to see the allocation first, then the usage, so it's removed
 ## 2023-03-16
 - Use None (actual null) as stack bottom => slight performance improvement
 ## 2023-03-21
-- Use target to know which specialized stack (frame) type we will have
+- Use target to know which specialized stack (frame) type we will have [#insight]
   - Uniquely determined by target if we don't do weird stuff
     - weird stuff: call with different number of parameters, relying on the
       captures to shift into place, somehow also changing the rest
@@ -60,7 +61,7 @@
 - We should not promote constants (strings in externs)
 ## 2023-08-22
 - shift n => shift n label
-- Shallow handlers via "open" metastacks / stack segments
+- Shallow handlers via "open" metastacks / stack segments [#insight]
   - i.e. don't have a prompt
   - merge lazily on push (concat stack as pair of stacks)
 ## 2023-08-23
@@ -76,7 +77,7 @@
 ## 2023-08-30
 - Write transformer from higher-level to asm-like IR
 ## 2023-09-20
-- Annotate return type of shift/control
+- Annotate return type of shift/control [#insight]
 ## 2023-10-15
 - stacks: common superclass instead of one being the superclass of the other
 ## 2023-10-16
@@ -100,7 +101,7 @@
 - Implement globals (using strings as id)
 ## 2024-04-05
 - Initial draft of koka backend with somewhat working handlers
-  - disable monadic translation, switch out key functions for handlers
+  - disable monadic translation, switch out key functions for handlers [#insight]
 ## 2024-04-06
 - Make LoadLib an instruction so it can divert execution to a static-init for the library
 - allow static-init (needed for globals)
@@ -109,7 +110,7 @@
 ## 2024-04-08
 - only execute static-init once per library (by path)
 ## 2024-04-11
-- Monomorphize codata (methods) values for num/ptr, so we don't have to eta-expand them.
+- Monomorphize codata (methods) values for num/ptr, so we don't have to eta-expand them. [#insight]
 ## 2024-04-12
 - Use Top as argument for resume closure and use the fact that this will now be monomorphized
   => Don't box when resuming with an unboxed int and expecting one, too
@@ -117,19 +118,22 @@
 - global ref cells
   - just like backtrackable ones, but not registered in region
 ## 2024-04-25
-- interned strings as tags for data types
+- interned strings as tags for data types [#insight]
   - easier to compile for (separate compilation)
   - the JIT can reason well about those
 - Also expose interned strings as a object-level construct
 ## 2024-04-30
 - mcore: Allow type annotations
 ## 2024-05-15
-- Expose promote to object code
+- Expose promote to object code [#insight]
   - can be used to promote language-specific parts of the encoding
-- Use those object-level promotes in koka to promote the current evidence vector evv
+- Use those object-level promotes in koka to promote the current evidence vector evv [#insight]
+  - manually promote in object code when reading global var
+    - otherwise, hard to reason about for jit
   - we want to specialize for the concrete handlers
+  - (shaves off ~1s for countdown, improves traces a lot)
 ## 2024-05-16
-- Prevent overpromotion by not adhering to object-code promotes if we have seen multiple values already
+- Prevent overpromotion by not adhering to object-code promotes if we have seen multiple values already [#insight]
 - Do static optimization to remove some spurious pushes for tail-calls
 ## 2024-05-24
 - We need to restore the evv when resuming
@@ -139,7 +143,7 @@
 - Local mutable state in koka
 ## 2024-06-07
 - Change Effekt backend for new translation of effects
-  - Directly use codata, shift-to-label (no handler-sugar)
+  - Directly use codata, shift-to-label (no handler-sugar) [#insight]
 ## 2024-06-28
 - Support for dynamic binding via special stacks with *one* dynamic binding
   - lookup based on label
@@ -161,7 +165,7 @@
 - Add allocation site to label, promote and compare first
   - might make handler sieve worse at new_with_vtable 8?
 # 2024-07-18
-- results before this change backupped to [notes-ref](./notes-ref/resback20240718/), jit at cc2df3a
+- results before this change backupped to [notes-ref](./notes-ref/resback20240718/), jit at cc2df3a         [#insight]
 - results after, no promote yet backupped to [notes-ref](./notes-ref/resback20240718_2/), jit at 8fde10d
 - results after, with promote backupped to [notes-ref](./notes-ref/resback20240718_3/), jit at ca41098
 - TODO: Make benchmarks for unused handlers, benchmark by number, with:
@@ -176,12 +180,12 @@
 - benchmark multiple_handlers implemented in eff: plain-ocaml times out, current jit is sim. to koka-vm
 - unused_handlers (with 10 unused handlers) implemented in koka,eff. Compared to countdown:
   - effekt-ml cant run (eff.poly.rec.)
-  - effekt-jit abt same time as countdown, so for other jit backends
+  - effekt-jit abt same time as countdown, so for other jit backends    [#insight]
   - koka-c,eff-plain-ocaml also like before
   - effekt-llvm a lot slower, koka-js somewhat (10%)
 # 2024-07-24
 - benchmark to_outermost_handler for koka.
-  - eff seems impossible? We can't mask, it's always dynamic
+  - eff seems impossible? We can't mask, it's always dynamic [#insight]
   - koka has problems with incrementing boxed ints (re-unbox, inc, box in trace)
 - this + restriction on polymorphic equals (esp. Eff): Maybe drop erased ptrs and switch to Value type?
   - Strings? io streams? (byte)arrays? (the rest should mostly just work)
@@ -191,7 +195,7 @@
 - to_outermost_handler over number of handlers:
   - ![absolute](./notes-ref/to_outermost_handler_plot0.png)
   - ![absolute](./notes-ref/to_outermost_handler_plot1.png)
-  - Weird non-continuity: Trace gets too long, see [log](./notes-ref/to_outermost_handler_effekt_41.log)
+  - Weird non-continuity: Trace gets too long, see [log](./notes-ref/to_outermost_handler_effekt_41.log)  [#insight]
     - in koka: see log [log](./notes-ref/to_outermost_handler_koka_41.log)
       - not optimized out statically, at least mask is still in generated code
   - results stored [here](./notes-ref/resback20240725/)
@@ -199,7 +203,7 @@
 # 2024-07-31 / Meeting
 ## Questions to ask CF
 - opt from last time (first check label origin): Makes worse in equal case?
-  - note: worst part in countdown is boxing
+  - note: worst part in countdown is boxing [#insight]
 - Trace too long problem (07-25)
 - polymorphic equals/RTTI and boxes (see 07-24) - did not get to that, ask later
 ## Notes from meeting
@@ -241,3 +245,55 @@
   - implementation effort?
   - source languages with effect handlers?
   - jitting for wasm?
+# 2024-10-01 / Meeting notes
+- Future: Lexa dynamically in jit?
+- Can find out certain info with local dynamic analysis instead of complex static ones
+- see slack
+- differences, commonalities
+- Jona's Notes:
+  ```md
+  ## Introduction
+
+  Design-space exploration for JIT based implementation techniques...
+  With JIT it is easy to find out things that are difficult to optimize at
+  runtime. By construction separate compilation, indirections, hofs, 
+  indirection over handlers (one effect is raised in one module and handled in a different one), ...
+
+  Specifically, in addition to the usual problems, effect handlers ...
+
+  - handler implementierung
+    AOT: inlining
+    JIT: "locally at runtime" search for handlers, easy to specialize
+  - allocation of continuations
+  - prompt search continuation capture
+
+  -> optimizing and inlining sometimes would be wrong, by construction works in jitting
+
+  Various aspects have been studied in the past... dynamic binding ... continuations ... but effect handlers as a total not
+
+  ## General Insights (across different implemented languages)
+
+  boxing, recursive functions, now very indirect over handlers, etc...
+
+  ## Specific insights
+  ```
+# 2024-10-04
+- Example where boxing must break tail recursion for a direct translation:
+  ```
+  def hof[A]{ body: => A }: A = { ... body() } // body called in tail position
+  def foo(): Int = {
+    hof {
+      ...
+      foo() // in tail position
+    }
+  }
+  ```
+  - Normal: both tail calls, no stack for foo => hof => lambda => foo
+  - With boxing:
+    - Need to box in lambda, because hof expects a lambda that returns a boxed value
+    - Need to unbox after hof in foo, because foo is expected to return an (unboxed) int
+  - hof is exactly how a handler looks in some of those translations!!
+- Idea: Can we do allocation reuse in a tracing JIT?
+  - If we detect linearity properly, this would magically solve the ref(NumBox) issue,
+    since reusing the NumBox is the same as setting its field. Setting the ref to its old value
+    should be easy to opt out.
