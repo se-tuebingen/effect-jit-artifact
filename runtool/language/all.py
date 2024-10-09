@@ -6,6 +6,7 @@ from runtool.util import store_logdict
 from runtool.language import Language
 from runtool.language.effekt import EffektBackend
 from runtool.language.eff import EffBackend
+from runtool.language.oldeff import OldEffBackend
 from runtool.language.helium import HeliumBackend
 from runtool.language.koka import KokaBackend
 
@@ -14,7 +15,8 @@ from runtool.language.adjusted_jit import with_adjusted_jit_backends
 langs: list[Language] = [
     *with_adjusted_jit_backends(EffektBackend("jit")),
     EffektBackend("llvm"), EffektBackend("js"), EffektBackend("ml"),
-    EffBackend("plain-ocaml"), 
+    EffBackend("plain-ocaml"),
+    OldEffBackend("plain-ocaml"),
     *with_adjusted_jit_backends(EffBackend("jit")),
     HeliumBackend("rpyeffect"),
     KokaBackend("js"), KokaBackend("c"),
