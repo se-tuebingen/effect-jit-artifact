@@ -1,0 +1,33 @@
+(executables
+ (names benchmark)
+ (ocamlopt_flags
+  (:standard -O3))
+ (modes native)
+ (libraries benchmark_suite bechamel-notty notty notty.unix unix))
+
+(rule
+(deps 
+(universe)) ;; always rebuild
+ (targets benchmark.output)
+ (action
+  (with-stdout-to
+   %{targets}
+   (run ./benchmark.exe))))
+
+(rule
+ (deps
+  benchmark.output)
+ (targets benchmark.output.version)
+ (action
+  (with-stdout-to
+   %{targets}
+   (pipe-outputs
+    (run echo "Ocaml Version: %{ocaml_version}\n")
+    (run cat - benchmark.output)))))
+
+(rule
+ (alias benchmark)
+ (mode promote)
+ (deps benchmark.output.version)
+ (action
+  (copy benchmark.output.version benchmark.expected)))

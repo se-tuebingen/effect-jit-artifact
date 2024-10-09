@@ -1,0 +1,22 @@
+let a = (let f x = x in (f 5, f "foo"));;
+
+a;;
+
+let g x y = (fun x y -> x) x y;;
+
+(g 4 "foo", g "foo" 4);;
+
+let u = [];;
+
+(1 :: u, "foo" :: u);;
+
+let v = [[]];;
+
+([] :: v, [2] :: v);;
+
+(fun x -> let h t u = u in h x x);;
+
+(fun x -> let h t u = t in h x x);;
+
+let rec u x = u x;;
+u;;

@@ -1,0 +1,88 @@
+(* This example is described in Section 6.7 of "Programming with Algebraic Effects and
+   Handlers" by A. Bauer and M. Pretnar. *)
+
+type result = Failure | Success of (int*int) list
+
+effect Select : bool
+
+let amb = handler
+  |  effect Select k ->
+    (match k true with
+    | Success y -> Success y
+    | Failure -> k false)
+;;
+
+(* The 8 queens problem. *)
+
+let rec select_from = function
+  | [] -> None
+  | x::xs -> if perform Select then Some x else select_from xs
+
+let no_attack (x,y) (x',y') =
+  x <> x' && y <> y' && abs (x - x') <> abs (y - y')
+
+let available x qs =
+  filter (fun y -> forall (no_attack (x,y)) qs) [1;2;3;4;5;6;7;8]
+;;
+
+(* This one finds [(8, 4); (7, 2); (6, 7); (5, 3); (4, 6); (3, 8); (2, 5); (1, 1)]. *)
+with amb handle
+  let rec place x qs =
+    if x = 9 then Success qs else
+      match select_from (available x qs) with
+      | Some y -> place (x+1) ((x, y) :: qs)
+      | None -> Failure
+  in place 1 []
+;;
+
+(* Breadth-first search. *)
+
+(* We add a state handler to use as a queue. *)
+
+effect Get_next : ((bool -> result)*bool) option
+effect Add_to_queue : ((bool -> result)*bool) -> unit
+
+let queue initial = handler
+  | effect Get_next k ->
+    ( fun queue -> match queue with
+    | [] -> k None []
+    | hd::tl -> k (Some hd) tl )
+  | effect (Add_to_queue y) k -> ( fun queue ->  k () (queue @ [y]))
+  | x -> ( fun _ -> x)
+  | finally x -> x initial
+;;
+
+
+let bfs =
+  (* Auxilary function that runs the next choice. *)
+  let run_next () =
+    match perform Get_next with
+    | None -> Failure
+    | Some (k,x) -> k x
+  in
+  handler (* Handler definition. *)
+| effect Select k ->
+  perform (Add_to_queue (k, true));
+  perform (Add_to_queue (k, false));
+  run_next ()
+  (* When the computation fails, run the next choice. Final Failure
+     comes from run_next when the queue is empty. *)
+| Success x -> Success x
+| Failure -> run_next ()
+;;
+
+(* We repeat 8-queen example with breadth-first-search. It is much slower
+   than amb, which is not surprising. It still finds the same solution
+   (which is what we would expect in this case). *)
+with queue [] handle
+with bfs handle
+  let rec place x qs =
+    if x = 9 then Success qs else
+      match select_from (available x qs) with
+      | Some y -> place (x+1) ((x, y) :: qs)
+      | None -> Failure
+  in place 1 []
+;;
+
+(* In this case using BFS is both slower and requires more code because we need
+   to have a queue, but it is an example of how neatly handlers can be nested. *)
