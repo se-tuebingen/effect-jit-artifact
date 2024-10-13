@@ -1,0 +1,11 @@
+effect Fun : unit
+
+let rec outer n = handle
+    if n > 0 then
+        outer (n - 1)
+    else 0
+  with 
+    | effect Fun k -> k ()
+    | x -> x
+
+let run n = outer n
