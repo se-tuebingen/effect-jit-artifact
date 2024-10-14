@@ -215,6 +215,55 @@ def doexport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[s
     
     return fname_abs, fname_rel
 
+def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None) -> None:
+    os.makedirs("./.exported", exist_ok=True)
+    export_dir = f"./.exported/{'_'.join(sorted(b.name for b in cbenchmarks))}/{'_'.join(sorted(l.name for l in clangs))}"
+    os.makedirs(export_dir, exist_ok=True)
+    fname_abs = f"{export_dir}/table.tex"
+    columns_dict = {}
+    for lang in clangs:
+        lang_name = lang.lang_name.replace("old","")
+        if lang_name not in columns_dict:
+            columns_dict[lang_name] = []
+        columns_dict[lang_name].append(lang)
+    for key in columns_dict:
+        columns_dict[key].sort(key=lambda x: (not ("jit" in x.name or "vm" in x.name), x.name))
+    supercolumns = sorted(columns_dict.keys())
+
+    columns = [be for lang in supercolumns for be in columns_dict[lang]]
+    with open(fname_abs, "w") as f:
+        f.write(f"\\begin{{tabular}}{{l{' r' * len(columns)}}}\n\\toprule")
+        for lang in supercolumns:
+            f.write(f" & \\multicolumn{{{len(columns_dict[lang])}}}{{c}}{{{lang.replace('_','-')}}}")
+        f.write(" \\\\\n")
+        last_end = 1
+        for lang in supercolumns:
+            end = last_end + len(columns_dict[lang])
+            f.write(f"\\cmidrule(l){{{last_end+1}-{end}}}")
+            last_end = end
+        f.write(" \n")
+        for lang in supercolumns:
+            for be in columns_dict[lang]:
+                bname = re.sub(f'^{lang}-', "", be.name)
+                f.write(f" & {bname}")
+        f.write(" \\\\\n\\midrule")
+
+        for benchmark in cbenchmarks:
+            f.write(f"\n{benchmark.name.replace('_','-')}")
+            for lang in supercolumns:
+                for be in columns_dict[lang]:
+                    abs_result, rel_result = numeric_results(benchmark, be, sargs, columns)
+                    if np.isnan(abs_result):
+                        f.write(f" & ")
+                    elif rel_result == 1.0:
+                        f.write(f" & $\\mathbf{{{abs_result:.3f}}}$")
+                    else:
+                        f.write(f" & ${abs_result:.3f}$")
+            f.write(" \\\\")
+        f.write(f"\n\\bottomrule\n\\end{{tabular}}")
+    
+    return fname_abs
+
 def doplot(cbenchmark: Benchmark, clangs: list[Language], sargs: list[str] | None, params) -> None:
     x = params
     for lang in sorted(clangs, key=lambda x: x.name):
@@ -429,6 +478,19 @@ if __name__ == "__main__":
         a,b = doexport(cbenchmarks, clangs, sargs)
         print(a)
         print(b)
+        sys.exit(0)
+
+      case "export-tex-tables":
+        parser = ArgumentParser()
+        parser.add_argument("langs")
+        parser.add_argument("benchmarks")
+        args = parser.parse_args(myargs)
+
+        clangs = getlangs(args.langs)
+        cbenchmarks = getbenchmarks(args.benchmarks)
+
+        a = doexport_tex(cbenchmarks, clangs, sargs)
+        print(a)
         sys.exit(0)
 
       case "getcmd":
