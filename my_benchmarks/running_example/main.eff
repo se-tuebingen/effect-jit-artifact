@@ -13,7 +13,7 @@ let filter p b =
     b ()
   with
   | effect (Emit x) k -> 
-      (if (p x) then (perform (Emit x)) else ());
+      if (p x) then (perform (Emit x)) else ();
       k ()
   | _ -> ()
 (* END:transformer *)
