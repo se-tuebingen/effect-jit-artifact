@@ -114,6 +114,51 @@ def numeric_results(benchmark: Benchmark, l: Language, sargs: list[str] | None, 
     else:
         return np.nan, np.nan
 
+def numeric_results_with_timeout_str(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language], param = None) -> tuple[float, float]:
+    benchmark_name = benchmark.name
+    if sargs is not None:
+        benchmark_name += "_" + "_".join(sargs)
+
+    # Check run/compile result
+    try:
+        if logdict is not None:
+            j = logdict.copy()
+        else:
+            with open(f"./.runlog.json") as f:
+                j = json.load(f)
+    except Exception:
+        return np.nan, np.nan
+    if benchmark_name in j and l.name in j[benchmark_name]:
+        res = j[benchmark_name][l.name]
+        if "benchmark" in res:
+            return "-", np.nan
+        elif "compile" in res:
+            return "x", np.nan
+        elif "run" in res:
+            if res["run"].startswith("timed out"):
+                return f"> {timeout}", np.nan
+            return res["run"], np.nan
+        elif "run-result" in res:
+            return np.nan, np.nan
+    else:
+        return np.nan, np.nan
+        
+    # Check actual benchmark times
+    try:
+        with open(f"./.results/.{benchmark_name}-results.json") as jf:
+            j = json.load(jf)
+    except Exception:
+        return np.nan, np.nan
+    results_by_name = {r["command"]: r["mean"] for r in j["results"]}
+    try:
+        fastest = min((results_by_name.get(f'{c.name}:{benchmark.name}') for c in columns if f'{c.name}:{benchmark.name}' in results_by_name))
+    except ValueError: pass
+    if f"{l.name}:{benchmark_name}" in results_by_name:
+        a = float(results_by_name.get(f'{l.name}:{benchmark_name}'))
+        return a, a/fastest
+    else:
+        return np.nan, np.nan
+
 def results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language]) -> tuple[str, str]:
     benchmark_name = benchmark.name
     if sargs is not None:
@@ -252,8 +297,10 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
             f.write(f"\n{benchmark.name.replace('_','-')}")
             for lang in supercolumns:
                 for be in columns_dict[lang]:
-                    abs_result, rel_result = numeric_results(benchmark, be, sargs, columns)
-                    if np.isnan(abs_result):
+                    abs_result, rel_result = numeric_results_with_timeout_str(benchmark, be, sargs, columns)
+                    if isinstance(abs_result, str):
+                        f.write(f" & {abs_result}")
+                    elif np.isnan(abs_result):
                         f.write(f" & ")
                     elif rel_result == 1.0:
                         f.write(f" & $\\mathbf{{{abs_result:.3f}}}$")
