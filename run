@@ -133,7 +133,7 @@ def numeric_results_with_timeout_str(benchmark: Benchmark, l: Language, sargs: l
         if "benchmark" in res:
             return "-", np.nan
         elif "compile" in res:
-            return "x", np.nan
+            return f"x-{benchmark_name}-{l.name}", np.nan
         elif "run" in res:
             if res["run"].startswith("timed out"):
                 return f"> {timeout}", np.nan
@@ -293,7 +293,7 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
                 f.write(f" & {bname}")
         f.write(" \\\\\n\\midrule")
 
-        for benchmark in cbenchmarks:
+        for benchmark in sorted(cbenchmarks, key=lambda x: x.name):
             f.write(f"\n{benchmark.name.replace('_','-')}")
             for lang in supercolumns:
                 for be in columns_dict[lang]:

@@ -7,11 +7,13 @@ from runtool.util import store_logdict
 from runtool.suite.handler_bench import HandlerBenchmark
 from runtool.suite.my_benchmarks import MyBenchmarks
 from runtool.suite.koka_bench import KokaBench
+from runtool.suite.effekt_are_we_fast_yet import EffektAreWeFastYet
 
 suites = [
     HandlerBenchmark,
     MyBenchmarks,
-    KokaBench
+    KokaBench,
+    EffektAreWeFastYet
 ]
 
 benchmarks = [
