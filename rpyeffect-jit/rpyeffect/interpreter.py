@@ -15,6 +15,7 @@ from rpython.rlib.rerased import new_erasing_pair
 import rpyeffect.config as cfg
 from rpyeffect.dynlib import load_lib
 from rpyeffect.util.debug import debug, debug_hooks
+from rpyeffect.value import *
 
 # Initialize JIT stuff
 def get_location(pc_block, pc_instruction, context, program, primitives):
@@ -124,19 +125,19 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
     if isinstance(op, CONST_NUMBER):
         env.set_num(op.out, op.value)
     elif isinstance(op, CONST_PTR):
-        env.set_ptr(op.out, op.value)
+        env.set_ptr(op.out, op.value_ptr)
     elif isinstance(op, PRIM_OP):
         #opid = promote_string(op.name) # Should be const
         if cfg.debug and cfg.print_debug:
             for i in op.ins.regs[NUMBER]:
-                debug("  num %d is %d" %(i, env.get_num(i)))
+                debug("  num %d is %d" %(i, env.get_int(i)))
             for i in op.ins.regs[OPAQUE_PTR]:
                 debug("  ptr %d is %s" %(i, env.get_ptr(i)))
         primitives.run_primitive(env, op.name, op.ins, op.outs, program, pc_block, pc_instruction, metastack, stack, stack_label, stack_binding)
         if cfg.debug:
             debug("  Out:")
             for i in op.outs.regs[NUMBER]:
-                debug("  num %d is %d" %(i, env.get_num(i)))
+                debug("  num %d is %d" %(i, env.get_int(i)))
             for i in op.outs.regs[OPAQUE_PTR]:
                 debug("  ptr %d is %s" %(i, env.get_ptr(i)))
     elif isinstance(op, ADD):
@@ -158,8 +159,8 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
     elif isinstance(op, JUMP):
         return jump_to(op.target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, IFZERO):
-        cond = env.get_int(op.cond)
-        if (cond == 0):
+        cond = env.get_num(op.cond)
+        if (isinstance(cond, BoolValue) and not cond.value) or (isinstance(cond, IntValue) and cond.value == 0):
             return jump_to(op.then.target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, SHIFT):
         if op.n == 0:
@@ -224,18 +225,18 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
         context = get_context(pc_block, pc_instruction, stack, metastack)
     elif isinstance(op, COPY):
         if op.ty == NUMBER:
-            env.set_num(op.to, env.get_int(op.fr))
+            env.set_num(op.to, env.get_num(op.fr))
         elif op.ty == OPAQUE_PTR:
             env.set_ptr(op.to, env.get_ptr(op.fr))
     elif isinstance(op, DROP):
         if op.ty == NUMBER:
-            env.set_num(op.reg, 0)
+            env.set_int(op.reg, 0)
         elif op.ty == OPAQUE_PTR:
             env.set_ptr(op.reg, eNone)
     elif isinstance(op, SWAP):
         if op.ty == NUMBER:
             tmp = env.get_num(op.b)
-            env.set_num(op.b, env.get_int(op.a))
+            env.set_num(op.b, env.get_num(op.a))
             env.set_num(op.a, tmp)
         elif op.ty == OPAQUE_PTR:
             tmp = env.get_ptr(op.b)
@@ -266,7 +267,7 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
             env.set_ptr(clause.args.regs[OPAQUE_PTR][i], arg.get_ptr(i))
         return jump_to(clause.target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, SWITCH):
-        arg = env.get_int(op.arg)
+        arg = env.get_num(op.arg)
         target = op.default_target
         for idx, value in enumerate(op.values):
             if arg == value:
@@ -349,10 +350,10 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
         ref = env.get_ref(op.ref)
         if op.ty == NUMBER:
             assert(isinstance(ref, NumRef))
-            ref.put_num(env.get_num(op.value))
+            ref.put_num(env.get_num(op.value_reg))
         elif op.ty == OPAQUE_PTR:
             assert(isinstance(ref, PtrRef))
-            ref.put_ptr(env.get_ptr(op.value))
+            ref.put_ptr(env.get_ptr(op.value_reg))
     elif isinstance(op, LOAD_LIB):
         lib, flag = load_lib(program, env.get_str(op.path), primitives)
         env.set_lib(0, lib)
@@ -388,7 +389,7 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
             else:
                 # debug(op.msg)
                 for reg in op.traced.regs[NUMBER]:
-                    debug("  NUM %d: %d" % (reg, env.get_num(reg)))                
+                    debug("  NUM %d: %d" % (reg, env.get_int(reg)))                
                 for reg in op.traced.regs[OPAQUE_PTR]:
                     debug("  PTR %d: %s" % (reg, env.get_ptr(reg)))                
 

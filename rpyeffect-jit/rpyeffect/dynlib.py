@@ -2,10 +2,11 @@ from rpyeffect.parse import load_program
 from rpyeffect.types import NUMBER_OF_TYPES
 from rpython.rlib.jit import elidable, unroll_safe
 from rpyeffect.util.debug import debug, debug_hooks
+from rpyeffect.value import Value
 
 import os
 
-class LoadedLib(object):
+class LoadedLib(Value):
     _immutable_fields_ = ['filename', 'at', 'symbols']
     def __init__(self, filename, at, symbols):
         self.filename = filename

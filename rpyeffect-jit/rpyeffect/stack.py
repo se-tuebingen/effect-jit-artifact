@@ -5,9 +5,10 @@ from rpyeffect.stored_environment import with_environment
 from rpyeffect.representations import generate_representation_accessors
 import rpyeffect.config as cfg
 from rpyeffect.representations import eNone
+from rpyeffect.value import Value
 
 # Stacks
-class StackLike: pass
+class StackLike(Value): pass
 
 @with_environment(specialized_for=[(x,y) for x in range(cfg.specialize_stacks[0]) for y in range(cfg.specialize_stacks[1])])
 class Stack(StackLike):
@@ -61,7 +62,7 @@ class ConcatStack(StackLike):
 
 # Metastacks
 erase_cont, unerase_cont = new_erasing_pair("MetaStackLike")
-class MetaStackLike:
+class MetaStackLike(Value):
     _attrs_ = ['stack']
     _immutable_fields_ = ['stack']
 

@@ -1,8 +1,11 @@
 from rpyeffect.types import *
 from rpyeffect.data import Data
 from rpyeffect.representations import decode_str
+from rpyeffect.value import IntValue, Value
 try:
     from rpython.rlib.jit import unroll_safe, promote
+    from rpython.rlib.signature import signature
+    from rpython.rlib import types
 except ImportError:
     def unroll_safe(f): return f
     def promote(v): return v
@@ -11,7 +14,18 @@ class Instr:
     def __init__(self):
         pass
 
-def int_list_repr(lst):
+def num_list_repr(lst):
+    res = "["
+    first = True
+    for e in lst:
+        if not first:
+            res += ", "
+        first = False
+        res += ("%s" % e)
+        first = False
+    return res + "]"
+
+def idx_list_repr(lst):
     res = "["
     first = True
     for e in lst:
@@ -44,7 +58,7 @@ class RegList:
             if not first:
                 res += ", "
             first = False
-            res += ("\"%s\": %s" % (type_repr(ty), int_list_repr(self.regs[ty])))
+            res += ("\"%s\": %s" % (type_repr(ty), idx_list_repr(self.regs[ty])))
         return res + "}"
     @unroll_safe
     def shape(self):
@@ -73,23 +87,23 @@ class CONST_NUMBER(Instr):
         self.value = value
 
     def __repr__(self):
-        return ("{\"op\": \"Const\", \"type\": \"num\", \"out\": %d, \"value\": %d}"
+        return ("{\"op\": \"Const\", \"type\": \"num\", \"out\": %d, \"value\": %s}"
                 % (self.out, self.value))
 
 class CONST_PTR(Instr):
-    _immutable_fields_ = ['out', 'value', 'format']
+    _immutable_fields_ = ['out', 'value_ptr', 'format']
 
     def __init__(self, out, value, fmt):
         self.out = out
-        self.value = value
+        self.value_ptr = value
         self.fmt = fmt
 
     def __repr__(self):
         val = ""
         if self.fmt == "string":
-            val = decode_str(self.value)
+            val = decode_str(self.value_ptr)
         else:
-            val = "%s" % self.value
+            val = "%s" % self.value_ptr
         return ("{\"op\": \"Const\", \"type\": \"ptr\", \"out\": %d, \"format\": \"%s\", \"value\": \"%s\"}"
                 % (self.out, self.fmt, val))
 
@@ -268,7 +282,7 @@ class SWITCH(Instr):
     def __init__(self, arg, values, targets, default_target):
         self.arg = arg
         assert len(targets) == len(values)
-        self.values = [0] * len(values)
+        self.values = [IntValue(0)] * len(values)
         self.targets = [default_target] * len(targets)
         for i in range(len(targets)):
             self.targets[i] = targets[i]
@@ -277,7 +291,7 @@ class SWITCH(Instr):
 
     def __repr__(self):
         return ("{\"op\": \"Switch\", \"scrutinee\": %d, \"values\": %s, \"targets\": %s, \"default\": %d}"
-                % (self.arg, int_list_repr(self.values), int_list_repr(self.targets), self.default_target))
+                % (self.arg, num_list_repr(self.values), idx_list_repr(self.targets), self.default_target))
 
 class PROJ(Instr):
     _immutable_fields_ = ['out', 'adt_type', 'scrutinee', 'tag', 'field', 'field_tpe']
@@ -335,7 +349,7 @@ class NEW(Instr):
 
     def __repr__(self):
         return ("{\"op\": \"New\", \"out\": %d, \"targets\": %s, \"args\": %s}"
-                % (self.out, int_list_repr(self.vtable.targets), self.args.__repr__()))
+                % (self.out, idx_list_repr(self.vtable.targets), self.args.__repr__()))
 
 class INVOKE(Instr):
     _immutable_fields_ = ['receiver', 'tag', 'args']
@@ -371,14 +385,14 @@ class LOAD(Instr):
                 % (self.out, type_repr(self.ty), self.ref))
 
 class STORE(Instr):
-    _immutable_fields_ = [ 'ref', 'ty', 'value' ]
+    _immutable_fields_ = [ 'ref', 'ty', 'value_reg' ]
     def __init__(self, ref, ty, value):
         self.ref = ref
         self.ty = ty
-        self.value = value
+        self.value_reg = value
     def __repr__(self):
         return ("{\"op\": \"Store\", \"ref\": %d, \"type\": \"%s\", \"value\": %d}"
-                % (self.ref, type_repr(self.ty), self.value))
+                % (self.ref, type_repr(self.ty), self.value_reg))
 
 class CALL_LIB(Instr):
     _immutable_fields_ = ['lib', 'symbol', 'cache_lib?', 'cache_target?']

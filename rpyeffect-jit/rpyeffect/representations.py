@@ -4,6 +4,9 @@ from rpython.rlib.rerased import new_erasing_pair
 from rpython.rlib.longlong2float import longlong2float, float2longlong
 import sys
 from rpython.tool.sourcetools import func_with_new_name
+from rpyeffect.value import *
+from rpython.rlib.signature import signature
+from rpython.rlib import types
 
 _representations = {}
 def representation(tpe_name, reg_tpe, encode=lambda x: x, decode=lambda x: x):
@@ -23,6 +26,16 @@ def erased_representation(tpe_name):
     """
     _erase, _unerase = new_erasing_pair(tpe_name)
     return representation(tpe_name, "ptr", encode=_erase, decode=_unerase)
+
+def boxed_representation(tpe_name, reg_tpe, box_cls, box_field="value"):
+    def box(v):
+        return box_cls(v)
+    @signature(types.instance(Value), returns=types.any())
+    def unbox(v):
+        assert isinstance(v, box_cls)
+        return getattr(v, box_field)
+        
+    return representation(tpe_name, reg_tpe, encode=box, decode=unbox)
 
 def _generate_representation_accessor(target, tpe_name, repr, read_only):
         reg_tpe, _encode, _decode = repr
@@ -57,13 +70,9 @@ def generate_representation_accessors(read_only = False):
 
 
 ## Representations of data types
-representation("int", "num")
-encode_double, decode_double = representation("double", "num", 
-    encode=float2longlong, 
-    decode=longlong2float)
-representation("bool", "num", 
-    encode=lambda b: 1 if b else 0, 
-    decode=lambda n: n != 0)
+boxed_representation("int", "num", IntValue)
+encode_double, decode_double = boxed_representation("double", "num", DoubleValue)
+boxed_representation("bool", "num", BoolValue)
 
 encode_str, decode_str = erased_representation("str")
 erased_representation("data")

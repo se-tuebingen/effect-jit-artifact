@@ -12,6 +12,7 @@ from rpyeffect.util.generic import generic
 from rpyeffect.util.annotations import assert_big_enough
 import rpyeffect.config as cfg
 from rpyeffect.util.debug import debug_hooks
+from rpyeffect.value import IntValue
 
 # Environments
 class Environment:
@@ -19,7 +20,7 @@ class Environment:
     @unroll_safe
     def __init__(self, program):
         self = hint(self, access_directly = True, fresh_virtualizable=True)
-        self.values_num = [0] * (program.frame_size[NUMBER])
+        self.values_num = [IntValue(0)] * (program.frame_size[NUMBER])
         self.values_ptr = [eNone] * program.frame_size[OPAQUE_PTR]
     @objectmodel.always_inline
     def get_num(self, name):
@@ -28,7 +29,7 @@ class Environment:
         if name >= 0:
             return self.values_num[name]
         else:
-            return 0
+            return IntValue(0)
     @objectmodel.always_inline
     def get_ptr(self, name):
         name = promote(name)

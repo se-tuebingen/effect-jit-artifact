@@ -7,6 +7,7 @@ from rpyeffect.symbol import Symbol
 from rpyeffect.util.debug import debug
 import rpyeffect.config as cfg
 from rpython.rlib.objectmodel import always_inline
+from rpyeffect.value import *
 
 def file_chars(filename, buffer_size = 128):
     """
@@ -426,6 +427,16 @@ def parse_int_list(tokens):
     token = tokens.next()
     while token != BRACKET_CLOSE:
         if isinstance(token, IntToken):
+            res = res + [IntValue(token.value)]
+        token = tokens.next()
+    return res
+
+def parse_idx_list(tokens):
+    expect(BRACKET_OPEN, tokens)
+    res = []
+    token = tokens.next()
+    while token != BRACKET_CLOSE:
+        if isinstance(token, IntToken):
             res = res + [token.value]
         token = tokens.next()
     return res
@@ -457,9 +468,9 @@ def parse_register_list(tokens):
     res = [[]] * NUMBER_OF_TYPES
     for key in json_keys(tokens):
         if key == "num":
-            res[NUMBER] = parse_int_list(tokens)
+            res[NUMBER] = parse_idx_list(tokens)
         elif key == "ptr":
-            res[OPAQUE_PTR] = parse_int_list(tokens)
+            res[OPAQUE_PTR] = parse_idx_list(tokens)
         elif key == 'double'\
         or key == 'string'\
         or key == "cont"\
@@ -508,7 +519,7 @@ def parse_type(tokens):
 
 def parse_CONST(tokens, primitives):
     out = 0
-    value_num = 0
+    value_num = IntValue(0)
     value_ptr = encode_str("")
     fmt = "int"
     ty = NUMBER
@@ -521,7 +532,7 @@ def parse_CONST(tokens, primitives):
             fmt = parse_string(tokens)
         elif key == "value":
             if ty == NUMBER and fmt == "int":
-                value_num = parse_int(tokens)
+                value_num = IntValue(parse_int(tokens))
             elif ty == NUMBER and fmt == "double":
                 value_num = encode_double(parse_double(tokens))
             elif ty == OPAQUE_PTR and fmt == "string":

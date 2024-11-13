@@ -4,9 +4,10 @@ from rpyeffect.stored_environment import with_environment
 from rpyeffect.representations import generate_representation_accessors
 import rpyeffect.config as cfg
 from rpyeffect.util.debug import debug_hooks
+from rpyeffect.value import Value
 
 @with_environment(specialized_for=[(x,y) for x in range(cfg.specialize_datas[0]) for y in range(cfg.specialize_datas[1])])
-class Data:
+class Data(Value):
     _immutable_fields_ = ['tpe']
     def __init__(self, tag):
         self.tag = tag

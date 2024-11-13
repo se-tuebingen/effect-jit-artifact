@@ -3,6 +3,7 @@ from rpyeffect.symbol import Symbol
 from rpyeffect.region import NumBox, PtrBox # reused for globals
 from rpyeffect.representations import eNone
 from rpython.rlib.jit import elidable
+from rpyeffect.value import IntValue
 
 NAME_OF_ENTRYPOINT = "$entrypoint"
 
@@ -79,7 +80,7 @@ class Program(object):
         r = self.get_global(name)
         if r is not None and isinstance(r, NumBox):
             return r.get()
-        else: return 0
+        else: return IntValue(0)
     
     @elidable
     def _get_global(self, name, lib_version):

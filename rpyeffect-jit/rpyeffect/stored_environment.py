@@ -5,6 +5,7 @@ from rpyeffect.util.annotations import assert_big_enough
 from rpyeffect.types import *
 from rpyeffect.representations import generate_representation_accessors, eNone
 from rpyeffect.util.debug import debug_hooks
+from rpyeffect.value import IntValue
 
 def with_environment(specialized_for=[]):
     """
@@ -38,7 +39,7 @@ def with_environment(specialized_for=[]):
             def _init(self, args, env, *init_args):
                 getattr(debug_hooks, "new_stored_env__%s" % cls.__name__)(self)
                 if n_num == -1:
-                    values_num = [0] * len(args.regs[NUMBER])
+                    values_num = [IntValue(0)] * len(args.regs[NUMBER])
                     assert_big_enough(len(env.values_num))
                     for i in range(len(args.regs[NUMBER])):
                         val = env.get_num(args.regs[NUMBER][i])
@@ -97,7 +98,7 @@ def with_environment(specialized_for=[]):
                     for i in unrolling_nums:
                         if idx == i:
                             return getattr(self, "values_num_%s" % i)
-                    return 0
+                    return IntValue(0)
             
             @unroll_safe
             @objectmodel.always_inline
