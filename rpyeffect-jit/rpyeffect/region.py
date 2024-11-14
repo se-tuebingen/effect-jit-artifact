@@ -1,7 +1,8 @@
-from rpython.rlib.rerased import new_erasing_pair, try_cast_erased
+from rpython.rlib.rerased import new_erasing_pair
 from rpython.rlib import objectmodel
 from rpython.rlib.jit import purefunction, elidable, hint, unroll_safe, promote, promote_string, we_are_jitted
 from rpyeffect.value import Value
+from rpyeffect.representations import subtpe_representation
 
 class Ref(Value):
     def freeze(self): return Box()
@@ -17,29 +18,28 @@ class NumRef(Ref):
 class _BoxedNumRefContents(Value):
     def __init__(self, num_value):
         self.value = num_value
-_erase_boxnumrefcont, _unerase_boxnumrefcont = new_erasing_pair("_BoxedNumRefContents")
 class PtrRef(Ref):
     _immutable_fields_ = ["is_num?"]
     def __init__(self, value):
-        nb = try_cast_erased(NumBox, value)
-        if nb:
+        if isinstance(value, NumBox):
             self.is_num = True
-            self.value = _erase_boxnumrefcont(_BoxedNumRefContents(nb.value))
+            self.value = _BoxedNumRefContents(value.value)
         else:
             self.is_num = False
             self.value = value
     def get_ptr(self):
         if self.is_num:
-            bn = _unerase_boxnumrefcont(self.value)
+            bn = self.value
+            assert isinstance(bn, _BoxedNumRefContents)
             return erase_box(NumBox(bn.value))
         else:
             return self.value
     def put_ptr(self, value):
         if self.is_num:
-            nb = try_cast_erased(NumBox, value)
-            bn = _unerase_boxnumrefcont(self.value)
-            if nb:
-                bn.value = nb.value
+            bn = (self.value)
+            assert isinstance(bn, _BoxedNumRefContents)
+            if isinstance(value, NumBox):
+                bn.value = value.value
             else:
                 self.is_num = False
                 self.value = value
@@ -49,7 +49,7 @@ class PtrRef(Ref):
     def restore(self, box):
         assert(isinstance(box, PtrBox))
         self.put_ptr(box.value)
-erase_ref, unerase_ref = new_erasing_pair("Ref")
+erase_ref, unerase_ref = subtpe_representation("ref", "ptr", Ref)
 
 class Box(Value): pass # TODO
 class NumBox(Box):
@@ -62,7 +62,8 @@ class PtrBox(Box):
     def __init__(self, value): self.value = value
     def get(self): return self.value
     def __repr__(self): return "PtrBox(%r)" % self.value
-erase_box, unerase_box = new_erasing_pair("box")
+erase_box, unerase_box = subtpe_representation("box", "ptr", Box)
+
 
 class Region(Value):
     _immutable_fields_ = ['boxes[*]']
@@ -85,4 +86,4 @@ class Region(Value):
         for i in range(len(self.boxes)):
             self.refs[i].restore(self.boxes[i])
         return self
-erase_region, unerase_region = new_erasing_pair("Region")
+erase_region, unerase_region = subtpe_representation("region", "ptr", Region)

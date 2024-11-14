@@ -3,6 +3,7 @@ from rpyeffect.types import NUMBER_OF_TYPES
 from rpython.rlib.jit import elidable, unroll_safe
 from rpyeffect.util.debug import debug, debug_hooks
 from rpyeffect.value import Value
+from rpyeffect.representations import subtpe_representation
 
 import os
 
@@ -15,6 +16,7 @@ class LoadedLib(Value):
 
     def __repr__(self):
         return ("<LoadedLib \"%s\" at %d>" % (self.filename, self.at))
+subtpe_representation("lib", "ptr", LoadedLib)
 
 @unroll_safe
 def load_lib(program, filename, primitives):

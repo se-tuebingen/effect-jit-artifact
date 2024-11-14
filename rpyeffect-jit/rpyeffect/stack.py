@@ -2,7 +2,7 @@ from rpython.rlib.rerased import new_erasing_pair
 from rpython.rlib.jit import JitDriver, purefunction, elidable, hint, unroll_safe, promote, assert_green, promote_string, we_are_jitted, record_exact_class, record_exact_value, not_rpython
 from rpython.rlib import objectmodel
 from rpyeffect.stored_environment import with_environment
-from rpyeffect.representations import generate_representation_accessors
+from rpyeffect.representations import generate_representation_accessors, subtpe_representation
 import rpyeffect.config as cfg
 from rpyeffect.representations import eNone
 from rpyeffect.value import Value
@@ -65,6 +65,8 @@ erase_cont, unerase_cont = new_erasing_pair("MetaStackLike")
 class MetaStackLike(Value):
     _attrs_ = ['stack']
     _immutable_fields_ = ['stack']
+
+subtpe_representation("cont", "ptr", MetaStackLike)
 
 class MetaStack(MetaStackLike):
     _immutable_fields_ = [ 'stack', 'region', 'tail' , 'label']
@@ -163,10 +165,12 @@ def get_dynamic(metastack, n, label):
     else:
         return get_dynamic(metastack.tail, n - (1 if metastack.label == label else 0), label)
 
-class Label:
+class Label(Value):
     _immutable_fields_ = [ "origin" ]
     def __init__(self, origin):
         self.origin = origin
+subtpe_representation("label", "ptr", Label)
+
 def eq_label(x, y):
     if x is None and y is None:
         return True

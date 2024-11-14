@@ -1,6 +1,6 @@
 from rpython.rlib.rerased import new_erasing_pair
 from rpyeffect.stored_environment import with_environment
-from rpyeffect.representations import generate_representation_accessors
+from rpyeffect.representations import generate_representation_accessors, subtpe_representation
 import rpyeffect.config as cfg
 from rpython.rlib.jit import unroll_safe
 from rpyeffect.util.debug import debug_hooks
@@ -44,3 +44,5 @@ class CoData(Value):
 
     def __repr__(self):
         return self.vtable.__repr__() # TODO captures
+
+subtpe_representation("codata", "ptr", CoData)

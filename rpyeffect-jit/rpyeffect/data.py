@@ -1,7 +1,7 @@
 from rpython.rlib.rerased import new_erasing_pair
 from rpython.rlib import objectmodel
 from rpyeffect.stored_environment import with_environment
-from rpyeffect.representations import generate_representation_accessors
+from rpyeffect.representations import generate_representation_accessors, subtpe_representation
 import rpyeffect.config as cfg
 from rpyeffect.util.debug import debug_hooks
 from rpyeffect.value import Value
@@ -26,3 +26,5 @@ class Data(Value):
         for i in range(self.len_ptr()):
             fields += ["ptr%d: %s" % (i, self.get_ptr(i))]
         return ("%s(%s)" % (self.tag.str, ", ".join(fields)))
+
+subtpe_representation("data", "ptr", Data)
