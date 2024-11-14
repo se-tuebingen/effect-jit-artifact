@@ -13,13 +13,13 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
 
   type OTpe = OperandType[ConcretelyTyped]
 
-  case class Register(idx: Int, tpe: rpyeffect.RegisterType) {
+  case class Register(idx: Int) {
     def asIndex(debug: String): Index = IndexWithDebug(idx, debug)
   }
 
   def possibleRegistersFor(x: Var[Id, OTpe]): LazyList[Register] = x.name match {
-    case Index(i) => LazyList(Register(i, Type.getRegisterType(x.tpe)))
-    case _ => LazyList.from(0).map(Register(_, Type.getRegisterType(x.tpe)))
+    case Index(i) => LazyList(Register(i))
+    case _ => LazyList.from(0).map(Register(_))
   }
 
   case class State(var registerContents: Map[Register, Var[Id, OTpe]], var block: Id, var ins: Int = 0)
@@ -80,18 +80,18 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
     def clr(r: Register): Unit = {
       registerContents = registerContents.removed(r)
     }
-    def put(r: Register, x: Id): Unit = put(r, Var(x, Type.fromRegisterType(r.tpe)))
+    def put(r: Register, x: Id): Unit = put(r, Var(x, TopPtr))
 
     def find(x: Id): Option[Register] = registerContents.collectFirst{ case (r, y) if y.name == x => r }
     def find(x: Var[Id, OTpe]): Option[Register] =
-      registerContents.collectFirst{ case (r, y) if y.name == x.name && Type.getRegisterType(x.tpe) == r.tpe => r }
+      registerContents.collectFirst{ case (r, y) if y.name == x.name => r }
     def asVar(r: Register): Var[Index, OTpe] = {
       val contents = registerContents.get(r)
       val idx = contents match {
         case Some(c) => IndexWithDebug(r.idx, c.name.toString)
         case None => Index(r.idx)
       }
-      Var(idx, contents.map(_.tpe).getOrElse{ Type.fromRegisterType(r.tpe) })
+      Var(idx, TopPtr)
     }
 
     def move(from: Register, to: Register)(using em: Emit[Instruction[Nothing, Tag, Label, Index, OTpe]]): Unit = if(from != to) {
@@ -116,7 +116,7 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
 
   def lookupW(id: Id, tpe: OTpe)(using s: State, em: Emit[Instruction[Nothing, Tag, Label, Index, OTpe]]): Index = { id match {
     case idx @ Index(i) =>
-      val reg = Register(i, Type.getRegisterType(tpe))
+      val reg = Register(i)
       s.registerContents.get(reg) match {
         case Some(Var(Index(ii), _)) if i == ii => idx
         case _ if s.isAvailable(reg) =>
@@ -135,7 +135,7 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
       val r = s.freshFor(Var(id, tpe)).get
       s.put(r, Var(id, tpe))
       IndexWithDebug(r.idx, id.toString)
-  }} ensuring { r => s.registerContents.get(Register(r.i, Type.getRegisterType(tpe))).map(_.name).contains(id) }
+  }} ensuring { r => s.registerContents.get(Register(r.i)).map(_.name).contains(id) }
 
   def lookupR(id: Id, tpe: OTpe)(using s: State, E: ErrorReporter): Index = { id match {
     case idx: Index => idx
@@ -159,12 +159,12 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
   }
 
   def getArgumentRegisters(args: RhsOpList[Nothing, Id, OTpe] | LhsOpList[Nothing, Id, OTpe]): List[Register] = {
-    val counters: mutable.Map[rpyeffect.RegisterType, Int] = mutable.HashMap.empty.withDefault(_ => -1)
+    var counter = -1
     args.map {
       case arg: Var[Id, OTpe] =>
         val rtpe = Type.getRegisterType(arg.tpe)
-        counters(rtpe) += 1
-        Register(counters(rtpe), rtpe)
+        counter += 1
+        Register(counter)
     }
   }
   def doPrepareJump(args: RhsOpList[Nothing, Id, OTpe], preserving: List[Id] = Nil)(using s: State, e: ErrorReporter, em: Emit[Instruction[Nothing, Tag, Label, Index, OTpe]]): RhsOpList[Nothing, Index, OTpe] = {
