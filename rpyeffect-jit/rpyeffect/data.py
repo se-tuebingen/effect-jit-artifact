@@ -6,7 +6,7 @@ import rpyeffect.config as cfg
 from rpyeffect.util.debug import debug_hooks
 from rpyeffect.value import Value
 
-@with_environment(specialized_for=[(x,y) for x in range(cfg.specialize_datas[0]) for y in range(cfg.specialize_datas[1])])
+@with_environment(specialized_for=[x for x in range(cfg.specialize_datas[0] + cfg.specialize_datas[1])])
 class Data(Value):
     _immutable_fields_ = ['tpe']
     def __init__(self, tag):
@@ -21,8 +21,6 @@ class Data(Value):
 
     def __repr__(self):
         fields = []
-        for i in range(self.len_num()):
-            fields += ["num%d: %s" % (i, self.get_num(i))]
         for i in range(self.len_ptr()):
             fields += ["ptr%d: %s" % (i, self.get_ptr(i))]
         return ("%s(%s)" % (self.tag.str, ", ".join(fields)))

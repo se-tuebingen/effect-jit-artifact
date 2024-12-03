@@ -7,14 +7,6 @@ from rpyeffect.representations import subtpe_representation
 class Ref(Value):
     def freeze(self): return Box()
     def restore(self, box): pass
-class NumRef(Ref):
-    def __init__(self, value): self.value = value
-    def get_num(self): return self.value
-    def put_num(self, value): self.value = value
-    def freeze(self): return NumBox(self.value)
-    def restore(self, box):
-        assert(isinstance(box, NumBox))
-        self.value = box.value
 class _BoxedNumRefContents(Value):
     def __init__(self, num_value):
         self.value = num_value

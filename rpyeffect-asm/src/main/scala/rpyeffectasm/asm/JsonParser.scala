@@ -4,34 +4,32 @@ import rpyeffectasm.util.ErrorReporter.{error, fatal}
 
 import scala.io.Source
 
-class JsonParser extends JsonParsers with Phase[Source, Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]] {
+class JsonParser extends JsonParsers with Phase[Source, Program[AsmFlags, Id, Id, Id]] {
   type JP[T] = JsonParser[T]
   type Flags = AsmFlags
   type Tag = Id
   type Label = Id
   type V = Id
-  type P = TypingPrecision
-  type OTpe = OperandType[P]
 
-  def tpe: JP[OTpe] = {
-    exactStr("Top") ^ { _ => rpyeffectasm.asm.Top }
-    || exactStr("Unit") ^ { _ => Data(Name("Unit"), List((Name("unit"), List()))) }
-    || exactStr("String") ^ { _ => Base.String }
-    || exactStr("Int") ^ { _ => Base.Int }
-    || exactStr("Double") ^ { _ => Base.Double }
-    || exactStr("Ptr") ^ { _ => TopPtr }
-    || exactStr("Num") ^ { _ => TopNum }
-    || exactStr("Label") ^ { _ => LabelT(Top, None) }
+  def tpe: JP[Unit] = {
+    exactStr("Top") ^ { _ => () }
+    || exactStr("Unit") ^ { _ => () }
+    || exactStr("String") ^ { _ => () }
+    || exactStr("Int") ^ { _ => () }
+    || exactStr("Double") ^ { _ => () }
+    || exactStr("Ptr") ^ { _ => () }
+    || exactStr("Num") ^ { _ => () }
+    || exactStr("Label") ^ { _ => () }
     || obj("kind" -> string &= {
       case "data" => ("name" -> v & "constructors" ->
         list(obj("tag" -> v & "fields" -> list(obj("id" -> v & "type" -> tpe)))))
-        ^ Data.apply
+        ^ { _ => () }
       case "codata" => ("name" -> v & "methods" ->
         list(obj("tag" -> v & "args" -> list(obj("id" -> v & "type" -> tpe)) & "ret" -> tpe))) ^ {
-        case (t, ms) => CoData(t, ms map {case ((t,as), r) => (t,as,r)})
+        case (t, ms) => ()
       }
-      case "ref" => ("to" -> tpe) ^ RefType.apply
-      case "Label" => ("at" -> tpe & optional("binding" -> tpe)) ^ LabelT.apply
+      case "ref" => ("to" -> tpe) ^ { _ => () }
+      case "Label" => ("at" -> tpe & optional("binding" -> tpe)) ^ { _ => () }
       case _ => ??? // TODO error
     }) ^ (_._2)
   }
@@ -39,11 +37,11 @@ class JsonParser extends JsonParsers with Phase[Source, Program[AsmFlags, Id, Id
   def v: JP[V] = {
     string ^ { n => Name(n) } || int ^ { i => Index(i) }
   }
-  def rhsOperand: JP[RhsOperand[Flags, V, OTpe]] = (
-    obj("id" -> v & "type" -> tpe) ^ {case (id,tpe) => Var(id, tpe) }
+  def rhsOperand: JP[RhsOperand[Flags, V]] = (
+    obj("id" -> v) ^ Var.apply
   )
-  def lhsOperand: JP[LhsOperand[Flags, V, OTpe]] = (
-    obj("id" -> v & "type" -> tpe) ^ {case (id,tpe) => Var(id, tpe) }
+  def lhsOperand: JP[LhsOperand[Flags, V]] = (
+    obj("id" -> v) ^ Var.apply
     )
   def literal: JP[LiteralType] = (
     string ^ (_.asInstanceOf[LiteralType]) || int || double || (obj("format" -> string & "value" -> string) ^ FormatConst.apply)
@@ -51,14 +49,14 @@ class JsonParser extends JsonParsers with Phase[Source, Program[AsmFlags, Id, Id
   def label: JP[Label] = v
   def tag: JP[Label] = v
 
-  def clause: JP[Clause[Flags,Label,V,OTpe]] = ("params" -> list(lhsOperand) & "env" -> list(rhsOperand) & "target" -> label) ^ {
+  def clause: JP[Clause[Flags,Label,V]] = ("params" -> list(lhsOperand) & "env" -> list(rhsOperand) & "target" -> label) ^ {
     case ((ps,e),t) => Clause(ps,e,t)
   }
 
-  def instruction: JP[Instruction[Flags,Tag,Label,V,OTpe]] = (
+  def instruction: JP[Instruction[Flags,Tag,Label,V]] = (
     obj("op" -> string &= {
       case "Let" => ("lhss" -> list(lhsOperand) & "rhss" -> list(rhsOperand)) ^ Let.apply
-      case "LetConst" => ("out" -> lhsOperand & "value" -> literal) ^ {case (o,v) => LetConst(o.asInstanceOf[LhsOperand[Flags,V,Base]],v) }
+      case "LetConst" => ("out" -> lhsOperand & "value" -> literal) ^ {case (o,v) => LetConst(o.asInstanceOf[LhsOperand[Flags,V]],v) }
       case "Prim" => ("outs" -> list(lhsOperand) & "name" -> string & "ins" -> list(rhsOperand)) ^ {case ((o,n),i) => Primitive(o,n,i)}
       case "Push" => ("target" -> label & "args" -> list(rhsOperand)) ^ Push.apply
       case "Return" => ("args" -> list(rhsOperand)) ^ Return.apply
@@ -106,10 +104,10 @@ class JsonParser extends JsonParsers with Phase[Source, Program[AsmFlags, Id, Id
       case other => fail(s"Unknown instruction ${other}")
     }) ^ (_._2)
   )
-  def block = obj("label" -> label & "params" -> list(lhsOperand) & "retTpe" -> tpe & "instructions" -> list(instruction) & "export_as" -> list(string)) ^ {
-    case ((((l,ps),retTpe),is), export_as) => Block(l,ps.asInstanceOf[LhsOpList[Nothing,Id,OTpe]], retTpe, is, export_as)
+  def block = obj("label" -> label & "params" -> list(lhsOperand) & "instructions" -> list(instruction) & "export_as" -> list(string)) ^ {
+    case (((l,ps),is), export_as) => Block(l,ps.asInstanceOf[LhsOpList[Nothing,Id]], is, export_as)
   }
   def program = obj("blocks" -> list(block)) ^ Program.apply
 
-  override def apply(f: Source)(using E: ErrorReporter): Program[Flags, V, V, V, OperandType[P]] = parse(program, f)
+  override def apply(f: Source)(using E: ErrorReporter): Program[Flags, V, V, V] = parse(program, f)
 }

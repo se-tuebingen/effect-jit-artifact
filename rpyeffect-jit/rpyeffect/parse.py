@@ -467,11 +467,11 @@ def parse_register_list(tokens):
     expect(BRACE_OPEN, tokens)
     res = [[]] * NUMBER_OF_TYPES
     for key in json_keys(tokens):
-        if key == "num":
-            res[NUMBER] = parse_idx_list(tokens)
-        elif key == "ptr":
+        if key == "any":
             res[OPAQUE_PTR] = parse_idx_list(tokens)
-        elif key == 'double'\
+        elif key == "num" \
+        or key == "ptr" \
+        or key == 'double'\
         or key == 'string'\
         or key == "cont"\
         or key == 'codata'\
@@ -519,8 +519,7 @@ def parse_type(tokens):
 
 def parse_CONST(tokens, primitives):
     out = 0
-    value_num = IntValue(0)
-    value_ptr = encode_str("")
+    value = IntValue(0)
     fmt = "int"
     ty = NUMBER
     for key in json_keys(tokens):
@@ -531,22 +530,19 @@ def parse_CONST(tokens, primitives):
         elif key == 'format':
             fmt = parse_string(tokens)
         elif key == "value":
-            if ty == NUMBER and fmt == "int":
-                value_num = IntValue(parse_int(tokens))
-            elif ty == NUMBER and fmt == "double":
-                value_num = encode_double(parse_double(tokens))
-            elif ty == OPAQUE_PTR and fmt == "string":
-                value_ptr = encode_str(parse_string(tokens))
-            elif ty == OPAQUE_PTR and fmt == "path":
-                value_ptr = encode_str(primitives.resolve_path(parse_string(tokens)))
-            elif ty == OPAQUE_PTR and fmt == "interned":
-                value_ptr = encode_interned(parse_interned(tokens, primitives))
+            if fmt == "int":
+                value = IntValue(parse_int(tokens))
+            elif fmt == "double":
+                value = encode_double(parse_double(tokens))
+            elif fmt == "string":
+                value = encode_str(parse_string(tokens))
+            elif fmt == "path":
+                value = encode_str(primitives.resolve_path(parse_string(tokens)))
+            elif fmt == "interned":
+                value = encode_interned(parse_interned(tokens, primitives))
         else:
             skip_value(tokens)
-    if ty == NUMBER:
-        return CONST_NUMBER(out, value_num)
-    elif ty == OPAQUE_PTR:
-        return CONST_PTR(out, value_ptr, fmt)
+    return CONST_PTR(out, value, fmt)
 
 def parse_PRIM_OP(tokens):
     name = ""

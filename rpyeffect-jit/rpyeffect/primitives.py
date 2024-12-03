@@ -7,7 +7,7 @@ from rpyeffect.types import *
 from rpyeffect.stack import fresh_label
 from rpyeffect.dynlib import load_lib
 from rpyeffect.environment import Environment
-from rpyeffect.region import Ref, NumRef, PtrRef, NumBox, PtrBox
+from rpyeffect.region import Ref, PtrRef, NumBox, PtrBox
 from timeit import default_timer
 import math
 from rpyeffect.util.path import abspath, dirname
@@ -411,8 +411,8 @@ class Primitives(object):
             env.set_int(outs.regs[NUMBER][0], len(env.get_str(ins.regs[OPAQUE_PTR][0])))
 
         elif opid == "substring(String, Int, Int): String":
-            start = env.get_int(ins.regs[NUMBER][0])
-            end = env.get_int(ins.regs[NUMBER][1])
+            start = env.get_int(ins.regs[NUMBER][1])
+            end = env.get_int(ins.regs[NUMBER][2])
             s = env.get_str(ins.regs[OPAQUE_PTR][0])
             if start < 0 or end < 0 or end < start:
                 self.panic("Invalid call substring(s, %d, %d) on string s of length %d" % (start, end, len(s)))
@@ -422,7 +422,7 @@ class Primitives(object):
 
         elif opid == "unsafeCharAt(String, Int): String":
             s = env.get_str(ins.regs[OPAQUE_PTR][0])
-            i = env.get_int(ins.regs[NUMBER][0])
+            i = env.get_int(ins.regs[NUMBER][1])
             if len(outs.regs[NUMBER]) > 1:
                 env.set_bool(outs.regs[NUMBER][1], i >= 0 and i < len(s))
             assert(i >= 0)
@@ -437,7 +437,7 @@ class Primitives(object):
 
         elif opid == "unsafeIndex(Bytes, Int): Int":
             ba = env.get_bytearray(ins.regs[OPAQUE_PTR][0])
-            i = env.get_int(ins.regs[NUMBER][0])
+            i = env.get_int(ins.regs[NUMBER][1])
             if len(outs.regs[NUMBER]) > 1:
                 env.set_bool(outs.regs[NUMBER][1], i <= len(ba))
             env.set_int(outs.regs[NUMBER][0], ba[i])
@@ -498,7 +498,7 @@ class Primitives(object):
                 self.panic("Assertion failed: " + env.get_str(ins.regs[OPAQUE_PTR][0]))
 
         elif opid == "charAt(Int, String): String":
-            s = env.get_str(ins.regs[OPAQUE_PTR][0])
+            s = env.get_str(ins.regs[OPAQUE_PTR][1])
             i = env.get_int(ins.regs[NUMBER][0])
             if i < 0 or i >= len(s):
                 if len(outs.regs[NUMBER]) > 0:
@@ -568,7 +568,7 @@ class Primitives(object):
         elif opid == "getGlobal(String): Ptr":
             env.set_ptr(outs.regs[OPAQUE_PTR][0], program.get_global_ptr(env.get_str(ins.regs[OPAQUE_PTR][0])))
         elif opid == "getGlobal(String): Num":
-            env.set_num(outs.regs[NUMBER][0], program.get_global_num(env.get_str(ins.regs[OPAQUE_PTR][0])))
+            env.set_num(outs.regs[NUMBER][0], program.get_global_ptr(env.get_str(ins.regs[OPAQUE_PTR][0])))
 
         elif opid == "setGlobal(String, Ptr): Unit":
             name = env.get_str(ins.regs[OPAQUE_PTR][0])
@@ -581,7 +581,7 @@ class Primitives(object):
         elif opid == "mkRef(Ptr): Ref[Ptr]":
             env.set_ref(outs.regs[OPAQUE_PTR][0], PtrRef(env.get_ptr(ins.regs[OPAQUE_PTR][0])))
         elif opid == "mkRef(Num): Ref[Num]":
-            env.set_ref(outs.regs[OPAQUE_PTR][0], NumRef(env.get_num(ins.regs[NUMBER][0])))
+            env.set_ref(outs.regs[OPAQUE_PTR][0], PtrRef(env.get_num(ins.regs[NUMBER][0])))
 
         elif opid == "getRef(Ref[Ptr]): Ptr":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
@@ -589,8 +589,8 @@ class Primitives(object):
             env.set_ptr(outs.regs[OPAQUE_PTR][0], r.get_ptr())
         elif opid == "getRef(Ref[Num]): Num":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
-            assert isinstance(r, NumRef)
-            env.set_num(outs.regs[NUMBER][0], r.get_num())
+            assert isinstance(r, PtrRef)
+            env.set_num(outs.regs[NUMBER][0], r.get_ptr())
 
         elif opid == "setRef(Ref[Ptr], Ptr): Unit":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
@@ -598,8 +598,8 @@ class Primitives(object):
             r.put_ptr(env.get_ptr(ins.regs[OPAQUE_PTR][1]))
         elif opid == "setRef(Ref[Num], Num): Unit":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
-            assert isinstance(r, NumRef)
-            r.put_num(env.get_num(ins.regs[NUMBER][1]))
+            assert isinstance(r, PtrRef)
+            r.put_ptr(env.get_num(ins.regs[NUMBER][1]))
 
         elif opid == "box(Num): Ptr":
             env.set_box(outs.regs[OPAQUE_PTR][0], NumBox(env.get_num(ins.regs[NUMBER][0])))
@@ -622,7 +622,7 @@ class Primitives(object):
 
         elif opid == "unsafeIndex(Array[Ptr], Int): Ptr":
             arr = env.get_array(ins.regs[OPAQUE_PTR][0])
-            i = env.get_int(ins.regs[NUMBER][0])
+            i = env.get_int(ins.regs[NUMBER][1])
             env.set_ptr(outs.regs[OPAQUE_PTR][0], arr[i])
 
         elif opid == "promote_ptr":

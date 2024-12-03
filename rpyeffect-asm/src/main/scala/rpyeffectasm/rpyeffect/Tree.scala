@@ -25,10 +25,10 @@ enum Tag {
   case Name(n: String)
 }
 case class VariableDescriptor(typ: Type, id: Register)
-case class FrameDescriptor(locals: Map[RegisterType, Int])
-case class RegList(regs: Map[RegisterType, List[Register]])
+case class FrameDescriptor(locals: Int)
+case class RegList(regs: List[Register])
 object RegList {
-  val empty = RegList(Map.empty)
+  val empty = RegList(List.empty)
 }
 case class Clause(tag: Tag, params: RegList, target: BlockLabel)
 
@@ -43,17 +43,17 @@ case class Push(target: BlockLabel, args: RegList) extends Instruction
 case class ShiftDyn(out: Register, n: Register, label: Register) extends Instruction
 case class Control(out: Register, n: Register, label: Register) extends Instruction
 case class IfZero(arg: Register, thenClause: Clause) extends Instruction
-case class Copy(tpe: RegisterType, from: Register, to: Register) extends Instruction
-case class Drop(tpe: RegisterType, reg: Register) extends Instruction
-case class Swap(tpe: RegisterType, a: Register, b: Register) extends Instruction
-case class Allocate(out: Register, tpe: RegisterType, init: Register, region: Register) extends Instruction
-case class Load(out: Register, tpe: RegisterType, ref: Register) extends Instruction
-case class Store(ref: Register, tpe: RegisterType, value: Register) extends Instruction
+case class Copy(from: Register, to: Register) extends Instruction
+case class Drop(reg: Register) extends Instruction
+case class Swap(a: Register, b: Register) extends Instruction
+case class Allocate(out: Register, init: Register, region: Register) extends Instruction
+case class Load(out: Register, ref: Register) extends Instruction
+case class Store(ref: Register, value: Register) extends Instruction
 case class Debug(msg: String, traced: RegList) extends Instruction
 case class GetDynamic(out: Register, n: Register, label: Register) extends Instruction
 
 case class Construct(out: Register, adt_type: Tag, tag: Tag, args: RegList) extends Instruction
-case class Proj(out: Register, adt_type: Tag, scrutinee: Register, tag: Tag, field: Int, field_tpe: RegisterType) extends Instruction
+case class Proj(out: Register, adt_type: Tag, scrutinee: Register, tag: Tag, field: Int) extends Instruction
 case class PushStack(arg: Register) extends Instruction
 case class NewStack(out: Register, region: Register, label: Register, target: BlockLabel, args: RegList) extends Instruction
 case class NewStackWithBinding(out: Register, region: Register, label: Register, target: BlockLabel, args: RegList, binding: Register) extends Instruction
@@ -78,28 +78,4 @@ enum Type {
   case Codata(index: Int)
   case Region()
   case Reference(to: Type)
-
-  def registerType: RegisterType = this match {
-    case Continuation() => RegisterType.Ptr
-    case Integer() => RegisterType.Number
-    case Double() => RegisterType.Number
-    case Label() => RegisterType.Ptr
-    case String() => RegisterType.Ptr
-    case Codata(index) => RegisterType.Ptr
-    case Datatype(index) => RegisterType.Ptr
-    case Region() => RegisterType.Ptr
-    case Reference(_) => RegisterType.Ptr
-  }
-}
-
-enum RegisterType {
-  case Number, Ptr
-
-  override def toString: String = this match {
-    case RegisterType.Number => "Num"
-    case RegisterType.Ptr => "Ptr"
-  }
-}
-object RegisterType {
-  given Ordering[RegisterType] = Ordering.by(List(Number,Ptr).indexOf)
 }

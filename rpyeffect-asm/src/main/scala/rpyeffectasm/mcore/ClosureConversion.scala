@@ -14,11 +14,7 @@ object ClosureConversion extends Phase[Program[Var], Program[ATerm]] {
   // TODO superficially, this seems similar to https://dl.acm.org/doi/abs/10.1145/3610612.3610622 - compare and check if we can use some ideas from there
   // TODO Analyse where a function becomes a value, run mkClosure there.
 
-  def typeShorthand(t: Type): String = t match {
-    case Top => "t"
-    case t if t.registerType == rpyeffect.RegisterType.Number => "n"
-    case t if t.registerType == rpyeffect.RegisterType.Ptr => "p"
-  }
+  def typeShorthand(t: Type): String = "v"
 
   def mkClosureName(params: List[Type], ret: Type): Id = {
     Name(s"closure_${params.map(typeShorthand).mkString}_${typeShorthand(ret)}")

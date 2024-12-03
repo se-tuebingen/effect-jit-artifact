@@ -10,7 +10,7 @@ import scopt.OParser
 object Exit extends Throwable
 
 type MCoreProgram = mcore.Program[mcore.ATerm]
-type AsmProgram = asm.Program[asm.AsmFlags, asm.Id, asm.Id, asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]]
+type AsmProgram = asm.Program[asm.AsmFlags, asm.Id, asm.Id, asm.Id]
 
 sealed trait Format {
   type T

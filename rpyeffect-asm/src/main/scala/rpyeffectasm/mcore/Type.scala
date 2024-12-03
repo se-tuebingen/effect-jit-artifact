@@ -8,7 +8,6 @@ import rpyeffectasm.asm
 
 sealed trait Type extends common.Type {
   override def asMCore: Type = this
-  override def asAsm: asm.OperandType[asm.TypingPrecision] = ???
 }
 object Top extends Type
 object Ptr extends Type
@@ -255,16 +254,7 @@ object Type {
       case Ref(to) => to
       case other => ErrorReporter.fatal(s"Dereferencing ${other}.")
     }
-
-    def forceConcrete: Type = self match {
-      case Top => Ptr
-      case t => t
-    }
-
-    def registerType: rpyeffectasm.rpyeffect.RegisterType = self.forceConcrete match {
-      case Num | Base.Int | Base.Double => rpyeffectasm.rpyeffect.RegisterType.Number
-      case _ => rpyeffectasm.rpyeffect.RegisterType.Ptr
-    }
+    
   }
 }
 

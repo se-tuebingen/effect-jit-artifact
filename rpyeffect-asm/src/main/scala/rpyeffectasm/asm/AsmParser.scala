@@ -5,7 +5,7 @@ import rpyeffectasm.util.Phase
 import scala.io.Source
 import scala.util.parsing.combinator.*
 
-class AsmParser extends RegexParsers with Phase[Source, Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]] {
+class AsmParser extends RegexParsers with Phase[Source, Program[AsmFlags, Id, Id, Id]] {
   import rpyeffectasm.util.ErrorReporter
 
   import scala.util.matching.Regex
@@ -13,8 +13,6 @@ class AsmParser extends RegexParsers with Phase[Source, Program[AsmFlags, Id, Id
   type Tag = Id
   type Label = Id
   type V = Id
-  type P = TypingPrecision
-  type OTpe = OperandType[P]
 
   def string: Parser[String] = """["]([^"\\]|(\\.))*["]""".r ^^ { s => s.stripPrefix("\"").stripSuffix("\"") }
   def id: Parser[Id]
@@ -41,7 +39,7 @@ class AsmParser extends RegexParsers with Phase[Source, Program[AsmFlags, Id, Id
         case i ~ None => Index(i.toInt): Tag
         case i ~ Some(doc) => IndexWithDebug(i.toInt, doc): Tag
       }
-  def rhsOp: Parser[RhsOperand[Flags, V, OTpe]]
+  def rhsOp: Parser[RhsOperand[Flags, V]]
     = "*" ~> rhsOp ^^ Ref.apply
     | const | variable
   def const: Parser[Const[Flags, LiteralType]]
@@ -51,58 +49,50 @@ class AsmParser extends RegexParsers with Phase[Source, Program[AsmFlags, Id, Id
     | """[a-zA-Z-][a-zA-Z-]*""".r ~ string ^^ { case fmt ~ p => Const(FormatConst(fmt, p)) }
 
   def intConst: Parser[Int] = """-?[0-9]+""".r ^^ (_.toInt)
-  def variable: Parser[Var[V, OTpe]]
+  def variable: Parser[Var[V]]
     = vid ~ opt(":" ~> operandTpe) ^^ {
-      case (name ~ Some(tpe)) => asm.Var(name, tpe)
-      case (name ~ None) => asm.Var(name, Top)
+      case (name ~ Some(tpe)) => asm.Var(name)
+      case (name ~ None) => asm.Var(name)
     }
 
-  def lhsOp: Parser[LhsOperand[Flags, V, OTpe]]
+  def lhsOp: Parser[LhsOperand[Flags, V]]
     = "*" ~> rhsOp ^^ Ref.apply
     | variable
 
-  def rhsOpList: Parser[RhsOpList[Flags, V, OTpe]] = """\(\s*""".r ~> repsep(rhsOp, """\s*,\s*""".r) <~ """\s*\)""".r
-  def lhsOpList: Parser[LhsOpList[Flags, V, OTpe]] = """\(\s*""".r ~> repsep(lhsOp, """\s*,\s*""".r) <~ """\s*\)""".r
+  def rhsOpList: Parser[RhsOpList[Flags, V]] = """\(\s*""".r ~> repsep(rhsOp, """\s*,\s*""".r) <~ """\s*\)""".r
+  def lhsOpList: Parser[LhsOpList[Flags, V]] = """\(\s*""".r ~> repsep(lhsOp, """\s*,\s*""".r) <~ """\s*\)""".r
 
-  def clause: Parser[Clause[Flags, Label, V, OTpe]] = (lhsOpList ~ ("""\s*\|\s*""".r ~> rhsOpList) ~ ("""\s*=>\s*""".r ~> labelid)) ^^ {
+  def clause: Parser[Clause[Flags, Label, V]] = (lhsOpList ~ ("""\s*\|\s*""".r ~> rhsOpList) ~ ("""\s*=>\s*""".r ~> labelid)) ^^ {
     case (params ~ env ~ target) => Clause(params, env, target)
   }
-  def operandTpe: Parser[OTpe] = {
-      "int" ^^ { _ => Base.Int }
-    | "double" ^^ { _ => Base.Double }
-    | "str" ^^ { _ => Base.String }
-    | "ptr" ^^ { _ => TopPtr }
-    | "num" ^^ { _ => TopNum }
-    | "Top" ^^ { _ => Top }
-    | "Bot" ^^ { _ => Bot }
-    | "*" ~> operandTpe ^^ RefType.apply
+  def operandTpe: Parser[Unit] = {
+      "int" ^^ { _ => () }
+    | "double" ^^ { _ => () }
+    | "str" ^^ { _ => () }
+    | "ptr" ^^ { _ => () }
+    | "num" ^^ { _ => () }
+    | "Top" ^^ { _ => () }
+    | "Bot" ^^ { _ => () }
+    | "*" ~> operandTpe ^^ { _ => () }
     | tagid ~ ("(" ~> repsep(tagid ~ ("(" ~> repsep(id ~ (":" ~> operandTpe), ",") <~ ")"), "|") <~ ")") ^^ { case (tpe ~ cnss) =>
-        Data(tpe, cnss map {
-          case (cns ~ fields) => (cns, fields map {
-            case (field ~ tpe) => (field, tpe)
-          })
-        })
+        ()
       }
     | tagid ~ ("{" ~> repsep(tagid ~ ("(" ~> repsep(id ~ (":" ~> operandTpe), ",") <~ ")") ~ ("->" ~> operandTpe), ";") <~ "}") ^^ { case (tpe ~ cnss) =>
-        CoData(tpe, cnss map {
-          case (cns ~ fields ~ ret) => (cns, fields map {
-            case (field ~ tpe) => (field, tpe)
-          }, ret)
-        })
+        ()
       }
   }
 
-  def instruction: Parser[Instruction[Flags, Tag, Label, V, OTpe]]
+  def instruction: Parser[Instruction[Flags, Tag, Label, V]]
     = ("""let\s*const\s*""".r ~> lhsOp) ~ ("""\s*<-\s*""".r ~> const) ^^ {
-        case (asm.Var(x, _) ~ Const(value: Int)) => LetConst(asm.Var(x, Base.Int), value)
-        case (asm.Var(x, _) ~ Const(value: Double)) => LetConst(asm.Var(x, Base.Double), value)
-        case (asm.Var(x, _) ~ Const(value: String)) => LetConst(asm.Var(x, Base.String), value)
-        case (asm.Var(x, _) ~ Const(cv: FormatConst)) => LetConst(asm.Var(x, Base.String), cv) // TODO assumes string for now
+        case (asm.Var(x) ~ Const(value: Int)) => LetConst(asm.Var(x), value)
+        case (asm.Var(x) ~ Const(value: Double)) => LetConst(asm.Var(x), value)
+        case (asm.Var(x) ~ Const(value: String)) => LetConst(asm.Var(x), value)
+        case (asm.Var(x) ~ Const(cv: FormatConst)) => LetConst(asm.Var(x), cv) // TODO assumes string for now
         case (asm.Ref(r) ~ _) => ???
       }
     | """let\s*""".r ~> repsep(lhsOp ~ ("<-" ~> rhsOp) ^^ { case l ~ r => (l,r) }, """\s*,\s*""".r) ^^ {
-          (l: List[(LhsOperand[Flags, V, OTpe], RhsOperand[Flags, V, OTpe])]) =>
-            val (lhss, rhss) = l.unzip[LhsOperand[Flags, V, OTpe], RhsOperand[Flags, V, OTpe]]
+          (l: List[(LhsOperand[Flags, V], RhsOperand[Flags, V])]) =>
+            val (lhss, rhss) = l.unzip[LhsOperand[Flags, V], RhsOperand[Flags, V]]
             Let(lhss, rhss)
         }
     | lhsOp ~ ("""\s*<-\s*""".r ~> labelid) ~ ("." ~> labelid) ~ rhsOpList ^^ {
@@ -170,19 +160,19 @@ class AsmParser extends RegexParsers with Phase[Source, Program[AsmFlags, Id, Id
 
   def comment: Parser[Unit] = rep1("""/\*((?!\*/).)*\*/""".r) ^^ { _ => () }
 
-  def block: Parser[Block[Flags, Tag, Label, V, OTpe]] =
+  def block: Parser[Block[Flags, Tag, Label, V]] =
     (("""@export\s*\(\s*""".r ~> repsep(string, "\\s*,\\s*".r) <~ "\\s*\\)\\s*".r ) ~ labelid ~ lhsOpList  ~ opt(":" ~> operandTpe) ~ ("""\s*\{\s*""".r ~> repsep(instruction, """\s*;\s*""".r) <~ (opt(comment) ~ """\s*\}""".r)) ^^ {
       case (export_as ~ label ~ params ~ ret ~ instructions) =>
-        Block(label, params.asInstanceOf, ret.getOrElse(Top), instructions, export_as) // TODO replace `asInstanceOf` with actual check
+        Block(label, params.asInstanceOf, instructions, export_as) // TODO replace `asInstanceOf` with actual check
     }) | (labelid ~ lhsOpList ~ opt(":" ~> operandTpe) ~ ("""\s*\{\s*""".r ~> repsep(instruction, """\s*;\s*""".r) <~ (opt(comment) ~ """\s*\}""".r)) ^^ {
       case (label ~ params ~ ret ~ instructions) =>
-        Block(label, params.asInstanceOf, ret.getOrElse(Top), instructions, Nil) // TODO replace `asInstanceOf` with actual check
+        Block(label, params.asInstanceOf, instructions, Nil) // TODO replace `asInstanceOf` with actual check
     }) | comment ~> block
 
-  def program: Parser[Program[Flags, Tag, Label, V, OTpe]] = ("""\s*""".r ~> repsep(block, """\s*""".r) <~ """\s*""".r) ^^ Program.apply
+  def program: Parser[Program[Flags, Tag, Label, V]] = ("""\s*""".r ~> repsep(block, """\s*""".r) <~ """\s*""".r) ^^ Program.apply
                                                            | comment ~> program
 
-  override def apply(f: Source)(using ErrorReporter): Program[Flags, Label, Label, Label, OperandType[P]] = {
+  override def apply(f: Source)(using ErrorReporter): Program[Flags, Label, Label, Label] = {
     parse(program, f.mkString) match {
       case Success(result, next) if next.atEnd => result
       case Success(result, next) => error(s"Trailing garbage: '${next.source.subSequence(next.offset, next.source.length())}'"); result

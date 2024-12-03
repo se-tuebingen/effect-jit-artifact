@@ -3,7 +3,7 @@ package rpyeffectasm.asm
 import rpyeffectasm.util.{Phase, Output, Target, JsonPrinter, ErrorReporter, escape}
 import scala.collection.immutable.ListMap
 
-object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]], Output]{
+object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id, Id], Output]{
 
   def toDoc(id: Id): Doc = id match {
     case Name(name) => s"\"${escape(name)}\""
@@ -12,13 +12,13 @@ object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id
     case generated: Generated => s"\"${escape(generated.toString)}\""
   }
 
-  def toDoc(p: LhsOperand[AsmFlags, Id, OperandType[TypingPrecision]]): Doc = p match {
-    case Var(name, tpe) => jsonObjectSmall(ListMap("id" -> toDoc(name), "type" -> toDoc(tpe)))
+  def toDoc(p: LhsOperand[AsmFlags, Id]): Doc = p match {
+    case Var(name) => jsonObjectSmall(ListMap("id" -> toDoc(name)))
     case Ref(ref) => ???
   }
 
-  def toDoc(p: RhsOperand[AsmFlags, Id, OperandType[TypingPrecision]]): Doc = p match {
-    case Var(name, tpe) => jsonObjectSmall(ListMap("id" -> toDoc(name), "type" -> toDoc(tpe)))
+  def toDoc(p: RhsOperand[AsmFlags, Id]): Doc = p match {
+    case Var(name) => jsonObjectSmall(ListMap("id" -> toDoc(name)))
     case Const(value) => ???
     case Ref(ref) => ???
   }
@@ -29,31 +29,8 @@ object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id
     case s: String => s"\"${escape(s)}\""
     case FormatConst(fmt, value) => jsonObjectSmall(ListMap("format" -> toDoc(fmt), "value" -> toDoc(value)))
   }
-  def toDoc(value: OperandType[TypingPrecision]): Doc = value match {
-    case Base.Int => "\"Int\""
-    case Base.Double => "\"Double\""
-    case Base.String => "\"String\""
-    case Data(tpe, constructors) => jsonObjectSmall(ListMap("kind" -> "\"data\"", "name" -> toDoc(tpe),
-      "constructors" -> jsonListSmall(constructors.map{
-        case (id, fields) => jsonObjectSmall(ListMap("tag" -> toDoc(id), "fields" -> jsonListSmall(fields.map{
-          case (x, tpe) => jsonObjectSmall(ListMap("id" -> toDoc(x), "type" -> toDoc(tpe)))
-        })))
-      })))
-    case CoData(tpe, methods) => jsonObjectSmall(ListMap("kind" -> "\"codata\"", "name" -> toDoc(tpe),
-      "methods" -> jsonListSmall(methods.map {
-        case (id, args, ret) => jsonObjectSmall(ListMap("tag" -> toDoc(id), "args" -> jsonListSmall(args.map {
-          case (x, tpe) => jsonObjectSmall(ListMap("id" -> toDoc(x), "type" -> toDoc(tpe)))
-        }), "ret" -> toDoc(ret)))
-      })))
-    case RefType(valueType) => jsonObjectSmall(ListMap("kind" -> "\"ref\"", "to" -> toDoc(valueType)))
-    case TopPtr => "\"Ptr\""
-    case TopNum => "\"Num\""
-    case Top => "\"Top\""
-    case Bot => "\"Bot\""
-    case LabelT(at, bnd) => jsonObjectSmall(ListMap("kind" -> "\"Label\"", "at" -> toDoc(at))
-      ++ (bnd.map{ b => "binding" -> toDoc(b) }.toMap))
-  }
-  def toDoc(value: Clause[AsmFlags, Id, Id, OperandType[TypingPrecision]]): Doc = value match {
+
+  def toDoc(value: Clause[AsmFlags, Id, Id]): Doc = value match {
     case Clause(params, env, target) => jsonObjectSmall(ListMap(
       "params" -> jsonListSmall(params.map(toDoc)),
       "env" -> jsonListSmall(env.map(toDoc)),
@@ -61,7 +38,7 @@ object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id
     ))
   }
 
-  def toDoc(instruction: Instruction[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]): Doc = jsonObjectSmall(instruction match {
+  def toDoc(instruction: Instruction[AsmFlags, Id, Id, Id]): Doc = jsonObjectSmall(instruction match {
     case Let(lhss, rhss) => ListMap("op" -> "\"Let\"", "lhss" -> jsonListSmall(lhss.map(toDoc)), "rhss" -> jsonListSmall(rhss.map(toDoc)))
     case LetConst(out, value) => ListMap("op" -> "\"LetConst\"", "out" -> toDoc(out), "value" -> toDoc(value))
     case Primitive(out, name, in) => ListMap("op" -> "\"Prim\"", "outs" -> jsonListSmall(out.map(toDoc)), "name" -> s"\"${name}\"", "ins" -> jsonListSmall(in.map(toDoc)))
@@ -128,7 +105,7 @@ object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id
     case Debug(msg, traced) => ListMap("op" -> "\"Debug\"", "msg" -> toDoc(msg), "traced" -> jsonListSmall(traced map toDoc))
   })
 
-  def toDoc(b: Block[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]): Doc =
+  def toDoc(b: Block[AsmFlags, Id, Id, Id]): Doc =
     jsonObject(ListMap(
       "label" -> toDoc(b.label),
       "params" -> jsonList(b.params.map(toDoc)),
@@ -136,10 +113,10 @@ object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id
       "export_as" -> jsonListSmall(b.export_as.map(toDoc))
     ))
 
-  def toDoc(p: Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]): Doc =
+  def toDoc(p: Program[AsmFlags, Id, Id, Id]): Doc =
     jsonObject(ListMap("blocks" -> jsonList(p.blocks.map(toDoc))))
 
-  override def apply(p: Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]])(using ErrorReporter): Output = new Output {
+  override def apply(p: Program[AsmFlags, Id, Id, Id])(using ErrorReporter): Output = new Output {
     override def emitTo[T](t: Target[T]): T = t.fromString(pretty(toDoc(p)))
   }
 }

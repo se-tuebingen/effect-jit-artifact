@@ -4,17 +4,17 @@ import rpyeffectasm.asm
 import rpyeffectasm.util.{Phase, ErrorReporter, Emit}
 import rpyeffectasm.util.ErrorReporter.impossible
 import rpyeffectasm.util.Emit.emit
-import rpyeffectasm.asm.{AsmFlags, OperandType, TypingPrecision}
+import rpyeffectasm.asm.{AsmFlags}
 import rpyeffectasm.mcore.analysis.FVSet
 import scala.collection.mutable
 
 case class MCoreGenerated(val underlying: Generated) extends asm.Generated(s"mcore:${underlying.name}")
-class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, asm.Id, asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]]] {
+class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, asm.Id, asm.Id]] {
 
   import rpyeffectasm.asm.LiveVariables
 
-  type Block = asm.Block[asm.AsmFlags, asm.Id, asm.Id, asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]]
-  final type Instruction = asm.Instruction[asm.AsmFlags, asm.Id, asm.Id, asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]]
+  type Block = asm.Block[asm.AsmFlags, asm.Id, asm.Id, asm.Id]
+  final type Instruction = asm.Instruction[asm.AsmFlags, asm.Id, asm.Id, asm.Id]
   class State {
     var gensyms: mutable.HashMap[Generated, asm.Generated] = mutable.HashMap.empty
     val blockNames: mutable.HashSet[Id] = mutable.HashSet.empty
@@ -38,41 +38,17 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
     case Index(i) => asm.Index(i)
     case generated: Generated => S.gensyms.getOrElseUpdate(generated, new MCoreGenerated(generated))
   }
-  def transform(x: LhsOperand)(using State, ErrorReporter): asm.Var[asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]] = x match {
+  def transform(x: LhsOperand)(using State, ErrorReporter): asm.Var[asm.Id] = x match {
     case Var(name, tpe: Function) =>
       ErrorReporter.fatal(s"Function ${name} is transformed to asm as Var. This should not happen (removed by lambda lifting + closure conversion)")
-    case Var(name, tpe) => asm.Var(transform(name), transform(tpe))
-  }
-  def transform(t: Type)(using State, ErrorReporter): asm.OperandType[asm.TypingPrecision.ConcretelyTyped] = t match {
-    case Top => asm.TopPtr // asm.Top
-    case Ptr => asm.TopPtr
-    case Num => asm.TopNum
-    case Bottom => asm.Bot
-    case Function(params, ret, purity) =>
-      ErrorReporter.fatal(s"Function type ${t} gets transformed to asm. This should not happen (removed by lambda lifting + closure conversion)")
-    case Codata(ifce_tag, methods) => asm.CoData(transform(ifce_tag), methods map {
-      case Method(tag, params, ret) =>
-        (transform(tag),
-          params.zipWithIndex.map { (f, i) => (asm.Index(i), transform(f))},
-          transform(ret))
-    })
-    case Data(type_tag, constructors) => asm.Data(transform(type_tag), constructors map {
-      case Constructor(tag, fields) => (transform(tag), fields.zipWithIndex.map { (f, i) => (asm.Index(i), transform(f))})
-    })
-    case Stack(resume_ret, resume_args) => asm.TopPtr // TODO
-    case Ref(to) => asm.RefType(transform(to))
-    case Base.Int => asm.Base.Int
-    case Base.Double => asm.Base.Double
-    case Base.String => asm.Base.String
-    case Base.Label(at, bnd) => asm.LabelT(transform(at), bnd.map(transform))
-    case Base.Unit => asm.Data(asm.Name("Unit"), List((asm.Name("unit"), Nil))) // TODO for now
+    case Var(name, tpe) => asm.Var(transform(name))
   }
 
   enum ResultForm {
     case Returned
-    case StoredIn(x: asm.Var[asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]])
+    case StoredIn(x: asm.Var[asm.Id])
   }
-  def transformMatchClause(doc: String, c: Clause[Var], env: List[asm.Var[asm.Id, OperandType[TypingPrecision.ConcretelyTyped]]], retTpe: Type)(using Emit[Block], ErrorReporter, State): asm.Clause[asm.AsmFlags, asm.Id, asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]] = c match {
+  def transformMatchClause(doc: String, c: Clause[Var], env: List[asm.Var[asm.Id]], retTpe: Type)(using Emit[Block], ErrorReporter, State): asm.Clause[asm.AsmFlags, asm.Id, asm.Id] = c match {
     case Clause(params, body) =>
       val tParams = params map transform
       val target = asBlock(s"match_${doc}", env ++ tParams, retTpe){
@@ -138,7 +114,7 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
       emit(asm.Control(transform(k), transform(n), transform(label)))
       transformReturning(body)
     case Reset(label, region, bnd, body, Clause(List(res), rbody)) =>
-      val x = asm.Var(new asm.Generated("return_clause"), asm.TopPtr) // TODO precise type
+      val x = asm.Var(new asm.Generated("return_clause")) // TODO precise type
       val capts = withoutBlockNames((analysis.FreeVariables(rbody) - res).toList)
       val retTpe = label.tpe match {
         case Base.Label(Top, _) => Type.of(t) // TODO
@@ -188,7 +164,7 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
       transformBinder(inner)
   }
 
-  def transformBinding(t: Term[Var])(kcapts: List[Var])(k: asm.Var[asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]] => Emit[Instruction] ?=> Unit)
+  def transformBinding(t: Term[Var])(kcapts: List[Var])(k: asm.Var[asm.Id] => Emit[Instruction] ?=> Unit)
                       (using emitblock: Emit[Block], e: Emit[Instruction], errorreporter: ErrorReporter, state: State): Unit = t match {
     case v @ Var(name, tpe) => k(transform(v))
     case Abs(params, body) => fatal("Local `Abs` should have been removed by lambda lifting or closure conversion.")
@@ -198,15 +174,15 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
       (withoutBlockNames((FVSet.from(kcapts) union ts.map(analysis.FreeVariables.apply).flattenFV).toList))
       { _ => transformBinding(Seq(ts))(kcapts)(k) }
     case Construct(tpe_tag, tag, args) =>
-      val x = asm.Var(new asm.Generated("constructed"), transform(Type.of(t)))
+      val x = asm.Var(new asm.Generated("constructed"))
       emit(asm.Construct(x, transform(tpe_tag), transform(tag), args map transform))
       k(x)
     case Project(scrutinee, tpe_tag, tag, field) =>
-      val x = asm.Var(new asm.Generated("proj_result"), transform(Type.of(t)))
+      val x = asm.Var(new asm.Generated("proj_result"))
       emit(asm.Proj(x, transform(tpe_tag), transform(scrutinee), transform(tag), field))
       k(x)
     case New(ifce_tag, methods) =>
-      val x = asm.Var(new asm.Generated(" new"), transform(Type.of(t)))
+      val x = asm.Var(new asm.Generated(" new"))
       val captures = withoutBlockNames(methods.map{ case (t, c) => analysis.FreeVariables(c) }.flattenFV.toList).map(transform)
       val targets = methods.map{ case (t, Clause(params, body)) =>
         transform(t) -> asBlock(s"method_${t.name}", (params map transform) ++ captures, Type.of(body)){
@@ -216,21 +192,21 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
       emit(asm.New(x, transform(ifce_tag), targets, captures))
       k(x)
     case Load(ref) =>
-      val x = asm.Var(new asm.Generated("loaded"), transform(Type.of(t)))
+      val x = asm.Var(new asm.Generated("loaded"))
       emit(asm.Load(x, transform(ref)))
       k(x)
     case Store(ref, value) =>
       emit(asm.Store(transform(ref), transform(value)))
       transformBinding(Literal.Unit)(kcapts)(k)
     case FreshLabel() =>
-      val x = asm.Var(new asm.Generated("fresh"), transform(Base.Label(Top, None)))
+      val x = asm.Var(new asm.Generated("fresh"))
       emit(asm.Primitive(List(x), "freshlabel", List())) // sic!
       k(x)
     case Primitive(name, args, returns, rest) =>
       emit(asm.Primitive(returns map transform, name, args map transform))
       transformBinding(rest)(kcapts)(k)
     case literal: Literal =>
-      val x = asm.Var(new asm.Generated(s"literal ${literal.value}"), transform(literal.tpe)).asInstanceOf[asm.Var[asm.Id, asm.Base]]
+      val x = asm.Var(new asm.Generated(s"literal ${literal.value}"))
       literal match {
       case Literal.Int(v) =>
         emit(asm.LetConst(x, v))
@@ -245,14 +221,14 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
         emit(asm.LetConst(x, asm.FormatConst(f, v)))
         k(x)
       case Literal.Label =>
-        k(asm.Var(asm.Index(-1), asm.TopPtr))
+        k(asm.Var(asm.Index(-1)))
       case Literal.Unit =>
-        val x = asm.Var(asm.Name("unit"), asm.TopPtr)
+        val x = asm.Var(asm.Name("unit"))
         emit(asm.Construct(x, asm.Name("Unit"), asm.Name("unit"), Nil))
         k(x)
       }
     case GetDynamic(label, n) =>
-      val x = asm.Var(new asm.Generated("dynamically bound value"), asm.TopPtr)
+      val x = asm.Var(new asm.Generated("dynamically bound value"))
       emit(asm.GetDynamic(x, transform(n), transform(label)))
       k(x)
     case DebugWrap(inner, annotations) =>
@@ -265,7 +241,7 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
     })
     case t =>
       val retTpe = Type.of(t)
-      val x = asm.Var(new asm.Generated(s"returned@${state.currentBlock}[${SExpPrettyPrinter(t)}]"), transform(retTpe))
+      val x = asm.Var(new asm.Generated(s"returned@${state.currentBlock}[${SExpPrettyPrinter(t)}]"))
       val params = x :: (kcapts map transform)
       val klbl = asBlock("k", params, retTpe){
         emit(asm.Debug("Returned value", List(x)))
@@ -274,13 +250,13 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
       emit(asm.Push(klbl, params.tail))
       transformReturning(t)
   }
-  def asBlock[R](params: List[asm.Var[asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]]], retTpe: Type)(k: Emit[Instruction] ?=> Unit)(using eb: Emit[Block], S: State, E: ErrorReporter): asm.Id = {
+  def asBlock[R](params: List[asm.Var[asm.Id]], retTpe: Type)(k: Emit[Instruction] ?=> Unit)(using eb: Emit[Block], S: State, E: ErrorReporter): asm.Id = {
     asBlock("block", params, retTpe)(k)
   }
-  def asBlock[R](doc: String, params: List[asm.Var[asm.Id, asm.OperandType[asm.TypingPrecision.ConcretelyTyped]]], retTpe: Type)(k: Emit[Instruction] ?=> Unit)(using eb: Emit[Block], S: State, E: ErrorReporter): asm.Id = {
+  def asBlock[R](doc: String, params: List[asm.Var[asm.Id]], retTpe: Type)(k: Emit[Instruction] ?=> Unit)(using eb: Emit[Block], S: State, E: ErrorReporter): asm.Id = {
     val name = new asm.Generated(s"${doc}@${S.currentBlock}")
     val instructions = inBlock(name) { Emit.collecting_[Instruction]{k} }
-    emit(asm.Block(name, params, transform(retTpe), instructions, Nil)) // TODO exports
+    emit(asm.Block(name, params, instructions, Nil)) // TODO exports
     name
   }
 
@@ -295,7 +271,7 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
           assert(false, s"Passing a function as a parameter ${p} to ${name}. This should have been converted to a closure by LambdaLifting.")
         case _ => ()
       }
-      emit(asm.Block(name, params map { p => transform(p) }, transform(retTpe), instructions, exportAs))
+      emit(asm.Block(name, params map { p => transform(p) }, instructions, exportAs))
     }
   }
   def transform(d: Definition[Var])(using Emit[Block], ErrorReporter, State): Unit = d match {
@@ -309,7 +285,7 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
       }
     case _ => fatal("Must run MakeConstantsLocal before Transformer")
   }
-  override def apply(f: Program[Var])(using ErrorReporter): asm.Program[AsmFlags, asm.Id, asm.Id, asm.Id, OperandType[TypingPrecision.ConcretelyTyped]] = f match {
+  override def apply(f: Program[Var])(using ErrorReporter): asm.Program[AsmFlags, asm.Id, asm.Id, asm.Id] = f match {
     case Program(definitions, main) =>
       given S: State = new State
       definitions.foreach{ case Definition(name, binding, exportAs) => S.blockNames.addOne(name.name) }

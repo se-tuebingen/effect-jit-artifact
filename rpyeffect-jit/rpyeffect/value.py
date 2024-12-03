@@ -1,3 +1,5 @@
+from rpyeffect.util.debug import debug_hooks
+
 class Value(object):
     _attrs_ = []
     _immutable_fields_ = []

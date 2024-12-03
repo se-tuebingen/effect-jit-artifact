@@ -76,11 +76,6 @@ class Program(object):
         if r is not None and isinstance(r, PtrBox):
             return r.get()
         else: return eNone
-    def get_global_num(self, name):
-        r = self.get_global(name)
-        if r is not None and isinstance(r, NumBox):
-            return r.get()
-        else: return IntValue(0)
     
     @elidable
     def _get_global(self, name, lib_version):

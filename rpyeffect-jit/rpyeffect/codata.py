@@ -33,7 +33,7 @@ class VTable:
         return ("{ %s }" % (",".join(methods)))
 
 # Codata
-@with_environment(specialized_for=[(x,y) for x in range(cfg.specialize_codatas[0]) for y in range(cfg.specialize_codatas[1])])
+@with_environment(specialized_for=[x for x in range(cfg.specialize_codatas[0] + cfg.specialize_codatas[1])])
 class CoData(Value):
     _immutable_fields_ = ['vtable']
     def __init__(self, vtable):

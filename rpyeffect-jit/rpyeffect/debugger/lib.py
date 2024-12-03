@@ -61,6 +61,7 @@ class Debugger:
         self.skipped_last_auto_snapshot = False
         self.auto_snapshot_filter_hook = lambda d: True
         self.debug_annot = dict()
+        self.debug_asserts = dict()
 
     def __deepcopy__(self, memo):
         res = Debugger(self.orig_program, self.args)
@@ -541,6 +542,16 @@ class Debugger:
     @not_rpython
     def mcore_syminfo(self, symid, lib = None):
         return self.debuginfo(lib)["mcore"]["Generated"][symid]
+
+    def check_assertions(self):
+        if (self.pc_block, self.pc_instruction) in self.debug_asserts:
+            for name, pred in self.debug_asserts[(self.pc_block, self.pc_instruction)]:
+                print(colors.faint("    ASSERT %s: %s" % (name, "ok" if pred() else colors.red("FAIL"))))
+
+    def assert_here(self, name, pred):
+        if (self.pc_block, self.pc_instruction) not in self.debug_asserts:
+            self.debug_asserts[(self.pc_block, self.pc_instruction)] = list()
+        self.debug_asserts[(self.pc_block, self.pc_instruction)].append((name, pred))
 
     # Koka-backend specific:
     # ----------------------

@@ -10,7 +10,7 @@ from rpyeffect.value import Value
 # Stacks
 class StackLike(Value): pass
 
-@with_environment(specialized_for=[(x,y) for x in range(cfg.specialize_stacks[0]) for y in range(cfg.specialize_stacks[1])])
+@with_environment(specialized_for=[x for x in range(cfg.specialize_stacks[0] + cfg.specialize_stacks[1])])
 class Stack(StackLike):
     _immutable_fields_ = [ 'target', 'tail' ]
     def __init__(self, target, tail):
@@ -30,10 +30,7 @@ class Stack(StackLike):
         class copy_wrapped:
             def __init__(self, inner):
                 self.inner = inner
-                self.values_num = [copy.deepcopy(inner.get_num(i), memo) for i in range(inner.len_num())]
                 self.values_ptr = [copy.deepcopy(inner.get_ptr(i), memo) for i in range(inner.len_ptr())]
-            def get_num(self, i):
-                return self.values_num[i]
             def get_ptr(self, i):
                 return self.values_ptr[i]
 

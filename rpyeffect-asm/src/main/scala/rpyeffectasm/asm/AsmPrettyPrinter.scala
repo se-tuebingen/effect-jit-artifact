@@ -2,7 +2,7 @@ package rpyeffectasm.asm
 
 import rpyeffectasm.util.{Output, ErrorReporter, Target, Phase}
 
-object AsmPrettyPrinter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]], Output] {
+object AsmPrettyPrinter extends Phase[Program[AsmFlags, Id, Id, Id], Output] {
   def apply(id: Id): String = id match {
     case Name(name) => s"$$${name}"
     case generated: Generated => s"##[${generated.toString}]"
@@ -10,55 +10,25 @@ object AsmPrettyPrinter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[
     case Index(i) => s"#${i}"
   }
 
-  def apply(r: RhsOperand[AsmFlags, Id, OperandType[TypingPrecision]] | LhsOperand[AsmFlags, Id, OperandType[TypingPrecision]]): String = r match {
+  def apply(r: RhsOperand[AsmFlags, Id] | LhsOperand[AsmFlags, Id]): String = r match {
     case Const(value: Int) => value.toString
     case Const(value: Double) => value.toString
     case Const(value: String) => s"\"${value}\""
-    case Var(name, Top) => apply(name)
-    case Var(name, tpe) => s"${apply(name)}:${apply(tpe)}"
+    case Var(name) => apply(name)
+    case Var(name) => s"${apply(name)}"
     case Ref(ref) => s"*${apply(ref)}"
   }
 
-  def apply(value: RhsOpList[AsmFlags, Id, OperandType[TypingPrecision]] | LhsOpList[AsmFlags, Id, OperandType[TypingPrecision]]): String = {
+  def apply(value: RhsOpList[AsmFlags, Id] | LhsOpList[AsmFlags, Id]): String = {
     val c = (value map apply).mkString(", ")
     s"(${c})"
   }
-
-  def apply(tpe: OperandType[TypingPrecision]): String = tpe match {
-    case Base.Int => "int"
-    case Base.Double => "double"
-    case Base.String => "str"
-    case Data(tpe, constructors) =>
-      val body = (constructors map {
-        case (cns, fields) =>
-          val args = (fields map {
-            case (field, tpe) => s"${apply(field)} : ${apply(tpe)}"
-          }).mkString(",")
-          s"${apply(cns)}(${args})"
-      }).mkString("|")
-      s"${apply(tpe)}(${body})"
-    case CoData(tpe, methods) =>
-      val body = (methods map {
-        case (method, args, ret) =>
-          val plist = (args map {
-            case (param, tpe) => s"${apply(param)}:${apply(tpe)}"
-          }).mkString(",")
-          s"${apply(method)}(${plist})->${apply(ret)}"
-      }).mkString(";")
-      s"${apply(tpe)}{${body}}"
-    case RefType(valueType) => s"*${apply(valueType)}"
-    case TopPtr => "ptr"
-    case TopNum => "num"
-    case Top => "Top"
-    case Bot => "Bot"
-    case LabelT(at,bnd) => "Ptr"
-  }
-
-  def apply(clause: Clause[AsmFlags, Id, Id, OperandType[TypingPrecision]]): String = clause match {
+  
+  def apply(clause: Clause[AsmFlags, Id, Id]): String = clause match {
     case Clause(params, env, target) => s"${apply(params)} | ${apply(env)} => ${apply(target)}"
   }
 
-  def apply(instruction: Instruction[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]): String = instruction match {
+  def apply(instruction: Instruction[AsmFlags, Id, Id, Id]): String = instruction match {
     case Let(lhss, rhss) => {
       val binds = ((lhss zip rhss) map { case (l,r) => s"${apply(l)} <- ${apply(r)}"}).mkString(", ")
       s"let ${binds}"
@@ -112,20 +82,20 @@ object AsmPrettyPrinter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[
     case other => throw new IllegalArgumentException(other.toString)
   }
 
-  def apply(block: Block[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]): String = block match {
-    case Block(label, params, ret, instructions, export_as) =>
+  def apply(block: Block[AsmFlags, Id, Id, Id]): String = block match {
+    case Block(label, params, instructions, export_as) =>
       val body = (instructions map apply).mkString(";\n    ")
         .replace("\n","\n|") // hack to counter-act stripMargin
       val tExportAs = if export_as.isEmpty then "" else {
         s"""@export(${export_as.map{ x => s"\"${rpyeffectasm.util.escape(x)}\""}.mkString(",")})"""
       }
-      s"""${tExportAs}${apply(label)}${apply(params)}:${apply(ret)} {
+      s"""${tExportAs}${apply(label)}${apply(params)} {
          |    ${body}
          |}
          |""".stripMargin
   }
 
-  def apply(program: Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]])(using ErrorReporter): Output = program match {
+  def apply(program: Program[AsmFlags, Id, Id, Id])(using ErrorReporter): Output = program match {
     case Program(blocks) => new Output{
       def emitTo[T](t: Target[T]): T = t.fromString((blocks map apply).mkString("\n"))
     }

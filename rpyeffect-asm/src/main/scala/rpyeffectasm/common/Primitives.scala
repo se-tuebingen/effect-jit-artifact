@@ -5,8 +5,6 @@ import scala.collection.mutable
 
 object Primitives {
 
-  import rpyeffectasm.asm.TopPtr
-
   trait PrimitiveException extends Exception
   case class PrimitiveInfo(name: String, insT: List[Type], outsT: List[Type], purity: Purity = Purity.Pure)
   val primitives: List[PrimitiveInfo] = List(
@@ -103,7 +101,7 @@ object Primitives {
     PrimitiveInfo("unsafeIndex(Bytes, Int): Int", List(ExternPtr("Bytes"), Base.Int), List(Base.Int), Purity.ErrorFlag),
     PrimitiveInfo("unsafeGetFileContents(String): String", List(Base.String), List(Base.String), Purity.Effectful),
     PrimitiveInfo("panic(String): Bottom", List(Base.String), List(Bottom), Purity.Effectful),
-    PrimitiveInfo("freshlabel", List(), List(Label(TopPtr, None)), Purity.Effectful),
+    PrimitiveInfo("freshlabel", List(), List(Label(Top, None)), Purity.Effectful),
     PrimitiveInfo("ptr_eq", List(Ptr, Ptr), List(Base.Int)),
     PrimitiveInfo("print(String): Unit", List(Base.String), List(Base.Unit), Purity.Effectful),
     PrimitiveInfo("non-exhaustive match", List(), List()), // not actually implemented, but used conventionally

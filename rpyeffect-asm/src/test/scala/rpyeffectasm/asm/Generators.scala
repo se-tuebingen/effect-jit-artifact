@@ -77,15 +77,15 @@ object Generators {
     def letConstInt(using Ctx): Gen[LetConst[Flags, V, Int]] = for {
       x <- v
       i <- Arbitrary.arbInt.arbitrary
-    } yield LetConst(Var(x, Base.Int), i)
+    } yield LetConst(Var(x), i)
     def letConstDouble(using Ctx): Gen[LetConst[Flags, V, Double]] = for {
       x <- v
       d <- Arbitrary.arbDouble.arbitrary
-    } yield LetConst(Var(x, Base.Double), d)
+    } yield LetConst(Var(x), d)
     def letConstString(using Ctx): Gen[LetConst[Flags, V, String]] = for {
       x <- v
       s <- Arbitrary.arbString.arbitrary
-    } yield LetConst(Var(x, Base.String), s)
+    } yield LetConst(Var(x), s)
     def letConst(using Ctx): Gen[LetConst[Flags, V, ?]] = Gen.oneOf(letConstInt, letConstDouble, letConstDouble)
 
     def primitive(using Ctx): Gen[Primitive[Flags, V, OTpe]] = for {
@@ -269,7 +269,7 @@ object Generators {
     }
   }
 
-  object simple extends InstructionGenerator[Nothing, Id, Id, Id, ConcretelyTyped, OperandType[ConcretelyTyped]] {
+  object simple extends InstructionGenerator[Nothing, Id, Id, Id, ConcretelyTyped] {
     import rpyeffectasm.asm.Generators.simple
     override def tag(using Ctx): Gen[Id] = id.any
     override def label(using Ctx): Gen[Id] = id.any

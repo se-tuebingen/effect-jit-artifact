@@ -32,25 +32,6 @@ object RichPrimitives {
             Let(List(Definition(res,
               Let(pdefs, b), Nil)), r)
           }
-        case "generic" => (as,rs,r) =>
-          var specialized = content
-          as.zipWithIndex.foreach{ (a, i) =>
-            val tpe = Type.of(a.unroll)
-            val rtpe = tpe.registerType
-            specialized =
-              specialized
-                .replace(s"$$tpe${i}", tpe.toString) // TODO: check that the format matches
-                .replace(s"$$regtpe${i}", rtpe.toString)
-          }
-          rs.zipWithIndex.foreach { (r, i) =>
-            val tpe = Type.of(r.unroll)
-            val rtpe = tpe.registerType
-            specialized =
-              specialized
-                .replace(s"$$Rtpe${i}", tpe.toString) // TODO: check that the format matches
-                .replace(s"$$Rregtpe${i}", rtpe.toString)
-          }
-          Primitive(specialized, as, rs, r)
         case "undefined" => (as,rs,r) =>
           val msg = Var(new Generated("panic msg/undefined"), Base.String)
           Let(List(Definition(msg, Literal.String(s"Undefined: ${content}"), Nil)),

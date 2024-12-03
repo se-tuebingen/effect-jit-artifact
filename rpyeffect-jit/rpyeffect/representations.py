@@ -87,6 +87,7 @@ def generate_representation_accessors(read_only = False):
 
 
 ## Representations of data types
+representation("num", "ptr")
 boxed_representation("int", "num", IntValue)
 encode_double, decode_double = boxed_representation("double", "num", DoubleValue)
 boxed_representation("bool", "num", BoolValue)

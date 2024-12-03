@@ -37,9 +37,6 @@ def pretty_ptr(p, program=None, max_width=200):
 
 def pretty_env(env, max_width=100, program = None):
     rows = []
-    n_nums = env.len_num()
-    for i in range(n_nums):
-       rows.append(("num%d" % i, pretty_num(env.get_num(i)))) 
     n_ptrs = env.len_ptr()
     for i in range(n_ptrs):
        rows.append(("ptr%d" % i, pretty_ptr(env.get_ptr(i), program, max_width=max_width-6))) 
@@ -101,8 +98,6 @@ def pretty_data(data, program=None, max_width=100):
 def simple_data(data, program=None):
     data = _strip_erase(data)
     argstrs = []
-    for i in range(data.len_num()):
-        argstrs.append("%d" % data.get_num(i))
     for i in range(data.len_ptr()):
         arg = _strip_erase(data.get_ptr(i))
         if isinstance(arg, Data):
