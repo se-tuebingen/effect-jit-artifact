@@ -47,6 +47,7 @@ def sum(a, g):
     while not isinstance(g, Empty):
         a = g.value + a
         g = g.k()
+    return a
 
 def run(n):
     return sum(0, generate(lambda: (yield from iterate(make(n)))))
