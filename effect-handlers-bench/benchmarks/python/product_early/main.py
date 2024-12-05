@@ -6,12 +6,16 @@ class Cons:
     hd: int
     tl: "Cons | None"
 
+@dataclass
+class Done(BaseException):
+    value: int
+
 def product(xs):
     if xs is None:
         return 0
     else:
         if xs.hd == 0:
-            raise 0
+            raise Done(0)
         else:
             return xs.hd * product(xs.tl)
 
@@ -24,8 +28,8 @@ def enumerate(i):
 def run_product(xs):
     try:
         return product(xs)
-    except int as e:
-        return e
+    except Done as e:
+        return e.value
 
 def run(n):
     xs = enumerate(1000)
