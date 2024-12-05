@@ -24,7 +24,8 @@ langs: list[Language] = [
     HeliumBackend("rpyeffect"),
     KokaBackend("js"), KokaBackend("c"),
     *with_adjusted_jit_backends(KokaBackend("vm")),
-    JSBackend(), Ocaml5Backend(),
+    JSBackend("v8"), JSBackend("spider"),
+    Ocaml5Backend(),
     PythonBackend("cpython"), PythonBackend("pypy")
 ]
 
