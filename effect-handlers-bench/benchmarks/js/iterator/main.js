@@ -7,11 +7,8 @@ function* range(l, u) {
 
 function run(n) {
     let s = 0;
-    let it = range(0, n);
-    let res = it.next();
-    while (!res.done) {
-        s = s + res.value;
-        res = it.next();
+    for (const r of range(0, n)) {
+        s = s + r;
     }
     return s;
 }
