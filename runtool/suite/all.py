@@ -18,7 +18,7 @@ suites = [
 
 benchmarks = [
     *HandlerBenchmark.all(),
-    *[bm for bm in MyBenchmarks.all() if bm.name in ["multiple_handlers", "to_outermost_handler", "unused_handlers"]],
+    *[bm for bm in MyBenchmarks.all() if bm.name in ["multiple_handlers", "to_outermost_handler", "unused_handlers", "startup"]],
     # Benchmark("countdown", ["200000000"], ["0"], HandlerBenchmark()),
     # Benchmark("fibonacci_recursive", ["42"], ["267914296"], HandlerBenchmark()),
     # Benchmark("generator", ["25"], ["67108837"], HandlerBenchmark()),
