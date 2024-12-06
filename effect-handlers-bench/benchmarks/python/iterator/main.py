@@ -7,7 +7,6 @@ def rnge(l, u):
 
 def run(n):
     s = 0
-    gen = rnge(0, n)
     for r in rnge(0, n):
         s = s + r
     return s
