@@ -248,7 +248,7 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
         arg = env.get_num(op.arg)
         target = op.default_target
         for idx, value in enumerate(op.values):
-            if arg == value:
+            if equal(arg, value):
                 target = op.targets[idx]
                 break
         return jump_to(target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)

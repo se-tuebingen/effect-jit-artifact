@@ -1,4 +1,6 @@
 from rpyeffect.util.debug import debug_hooks
+from rpython.rlib import objectmodel
+from rpython.rlib.jit import unroll_safe
 
 class Value(object):
     _attrs_ = []
@@ -50,3 +52,17 @@ class ArrayValue(Value):
         self.value = value
 
 class ValueNull(Value): pass
+
+@objectmodel.always_inline
+@unroll_safe
+def equal(a, b):
+    if isinstance(a, IntValue) and isinstance(b, IntValue):
+        return a.value == b.value
+    elif isinstance(a, DoubleValue) and isinstance(b, DoubleValue):
+        return a.value == b.value
+    elif isinstance(a, BoolValue) and isinstance(b, BoolValue):
+        return a.value == b.value
+    elif isinstance(a, StringValue) and isinstance(b, StringValue):
+        return a.value == b.value
+    else:
+        return a == b
