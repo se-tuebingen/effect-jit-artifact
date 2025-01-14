@@ -326,7 +326,7 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
             return jump_to(lib.symbols["$static-init"].position, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
         else:
             # directly return, already initialized (or no $static-init)
-            return do_return([[],[0]], program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
+            return do_return([[0]], program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, CALL_LIB):
         lib = promote(env.get_lib(op.lib))
         if lib is None:
