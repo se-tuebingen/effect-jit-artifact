@@ -157,7 +157,8 @@ case class AlternativeChoice(choices: List[Term[ATerm]]) extends Sugar {
   def expand(term: Term[ATerm], leftover: List[Term[ATerm]])(using ErrorReporter): Term[ATerm] = {
     val impl = new Structural[ATerm, ATerm] {
       override def term: PartialFunction[Term[ATerm], Term[ATerm]] = {
-        case AlternativeFail if leftover.isEmpty => ErrorReporter.fatal("AlternativeFail must be wrapped in AlternativeChoice, and cannot occur in the last choice")
+        case AlternativeFail if leftover.isEmpty =>
+          ErrorReporter.fatal("AlternativeFail must be wrapped in AlternativeChoice, and cannot occur in the last choice")
         case AlternativeFail => expand(leftover.head, leftover.tail)
         case AlternativeChoice(choices) => AlternativeChoice(choices.init :+ expand(choices.last, leftover))
         case sugar: Sugar => apply(sugar.desugared) // FIXME in [[Structural]]

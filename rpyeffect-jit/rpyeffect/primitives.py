@@ -320,7 +320,7 @@ class Primitives(object):
         elif opid == "read(String, Int): Int":
             s = env.get_str(ins.regs[OPAQUE_PTR][0])
             v = 0
-            base = env.get_int(ins.regs[NUMBER][0])
+            base = env.get_int(ins.regs[NUMBER][1])
             e = True
             try:
                 if base == 0:
