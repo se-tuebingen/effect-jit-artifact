@@ -306,11 +306,11 @@ pub fip fun mbint( m : maybe<int> ) : int
 pub noinline fun parse-int( s : string, hex : bool = False) : maybe<int>
   s.xparse(hex)
 
-noinline extern xparse( s : string, hex : bool ) : maybe<int>
+pub noinline extern xparse( s : string, hex : bool ) : maybe<int>
   c  "kk_integer_xparse"
   cs "Primitive.IntParse"
   js "_int_parse"
-  vm "!sexp:($xparseImpl:(fun Pure (ptr int) ptr) $arg0:ptr $arg1:int)"
+  vm "!sexp:($xparseImpl:(fun Pure (ptr bool) ptr) $arg0:ptr $arg1:bool)"
 
 
 // ----------------------------------------------------------------------------

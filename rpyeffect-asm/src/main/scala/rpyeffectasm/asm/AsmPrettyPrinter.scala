@@ -34,6 +34,7 @@ object AsmPrettyPrinter extends Phase[Program[AsmFlags, Id, Id, Id], Output] {
       s"let ${binds}"
     }
     case LetConst(out, value: Int) => s"let const ${apply(out)} <- ${value}"
+    case LetConst(out, value: Boolean) => s"let const ${apply(out)} <- ${value}"
     case LetConst(out, value: Double) => s"let const ${apply(out)} <- ${value}"
     case LetConst(out, value: String) => s"let const ${apply(out)} <- \"${value}\""
     case LetConst(out, FormatConst(fmt, value)) => s"let const ${apply(out)} <- ${fmt}\"${value}\""

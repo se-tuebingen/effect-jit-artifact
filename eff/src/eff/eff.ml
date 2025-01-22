@@ -209,7 +209,8 @@ let main =
       if !Config.use_stdlib then
         let stdlib =
           match !Config.backend with
-          | Config.Runtime | Config.Ocaml | Config.Jit -> Loader.Stdlib_eff.source
+          | Config.Runtime | Config.Ocaml | Config.Jit ->
+              Loader.Stdlib_eff.source
           | Config.Multicore -> MulticoreOCaml.stdlib
         in
         Shell.load_source stdlib state

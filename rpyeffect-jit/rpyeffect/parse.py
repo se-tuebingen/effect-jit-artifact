@@ -1,7 +1,7 @@
 from rpyeffect.instructions import *
 from rpyeffect.program import *
 from rpyeffect.types import *
-from rpyeffect.representations import encode_str, encode_double, encode_interned
+from rpyeffect.representations import encode_str, encode_double, encode_interned, encode_bool
 from rpyeffect.codata import VTable, CoData
 from rpyeffect.symbol import Symbol
 from rpyeffect.util.debug import debug
@@ -38,6 +38,11 @@ class DoubleToken(Token):
         self.value = value
     def __repr__(self):
         return "Double(%d)" % self.value
+class BoolToken(Token):
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return "Bool(%d)" % self.value
 class OpToken(Token):
     def __init__(self, op):
         self.op = op
@@ -61,7 +66,7 @@ def tokens(char_gen):
     """
     Generator iterating over the tokens in a character generator
     """
-    S_START, S_INT, S_STR, S_STR_ESC, S_DOUBLE_FRAC, S_DOUBLE_EXP_START, S_DOUBLE_EXP, S_COMMENT = range(8)
+    S_START, S_INT, S_STR, S_STR_ESC, S_DOUBLE_FRAC, S_DOUBLE_EXP_START, S_DOUBLE_EXP, S_COMMENT, S_SKIP_ID = range(9)
     state = S_START
     token = ""
     for c in char_gen:
@@ -105,6 +110,11 @@ def tokens(char_gen):
             else:
                 yield DoubleToken(float(token))
                 state = S_START
+        elif state == S_SKIP_ID:
+            if c >= 'a' and c <= 'z':
+                continue
+            else:
+                state = S_START
         # intentionally fall through here because a new token might start here after a number
         if state == S_START:
             if c == '"':
@@ -116,6 +126,12 @@ def tokens(char_gen):
             elif c == ']': yield BRACKET_CLOSE
             elif c == ',': yield COMMA
             elif c == ':': yield COLON
+            elif c == 't':
+                yield BoolToken(True)
+                state=S_SKIP_ID
+            elif c == 'f':
+                yield BoolToken(False)
+                state=S_SKIP_ID
             elif c.isdigit() or c == '-':
                 token=c
                 state=S_INT
@@ -190,6 +206,12 @@ def parse_int(tokens):
     tok = tokens.next()
     p_assert (isinstance(tok, IntToken))
     assert (isinstance(tok, IntToken))
+    return tok.value
+
+def parse_bool(tokens):
+    tok = tokens.next()
+    p_assert (isinstance(tok, BoolToken))
+    assert (isinstance(tok, BoolToken))
     return tok.value
 
 def parse_double(tokens):
@@ -431,6 +453,18 @@ def parse_int_list(tokens):
         token = tokens.next()
     return res
 
+def parse_lit_list(tokens):
+    expect(BRACKET_OPEN, tokens)
+    res = []
+    token = tokens.next()
+    while token != BRACKET_CLOSE:
+        if isinstance(token, IntToken):
+            res = res + [IntValue(token.value)]
+        elif isinstance(token, BoolToken):
+            res = res + [BoolValue(token.value)]
+        token = tokens.next()
+    return res
+
 def parse_idx_list(tokens):
     expect(BRACKET_OPEN, tokens)
     res = []
@@ -540,6 +574,8 @@ def parse_CONST(tokens, primitives):
                 value = encode_str(primitives.resolve_path(parse_string(tokens)))
             elif fmt == "interned":
                 value = encode_interned(parse_interned(tokens, primitives))
+            elif fmt == "bool":
+                value = encode_bool(parse_bool(tokens))
         else:
             skip_value(tokens)
     return CONST_PTR(out, value, fmt)
@@ -762,7 +798,7 @@ def parse_SWITCH(tokens, relocate_by):
         if key == "arg":
             arg = parse_int(tokens)
         elif key == "values":
-            values = parse_int_list(tokens)
+            values = parse_lit_list(tokens)
         elif key == "targets":
             targets = parse_target_list(tokens, relocate_by)
         elif key == "default":

@@ -1,6 +1,7 @@
 package rpyeffectasm.asm
 
 import rpyeffectasm.util.{Phase, Output, Target, JsonPrinter, ErrorReporter, escape}
+import rpyeffectasm.mcore
 import scala.collection.immutable.ListMap
 
 object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id, Id], Output]{
@@ -104,6 +105,12 @@ object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id
     )
     case Debug(msg, traced) => ListMap("op" -> "\"Debug\"", "msg" -> toDoc(msg), "traced" -> jsonListSmall(traced map toDoc))
   })
+
+  def toDoc(lit: mcore.Literal): Doc = lit match {
+    case mcore.Literal.Int(v) => toDoc(v)
+    case mcore.Literal.Bool(v) => v.toString
+    case _ => ???
+  }
 
   def toDoc(b: Block[AsmFlags, Id, Id, Id]): Doc =
     jsonObject(ListMap(

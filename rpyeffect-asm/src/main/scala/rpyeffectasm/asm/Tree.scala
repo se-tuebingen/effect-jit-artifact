@@ -77,7 +77,7 @@ case class Return[+Flags <: AsmFlags, +V <: Id, +OTpe](args: RhsOpList[Flags, V]
 // Control flow
 case class Jump[+Flags <: AsmFlags, +Label <: Id, +V <: Id, +OTpe](target: Label, env: RhsOpList[Flags, V]) extends Instruction[Flags, Nothing, Label, V] with Terminator
 case class IfZero[+Flags <: AsmFlags, +Label <: Id, +V <: Id, +OTpe](arg: RhsOperand[Flags, V], thenClause: Clause[Flags, Label, V]) extends Instruction[Flags, Nothing, Label, V]
-case class Switch[+Flags <: AsmFlags, +Label <: Id, +V <: Id, +OTpe](arg: RhsOperand[Flags, V], cases: List[(Int, Label)], default: Label, env: RhsOpList[Flags, V]) extends Instruction[Flags, Nothing, Label, V] with Terminator
+case class Switch[+Flags <: AsmFlags, +Label <: Id, +V <: Id, +OTpe](arg: RhsOperand[Flags, V], cases: List[(LiteralType, Label)], default: Label, env: RhsOpList[Flags, V]) extends Instruction[Flags, Nothing, Label, V] with Terminator
 
 // Mutable references
 case class Allocate[+Flags <: AsmFlags, +V <: Id, +OTpe](ref: LhsOperand[Flags, V], init: RhsOperand[Flags, V], region: RhsOperand[Flags, V]) extends Instruction[Flags, Nothing, Nothing, V]

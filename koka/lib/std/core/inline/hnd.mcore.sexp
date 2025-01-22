@@ -42,14 +42,14 @@
     $std/core/hnd/htag $std/core/hnd/Htag 0)))
 
 ;; make primitive?
-(define $evvDelete:(fun Pure (int int ptr) ptr) (lambda ($i:int $evv:ptr)
+(define $evvDelete:(fun Pure (int ptr) ptr) (lambda ($i:int $evv:ptr)
   (match ($evv:ptr $evv)
     ($cons ($hd:ptr $tl:ptr)
       (switch $i:int
         (0 $tl:ptr)
         (_ (make $evv $cons (
               $hd:ptr
-              ($evvDelete:(fun Pure (int int ptr) ptr) ("infixSub(Int, Int): Int" $i:int 1) $tl:ptr))))))
+              ($evvDelete:(fun Pure (int ptr) ptr) ("infixSub(Int, Int): Int" $i:int 1) $tl:ptr))))))
     (_ () ("panic(String): Bottom" "Out of bounds index into evidence vector"))))
   :export-as ("evvDelete"))
 (define $evvInsert:(fun Pure (ptr ptr) ptr) (lambda ($evv:ptr $ev:ptr)
@@ -58,7 +58,7 @@
         (switch ("infixGt(String, String): Boolean" 
                    ($evHtag:(fun Pure (ptr) str) $ev:ptr)
                    ($evHtag:(fun Pure (ptr) str) $fst:ptr))
-          (1 (make $evv $cons (
+          (true (make $evv $cons (
                 $fst:ptr
                 ($evvInsert:(fun Pure (ptr ptr) ptr) $rst:ptr $ev:ptr))))
           (_ (make $evv $cons ($ev:ptr $evv:ptr)))))
@@ -70,7 +70,7 @@
       (switch ("infixEq(String, String): Boolean"
                  (project $htag:ptr $std/core/hnd/htag $std/core/hnd/Htag 0)
                  ($evHtag:(fun Pure (ptr) str) $fst:ptr))
-        (1 $acc:int)
+        (true $acc:int)
         (_ ($evvIndex:(fun Pure (ptr ptr int) int) $rst:ptr $htag:ptr 
              ("infixAdd(Int, Int): Int" $acc:int 1)))))
     (_ () ("!undefined:no evidence for htag"))))

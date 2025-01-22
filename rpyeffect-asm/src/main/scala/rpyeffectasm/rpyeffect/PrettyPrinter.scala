@@ -54,6 +54,8 @@ object PrettyPrinter extends JsonPrinter with Phase[rpyeffect.Program, Output] {
   def toDoc(instruction: Instruction): Doc = instruction match {
     case Const(out, value) => jsonObjectSmall(ListMap("op" -> "\"Const\"",
       "format" -> "\"int\"", "out" -> toDoc(out), "value" -> value.toString))
+    case ConstBool(out, value) => jsonObjectSmall(ListMap("op" -> "\"Const\"",
+      "format" -> "\"bool\"", "out" -> toDoc(out), "value" -> value.toString))
     case ConstDouble(out, value) => jsonObjectSmall(ListMap("op" -> "\"Const\"",
       "format" -> "\"double\"", "out" -> toDoc(out), "value" -> value.toString))
     case ConstString(out, value) => jsonObjectSmall(ListMap("op" -> "\"Const\"",
@@ -184,7 +186,11 @@ object PrettyPrinter extends JsonPrinter with Phase[rpyeffect.Program, Output] {
       ))
     }
 
-  def toDoc(i: Int): Doc = i.toString()
+  def toDoc(i: asm.LiteralType): Doc = i match {
+    case i: Int => i.toString
+    case b: Boolean => b.toString
+    case _ => ???
+  }
 
   def format(prog: Program): Document = {
     pretty(toDoc(prog))

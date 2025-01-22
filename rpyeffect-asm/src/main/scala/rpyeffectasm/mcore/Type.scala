@@ -30,6 +30,7 @@ sealed trait Base extends Type {
   type ScalaType
 }
 object Base {
+  object Bool extends Base { override type ScalaType = scala.Boolean }
   object Int extends Base { override type ScalaType = scala.Int }
   object Double extends Base { override type ScalaType = scala.Double }
   object String extends Base { override type ScalaType = java.lang.String }

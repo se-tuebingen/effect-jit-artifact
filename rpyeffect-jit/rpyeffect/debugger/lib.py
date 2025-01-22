@@ -172,6 +172,23 @@ class Debugger:
             self.step_count += 1
             self._my_debug_hook("after_step")
 
+    def step_out(self):
+        """Run the program until returned to the current topmost return on the stack (potentially never!)"""
+        t = self.stack.target
+        rem = (t, 0) not in self.breakpoints
+        self.set_breakpoint(t)
+        self.run()
+        if rem:
+            self.unset_breakpoint(t)
+
+    def step_block(self):
+        """Run the program until reaching a different block"""
+        cur = self.pc_block
+        hndl = self.set_break_condition(lambda d: d.pc_block != cur)
+        self.run()
+        self.unset_break_condition(hndl)
+        
+
     def snapshot(self):
         snap = self._snapshot()
         if self.step_count in self._weak_snapshots:

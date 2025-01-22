@@ -150,6 +150,10 @@ class Transformer extends Phase[Program[Nothing, Id, Index, Index], rpyeffect.Pr
       use(i)
       emit(rpyeffect.Const(i, value))
       apply(rest)
+    case LetConst(Var(Index(i)), value: Boolean) :: rest =>
+      use(i)
+      emit(rpyeffect.ConstBool(i, value))
+      apply(rest)
     case LetConst(Var(Index(out)), value: Double) :: rest =>
       use(out)
       emit(rpyeffect.ConstDouble(out, value))

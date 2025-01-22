@@ -122,22 +122,22 @@ class Primitives(object):
             env.set_int(outs.regs[NUMBER][0], abs(env.get_int(ins.regs[NUMBER][0])))
 
         elif opid == "infixEq(Int, Int): Boolean":
-            env.set_int(outs.regs[NUMBER][0], 1 if env.get_int(ins.regs[NUMBER][0]) == env.get_int(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_int(ins.regs[NUMBER][0]) == env.get_int(ins.regs[NUMBER][1]))
 
         elif opid == "infixNeq(Int, Int): Boolean":
-            env.set_int(outs.regs[NUMBER][0], 1 if env.get_int(ins.regs[NUMBER][0]) != env.get_int(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_int(ins.regs[NUMBER][0]) != env.get_int(ins.regs[NUMBER][1]))
 
         elif opid == "infixLt(Int, Int): Boolean":
-            env.set_int(outs.regs[NUMBER][0], 1 if env.get_int(ins.regs[NUMBER][0]) < env.get_int(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_int(ins.regs[NUMBER][0]) < env.get_int(ins.regs[NUMBER][1]))
 
         elif opid == "infixLte(Int, Int): Boolean":
-            env.set_int(outs.regs[NUMBER][0], 1 if env.get_int(ins.regs[NUMBER][0]) <= env.get_int(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_int(ins.regs[NUMBER][0]) <= env.get_int(ins.regs[NUMBER][1]))
 
         elif opid == "infixGt(Int, Int): Boolean":
-            env.set_int(outs.regs[NUMBER][0], 1 if env.get_int(ins.regs[NUMBER][0]) > env.get_int(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_int(ins.regs[NUMBER][0]) > env.get_int(ins.regs[NUMBER][1]))
 
         elif opid == "infixGte(Int, Int): Boolean":
-            env.set_int(outs.regs[NUMBER][0], 1 if env.get_int(ins.regs[NUMBER][0]) >= env.get_int(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_int(ins.regs[NUMBER][0]) >= env.get_int(ins.regs[NUMBER][1]))
 
         elif opid == "println(Double): Unit / Console" or opid == "println(Double): Unit":
             print(env.get_double(ins.regs[NUMBER][0]))
@@ -177,22 +177,22 @@ class Primitives(object):
             env.set_double(outs.regs[NUMBER][0], math.fabs(env.get_double(ins.regs[NUMBER][0])))
 
         elif opid == "infixEq(Double, Double): Boolean":
-            env.set_double(outs.regs[NUMBER][0], 1 if env.get_double(ins.regs[NUMBER][0]) == env.get_double(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_double(ins.regs[NUMBER][0]) == env.get_double(ins.regs[NUMBER][1]))
 
         elif opid == "infixNeq(Double, Double): Boolean":
-            env.set_double(outs.regs[NUMBER][0], 1 if env.get_double(ins.regs[NUMBER][0]) != env.get_double(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_double(ins.regs[NUMBER][0]) != env.get_double(ins.regs[NUMBER][1]))
 
         elif opid == "infixLt(Double, Double): Boolean":
-            env.set_double(outs.regs[NUMBER][0], 1 if env.get_double(ins.regs[NUMBER][0]) < env.get_double(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_double(ins.regs[NUMBER][0]) < env.get_double(ins.regs[NUMBER][1]))
 
         elif opid == "infixLte(Double, Double): Boolean":
-            env.set_double(outs.regs[NUMBER][0], 1 if env.get_double(ins.regs[NUMBER][0]) <= env.get_double(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_double(ins.regs[NUMBER][0]) <= env.get_double(ins.regs[NUMBER][1]))
 
         elif opid == "infixGt(Double, Double): Boolean":
-            env.set_double(outs.regs[NUMBER][0], 1 if env.get_double(ins.regs[NUMBER][0]) > env.get_double(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_double(ins.regs[NUMBER][0]) > env.get_double(ins.regs[NUMBER][1]))
 
         elif opid == "infixGte(Double, Double): Boolean":
-            env.set_double(outs.regs[NUMBER][0], 1 if env.get_double(ins.regs[NUMBER][0]) >= env.get_double(ins.regs[NUMBER][1]) else 0)
+            env.set_bool(outs.regs[NUMBER][0], env.get_double(ins.regs[NUMBER][0]) >= env.get_double(ins.regs[NUMBER][1]))
 
         elif opid == "cos(Double): Double":
             env.set_double(outs.regs[NUMBER][0], math.cos(env.get_double(ins.regs[NUMBER][0])))

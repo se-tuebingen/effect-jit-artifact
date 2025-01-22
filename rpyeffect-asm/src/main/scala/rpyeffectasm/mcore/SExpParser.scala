@@ -37,6 +37,7 @@ object SExpParser extends Phase[Source, Program[ATerm]] with RegexParsers with J
     | "bot" ^^ { _ => Bottom }
     | "int" ^^ { _ => Base.Int }
     | "unit" ^^ { _ => Base.Unit }
+    | "bool" ^^ { _ => Base.Bool }
     | "double" ^^ { _ => Base.Double }
     | "str" ^^ { _ => Base.String }
     | "label" ^^ { _ => Base.Label(Top, None) }
@@ -53,6 +54,7 @@ object SExpParser extends Phase[Source, Program[ATerm]] with RegexParsers with J
     )
   }
   def int: Parser[Int] = wholeNumber ^^ { s => s.toInt }
+  def bool: Parser[Boolean] = ("true" ^^ { _ => true }) | ("false" ^^ { _ => false })
   def str: Parser[String] = """\"([^\"\\]|(\\.))*\"""".r ^^ { s => StringContext.processEscapes(s.substring(1, s.length-1)) }
   def dbl: Parser[Double] = floatingPointNumber ^^ { s => s.toDouble }
   def dblOrInt: Parser[Double | Int] = floatingPointNumber ^^ { s =>
@@ -66,6 +68,16 @@ object SExpParser extends Phase[Source, Program[ATerm]] with RegexParsers with J
     case x ~ t ~ e => Definition(x,t,e.getOrElse(Nil)) 
   }
   def clause: Parser[(Id, Clause[ATerm])] = tuple(id ~ list(lhsOp) ~ term) ^^ { case t ~ ps ~ b => (t, Clause(ps, b)) }
+  def literal: Parser[Literal] =
+      "true" ^^ { _ => Literal.Bool(true) }
+    | "false" ^^ { _ => Literal.Bool(false) }
+    | dblOrInt ^^ {
+        case i: Int => Literal.Int(i)
+        case d: Double => Literal.Double(d)
+      }
+    | str ^^ { s => new Literal.String(s) }
+    | """[a-zA-Z-][a-zA-Z-]*\"([^\"]|(\\.))*\"""".r ^^ { case f => Literal.StringWithFormat(f.split('"').tail.mkString("\"").stripSuffix("\""), f.split('"')(0)) }
+
   def term: Parser[Term[ATerm]] = maybeComment ~> ( v | tuple(
     "lambda" ~> list(lhsOp) ~ term ^^ { case params ~ body => Abs(params, body) }
       | "begin" ~> rep(term) ^^ Seq.apply
@@ -82,7 +94,7 @@ object SExpParser extends Phase[Source, Program[ATerm]] with RegexParsers with J
               case "_" ~ ps ~ b => Clause(ps, b)
             }.getOrElse { throw IllegalArgumentException("No default clause in match") })
         }
-      | "switch" ~> term ~ rep(tuple(int ~ term) ^^ { case v ~ t => (v, t)}) ~ tuple("_" ~> term) ^^ {
+      | "switch" ~> term ~ rep(tuple(literal ~ term) ^^ { case v ~ t => (v, t)}) ~ tuple("_" ~> term) ^^ {
           case s ~ cs ~ d => Switch(s, cs, d)
         }
       | "new" ~> id ~ rep(clause) ^^ { case it ~ cs => New(it, cs) }
@@ -141,12 +153,7 @@ object SExpParser extends Phase[Source, Program[ATerm]] with RegexParsers with J
       | "the" ~> tpe ~ term ^^ { case tp ~ t => The(tp, t) }
       | "this-lib" ^^ { case _ => ThisLib() }
       | term ~ rep(term) ^^ { case f ~ a => App(f, a) }
-  ) | dblOrInt ^^ {
-      case i: Int => Literal.Int(i)
-      case d: Double => Literal.Double(d)
-    }
-  | str ^^ { s => new Literal.String(s) }
-  | """[a-zA-Z-][a-zA-Z-]*\"([^\"]|(\\.))*\"""".r ^^ { case f => Literal.StringWithFormat(f.split('"').tail.mkString("\"").stripSuffix("\""), f.split('"')(0)) })
+  ) | literal)
 
   def program: Parser[Program[ATerm]] = (rep(definition) ~ term <~ maybeComment ^^ { case defs ~ main => Program(defs, main) }) <~ """\s*""".r
 

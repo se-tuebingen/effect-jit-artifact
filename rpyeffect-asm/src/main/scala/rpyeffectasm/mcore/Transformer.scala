@@ -56,6 +56,11 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
       }
       asm.Clause(tParams, env ++ tParams, target)
   }
+  def transform(literal: Literal): asm.LiteralType = literal match {
+    case Literal.Int(value) => value
+    case Literal.Bool(value) => value
+    case _ => ???
+  }
   def transformReturning(t: Term[Var])(using Emit[Block], Emit[Instruction], ErrorReporter, State): Unit = t match {
     case App(fn, args) =>
       emit(asm.Jump(transform(fn.name), args map transform))
@@ -79,7 +84,7 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
       val tCases = cases.map{ case (v, thn) =>
         val target = new asm.Generated(s"switch case for ${v}")
         transformAsBlock(target, env, retTpe, thn)
-        (v, target)
+        (transform(v), target)
       }
       val tDefault = new asm.Generated("switch default case")
       transformAsBlock(tDefault, env, retTpe, default)
@@ -209,6 +214,9 @@ class Transformer extends Phase[Program[Var], asm.Program[asm.AsmFlags, asm.Id, 
       val x = asm.Var(new asm.Generated(s"literal ${literal.value}"))
       literal match {
       case Literal.Int(v) =>
+        emit(asm.LetConst(x, v))
+        k(x)
+      case Literal.Bool(v) =>
         emit(asm.LetConst(x, v))
         k(x)
       case Literal.Double(v) =>

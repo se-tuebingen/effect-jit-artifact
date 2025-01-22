@@ -34,6 +34,7 @@ case class Clause(tag: Tag, params: RegList, target: BlockLabel)
 
 sealed trait Instruction
 case class Const(out: Register, value: Int) extends Instruction
+case class ConstBool(out: Register, value: scala.Boolean) extends Instruction
 case class ConstDouble(out: Register, value: scala.Double) extends Instruction
 case class ConstString(out: Register, value: String) extends Instruction
 case class ConstFormat(out: Register, value: String, fmt: String) extends Instruction
@@ -63,7 +64,7 @@ sealed trait Terminator
 case class Return(args: RegList) extends Terminator
 case class Jump(target: BlockLabel) extends Terminator
 case class Match(adt_type: Tag, scrutinee: Register, clauses: List[Clause], default: Clause) extends Terminator
-case class Switch(arg: Register, values: List[Int], targets: List[BlockLabel], default: BlockLabel) extends Terminator
+case class Switch(arg: Register, values: List[asm.LiteralType], targets: List[BlockLabel], default: BlockLabel) extends Terminator
 case class Invoke(receiver: Register, tag: Tag, args: RegList) extends Terminator
 case class CallLib(lib: Register, symbol: String) extends Terminator
 case class LoadLib(path: Register) extends Terminator

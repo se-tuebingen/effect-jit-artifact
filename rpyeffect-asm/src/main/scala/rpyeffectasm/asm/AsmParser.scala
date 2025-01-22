@@ -45,6 +45,7 @@ class AsmParser extends RegexParsers with Phase[Source, Program[AsmFlags, Id, Id
   def const: Parser[Const[Flags, LiteralType]]
     = string ^^ Const.apply
     | intConst ^^ Const.apply
+    | "true" ^^ { _ => Const(true) } | "false" ^^ { _ => Const(false) }
     | """[0-9]*\.[0-9]*([eE][0-9]+)?""".r ^^ { d => Const.apply(d.toDouble) } // FIXME
     | """[a-zA-Z-][a-zA-Z-]*""".r ~ string ^^ { case fmt ~ p => Const(FormatConst(fmt, p)) }
 
@@ -68,6 +69,7 @@ class AsmParser extends RegexParsers with Phase[Source, Program[AsmFlags, Id, Id
   def operandTpe: Parser[Unit] = {
       "int" ^^ { _ => () }
     | "double" ^^ { _ => () }
+    | "bool" ^^ { _ => () }
     | "str" ^^ { _ => () }
     | "ptr" ^^ { _ => () }
     | "num" ^^ { _ => () }
@@ -85,6 +87,7 @@ class AsmParser extends RegexParsers with Phase[Source, Program[AsmFlags, Id, Id
   def instruction: Parser[Instruction[Flags, Tag, Label, V]]
     = ("""let\s*const\s*""".r ~> lhsOp) ~ ("""\s*<-\s*""".r ~> const) ^^ {
         case (asm.Var(x) ~ Const(value: Int)) => LetConst(asm.Var(x), value)
+        case (asm.Var(x) ~ Const(value: Boolean)) => LetConst(asm.Var(x), value)
         case (asm.Var(x) ~ Const(value: Double)) => LetConst(asm.Var(x), value)
         case (asm.Var(x) ~ Const(value: String)) => LetConst(asm.Var(x), value)
         case (asm.Var(x) ~ Const(cv: FormatConst)) => LetConst(asm.Var(x), cv) // TODO assumes string for now

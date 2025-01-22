@@ -102,6 +102,7 @@ object SExpPrettyPrinter extends Phase[Program[ATerm], Output] {
       case None => ""
     }})"
     case Base.Unit => "unit"
+    case Base.Bool => "bool"
   }
   def toDoc(t: Term[ATerm])(using Context): String = t match {
     case Var(name, tpe) => s"${toDoc(name)}:${singleline{toDoc(tpe)}}"
@@ -210,6 +211,7 @@ object SExpPrettyPrinter extends Phase[Program[ATerm], Output] {
       s"(prim (${tReturns}) (\"${name}\" ${tArgs}) ${tBody})"
     case l: Literal => l match {
       case Literal.Int(i) => s"${i}"
+      case Literal.Bool(b) => s"${b}"
       case Literal.Double(d) => s"${d}"
       case Literal.String(s) => toDoc(s)
       case Literal.Unit => "(unit)"

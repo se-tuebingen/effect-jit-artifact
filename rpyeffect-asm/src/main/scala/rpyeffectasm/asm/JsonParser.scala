@@ -91,7 +91,7 @@ class JsonParser extends JsonParsers with Phase[Source, Program[AsmFlags, Id, Id
           case (((tp,r),m),as) => Invoke(r,tp,m,as)
         }
       case "Switch" => ("arg" -> rhsOperand &
-        "cases" -> list(obj("value" -> int & "target" -> label)) &
+        "cases" -> list(obj("value" -> literal & "target" -> label)) &
         "default" -> label &
         "env" -> list(rhsOperand)) ^ {
         case (((a,cs),d),e) => Switch(a,cs,d,e)

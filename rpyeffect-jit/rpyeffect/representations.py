@@ -90,7 +90,7 @@ def generate_representation_accessors(read_only = False):
 representation("num", "ptr")
 boxed_representation("int", "num", IntValue)
 encode_double, decode_double = boxed_representation("double", "num", DoubleValue)
-boxed_representation("bool", "num", BoolValue)
+encode_bool, decode_bool = boxed_representation("bool", "num", BoolValue)
 
 encode_str, decode_str = boxed_representation("str", "ptr", StringValue)
 boxed_representation("bytearray", "ptr", BytearrayValue)
