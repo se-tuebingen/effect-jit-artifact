@@ -238,7 +238,7 @@ inline extern evv-set<e1,e>( w : evv<e1> ) : e ()
 pub extern @evv-is-affine() : bool
   c  inline "kk_evv_is_affine(kk_context())"
   js inline "$std_core_hnd._evv_is_affine_()"
-  vm "!sexp:0"
+  vm "!sexp:false"
 
 
 // -----------------------------------------------------------------------------------
@@ -257,7 +257,7 @@ inline extern evv-swap<e1,e2>( w : evv<e1> ) : e evv<e2>
 extern evv-swap-delete( i : ev-index, behind : bool ) : e1 evv<e>
   c  "kk_evv_swap_delete"
   js "_evv_swap_delete"
-  vm "!sexp:($evvSwapDelete:(fun Effectful (int int) ptr) $arg0:int $arg1:int)"
+  vm "!sexp:($evvSwapDelete:(fun Effectful (int bool) ptr) $arg0:int $arg1:bool)"
 
 // Swap the current evidence vector with an empty vector.
 // (this is used in open calls to switch to a total context)
@@ -288,12 +288,12 @@ extern evv-swap-create( indices : vector<ev-index> ) : e evv<e>  //not quite the
 pub inline extern yielding() : bool
   c  "kk_yielding"
   js "$std_core_hnd._yielding"
-  vm "!sexp:0"
+  vm "!sexp:false"
 
 pub inline extern yielding-non-final() : bool
   c  "kk_yielding_non_final"
   js "$std_core_hnd._yielding_non_final"
-  vm "!sexp:0"
+  vm "!sexp:false"
 
 pub noinline extern yield-extend(next : a -> e b ) : e b
   c  "kk_yield_extend"

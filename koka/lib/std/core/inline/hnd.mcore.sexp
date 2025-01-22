@@ -30,9 +30,10 @@
       ($setCurrentEvv:(fun Effectful (ptr) unit) $next:ptr)
       $cur:ptr)))
   :export-as ("evvSwapCreate0"))
-(define $evvSwapDelete:(fun Effectful (int int) ptr) (lambda ($i:int $behind:int)
+(define $evvSwapDelete:(fun Effectful (int bool) ptr) (lambda ($i:int $behind:bool)
   (letrec ((define $cur:ptr ($getCurrentEvv:(fun Effectful () ptr)))
-           (define $next:ptr ($evvDelete:(fun Pure (int ptr) ptr) ("infixAdd(Int, Int): Int" $i:int $behind:int) $cur:ptr)))
+           (define $increment:int (switch $behind:bool (false 0) (_ 1)))
+           (define $next:ptr ($evvDelete:(fun Pure (int ptr) ptr) ("infixAdd(Int, Int): Int" $i:int $increment:int) $cur:ptr)))
     (begin
       ($setCurrentEvv:(fun Effectful (ptr) unit) $next:ptr)
       $cur:ptr)))
