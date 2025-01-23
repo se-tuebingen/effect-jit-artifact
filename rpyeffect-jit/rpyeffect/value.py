@@ -53,12 +53,14 @@ class IntValue(UnboxableValue):
     def __init__(self, value):
         self.value = value
 
-class DoubleValue(Value):
+@unbox_in_ref
+class DoubleValue(UnboxableValue):
     _immutable_fields_ = ['value']
     def __init__(self, value):
         self.value = value
 
-class BoolValue(Value):
+@unbox_in_ref
+class BoolValue(UnboxableValue):
     _immutable_fields_ = ['value']
     def __init__(self, value):
         self.value = value
