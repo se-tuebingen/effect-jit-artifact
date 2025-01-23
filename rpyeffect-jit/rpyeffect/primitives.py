@@ -7,7 +7,7 @@ from rpyeffect.types import *
 from rpyeffect.stack import fresh_label
 from rpyeffect.dynlib import load_lib
 from rpyeffect.environment import Environment
-from rpyeffect.region import Ref, PtrRef, NumBox, PtrBox
+from rpyeffect.region import Ref, PtrRef
 from timeit import default_timer
 import math
 from rpyeffect.util.path import abspath, dirname
@@ -602,10 +602,10 @@ class Primitives(object):
             r.put_ptr(env.get_num(ins.regs[NUMBER][1]))
 
         elif opid == "box(Num): Ptr":
-            env.set_box(outs.regs[OPAQUE_PTR][0], NumBox(env.get_num(ins.regs[NUMBER][0])))
+            env.set_ptr(outs.regs[OPAQUE_PTR][0], env.get_num(ins.regs[NUMBER][0]))
         elif opid == "unbox(Ptr): Num":
-            box = env.get_box(ins.regs[OPAQUE_PTR][0])
-            env.set_num(outs.regs[NUMBER][0], box.get())
+            box = env.get_ptr(ins.regs[OPAQUE_PTR][0])
+            env.set_num(outs.regs[NUMBER][0], box)
 
         elif opid == "divmod(Int, Int): Int, Int":
             a = env.get_int(ins.regs[NUMBER][0])
