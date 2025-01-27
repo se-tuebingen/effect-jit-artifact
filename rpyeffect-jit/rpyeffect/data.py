@@ -25,4 +25,14 @@ class Data(Value):
             fields += ["ptr%d: %s" % (i, self.get_ptr(i))]
         return ("%s(%s)" % (self.tag.str, ", ".join(fields)))
 
+    def equals(self, other):
+        if not isinstance(other, Data):
+            return False
+        if self.tag != other.tag:
+            return False
+        for i in range(self.len_ptr()):
+            if not self.get_ptr(i).equals(other.get_ptr(i)):
+                return False
+        return True
+
 subtpe_representation("data", "ptr", Data)

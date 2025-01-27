@@ -591,18 +591,7 @@ let translate_top_let _st = function
 let primitive_value_decl = function
   | S.Primitives.CompareEq ->
       [
-        ( "infixEq(Int, Int): Boolean",
-          [ T.Base T.Int; T.Base T.Int ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixEq(Double, Double): Boolean",
-          [ T.Base T.Double; T.Base T.Double ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixEq(String, String): Boolean",
-          [ T.Base T.String; T.Base T.String ],
-          [ T.Base T.Int ],
-          T.Pure );
+        ("equals(Any, Any): Bool", [ T.Top; T.Top ], [ T.Base T.Bool ], T.Pure);
       ]
   | S.Primitives.CompareGe ->
       [

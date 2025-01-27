@@ -102,6 +102,7 @@ object Primitives {
     PrimitiveInfo("unsafeGetFileContents(String): String", List(Base.String), List(Base.String), Purity.Effectful),
     PrimitiveInfo("panic(String): Bottom", List(Base.String), List(Bottom), Purity.Effectful),
     PrimitiveInfo("freshlabel", List(), List(Label(Top, None)), Purity.Effectful),
+    PrimitiveInfo("equals(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
     PrimitiveInfo("ptr_eq", List(Ptr, Ptr), List(Base.Int)),
     PrimitiveInfo("print(String): Unit", List(Base.String), List(Base.Unit), Purity.Effectful),
     PrimitiveInfo("non-exhaustive match", List(), List()), // not actually implemented, but used conventionally

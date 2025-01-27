@@ -17,10 +17,11 @@ case class Label(at: Type, bnd: Option[Type]) extends Type {
   override def asMCore: mcore.Type = mcore.Base.Label(at.asMCore, bnd.map(_.asMCore))
 }
 enum Base extends Type {
-  case Unit, Int, Double, String
+  case Unit, Bool, Int, Double, String
 
   override def asMCore: mcore.Type = this match {
     case Unit => mcore.Base.Unit
+    case Bool => mcore.Base.Bool
     case Int => mcore.Base.Int
     case Double => mcore.Base.Double
     case String => mcore.Base.String

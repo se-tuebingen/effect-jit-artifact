@@ -44,6 +44,7 @@ type typ =
 
 and base_type =
   | Int
+  | Bool
   | Double
   | String
   | Label of typ option * typ option
@@ -152,6 +153,7 @@ let rec print_typ fmt = function
 
 and print_base_type fmt = function
   | Int -> fprintf fmt {|{"op": "Int"}|}
+  | Bool -> fprintf fmt {|{"op": "Bool"}|}
   | Double -> fprintf fmt {|{"op": "Double"}|}
   | String -> fprintf fmt {|{"op": "String"}|}
   | Label (Some at, Some bnd) ->

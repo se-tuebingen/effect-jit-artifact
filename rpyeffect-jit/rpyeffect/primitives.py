@@ -625,6 +625,11 @@ class Primitives(object):
             i = env.get_int(ins.regs[NUMBER][1])
             env.set_ptr(outs.regs[OPAQUE_PTR][0], arr[i])
 
+        elif opid == "equals(Any, Any): Bool":
+            l = env.get_ptr(ins.regs[OPAQUE_PTR][0])
+            r = env.get_ptr(ins.regs[OPAQUE_PTR][1])
+            env.set_bool(outs.regs[OPAQUE_PTR][0], l.equals(r))
+
         elif opid == "promote_ptr":
             p = env.get_ptr(ins.regs[OPAQUE_PTR][0])
             c = self._get_ptr_cache(pc_block, pc_instruction, self._ptr_cache_version)

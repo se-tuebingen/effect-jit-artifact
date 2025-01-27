@@ -6,6 +6,9 @@ class Value(object):
     _attrs_ = []
     _immutable_fields_ = []
 
+    def equals(self, other):
+        return self == other
+
 class ValueNull(Value): pass
 
 class UnboxableValue(Value):
@@ -53,11 +56,27 @@ class IntValue(UnboxableValue):
     def __init__(self, value):
         self.value = value
 
+    @objectmodel.always_inline
+    @unroll_safe
+    def equals(self, other):
+        if isinstance(other, IntValue):
+            return self.value == other.value
+        else:
+            return False
+
 @unbox_in_ref
 class DoubleValue(UnboxableValue):
     _immutable_fields_ = ['value']
     def __init__(self, value):
         self.value = value
+
+    @objectmodel.always_inline
+    @unroll_safe
+    def equals(self, other):
+        if isinstance(other, DoubleValue):
+            return self.value == other.value
+        else:
+            return False
 
 @unbox_in_ref
 class BoolValue(UnboxableValue):
@@ -65,10 +84,26 @@ class BoolValue(UnboxableValue):
     def __init__(self, value):
         self.value = value
 
+    @objectmodel.always_inline
+    @unroll_safe
+    def equals(self, other):
+        if isinstance(other, BoolValue):
+            return self.value == other.value
+        else:
+            return False
+
 class StringValue(Value):
     _immutable_fields_ = ['value']
     def __init__(self, value):
         self.value = value
+
+    @objectmodel.always_inline
+    @unroll_safe
+    def equals(self, other):
+        if isinstance(other, StringValue):
+            return self.value == other.value
+        else:
+            return False
 
 class BytearrayValue(Value):
     _immutable_fields_ = ['value']
