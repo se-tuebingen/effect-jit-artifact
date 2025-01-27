@@ -25,9 +25,8 @@ class JavaScriptTests extends EffektTests {
   )
 
   override def ignored: List[File] = List(
-    // we deprecated locally defined type and effect declarations, for now.
-    examplesDir / "neg" / "existential_effect_leaks.effekt",
-    examplesDir / "neg" / "scoped.effekt",
+    // unsafe cont
+    examplesDir / "pos" / "propagators.effekt"
   )
 }
 

@@ -19,7 +19,7 @@ class LexerTests extends munit.FunSuite {
     try {
       Lexer(StringSource(prog, "")).run()
     } catch {
-        case LexerError(msg, _, _) => fail(msg)
+        case LexerError(msg, start, end) => fail(s"$msg at $start...$end")
     }
 
   def assertFailure(prog: String)(using Location): Unit =
@@ -43,6 +43,18 @@ class LexerTests extends munit.FunSuite {
       `return`, `box`, `{`, `(`, `)`, `=>`, `(`, Ident("x"), `,`, Ident("y"), `)`, `}`, Newline,
       EOF
     )
+  }
+
+  test("braces") {
+    assertFailure("${}")
+    assertFailure("\" before ${ ${} } after\"")
+
+    assertSuccess("}")
+    assertSuccess("{}}")
+    assertSuccess("{ 42 ")
+    assertSuccess("\"${}}}}\"")
+    assertSuccess("\"}\"")
+    assertSuccess("\" before ${ \"${ 42 }\" } after\"")
   }
 
   test("numbers") {
@@ -85,19 +97,24 @@ class LexerTests extends munit.FunSuite {
     assertTokensEq("\" \\t \"", Str(" \t ", false), EOF)
     assertFailure("\"\\k\"")
     assertTokensEq("\"\\u001b\"", Str("\u001b", false), EOF)
+    assertTokensEq("\"\\u{001b}\"", Str("\u001b", false), EOF)
+    assertTokensEq("'\\\''", Chr(39), EOF)
+    assertTokensEq("\"'\"", Str("'", false), EOF)
+    assertTokensEq("'\\\"'", Chr(34), EOF)
+    assertTokensEq("\"\\\"\"", Str("\"", false), EOF)
   }
 
   test("characters") {
     assertTokensEq("' '", Chr(' '), EOF)
     assertTokensEq("'😅'", Chr(0x1F605), EOF)
-    assertTokensEq("'\\'", Chr('\\'), EOF)
-    assertTokensEq("'\n'", Chr('\n'), EOF)
-    assertTokensEq("'\t'", Chr('\t'), EOF)
+    assertTokensEq("'\\\\'", Chr('\\'), EOF)
+    assertTokensEq("'\\n'", Chr('\n'), EOF)
+    assertTokensEq("'\\t'", Chr('\t'), EOF)
     assertTokensEq("\\u0000", Chr(0), EOF)
     assertTokensEq("\\uFFFF", Chr(0xFFFF), EOF)
     assertTokensEq("\\u10FFFF{ val", Chr(0x10FFFF), `{`, `val`, EOF)
     assertTokensEq("val s =\\u0000+ 1", `val`, Ident("s"), `=`, Chr(0), `+`, Integer(1), EOF)
-    assertFailure("''")
+    assertTokensEq("''", Error(LexerError("Empty character literal", 0, 2)), EOF)
   }
 
   test("multi line strings") {

@@ -17,8 +17,6 @@ trait EffektConfig {
 
   def outputPath(): String = "out"
 
-  def requiresLift(): Boolean = false
-
   def prelude(): List[String] = List(
     "effekt",
     "option",
@@ -35,4 +33,6 @@ trait EffektConfig {
   def maxInlineSize() = 50L
 
   def timed() = false
+
+  def debug() = false
 }

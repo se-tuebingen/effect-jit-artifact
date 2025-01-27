@@ -7,12 +7,18 @@ package llvm
  *  see: https://hackage.haskell.org/package/llvm-hs-pure-9.0.0/docs/LLVM-AST.html#t:Definition
  */
 enum Definition {
-  case Function(returnType: Type, name: String, parameters: List[Parameter], basicBlocks: List[BasicBlock])
-  case VerbatimFunction(returnType: Type, name: String, parameters: List[Parameter], body: String)
+  case Function(callingConvention: CallingConvention, returnType: Type, name: String, parameters: List[Parameter], basicBlocks: List[BasicBlock])
+  case VerbatimFunction(callingConvention: CallingConvention, returnType: Type, name: String, parameters: List[Parameter], body: String)
   case Verbatim(content: String)
   case GlobalConstant(name: String, initializer: Operand) // initializer should be constant
 }
 export Definition.*
+
+enum CallingConvention {
+  case Ccc()
+  case Tailcc(musttail: Boolean)
+}
+export CallingConvention.*
 
 case class BasicBlock(name: String, instructions: List[Instruction], terminator: Terminator)
 
@@ -20,8 +26,7 @@ case class BasicBlock(name: String, instructions: List[Instruction], terminator:
  *  see: https://hackage.haskell.org/package/llvm-hs-pure-9.0.0/docs/LLVM-AST-Instruction.html#t:Instruction
  */
 enum Instruction {
-  case Call(result: String, resultType: Type, function: Operand, arguments: List[Operand])
-  case TailCall(function: Operand, arguments: List[Operand])
+  case Call(result: String, callingConvention: CallingConvention, resultType: Type, function: Operand, arguments: List[Operand])
   case Load(result: String, tpe: Type, address: Operand)
   case Store(address: Operand, value: Operand)
   case GetElementPtr(result: String, tpe: Type, address: Operand, indices: List[Int])
@@ -51,12 +56,25 @@ object Operand {
   case class ConstantInt(n: Long) extends Operand
   case class ConstantDouble(x: Double) extends Operand
   case class ConstantAggregateZero(typ: Type) extends Operand
-  case class ConstantGlobal(tpe: Type, name: String) extends Operand
+  case class ConstantGlobal(name: String) extends Operand
   case class ConstantNull(tpe: Type) extends Operand
   case class ConstantArray(memberType: Type, members: List[Operand]) extends Operand // members should be homogeneous
   case class ConstantInteger8(b: Byte) extends Operand
 }
 export Operand.*
+
+enum EraserKind {
+  case ObjectEraser
+  case StackEraser
+  case StackFrameEraser
+}
+export EraserKind.*
+
+enum SharerKind {
+  case StackSharer
+  case StackFrameSharer
+}
+export SharerKind.*
 
 /**
  *  see: https://hackage.haskell.org/package/llvm-hs-pure-9.0.0/docs/LLVM-AST.html#t:Type

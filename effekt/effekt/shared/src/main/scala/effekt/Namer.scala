@@ -72,7 +72,9 @@ object Namer extends Phase[Parsed, NameResolved] {
     // process all includes, updating the terms and types in scope
     val includes = decl.includes collect {
       case im @ source.Include(path) =>
-        Context.at(im) { importDependency(path) }
+        val mod = Context.at(im) { importDependency(path) }
+        Context.annotate(Annotations.IncludedSymbols, im, mod)
+        mod
     }
 
     Context.timed(phaseName, src.name) { resolveGeneric(decl) }
@@ -132,7 +134,7 @@ object Namer extends Phase[Parsed, NameResolved] {
       }
       Context.define(id, sym)
 
-    case source.InterfaceDef(id, tparams, ops, isEffect) =>
+    case source.InterfaceDef(id, tparams, ops) =>
       val effectName = Context.nameFor(id)
       // we use the localName for effects, since they will be bound as capabilities
       val effectSym = Context scoped {
@@ -315,7 +317,7 @@ object Namer extends Phase[Parsed, NameResolved] {
         }
       }
 
-    case source.InterfaceDef(id, tparams, operations, isEffect) =>
+    case source.InterfaceDef(id, tparams, operations) =>
       // symbol has already been introduced by the previous traversal
       val interface = Context.symbolOf(id).asInterface
       interface.operations = operations.map {
@@ -345,7 +347,6 @@ object Namer extends Phase[Parsed, NameResolved] {
           }
         }
       }
-      if (isEffect) interface.operations.foreach { op => Context.bind(op) }
 
     case source.NamespaceDef(id, definitions) =>
       Context.namespace(id.name) {
@@ -360,10 +361,11 @@ object Namer extends Phase[Parsed, NameResolved] {
       val data = d.symbol
       data.constructors = ctors map {
         case source.Constructor(id, tparams, ps) =>
-          val name = Context.nameFor(id)
-          val tps = tparams map resolve
-
-          val constructor = Constructor(name, data.tparams ++ tps, null, data)
+          val constructor = Context scoped {
+            val name = Context.nameFor(id)
+            val tps = tparams map resolve
+            Constructor(name, data.tparams ++ tps, null, data)
+          }
           Context.define(id, constructor)
           constructor.fields = resolveFields(ps, constructor)
           constructor
@@ -486,12 +488,40 @@ object Namer extends Phase[Parsed, NameResolved] {
     // (2) === Bound Occurrences ===
 
     case source.Select(receiver, target) =>
-      resolveGeneric(receiver)
-      Context.resolveSelect(target)
+      Context.panic("Cannot happen since Select is introduced later")
 
     case source.MethodCall(receiver, target, targs, vargs, bargs) =>
       resolveGeneric(receiver)
-      Context.resolveMethodCalltarget(target)
+
+      // We are a bit context sensitive in resolving the method
+      Context.focusing(target) { _ =>
+        receiver match {
+          case source.Var(id) => Context.resolveTerm(id) match {
+            // (foo: ValueType).bar(args)  = Call(bar, foo :: args)
+            case symbol: ValueSymbol =>
+              if !Context.resolveOverloadedFunction(target)
+              then Context.abort(pp"Cannot resolve function ${target}, called on a value receiver.")
+
+            case symbol: RefBinder =>
+              if !Context.resolveOverloadedFunction(target)
+              then Context.abort(pp"Cannot resolve function ${target}, called on a receiver that is a reference.")
+
+            // (foo: BlockType).bar(args)  = Invoke(foo, bar, args)
+            case symbol: BlockSymbol =>
+              if !Context.resolveOverloadedOperation(target)
+              then Context.abort(pp"Cannot resolve operation ${target}, called on a receiver that is a computation.")
+          }
+          // (unbox term).bar(args)  = Invoke(Unbox(term), bar, args)
+          case source.Unbox(term) =>
+            if !Context.resolveOverloadedOperation(target)
+            then Context.abort(pp"Cannot resolve operation ${target}, called on an unboxed computation.")
+
+          // expr.bar(args) = Call(bar, expr :: args)
+          case term =>
+            if !Context.resolveOverloadedFunction(target)
+            then Context.abort(pp"Cannot resolve function ${target}, called on an expression.")
+        }
+      }
       targs foreach resolve
       resolveAll(vargs)
       resolveAll(bargs)
@@ -835,20 +865,26 @@ trait NamerOps extends ContextOps { Context: Context =>
   }
 
   /**
-   * Resolves a potentially overloaded call target
+   * Resolves a potentially overloaded method target
    */
-  private[namer] def resolveMethodCalltarget(id: IdRef): Unit = at(id) {
+  private[namer] def resolveOverloadedOperation(id: IdRef): Boolean = at(id) {
+    val syms = scope.lookupOperation(id.path, id.name)
 
-    val syms = scope.lookupOverloaded(id, term => term.isInstanceOf[BlockSymbol])
+    val syms2 = if (syms.isEmpty) scope.lookupFunction(id.path, id.name) else syms
 
-    if (syms.isEmpty) {
-      abort(pretty"Cannot resolve function ${id.name}")
-    }
-    assignSymbol(id, CallTarget(syms.asInstanceOf))
+    if (syms2.nonEmpty) { assignSymbol(id, CallTarget(syms2.asInstanceOf)); true } else { false }
+  }
+
+  private[namer] def resolveOverloadedFunction(id: IdRef): Boolean = at(id) {
+    val syms = scope.lookupFunction(id.path, id.name)
+
+    val syms2 = if (syms.isEmpty) scope.lookupOperation(id.path, id.name) else syms
+
+    if (syms2.nonEmpty) { assignSymbol(id, CallTarget(syms2.asInstanceOf)); true } else { false }
   }
 
   /**
-   * Resolves a potentially overloaded field access
+   * Resolves a potentially overloaded function call
    */
   private[namer] def resolveFunctionCalltarget(id: IdRef): Unit = at(id) {
     val candidates = scope.lookupOverloaded(id, term => !term.isInstanceOf[Operation])

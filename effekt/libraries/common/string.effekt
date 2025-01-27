@@ -14,7 +14,6 @@ import result
 /**
  * Strings
  * - JS: Strings are represented as UTF-16 code units where some characters take 2 slots (surrogate pairs)
- * - ML: Strings are sequences of 8-bit characters (https://smlfamily.github.io/Basis/string.html)
  * - Chez: Strings are sequences of unicode characters (?)
  * - LLVM: UTF-8 (characters can take from 1-4 bytes).
  */
@@ -34,9 +33,7 @@ def substring(str: String, from: Int): String =
   str.substring(from, str.length)
 
 
-/**
- * Checks whether str starts with the given prefix at `from`
- */
+/// Checks whether str starts with the given prefix at `from`
 def isSubstringAt(str: String, prefix: String, from: Int): Bool = {
   with default[OutOfBounds, Bool] { false };
 
@@ -59,11 +56,9 @@ def startsWith(str: String, prefix: String): Bool =
 def endsWith(str: String, suffix: String): Bool =
   isSubstringAt(str, suffix, str.length - suffix.length)
 
-/**
- * Repeats the given string n-times.
- *
- * TODO use a more efficient way of appending strings like a buffer
- */
+/// Repeats the given string n-times.
+///
+/// TODO use a more efficient way of appending strings like a buffer
 def repeat(str: String, n: Int): String = {
   def go(n: Int, result: String): String = {
     if (n == 0) result
@@ -139,19 +134,55 @@ def toInt(str: String): Int / Exception[WrongFormat] = {
   }
 }
 
+// TODO optimize (right now this will be horribly slow (compared to the native JS version)
+def toInt(str: String, base: Int): Int / Exception[WrongFormat] = {
 
-// Native versions of toInt (unused right now)
-//   ML: also accepts sml style `~2` for unary minus along with `+2` and `-2`
+  if( base > 36 || base < 1 ) {
+    wrongFormat("Invalid base: " ++ base.show)
+  }
+
+  val zero = '0'.toInt
+  val l_a = 'a'.toInt
+  val u_a = 'A'.toInt
+
+  def parseDigit(c: Char): Option[Int] = {
+    if( c >= '0' and c <= '9' and c.toInt - zero < base ) {
+      Some(c.toInt - zero)
+    } else if( c >= 'a' and c <= 'z' and c.toInt - l_a < base - 10 ) {
+      Some(c.toInt - l_a + 10)
+    } else if( c >= 'A' and c <= 'Z' and c.toInt - u_a < base - 10) {
+      Some(c.toInt - u_a + 10)
+    } else {
+      None()
+    }
+  }
+
+  def go(index: Int, acc: Int): Int = {
+    result[Char, OutOfBounds] { str.charAt(index) } match {
+      case Success(c) and parseDigit(c) is Some(d) =>
+        go(index + 1, base * acc + d)
+      case Success(c) => wrongFormat("Not a valid number: '" ++ str ++ "'")
+      // wrong index means we are done parsing
+      case Error(_, _) => acc
+    }
+  }
+
+  with default[OutOfBounds, Int] { wrongFormat("Empty string is not a valid number") };
+
+  str.charAt(0) match {
+    case '-' => 0 - go(1, 0)
+    case _   => go(0, 0)
+  }
+}
+
+/// Native versions of toInt (unused right now)
 extern pure def unsafeToInt(str: String): Int =
   js "(Number.isNaN(parseInt(${str})) ? undefined : parseInt(${str}))"
   chez "(string->number ${str})"
-  ml "Int.fromString ${str}"
   jit "read(String): Int"
 
 
-/**
- * Returns the index of the first occurrence of `sub` in `str`
- */
+/// Returns the index of the first occurrence of `sub` in `str`
 def indexOf(str: String, sub: String): Option[Int] =
   indexOf(str, sub, 0)
 
@@ -165,9 +196,7 @@ def indexOf(str: String, sub: String, from: Int): Option[Int] = {
   go(from)
 }
 
-/**
- * Returns the index of the last occurence of `sub` in `str`
- */
+/// Returns the index of the last occurence of `sub` in `str`
 def lastIndexOf(str: String, sub: String): Option[Int] =
   lastIndexOf(str, sub, str.length)
 
@@ -194,46 +223,12 @@ def lastIndexOf(str: String, sub: String, from: Int): Option[Int] = {
 // extern pure def unsafeIndexOf(str: String, sub: String): Int =
 //   js "${str}.indexOf(${sub})"
 
-interface Stream {
-  def emit(string: Char): Unit
-}
-
-def string[T] { prog: => T / Stream }: (T, String) = <>
-
-// TODO implement after concurrent IO (we need to stub `process.stdout` in JS for browsers).
-def printing[T] { prog: => T / Stream }: T = <>
-
-
-// ANSI escape codes
-namespace ANSI {
-  val BLACK = "\u001b[30m"
-  val RED = "\u001b[31m"
-  val GREEN = "\u001b[32m"
-  val YELLOW = "\u001b[33m"
-  val BLUE = "\u001b[34m"
-  val MAGENTA = "\u001b[35m"
-  val CYAN = "\u001b[36m"
-  val WHITE = "\u001b[37m"
-
-  val BG_BLACK = "\u001b[40m"
-  val BG_RED = "\u001b[41m"
-  val BG_GREEN = "\u001b[42m"
-  val BG_YELLOW = "\u001b[43m"
-  val BG_BLUE = "\u001b[44m"
-  val BG_MAGENTA = "\u001b[45m"
-  val BG_CYAN = "\u001b[46m"
-  val BG_WHITE = "\u001b[47m"
-
-  val RESET = "\u001b[0m"
-}
-
 
 // Characters
 // ----------
 //
 //   JS: Int (Unicode codepoints)
-//   CS: ?
-//   ML: 8-bit https://smlfamily.github.io/Basis/char.html
+//   Chez: ?
 //   LLVM: i64 representing utf-8 (varying length 1-4 bytes)
 
 extern pure def toString(ch: Char): String =
@@ -241,7 +236,7 @@ extern pure def toString(ch: Char): String =
   chez "(string (integer->char ${ch}))"
   jit "!sexp:$arg0:str"
   llvm """
-    %z = call %Pos @c_buffer_show_Char(%Int %ch)
+    %z = call %Pos @c_bytearray_show_Char(%Int ${ch})
     ret %Pos %z
   """
 
@@ -250,61 +245,64 @@ extern pure def toString(ch: Char): String =
 extern pure def toInt(ch: Char): Int =
   js "${ch}"
   chez "${ch}"
-  ml "${ch}"
   jit "charCode(String): Int"
   llvm "ret %Int ${ch}"
+  vm "string::toInt(Char)"
+
+extern pure def toChar(codepoint: Int): Char =
+  js "${codepoint}"
+  chez "${codepoint}"
+  llvm "ret %Int ${codepoint}"
+  vm "string::toChar(Int)"
+
 
 extern pure def infixLt(x: Char, y: Char): Bool =
   js "(${x} < ${y})"
   chez "(< ${x} ${y})"
-  ml "(${x}: int) < ${y}"
   jit "infixLt(String, String): Boolean"
   llvm """
-    %z = icmp slt %Int %x, %y
+    %z = icmp slt %Int ${x}, ${y}
     %fat_z = zext i1 %z to i64
     %adt_boolean = insertvalue %Pos zeroinitializer, i64 %fat_z, 0
     ret %Pos %adt_boolean
   """
+  vm "string::infixLt(Char, Char)"
 
 extern pure def infixLte(x: Char, y: Char): Bool =
   js "(${x} <= ${y})"
   chez "(<= ${x} ${y})"
-  ml "(${x}: int) <= ${y}"
   jit "infixLte(String, String): Boolean"
   llvm """
-    %z = icmp sle %Int %x, %y
+    %z = icmp sle %Int ${x}, ${y}
     %fat_z = zext i1 %z to i64
     %adt_boolean = insertvalue %Pos zeroinitializer, i64 %fat_z, 0
     ret %Pos %adt_boolean
   """
+  vm "string::infixLte(Char, Char)"
 
 extern pure def infixGt(x: Char, y: Char): Bool =
   js "(${x} > ${y})"
   chez "(> ${x} ${y})"
-  ml "(${x}: int) > ${y}"
   jit "infixGt(String, String): Boolean"
   llvm """
-    %z = icmp sgt %Int %x, %y
+    %z = icmp sgt %Int ${x}, ${y}
     %fat_z = zext i1 %z to i64
     %adt_boolean = insertvalue %Pos zeroinitializer, i64 %fat_z, 0
     ret %Pos %adt_boolean
   """
+  vm "string::infixGt(Char, Char)"
 
 extern pure def infixGte(x: Char, y: Char): Bool =
   js "(${x} >= ${y})"
   chez "(>= ${x} ${y})"
-  ml "(${x}: int) >= ${y}"
   jit "infixGte(String, String): Boolean"
   llvm """
-    %z = icmp sge %Int %x, %y
+    %z = icmp sge %Int ${x}, ${y}
     %fat_z = zext i1 %z to i64
     %adt_boolean = insertvalue %Pos zeroinitializer, i64 %fat_z, 0
     ret %Pos %adt_boolean
   """
-
-// TODO iterator over codepoints (maybe use the JS primitive feature???)
-
-extern type StringIterator
+  vm "string::infixGte(Char, Char)"
 
 
 /**
@@ -326,16 +324,6 @@ def utf16UnitCount(codepoint: Char): Int = codepoint match {
   case c => panic("Not a valid code point")
 }
 
-// TODO this is copied from the LLVM-backend stdlib. Do we need this?
-// def showQuoted(s: String): String =
-//  "\x22" ++ s.map { c =>
-//    if(c == "\x22") {
-//     "\\\x22"
-//    } else if (c == "\\") {
-//     "\\\\"
-//    } else c
-//  } ++ "\x22"
-
 extern pure def charWidth(c: Char): Int =
   // JavaScript strings are UTF-16 where every unicode character after 0xffff takes two units
   js "(${c} > 0xffff) ? 2 : 1"
@@ -349,9 +337,9 @@ def charAt(str: String, index: Int): Char / Exception[OutOfBounds] =
 extern pure def unsafeCharAt(str: String, n: Int): Char =
   js "${str}.codePointAt(${n})"
   chez "(char->integer (string-ref ${str} ${n}))"
-  ml "(Char.ord (String.sub (${str}, ${n})))"
   jit """!sexp:("charAt(Int, String): String" $arg1:int $arg0:str)"""
   llvm """
-    %x = call %Int @c_buffer_character_at(%Pos %str, i64 %n)
+    %x = call %Int @c_bytearray_character_at(%Pos ${str}, %Int ${n})
     ret %Int %x
   """
+  vm "string::unsafeCharAt(String, Int)"

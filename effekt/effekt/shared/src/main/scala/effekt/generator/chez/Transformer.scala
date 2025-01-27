@@ -12,6 +12,7 @@ import util.messages.{ INTERNAL_ERROR, NOT_SUPPORTED }
 
 import scala.language.implicitConversions
 import scala.util.matching.Regex
+import scala.collection.mutable
 
 object TransformerMonadic extends Transformer {
 
@@ -59,23 +60,22 @@ trait Transformer {
     chez.Block(generateStateAccessors(pure) ++ definitions, Nil, runMain(nameRef(mainSymbol)))
   }
 
-  def toChez(p: Param): ChezName = nameDef(p.id)
+  def toChez(p: ValueParam): ChezName = nameDef(p.id)
+  def toChez(p: BlockParam): ChezName = nameDef(p.id)
 
   def toChez(module: ModuleDecl)(using ErrorReporter): List[chez.Def] = {
     val decls = module.declarations.flatMap(toChez)
     val externs = module.externs.map(toChez)
      // TODO FIXME, once there is a let _ = ... in there, we are doomed!
-    val defns = module.definitions.map(toChez).flatMap {
-      case Left(d) => Some(d)
-      case Right(None) => None
-      case Right(e) => ???
-    }
+    val defns = module.definitions.map(toChez)
     decls ++ externs ++ defns
   }
 
   def toChezExpr(stmt: Stmt): chez.Expr = stmt match {
     case Return(e) => pure(toChez(e))
     case App(b, targs, vargs, bargs) => chez.Call(toChez(b), vargs.map(toChez) ++ bargs.map(toChez))
+    case Invoke(b, method, methodTpe, targs, vargs, bargs) =>
+      chez.Call(chez.Call(chez.Variable(nameRef(method)), List(toChez(b))), vargs.map(toChez) ++ bargs.map(toChez))
     case If(cond, thn, els) => chez.If(toChez(cond), toChezExpr(thn), toChezExpr(els))
     case Val(id, tpe, binding, body) => bind(toChezExpr(binding), nameDef(id), toChez(body))
     // empty matches are translated to a hole in chez scheme
@@ -107,25 +107,19 @@ trait Transformer {
     case Alloc(id, init, region, body) =>
       chez.Let(List(Binding(nameDef(id), chez.Builtin("fresh", chez.Variable(nameRef(region)), toChez(init)))), toChez(body))
 
-    case Try(body, handler) =>
-      val handlers: List[chez.Handler] = handler.map { h =>
-        val names = RecordNames(h.interface.name)
-        chez.Handler(names.constructor, h.operations.map {
-          case Operation(op, tps, cps, vps, bps, Some(resume), body) =>
-            resume.tpe match {
-              case BlockType.Function(tparams, cparams, Nil, bparams, result) =>
-                NOT_SUPPORTED(s"Bidirectional handlers are not support by the Chez backends (encountered when translating the handler for ${names.name})")
-              case _ => ()
-            }
-            chez.Operation(nameDef(op), vps.map(p => nameDef(p.id)), nameDef(resume.id), toChezExpr(body))
-          case _ => INTERNAL_ERROR("Handler operations should have a continuation argument")
-        })
-      }
-      chez.Handle(handlers, toChez(body))
+    case Reset(body) => chez.Reset(toChez(body))
+
+    case Shift(p, body) => chez.Shift(nameRef(p.id), toChez(body))
+
+    // currently bidirectional handlers are not supported
+    case Resume(k, Return(expr)) => chez.Call(toChez(k), List(toChez(expr)))
+
+    case Resume(k, other) => sys error s"Not supported yet: ${util.show(stmt)}"
 
     case Region(body) => chez.Builtin("with-region", toChez(body))
 
-    case other => chez.Let(Nil, toChez(other))
+    case stmt: (Def | Let) =>
+      chez.Let(Nil, toChez(stmt))
   }
 
   def toChez(decl: core.Declaration): List[chez.Def] = decl match {
@@ -146,7 +140,7 @@ trait Transformer {
           chez.Builtin("hole")
       }
       chez.Constant(nameDef(id),
-        chez.Lambda((vps ++ bps) map { p => nameDef(p.id) },
+        chez.Lambda(vps.map { p => nameDef(p.id) } ++ bps.map { p => nameDef(p.id) },
           tBody))
 
     case Extern.Include(ff, contents) =>
@@ -156,40 +150,39 @@ trait Transformer {
   def toChez(t: Template[core.Expr]): chez.Expr =
     chez.RawExpr(t.strings, t.args.map(e => toChez(e)))
 
-  def toChez(defn: Definition): Either[chez.Def, Option[chez.Expr]] = defn match {
-    case Definition.Def(id, block) =>
-      Left(chez.Constant(nameDef(id), toChez(block)))
+  def toChez(defn: Toplevel): chez.Def = defn match {
+    case Toplevel.Def(id, block) => chez.Constant(nameDef(id), toChez(block))
+    case Toplevel.Val(id, tpe, binding) => chez.Constant(nameDef(id), run(toChezExpr(binding)))
+  }
 
-    case Definition.Let(Wildcard(), _, binding) =>
+  def toChez(stmt: Stmt): chez.Block = stmt match {
+    case Stmt.Def(id, block, body) =>
+      val chez.Block(defs, exprs, result) = toChez(body)
+      chez.Block(chez.Constant(nameDef(id), toChez(block)) :: defs, exprs, result)
+
+    case Stmt.Let(Wildcard(), tpe, binding, body) =>
       toChez(binding) match {
         // drop the binding altogether, if it is of the form:
         //   let _ = myVariable; BODY
         // since this might lead to invalid scheme code.
-        case _: chez.Variable => Right(None)
-        case other => Right(Some(other))
+        case _: chez.Variable => toChez(body)
+        case expr =>
+          toChez(body) match {
+            case chez.Block(Nil, exprs, result) => chez.Block(Nil, expr :: exprs, result)
+            case rest => chez.Block(Nil, expr :: Nil, chez.Let(Nil, rest))
+          }
       }
 
-    // we could also generate a let here...
-    case Definition.Let(id, _, binding) =>
-      Left(chez.Constant(nameDef(id), toChez(binding)))
-  }
-
-  def toChez(stmt: Stmt): chez.Block = stmt match {
-    // TODO maybe this can be simplified after also introducing mutual definitions
-    case Scope(definitions, body) =>
-      definitions.map(toChez).foldRight(toChez(body)) {
-        case (Left(defn), chez.Block(defns, exprs, result)) => chez.Block(defn :: defns, exprs, result)
-        case (Right(Some(expr)), chez.Block(Nil, exprs, result)) => chez.Block(Nil, expr :: exprs, result)
-        case (Right(Some(expr)), rest) => chez.Block(Nil, expr :: Nil, chez.Let(Nil, rest))
-        case (Right(None), rest) => rest
-      }
+    case Stmt.Let(id, tpe, binding, body) =>
+      val chez.Block(defs, exprs, result) = toChez(body)
+      chez.Block(chez.Constant(nameDef(id), toChez(binding)) :: defs, exprs, result)
 
     case other => chez.Block(Nil, Nil, toChezExpr(other))
   }
 
   def toChez(block: BlockLit): chez.Lambda = block match {
     case BlockLit(tps, cps, vps, bps, body) =>
-      chez.Lambda((vps ++ bps) map toChez, toChez(body))
+      chez.Lambda(vps.map(toChez) ++ bps.map(toChez), toChez(body))
   }
 
   def toChez(block: Block): chez.Expr = block match {
@@ -197,9 +190,6 @@ trait Transformer {
       chez.Variable(nameRef(id))
 
     case b @ BlockLit(tps, cps, vps, bps, body) => toChez(b)
-
-    case Member(b, field, tpe) =>
-      chez.Call(chez.Variable(nameRef(field)), List(toChez(b)))
 
     case Unbox(e) => toChez(e)
 
@@ -211,14 +201,14 @@ trait Transformer {
     chez.Call(chez.Variable(ChezName(name)), impl.operations.map(toChez))
 
   def toChez(op: Operation): chez.Expr = op match {
-    case Operation(name, tps, cps, vps, bps, resume, body) =>
-      chez.Lambda((vps ++ bps) map toChez, toChez(body))
+    case Operation(name, tps, cps, vps, bps, body) =>
+      chez.Lambda(vps.map(toChez) ++ bps.map(toChez), toChez(body))
   }
 
   def toChez(expr: Expr): chez.Expr = expr match {
     case Literal((), _)         => chez.RawValue("#f")
 
-    case Literal(s: String, _)  => ChezString(adaptEscapes(escape(s)))
+    case Literal(s: String, _)  => escape(s)
     case Literal(b: Boolean, _) => if (b) chez.RawValue("#t") else chez.RawValue("#f")
     case l: Literal             => chez.RawValue(l.value.toString)
     case ValueVar(id, _)        => chez.Variable(nameRef(id))
@@ -227,12 +217,7 @@ trait Transformer {
     case PureApp(b, targs, args) => chez.Call(toChez(b), args map toChez)
     case Make(data, tag, args) => chez.Call(chez.Variable(nameRef(tag)), args map toChez)
 
-    case Select(b, field, _) =>
-      chez.Call(nameRef(field), toChez(b))
-
     case Box(b, _) => toChez(b)
-
-    case Run(s) => run(toChezExpr(s))
   }
 
 
@@ -257,11 +242,26 @@ trait Transformer {
     List(getter, setter)
   }
 
-  def escape(scalaString: String): String =
-    scalaString.foldLeft(StringBuilder()) { (acc, c) =>
-      escapeSeqs.get(c) match {
-        case Some(s) => acc ++= s
-        case None => acc += c
-      }
-    }.toString()
+  def escape(scalaString: String): chez.Expr = {
+    val parts = mutable.ListBuffer[chez.Expr]()
+    val strPart = StringBuilder()
+    scalaString.codePoints().forEach {
+      case c if escapeSeqs.contains(c.toChar) => strPart.append(escapeSeqs(c.toChar))
+      case c if c >= 32 && c <= 126 => strPart.append(String.valueOf(Character.toChars(c)))
+      case c if c < 8 * 8 * 8 =>
+        strPart.append("\\" + Integer.toString(c, 8).reverse.padTo(3, '0').reverse)
+      case c =>
+        parts.addOne(chez.RawValue("\"" ++ strPart.mkString ++ "\""))
+        strPart.clear()
+        parts.addOne(chez.Call(chez.RawExpr("string"), chez.Call(chez.RawExpr("integer->char"),
+          chez.RawExpr("#x" ++ c.toHexString))))
+    }
+    parts.addOne(chez.RawValue("\"" ++ strPart.mkString ++ "\""))
+
+    if (parts.size == 1) {
+      parts(0)
+    } else {
+      chez.Call(chez.RawExpr("string-append"), parts.toList)
+    }
+  }
 }

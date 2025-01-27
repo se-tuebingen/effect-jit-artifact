@@ -21,16 +21,17 @@ abstract class ChezSchemeTests extends EffektTests {
 
     examplesDir / "llvm",
 
-    examplesDir / "ml",
-
-    examplesDir / "pos" / "arrays.effekt",
-    examplesDir / "pos" / "issue319.effekt",
-    examplesDir / "pos" / "maps.effekt",
-
     // bidirectional effects are not yet supported in our Chez backend
+    examplesDir / "pos" / "maps.effekt",
     examplesDir / "pos" / "bidirectional",
     examplesDir / "pos" / "object",
     examplesDir / "pos" / "type_omission_op.effekt",
+
+    // filesystem operations and bytearrays are not yet supported in our Chez backend
+    examplesDir / "benchmarks" / "input_output" / "word_count_ascii.effekt",
+    examplesDir / "benchmarks" / "input_output" / "word_count_utf8.effekt",
+    examplesDir / "benchmarks" / "input_output" / "dyck_one.effekt",
+    examplesDir / "benchmarks" / "input_output" / "number_matrix.effekt",
 
     // unsafe continuations are not yet supported in our Chez backend
     examplesDir / "pos" / "unsafe_cont.effekt",
@@ -38,17 +39,11 @@ abstract class ChezSchemeTests extends EffektTests {
 
     // the number representations differ in JS and Chez
     examplesDir / "casestudies" / "ad.effekt.md",
+    examplesDir / "casestudies" / "inference.effekt.md",
 
     // in the CallCC variant, we cannot have toplevel vals at the moment (their bindings need to be wrapped in `(run (thunk ...))`
     // see comment on commit 61492d9
     examplesDir / "casestudies" / "anf.effekt.md",
-
-    // indexOf and lastIndexOf are not implemented in text/string
-    examplesDir / "pos" / "string" / "indexOf.effekt",
-
-    // missing array-related functions & methods
-    examplesDir / "pos" / "array" / "list_conversion.effekt",
-    examplesDir / "pos" / "array" / "sum.effekt",
 
     // we do not need to run the negative tests for the other backends
     examplesDir / "neg",
@@ -61,9 +56,12 @@ abstract class ChezSchemeTests extends EffektTests {
 
     examplesDir / "pos" / "io", // async io is only implemented for monadic JS
 
-    examplesDir / "pos" / "genericcompare.effekt", // genericCompare is only implemented for JS
 
     examplesDir / "pos" / "issue429.effekt",
+
+    // Generic comparison
+    examplesDir / "pos" / "genericcompare.effekt",
+    examplesDir / "pos" / "issue733.effekt",
   )
 }
 
@@ -73,21 +71,4 @@ class ChezSchemeMonadicTests extends ChezSchemeTests {
 
 class ChezSchemeCallCCTests extends ChezSchemeTests {
   def backendName = "chez-callcc"
-}
-class ChezSchemeLiftTests extends ChezSchemeTests {
-
-  def backendName = "chez-lift"
-
-  override def ignored: List[File] = super.ignored ++ List(
-    // regions are not yet supported
-    examplesDir / "benchmarks" / "generator.effekt",
-    examplesDir / "pos" / "capture" / "regions.effekt",
-    examplesDir / "pos" / "capture" / "selfregion.effekt",
-    // boxing is not (yet) supported for lift-based backends
-    examplesDir / "pos" / "file.effekt",
-
-    // known issues:
-    examplesDir / "pos" / "lambdas" / "simpleclosure.effekt", // doesn't work with lift inference, yet
-    examplesDir / "pos" / "capture" / "ffi_blocks.effekt", // ffi is passed evidence, which it does not need
-  )
 }

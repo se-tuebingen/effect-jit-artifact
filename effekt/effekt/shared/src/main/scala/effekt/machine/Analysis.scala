@@ -20,42 +20,38 @@ def freeVariables(statement: Statement): Set[Variable] =
     case Jump(Label(_, environment)) =>
       environment.toSet
     case Substitute(bindings, rest) =>
-      freeVariables(rest) -- bindings.map(_._1).toSet ++ bindings.map(_._2).toSet
+      freeVariables(rest).map { variable => bindings.toMap.getOrElse(variable, variable) }
     case Construct(name, tag, values, rest) =>
       Set.from(values) ++ (freeVariables(rest) -- Set(name))
     case Switch(value, clauses, default: Option[Clause]) =>
-      Set(value) ++ clauses.flatMap { case (tag, branch) => freeVariables(branch) } ++ default.map(freeVariables).getOrElse(Set.empty)
+      Set(value) ++ clauses.flatMap(freeVariables) ++ default.map(freeVariables).getOrElse(Set.empty)
     case New(name, clauses, rest) =>
       freeVariables(clauses) ++ (freeVariables(rest) -- Set(name))
     case Invoke(value, tag, values) =>
       Set(value) ++ Set.from(values)
-    case Allocate(name, init, region, rest) =>
-      freeVariables(rest) ++ Set(init, region) -- Set(name)
-    case Load(name, ref, ev, rest) =>
-      Set(ref, ev) ++ freeVariables(rest) -- Set(name)
-    case Store(ref, value, ev, rest) =>
-      Set(ref, value, ev) ++ freeVariables(rest)
+    case Var(name, init, tpe, rest) =>
+      Set(init) ++ (freeVariables(rest) -- Set(name))
+    case LoadVar(name, ref, rest) =>
+      Set(ref) ++ (freeVariables(rest) -- Set(name))
+    case StoreVar(ref, value, rest) =>
+      Set(ref, value) ++ freeVariables(rest)
     case PushFrame(frame, rest) =>
       freeVariables(frame) ++ freeVariables(rest)
     case Return(values) =>
       Set.from(values)
-    case NewStack(name, frame, rest) =>
-      freeVariables(frame) ++ (freeVariables(rest) -- Set(name))
-    case PushStack(value, rest) =>
+    case Reset(prompt, frame, rest) =>
+      freeVariables(frame) ++ (freeVariables(rest) -- Set(prompt))
+    case Resume(value, rest) =>
       Set(value) ++ freeVariables(rest)
-    case PopStacks(name, n, rest) =>
-      freeVariables(rest) -- Set(name) ++ Set(n)
-    case ComposeEvidence(name, ev1, ev2, rest) =>
-      freeVariables(rest) -- Set(name) ++ Set(ev1, ev2)
+    case Shift(name, prompt, rest) =>
+      Set(prompt) ++ (freeVariables(rest) -- Set(name))
     case LiteralInt(name, value, rest) =>
       freeVariables(rest) - name
     case LiteralDouble(name, value, rest) =>
       freeVariables(rest) - name
     case LiteralUTF8String(name, utf8, rest) =>
       freeVariables(rest) - name
-    case LiteralEvidence(name, ev, rest) =>
-      freeVariables(rest) - name
     case ForeignCall(name, builtin, arguments, rest) =>
-      arguments.toSet ++ freeVariables(rest) - name
+      arguments.toSet ++ (freeVariables(rest) - name)
     case Hole => Set.empty
   }

@@ -12,16 +12,15 @@ object PrettyPrinter {
     definitions.map(show).mkString("\n\n")
 
   def show(definition: Definition)(using C: Context): LLVMString = definition match {
-    case Function(returnType, name, parameters, basicBlocks) =>
+    case Function(callingConvention, returnType, name, parameters, basicBlocks) =>
       s"""
-define fastcc ${show(returnType)} ${globalName(name)}(${commaSeparated(parameters.map(show))}) {
+define ${show(callingConvention)} ${show(returnType)} ${globalName(name)}(${commaSeparated(parameters.map(show))}) {
     ${indentedLines(basicBlocks.map(show).mkString)}
 }
 """
-    case VerbatimFunction(returnType, name, parameters, body) =>
-      // TODO what about calling convention?
+    case VerbatimFunction(callingConvention, returnType, name, parameters, body) =>
       s"""
-define ${show(returnType)} ${globalName(name)}(${commaSeparated(parameters.map(show))}) {
+define ${show(callingConvention)} ${show(returnType)} ${globalName(name)}(${commaSeparated(parameters.map(show))}) {
     $body
 }
 """
@@ -39,6 +38,11 @@ define ${show(returnType)} ${globalName(name)}(${commaSeparated(parameters.map(s
       s"@$name = private constant ${show(initializer)}"
   }
 
+  def show(callingConvention: CallingConvention): LLVMString = callingConvention match {
+    case Ccc() => "ccc"
+    case Tailcc(_) => "tailcc"
+  }
+
   def show(basicBlock: BasicBlock)(using Context): LLVMString = basicBlock match {
     case BasicBlock(name, instructions, terminator) =>
       s"""
@@ -50,26 +54,30 @@ ${indentedLines(instructions.map(show).mkString("\n"))}
 
   def show(instruction: Instruction)(using C: Context): LLVMString = instruction match {
 
-    case Call(_, VoidType(), ConstantGlobal(_, name), arguments) =>
-      s"call void ${globalName(name)}(${commaSeparated(arguments.map(show))})"
-    case Call(result, tpe, ConstantGlobal(_, name), arguments) =>
-      s"${localName(result)} = call ${show(tpe)} ${globalName(name)}(${commaSeparated(arguments.map(show))})"
-    case Call(_, _, nonglobal, _) => C.abort(s"cannot call non-global operand: $nonglobal")
-
-    case TailCall(LocalReference(_, name), arguments) =>
-      s"tail call fastcc void ${localName(name)}(${commaSeparated(arguments.map(show))})"
-    case TailCall(ConstantGlobal(_, name), arguments) =>
-      s"tail call fastcc void ${globalName(name)}(${commaSeparated(arguments.map(show))})"
-    case TailCall(nonglobal, _) => C.abort(s"can only tail call references, not: $nonglobal")
-    // TODO [jfrech, 2022-07-26] Why does tail call even have a return type if we do not use it?
+    case Call(_, Ccc(), VoidType(), ConstantGlobal(name), arguments) =>
+      s"call ccc void ${globalName(name)}(${commaSeparated(arguments.map(show))})"
+    case Call(result, Ccc(), tpe, ConstantGlobal(name), arguments) =>
+      s"${localName(result)} = call ccc ${show(tpe)} ${globalName(name)}(${commaSeparated(arguments.map(show))})"
+    case Call(_, Ccc(), VoidType(), LocalReference(_, name), arguments) =>
+      s"call ccc void ${localName(name)}(${commaSeparated(arguments.map(show))})"
+    case Call(_, Ccc(), _, nonglobal, _) =>
+      C.abort(s"cannot call non-global operand: $nonglobal") // why not?
+    case Call(_, Tailcc(false), VoidType(), ConstantGlobal(name), arguments) =>
+      s"call tailcc void ${globalName(name)}(${commaSeparated(arguments.map(show))})"
+    case Call(_, Tailcc(false), VoidType(), LocalReference(_, name), arguments) =>
+      s"call tailcc void ${localName(name)}(${commaSeparated(arguments.map(show))})"
+    case Call(result, Tailcc(true), resultType, function, arguments) =>
+      s"musttail ${show(Call(result, Tailcc(false), resultType, function, arguments))}"
+    case Call(_, Tailcc(_), tpe, _, _) =>
+      C.abort(s"tail call to non-void function returning: $tpe")
 
     case Load(result, tpe, LocalReference(PointerType(), name)) =>
-      s"${localName(result)} = load ${show(tpe)}, ${show(LocalReference(PointerType(), name))}"
+      s"${localName(result)} = load ${show(tpe)}, ${show(LocalReference(PointerType(), name))}, !noalias !2"
     case Load(_, _, operand) => C.abort(s"WIP: loading anything but local references not yet implemented: $operand")
 
     // TODO [jfrech, 2022-07-26] Why does `Load` explicitly check for a local reference and `Store` does not?
     case Store(address, value) =>
-      s"store ${show(value)}, ${show(address)}"
+      s"store ${show(value)}, ${show(address)}, !noalias !2"
 
     case GetElementPtr(result, tpe, ptr @ LocalReference(_, name), i :: is) =>
       s"${localName(result)} = getelementptr ${show(tpe)}, ${show(ptr)}, i64 $i" + is.map(", i32 " + _).mkString
@@ -97,9 +105,11 @@ ${indentedLines(instructions.map(show).mkString("\n"))}
     case ExtractValue(result, aggregate, index) =>
       s"${localName(result)} = extractvalue ${show(aggregate)}, $index"
 
-    case Comment(msg) =>
+    case Comment(msg) if C.config.debug() =>
       val sanitized = msg.map((c: Char) => if (' ' <= c && c != '\\' && c <= '~') c else '?').mkString
-      s"; $sanitized"
+      s"\n; $sanitized"
+
+    case Comment(msg) => ""
   }
 
   def show(terminator: Terminator): LLVMString = terminator match {
@@ -114,7 +124,7 @@ ${indentedLines(instructions.map(show).mkString("\n"))}
 
   def show(operand: Operand): LLVMString = operand match {
     case LocalReference(tpe, name)          => s"${show(tpe)} ${localName(name)}"
-    case ConstantGlobal(tpe, name)          => s"${show(tpe)} ${globalName(name)}"
+    case ConstantGlobal(name)               => s"ptr ${globalName(name)}"
     case ConstantInt(n)                     => s"i64 $n"
     case ConstantDouble(n)                  => s"double $n"
     case ConstantAggregateZero(tpe)         => s"${show(tpe)} zeroinitializer"
@@ -131,7 +141,7 @@ ${indentedLines(instructions.map(show).mkString("\n"))}
     case DoubleType() => "double"
     case PointerType() => "ptr"
     case ArrayType(size, of) => s"[$size x ${show(of)}]"
-    case StructureType(elementTypes) => s"{${commaSeparated(elementTypes.map(show))}}"
+    case StructureType(elementTypes) => s"<{${commaSeparated(elementTypes.map(show))}}>"
     case FunctionType(returnType, argumentTypes) => s"${show(returnType)} (${commaSeparated(argumentTypes.map(show))})"
     case NamedType(name) => localName(name)
   }

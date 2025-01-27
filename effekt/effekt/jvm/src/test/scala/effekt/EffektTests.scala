@@ -17,6 +17,12 @@ trait EffektTests extends munit.FunSuite {
   // The name of the backend as it is passed to the --backend flag.
   def backendName: String
 
+  // Whether to execute using valgrind
+  def valgrind = false
+
+  // Whether to execute using debug mode
+  def debug = false
+
   def output: File = new File(".") / "out" / "tests" / getClass.getName.toLowerCase
 
   // The sources of all testfiles are stored here:
@@ -55,11 +61,14 @@ trait EffektTests extends munit.FunSuite {
 
   def run(input: File): String =
     val compiler = driver
-    val configs = compiler.createConfig(Seq(
+    var options = Seq(
       "--Koutput", "string",
       "--backend", backendName,
-      "--out", output.getPath
-    ))
+      "--out", output.getPath,
+    )
+    if (valgrind) options = options :+ "--valgrind"
+    if (debug) options = options :+ "--debug"
+    val configs = compiler.createConfig(options)
     configs.verify()
 
     // reuse state after compiling a trivial file
@@ -154,19 +163,19 @@ trait EffektTests extends munit.FunSuite {
       case f if f.isDirectory && !ignored.contains(f) =>
         f.listFiles.foreach(foreachFileIn(_)(test))
       case f if f.getName.endsWith(".effekt") || f.getName.endsWith(".effekt.md") =>
-        val path = f.getParentFile
-        val baseName = f.getName.stripSuffix(".md").stripSuffix(".effekt")
-
-        if (ignored.contains(f)) {
-          ignored.contains(f)
-        } else {
-          val checkfile = path / (baseName + ".check")
-          val expected = if checkfile.exists() then Some(IO.read(checkfile)) else None
-
-          test(f, expected)
+        if (!ignored.contains(f)) {
+          test(f, expectedResultFor(f))
         }
       case _ => ()
     }
 
   runTests()
 }
+
+def expectedResultFor(f: File): Option[String] = {
+  val path = f.getParentFile
+  val baseName = f.getName.stripSuffix(".md").stripSuffix(".effekt")
+  val checkfile = path / (baseName + ".check")
+  if checkfile.exists() then Some(IO.read(checkfile)) else None
+}
+

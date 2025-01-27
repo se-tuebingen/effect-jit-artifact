@@ -10,6 +10,9 @@ class LLVMTests extends EffektTests {
 
   def backendName = "llvm"
 
+  override def valgrind = sys.env.get("EFFEKT_VALGRIND").nonEmpty
+  override def debug = sys.env.get("EFFEKT_DEBUG").nonEmpty
+
   override lazy val positives: List[File] = List(
     examplesDir / "llvm",
     examplesDir / "pos",
@@ -17,24 +20,13 @@ class LLVMTests extends EffektTests {
   )
 
   lazy val bugs: List[File] = List(
-    examplesDir / "pos" / "issue108.effekt", // seg faults!
-
-    // unsure
-    examplesDir / "pos" / "parametrized.effekt", // just doesn't print anything
-    examplesDir / "ml" / "probabilistic.effekt", // crashes with "PANIC: Reached a hole in the program"
-
     // names not sanitized (even?)
     examplesDir / "pos" / "special_names.effekt",
-
-    // *** MALLOC PANIC
-    examplesDir / "pos" / "get_put.effekt",
-
-    // showing of strings with escaped " is wrong / different from other backends
-    examplesDir / "pos" / "escaped_linebreaks.effekt",
-    examplesDir / "pos" / "multiline_string.effekt",
-
-    // unclear
-    examplesDir / "pos" / "higher_rank_polymorphism.effekt",
+    // Jump to the invalid address stated on the next line
+    examplesDir / "benchmarks" / "input_output" / "dyck_one.effekt",
+    examplesDir / "benchmarks" / "input_output" / "number_matrix.effekt",
+    examplesDir / "benchmarks" / "input_output" / "word_count_ascii.effekt",
+    examplesDir / "benchmarks" / "input_output" / "word_count_utf8.effekt",
   )
 
   /**
@@ -66,12 +58,7 @@ class LLVMTests extends EffektTests {
     examplesDir / "pos" / "records.effekt",
 
     // toplevel def and let bindings
-    examplesDir / "pos" / "toplevelval.effekt",
     examplesDir / "pos" / "capture" / "mbed.effekt",
-    examplesDir / "pos" / "lib_test.effekt",
-
-    // foreign functions with block arguments
-    examplesDir / "pos" / "liftinference.effekt",
 
     // unsafe cont
     examplesDir / "pos" / "propagators.effekt",
@@ -84,20 +71,8 @@ class LLVMTests extends EffektTests {
     examplesDir / "pos" / "capture" / "resources.effekt",
     examplesDir / "pos" / "io",
 
-    // Bidirectional effects do not work in general
-    examplesDir / "pos" / "bidirectional",
-    examplesDir / "pos" / "type_omission_op.effekt",
-    examplesDir / "pos" / "object"/ "higher_order_compose_op.effekt",
-
     // first class functions closing over capabilities
-    examplesDir / "pos" / "capture" / "borrows.effekt",
-    examplesDir / "pos" / "capture" / "optimizing_unbox.effekt",
-    examplesDir / "pos" / "capture" / "regions.effekt",
-    examplesDir / "pos" / "lambdas" / "annotated.effekt",
-    examplesDir / "pos" / "lambdas" / "scheduler.effekt",
-    examplesDir / "pos" / "lambdas" / "simpleclosure.effekt",
-    examplesDir / "pos" / "file.effekt",
-    examplesDir / "benchmarks" / "generator.effekt",
+    examplesDir / "pos" / "capture" / "state_eff.effekt",
 
     // higher order foreign functions are not supported
     examplesDir / "pos" / "capture" / "ffi_blocks.effekt",
@@ -108,8 +83,8 @@ class LLVMTests extends EffektTests {
     // Generic equality
     examplesDir / "pos" / "issue429.effekt",
 
-    // Math operations
-    examplesDir / "pos" / "doubles.effekt",
+    // Generic comparison
+    examplesDir / "pos" / "issue733.effekt",
   )
 
   override lazy val ignored: List[File] = bugs ++ missingFeatures

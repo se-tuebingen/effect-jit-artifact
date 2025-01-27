@@ -140,6 +140,9 @@ class RecursiveDescentTests extends munit.FunSuite {
     )
     parseExpr("box { (x: Int) => x }")
     parseExpr("box new Fresh { def fresh() = \"42\" }")
+    parseExpr("box foo()")
+    parseExpr("box bar(1)")
+    parseExpr("box baz(quux)")
 
     // { f } is parsed as a capture set and not backtracked.
     intercept[Throwable] { parseExpr("box { f }") }
@@ -156,6 +159,14 @@ class RecursiveDescentTests extends munit.FunSuite {
         |  case _ => <{ "Test" }>
         |}
         |""".stripMargin)
+
+    parseExpr(
+          """x match {
+            |  case 0 => { 42 }
+            |  case 1 => { 1; 2 }
+            |  case _ => 42
+            |}
+            |""".stripMargin)
 
     parseExpr(
       """x match {
@@ -629,7 +640,6 @@ class RecursiveDescentTests extends munit.FunSuite {
       "extern def println(value: String): Unit =" +
       "js \"$effekt.println(${value})\"" +
       "chez \"(println_impl ${value})\"" +
-      "ml { print(value); print(\"\\n\") }" +
       "llvm \"\"\"call void @c_io_println_String(%Pos %value); ret %Pos zeroinitializer ; Unit\"\"\"" + "\n" +
       "extern js \"\"\" function \"\"\""
     )

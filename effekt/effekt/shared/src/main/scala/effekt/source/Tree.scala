@@ -12,6 +12,15 @@ import effekt.symbols.Symbol
  *   ─ [[ Tree ]]
  *     │─ [[ NoSource ]]
  *     │─ [[ Comment ]]
+ *     │─ [[ FeatureFlag ]]
+ *     │  │─ [[ NamedFeatureFlag ]]
+ *     │  │─ [[ Default ]]
+ *     │
+ *     │─ [[ ExternBody ]]
+ *     │  │─ [[ StringExternBody ]]
+ *     │  │─ [[ EffektExternBody ]]
+ *     │  │─ [[ Unsupported ]]
+ *     │
  *     │─ [[ Id ]]
  *     │  │─ [[ IdDef ]]
  *     │  │─ [[ IdRef ]]
@@ -52,6 +61,10 @@ import effekt.symbols.Symbol
  *     │  │─ [[ ExprTarget ]]
  *     │
  *     │─ [[ MatchClause ]]
+ *     │─ [[ MatchGuard ]]
+ *     │  │─ [[ BooleanGuard ]]
+ *     │  │─ [[ PatternGuard ]]
+ *     │
  *     │─ [[ MatchPattern ]]
  *     │  │─ [[ AnyPattern ]]
  *     │  │─ [[ TagPattern ]]
@@ -205,6 +218,7 @@ export Param.*
  *     │─ [[ RegDef ]]
  *     │─ [[ VarDef ]]
  *     │─ [[ DefDef ]]
+ *     │─ [[ NamespaceDef ]]
  *     │─ [[ InterfaceDef ]]
  *     │─ [[ DataDef ]]
  *     │─ [[ RecordDef ]]
@@ -228,7 +242,7 @@ enum Def extends Definition {
 
   case NamespaceDef(id: IdDef, definitions: List[Def])
 
-  case InterfaceDef(id: IdDef, tparams: List[Id], ops: List[Operation], isEffect: Boolean = true)
+  case InterfaceDef(id: IdDef, tparams: List[Id], ops: List[Operation])
   case DataDef(id: IdDef, tparams: List[Id], ctors: List[Constructor])
   case RecordDef(id: IdDef, tparams: List[Id], fields: List[ValueParam])
 

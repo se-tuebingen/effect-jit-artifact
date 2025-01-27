@@ -4,10 +4,11 @@
 
 typedef int64_t Int;
 typedef double Double;
+typedef uint8_t Byte;
 
 struct Header {
-  uint64_t rc;
-  void (*eraser)(void *);
+    uint64_t rc;
+    void (*eraser)(void *);
 };
 
 struct Pos {
@@ -26,18 +27,27 @@ static const struct Pos BooleanTrue = (struct Pos) { .tag = 1, .obj = NULL, };
 
 typedef struct Pos String;
 
+struct StackValue;
+
+typedef struct StackValue* Stack;
+
 
 // Defined in rts.ll
 
+extern void resume_Int(Stack, Int);
+extern void resume_Pos(Stack, struct Pos);
+
 extern void run(struct Neg);
-extern void run_i64(struct Neg, int64_t);
+extern void run_Int(struct Neg, Int);
 extern void run_Pos(struct Neg, struct Pos);
 
 // Reference counting primitives defined in LLVM
 extern void eraseNegative(struct Neg);
 extern void erasePositive(struct Pos);
+extern void eraseStack(Stack);
 
 extern void shareNegative(struct Neg);
 extern void sharePositive(struct Pos);
+extern void shareStack(Stack);
 
 #endif

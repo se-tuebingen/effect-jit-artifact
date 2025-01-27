@@ -386,17 +386,19 @@ object Typer extends Phase[NameResolved, Typechecked] {
 
           //     effect E[A, B, ...] { def op[C, D, ...]() = ... }  !--> op[A, B, ..., C, D, ...]
           // The parameters C, D, ... are existentials
-          val existentials: List[ValueType] = if (tparams.size == declaredType.tparams.size - targs.size) {
-            tparams.map { tparam => ValueTypeRef(tparam.symbol.asTypeParam) }
+          val existentialParams: List[TypeVar] = if (tparams.size == declaredType.tparams.size - targs.size) {
+            tparams.map { tparam => tparam.symbol.asTypeParam }
           } else {
             // using the invariant that the universals are prepended to type parameters of the operation
             declaredType.tparams.drop(targs.size).map { tp =>
               // recreate "fresh" type variables
               val name = tp.name
-              val newTp = TypeVar.TypeParam(name)
-              ValueTypeRef(newTp)
+              TypeVar.TypeParam(name)
             }
           }
+          val existentials = existentialParams.map(ValueTypeRef.apply)
+
+          Context.annotate(Annotations.TypeParameters, d, existentialParams)
 
           val canonicalEffects = declaredType.effects.canonical
 
@@ -566,6 +568,8 @@ object Typer extends Phase[NameResolved, Typechecked] {
       // create fresh **bound** variables
       val freshExistentials = existentials.map { t => TypeVar.TypeParam(t.name) }
 
+      Context.annotate(Annotations.TypeParameters, p, freshExistentials)
+
       val targs = (freshUniversals ++ freshExistentials).map { t => ValueTypeRef(t) }
 
       // (4) Compute blocktype of this constructor with rigid type vars
@@ -675,7 +679,7 @@ object Typer extends Phase[NameResolved, Typechecked] {
     case d @ source.ExternResource(id, tpe) =>
       Context.bind(d.symbol)
 
-    case d @ source.InterfaceDef(id, tparams, ops, isEffect) =>
+    case d @ source.InterfaceDef(id, tparams, ops) =>
       d.symbol.operations.foreach { op =>
         if (op.effects.toList contains op.appliedInterface) {
           Context.error("Bidirectional effects that mention the same effect recursively are not (yet) supported.")
@@ -782,9 +786,7 @@ object Typer extends Phase[NameResolved, Typechecked] {
         }
         // we bind the function type outside of the unification scope to solve for variables.
         val substituted = Context.unification(funTpe)
-        if (!isConcreteBlockType(substituted)) {
-          Context.abort(pretty"Cannot fully infer type for ${id}: ${substituted}")
-        }
+        assertConcreteFunction(id, substituted)
         Context.bind(sym, substituted)
 
         Result((), unhandledEffects)
@@ -1194,10 +1196,10 @@ object Typer extends Phase[NameResolved, Typechecked] {
       Context.abort(s"Wrong number of type arguments, given ${targs.size}, but ${name} expects ${funTpe.tparams.size}.")
 
     if (vargs.size != funTpe.vparams.size)
-      Context.error(s"Wrong number of value arguments, given ${vargs.size}, but ${name} expects ${funTpe.vparams.size}.")
+      Context.abort(s"Wrong number of value arguments, given ${vargs.size}, but ${name} expects ${funTpe.vparams.size}.")
 
     if (bargs.size != funTpe.bparams.size)
-      Context.error(s"Wrong number of block arguments, given ${bargs.size}, but ${name} expects ${funTpe.bparams.size}.")
+      Context.abort(s"Wrong number of block arguments, given ${bargs.size}, but ${name} expects ${funTpe.bparams.size}.")
 
     val callsite = currentCapture
 
@@ -1218,7 +1220,16 @@ object Typer extends Phase[NameResolved, Typechecked] {
       effs = effs ++ eff
     }
 
-    (bps zip bargs zip captArgs) foreach { case ((tpe, expr), capt) =>
+    // To improve inference, we first type check block arguments that DO NOT subtract effects,
+    // since those need to be fully known.
+
+    val (withoutEffects, withEffects) = (bps zip (bargs zip captArgs)).partitionMap {
+      // TODO refine and check that eff.args refers to (inferred) type arguments of this application (`typeArgs`)
+      case (tpe : FunctionType, rest) if tpe.effects.exists { eff => eff.args.nonEmpty } => Right((tpe, rest))
+      case (tpe, rest) => Left((tpe, rest))
+    }
+
+    (withoutEffects ++ withEffects) foreach { case (tpe, (expr, capt)) =>
       flowsInto(capt, callsite)
       // capture of block <: ?C
       flowingInto(capt) {
@@ -1497,7 +1508,7 @@ trait TyperOps extends ContextOps { self: Context =>
 
   private [typer] def bindCapabilities[R](binder: source.Tree, caps: List[symbols.BlockParam]): Unit =
     val capabilities = caps map { cap =>
-      assertConcrete(cap.tpe.getOrElse { INTERNAL_ERROR("Capability type needs to be know.") }.asInterfaceType)
+      assertConcreteEffect(cap.tpe.getOrElse { INTERNAL_ERROR("Capability type needs to be know.") }.asInterfaceType)
       positions.dupPos(binder, cap)
       cap
     }
@@ -1515,14 +1526,13 @@ trait TyperOps extends ContextOps { self: Context =>
    * Has the potential side-effect of creating a fresh capability. Also see [[BindAll.capabilityFor()]]
    */
   private [typer] def capabilityFor(tpe: InterfaceType): symbols.BlockParam =
-    assertConcrete(tpe)
+    assertConcreteEffect(tpe)
     val cap = capabilityScope.capabilityFor(tpe)
     annotations.update(Annotations.Captures, cap, CaptureSet(cap.capture))
     cap
 
   private [typer] def freshCapabilityFor(tpe: InterfaceType): symbols.BlockParam =
-    val capName = tpe.name.rename(_ + "$capability")
-    val param: BlockParam = BlockParam(capName, Some(tpe))
+    val param: BlockParam = BlockParam(tpe.name, Some(tpe))
     // TODO FIXME -- generated capabilities need to be ignored in LSP!
 //     {
 //      override def synthetic = true

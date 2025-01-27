@@ -15,10 +15,13 @@ import scala.util.boundary.break
 
 
 case class Fail(message: String, position: Int) extends Throwable(null, null, false, false)
+case class SoftFail(message: String, positionStart: Int, positionEnd: Int)
 
 class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source) {
 
   import scala.collection.mutable.ListBuffer
+
+  val softFails: ListBuffer[SoftFail] = ListBuffer[SoftFail]()
 
   def parse(input: Input)(using C: Context): Option[ModuleDecl] =
 
@@ -29,7 +32,17 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
       //val after = System.currentTimeMillis()
       //println(s"${input.source.name}: ${after - before}ms")
 
-      res
+      // Report soft fails
+      softFails.foreach {
+        case SoftFail(msg, from, to) =>
+          val source = input.source
+          val fromPos = source.offsetToPosition(tokens(from).start)
+          val toPos = source.offsetToPosition(tokens(to).end)
+          val range = Range(fromPos, toPos)
+          C.report(effekt.util.messages.ParseError(msg, Some(range)))
+      }
+
+      if (softFails.isEmpty) { res } else { None }
     } catch {
       case Fail(msg, pos) =>
         val source = input.source
@@ -60,7 +73,12 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
   // always points to the latest non-space position
   var position: Int = 0
 
-  def peek: Token = tokens(position)
+  extension(token: Token) def failOnErrorToken: Token = token.kind match {
+    case TokenKind.Error(err) => fail(err.msg)
+    case _ => token
+  }
+
+  def peek: Token = tokens(position).failOnErrorToken
 
   /**
    * Negative lookahead
@@ -76,7 +94,7 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
     def go(position: Int, offset: Int): Token =
       if position >= tokens.length then fail("Unexpected end of file")
 
-      tokens(position) match {
+      tokens(position).failOnErrorToken match {
         case token if isSpace(token.kind) => go(position + 1, offset)
         case token if offset <= 0 => token
         case _ => go(position + 1, offset - 1)
@@ -94,7 +112,7 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
 
   def hasNext(): Boolean = position < tokens.length
   def next(): Token =
-    val t = tokens(position)
+    val t = tokens(position).failOnErrorToken
     skip()
     t
 
@@ -142,7 +160,7 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
   * - Use `backtrack` with caution and as a last resort. Try to disambiguate the grammar by using `peek` and also try to
   *   only use `backtrack` on "shallow" non-terminals, that is, not on a non-terminal containing an expression,
   *   a statement or a type.
-  * - For the same reason, there is no function `manyWhile[T](p: => T): List[T]` but only 
+  * - For the same reason, there is no function `manyWhile[T](p: => T): List[T]` but only
   *   `manyWhile[T](p: => T, predicate: => Boolean): List[T]` as this one does not use backtracking.
   * - Use `fail` for reporting errors.
   * - Functions consuming tokens have an empty parameter list `()`, functions that do not, have no parameter list (e.g. peek)
@@ -181,23 +199,32 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
     case `val` =>
       val params = (`val` ~> peek.kind match {
         case `(` => valueParamsOpt()
-        case _ => List(valueParam()) // TODO copy position
+        case _ => List(valueParamOpt()) // TODO copy position
       })
-      desugarWith(params, `=` ~> expr(), semi() ~> stmts())
+      desugarWith(params, Nil, `=` ~> expr(), semi() ~> stmts())
 
-    case _ => desugarWith(Nil, expr(), semi() ~> stmts())
+    case `def` =>
+      val params = (`def` ~> peek.kind match {
+        case `{` => blockParamsOpt()
+        case _ => List(blockParamOpt()) // TODO copy position
+      })
+      desugarWith(Nil, params, `=` ~> expr(), semi() ~> stmts())
+
+    case _ => desugarWith(Nil, Nil, expr(), semi() ~> stmts())
   }
 
-  def desugarWith(params: List[ValueParam], call: Term, body: Stmt): Stmt = call match {
+  def desugarWith(vparams: List[ValueParam], bparams: List[BlockParam], call: Term, body: Stmt): Stmt = call match {
      case m@MethodCall(receiver, id, tps, vargs, bargs) =>
-       Return(MethodCall(receiver, id, tps, vargs, bargs :+ (BlockLiteral(Nil, params, Nil, body))))
+       Return(MethodCall(receiver, id, tps, vargs, bargs :+ (BlockLiteral(Nil, vparams, bparams, body))))
      case c@Call(callee, tps, vargs, bargs) =>
-       Return(Call(callee, tps, vargs, bargs :+ (BlockLiteral(Nil, params, Nil, body))))
+       Return(Call(callee, tps, vargs, bargs :+ (BlockLiteral(Nil, vparams, bparams, body))))
      case Var(id) =>
        val tgt = IdTarget(id)
-       Return(Call(tgt, Nil, Nil, (BlockLiteral(Nil, params, Nil, body)) :: Nil))
+       Return(Call(tgt, Nil, Nil, (BlockLiteral(Nil, vparams, bparams, body)) :: Nil))
+     case Do(effect, id, targs, vargs, bargs) =>
+      Return(Do(effect, id, targs, vargs, bargs :+ BlockLiteral(Nil, vparams, bparams, body)))
      case term =>
-       Return(Call(ExprTarget(term), Nil, Nil, (BlockLiteral(Nil, params, Nil, body)) :: Nil))
+       Return(Call(ExprTarget(term), Nil, Nil, (BlockLiteral(Nil, vparams, bparams, body)) :: Nil))
   }
 
   def maybeSemi(): Unit = if isSemi then semi()
@@ -445,9 +472,8 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
   def operationDef(): Def =
     nonterminal:
       `effect` ~> operation() match {
-        case op =>
-          // TODO is the `true` flag used at all anymore???
-          InterfaceDef(IdDef(op.id.name), Nil, List(op), true)
+        case op @ Operation(id, tps, vps, bps, ret) =>
+          InterfaceDef(IdDef(id.name) withPositionOf op, tps, List(Operation(id, Nil, vps, bps, ret) withPositionOf op))
       }
 
   def operation(): Operation =
@@ -458,7 +484,7 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
 
   def interfaceDef(): InterfaceDef =
     nonterminal:
-      InterfaceDef(`interface` ~> idDef(), maybeTypeParams(), `{` ~> manyWhile(`def` ~> operation(), `def`) <~ `}`, true)
+      InterfaceDef(`interface` ~> idDef(), maybeTypeParams(), `{` ~> manyWhile(`def` ~> operation(), `def`) <~ `}`)
 
   def namespaceDef(): Def =
     nonterminal:
@@ -646,7 +672,7 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
       val captures = `box` ~> backtrack(captureSet())
       val expr = if (peek(`{`)) functionArg()
         else if (peek(`new`)) newExpr()
-        else Var(idRef())
+        else callExpr()
       Box(captures, expr)
 
 
@@ -690,11 +716,11 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
 
       // Interface[...] { () => ... }
       // Interface[...] { case ... => ... }
-      def operationImplementation() = idRef() ~ maybeTypeParams() ~ implicitResume ~ functionArg() match {
+      def operationImplementation() = idRef() ~ maybeTypeArgs() ~ implicitResume ~ functionArg() match {
         case (id ~ tps ~ k ~ BlockLiteral(_, vps, bps, body)) =>
           val synthesizedId = IdRef(Nil, id.name).withPositionOf(id)
-          val interface = BlockTypeRef(id, Nil).withPositionOf(id): BlockTypeRef
-          val operation = OpClause(synthesizedId, tps, vps, bps, None, body, k).withRangeOf(id, body)
+          val interface = BlockTypeRef(id, tps).withPositionOf(id): BlockTypeRef
+          val operation = OpClause(synthesizedId, Nil, vps, bps, None, body, k).withRangeOf(id, body)
           Implementation(interface, List(operation))
       }
 
@@ -704,6 +730,23 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
     nonterminal:
       (`def` ~> idRef()) ~ paramsOpt() ~ maybeReturnAnnotation() ~ (`=` ~> stmt()) match {
         case id ~ (tps, vps, bps) ~ ret ~ body =>
+         if (isSemi) {
+           semi()
+
+           val startPosition = position
+
+           if (!peek(`}`) && !peek(`def`) && !peek(EOF)) {
+              // consume until the next `def` or `}` or EOF
+              while (!peek(`}`) && !peek(`def`) && !peek(EOF)) {
+                next()
+              }
+
+              val endPosition = position
+              val msg = "Unexpected tokens after operation definition. Expected either a new operation definition or the end of the implementation."
+              softFail(msg, startPosition, endPosition)
+            }
+          }
+
           // TODO the implicitResume needs to have the correct position assigned (maybe move it up again...)
           OpClause(id, tps, vps, bps, ret, body, implicitResume)
       }
@@ -714,7 +757,13 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
 
   def matchClause(): MatchClause =
     nonterminal:
-      MatchClause(`case` ~> matchPattern(), manyWhile(`and` ~> matchGuard(), `and`), `=>` ~> stmts())
+      MatchClause(
+        `case` ~> matchPattern(),
+        manyWhile(`and` ~> matchGuard(), `and`),
+        // allow a statement enclosed in braces or without braces
+        // both is allowed since match clauses are already delimited by `case`
+        `=>` ~> (if (peek(`{`)) { stmt() } else { stmts() })
+      )
 
   def matchGuards() =
     nonterminal:
@@ -1206,6 +1255,10 @@ class RecursiveDescent(positions: Positions, tokens: Seq[Token], source: Source)
    * Aborts parsing with the given message
    */
   def fail(message: String): Nothing = throw Fail(message, position)
+
+  def softFail(message: String, start: Int, end: Int): Unit = {
+    softFails += SoftFail(message, start, end)
+  }
 
   /**
    * Guards `thn` by token `t` and consumes the token itself, if present.

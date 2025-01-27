@@ -1,14 +1,13 @@
 package effekt
 
-import effekt.PhaseResult.{ AllTransformed, CoreLifted, CoreTransformed }
+import effekt.PhaseResult.{ AllTransformed, CoreTransformed }
 import effekt.context.Context
-import effekt.core.{ DirectStyleMutableState, Transformer }
-import effekt.lifted.LiftInference
+import effekt.core.Transformer
 import effekt.namer.Namer
 import effekt.source.{ AnnotateCaptures, ExplicitCapabilities, ResolveExternDefs, ModuleDecl }
 import effekt.symbols.Module
 import effekt.typer.{ BoxUnboxInference, Typer, Wellformedness }
-import effekt.util.messages.FatalPhaseError
+import effekt.util.messages.{ FatalPhaseError, CompilerPanic }
 import effekt.util.{ SourceTask, Task, VirtualSource, paths }
 import kiama.output.PrettyPrinterTypes.Document
 import kiama.util.{ Positions, Source }
@@ -53,18 +52,13 @@ enum PhaseResult {
   case AllTransformed(source: Source, main: PhaseResult.CoreTransformed, dependencies: List[PhaseResult.CoreTransformed])
 
   /**
-   * The result of [[LiftInference]] transforming [[core.Tree]] into the lifted core representation [[lifted.Tree]].
-   */
-  case CoreLifted(source: Source, tree: ModuleDecl, mod: symbols.Module, core: effekt.lifted.ModuleDecl)
-
-  /**
    * The result of [[effekt.generator.Backend]], consisting of a mapping from filename to output to be written.
    */
   case Compiled(source: Source, mainFile: String, outputFiles: Map[String, Document])
 }
 export PhaseResult.*
 
-enum Stage { case Core; case Lifted; case Machine; case Target; }
+enum Stage { case Core; case Machine; case Target; }
 
 /**
  * The compiler for the Effekt language.
@@ -94,7 +88,6 @@ enum Stage { case Core; case Lifted; case Machine; case Target; }
  * - [[generator.js.JavaScript]]
  * - [[generator.chez.ChezScheme]] (in three variants)
  * - [[generator.llvm.LLVM]]
- * - [[generator.ml.ML]]
  *
  * @tparam Executable information of this compilation run, which is passed to
  *                 the corresponding backend runner (e.g. the name of the main file)
@@ -116,25 +109,36 @@ trait Compiler[Executable] {
     CachedParser(source).map { res => res.tree }
 
   /**
-   * Used by
+   * This is the second-most important entry-point besides [[Driver.compileSource]].
+   * It is used by
    * - Namer to resolve dependencies
    * - Server / Driver to typecheck and report type errors in VSCode
    */
-  def runFrontend(source: Source)(using Context): Option[Module] =
-    Frontend(source).map { res =>
-      val mod = res.mod
-      validate(source, mod)
-      mod
-    }
+  def runFrontend(source: Source)(using C: Context): Option[Module] =
+    def getStackTrace(e: Throwable): String =
+      val stringWriter = new java.io.StringWriter()
+      e.printStackTrace(new java.io.PrintWriter(stringWriter))
+      stringWriter.toString
 
-  /**
-   * Used by the server to typecheck, report type errors and show
-   * captures at boxes and definitions
-   */
-  def runMiddleend(source: Source)(using Context): Option[Module] =
-    (Frontend andThen Middleend)(source).map { res =>
-      validate(res.source, res.mod)
-      res.mod
+    try {
+      val res = Frontend(source).map { res =>
+        val mod = res.mod
+        validate(source, mod)
+        mod
+      }
+      if C.messaging.hasErrors then None else res
+    } catch {
+      case FatalPhaseError(msg) =>
+        C.report(msg)
+        None
+      case e @ CompilerPanic(msg) =>
+        C.report(msg)
+        C.info(getStackTrace(e))
+        None
+      case e =>
+        C.info("Effekt Compiler Crash: " + e.toString)
+        C.info(getStackTrace(e))
+        None
     }
 
   /**
@@ -167,13 +171,6 @@ trait Compiler[Executable] {
    * choose the representation of the executable.
    */
   def compile(source: Source)(using Context): Option[(Map[String, String], Executable)]
-
-  /**
-   * Should compile [[source]] with this backend, the compilation result should only include
-   * the contents of this file, not its dependencies. Only used by the website and implemented
-   * by the JS backend. All other backends can return `None`.
-   */
-  def compileSeparate(source: Source)(using Context): Option[(CoreTransformed, String)] = None
 
 
   // The Compiler Compiler Phases:
@@ -224,28 +221,28 @@ trait Compiler[Executable] {
        * Wellformedness checks (exhaustivity, non-escape)
        *   [[Typechecked]] --> [[Typechecked]]
        */
-      Wellformedness
+      Wellformedness andThen
+      /**
+       * Resolves `extern`s for the current backend
+       * [[Typechecked]] --> [[Typechecked]]
+       */
+      ResolveExternDefs andThen
+      /**
+       * Uses annotated effects to translate to explicit capability passing
+       * [[Typechecked]] --> [[Typechecked]]
+       */
+      ExplicitCapabilities andThen
+      /**
+       * Computes and annotates the capture of each subexpression
+       * [[Typechecked]] --> [[Typechecked]]
+       */
+      AnnotateCaptures
   }
 
   /**
    * Middleend
    */
   val Middleend = Phase.cached("middleend", cacheBy = (in: Typechecked) => paths.lastModified(in.source)) {
-    /**
-     * Resolves `extern`s for the current backend
-     * [[Typechecked]] --> [[Typechecked]]
-     */
-    ResolveExternDefs andThen
-    /**
-     * Uses annotated effects to translate to explicit capability passing
-     * [[Typechecked]] --> [[Typechecked]]
-     */
-    ExplicitCapabilities andThen
-    /**
-     * Computes and annotates the capture of each subexpression
-     * [[Typechecked]] --> [[Typechecked]]
-     */
-    AnnotateCaptures andThen
     /**
      * Translates a source program to a core program
      * [[Typechecked]] --> [[CoreTransformed]]
@@ -288,7 +285,7 @@ trait Compiler[Executable] {
       // collect all information
       var declarations: List[core.Declaration] = Nil
       var externs: List[core.Extern] = Nil
-      var definitions: List[core.Definition] = Nil
+      var definitions: List[core.Toplevel] = Nil
       var exports: List[symbols.Symbol] = Nil
 
       (dependencies :+ main).foreach { module =>
@@ -305,7 +302,7 @@ trait Compiler[Executable] {
   }
 
   lazy val Machine = Phase("machine") {
-    case CoreLifted(source, tree, mod, core) =>
+    case CoreTransformed(source, tree, mod, core) =>
       val main = Context.checkMain(mod)
       (mod, main, machine.Transformer.transform(main, core))
   }

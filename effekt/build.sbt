@@ -2,6 +2,7 @@ import sbtcrossproject.CrossProject
 
 import scala.sys.process.Process
 import benchmarks._
+import EffektVersion.effektVersion
 
 // additional targets that can be used in sbt
 lazy val deploy = taskKey[Unit]("Builds the jar and moves it to the bin folder")
@@ -11,8 +12,7 @@ lazy val install = taskKey[Unit]("Installs the current version locally")
 lazy val assembleJS = taskKey[Unit]("Assemble the JS file in out/effekt.js")
 lazy val assembleBinary = taskKey[Unit]("Assembles the effekt binary in bin/effekt")
 lazy val generateDocumentation = taskKey[Unit]("Generates some documentation.")
-
-lazy val effektVersion = "0.2.2"
+lazy val bumpMinorVersion = taskKey[Unit]("Bumps the minor version number (used in CI).")
 
 lazy val noPublishSettings = Seq(
   publish := {},
@@ -47,8 +47,7 @@ lazy val replDependencies = Seq(
 )
 
 lazy val lspDependencies = Seq(
-  "org.eclipse.lsp4j" % "org.eclipse.lsp4j" % "0.12.0",
-  "com.google.code.gson" % "gson" % "2.8.9"
+  "org.eclipse.lsp4j" % "org.eclipse.lsp4j" % "0.23.1"
 )
 
 lazy val testingDependencies = Seq(
@@ -63,7 +62,8 @@ lazy val kiama: CrossProject = crossProject(JSPlatform, JVMPlatform).in(file("ki
     name := "kiama"
   )
   .jvmSettings(
-    libraryDependencies ++= (replDependencies ++ lspDependencies)
+    libraryDependencies ++= (replDependencies ++ lspDependencies ++ testingDependencies),
+    testFrameworks += new TestFramework("utest.runner.Framework")
   )
 
 lazy val root = project.in(file("effekt"))
@@ -116,6 +116,15 @@ lazy val effekt: CrossProject = crossProject(JSPlatform, JVMPlatform).in(file("e
 
     assembly / assemblyJarName := "effekt.jar",
 
+    // there is a conflict between the two transitive dependencies "gson:2.11.0"
+    // and "error_prone_annotations:2.27.0", so we need the merge strategy here for `sbt install`
+    assembly / assemblyMergeStrategy := {
+      case PathList("META-INF", "versions", "9", "module-info.class") => MergeStrategy.first
+      case x =>
+        val oldStrategy = (assembly / assemblyMergeStrategy).value
+        oldStrategy(x)
+    },
+
     // we use the lib folder as resource directory to include it in the JAR
     Compile / unmanagedResourceDirectories += (ThisBuild / baseDirectory).value / "libraries",
 
@@ -144,7 +153,7 @@ lazy val effekt: CrossProject = crossProject(JSPlatform, JVMPlatform).in(file("e
       assembleBinary.value
 
       Process(s"${npm.value} pack").!!
-      Process(s"${npm.value} install -g effekt-${effektVersion}.tgz").!!
+      Process(s"${npm.value} install -g effekt-lang-effekt-${effektVersion}.tgz").!!
     },
 
     generateLicenses := {
@@ -160,6 +169,27 @@ lazy val effekt: CrossProject = crossProject(JSPlatform, JVMPlatform).in(file("e
       Process(s"${npm.value} version ${effektVersion} --no-git-tag-version --allow-same-version").!!
       Process(s"${mvn.value} versions:set -DnewVersion=${effektVersion} -DgenerateBackupPoms=false").!!
     },
+
+    bumpMinorVersion := {
+      val versionPattern = """(\d+)\.(\d+)\.(\d+)""".r
+      val newVersion = effektVersion match {
+        case versionPattern(major, minor, patch) =>
+          s"$major.${minor.toInt + 1}.0"
+        case _ =>
+          sys.error(s"Invalid version format: $effektVersion")
+      }
+
+      val versionFile = (ThisBuild / baseDirectory).value / "project" / "EffektVersion.scala"
+      IO.write(versionFile,
+        s"""// Don't change this file without changing the CI too!
+           |import sbt.*
+           |import sbt.Keys.*
+           |object EffektVersion { lazy val effektVersion = "$newVersion" }
+           |""".stripMargin)
+
+      println(newVersion)
+    },
+
     generateDocumentation := TreeDocs.replacer.value,
     Compile / sourceGenerators += versionGenerator.taskValue,
     Compile / sourceGenerators += TreeDocs.generator.taskValue,

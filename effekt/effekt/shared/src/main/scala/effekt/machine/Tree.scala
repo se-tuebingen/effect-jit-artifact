@@ -47,7 +47,7 @@ case class Program(declarations: List[Declaration], program: Statement)
  * Toplevel declarations for FFI
  */
 enum Declaration {
-  case Extern(name: String, parameters: Environment, returnType: Type, body: ExternBody)
+  case Extern(name: String, parameters: Environment, returnType: Type, async: Boolean, body: ExternBody)
   case Include(featureFlag: FeatureFlag, contents: String)
 }
 export Declaration.*
@@ -90,20 +90,18 @@ case class Clause(parameters: Environment, body: Statement)
  *     │─ [[ Switch ]]
  *     │─ [[ New ]]
  *     │─ [[ Invoke ]]
- *     │─ [[ Allocate ]]
- *     │─ [[ Load ]]
- *     │─ [[ Store ]]
+ *     │─ [[ Var ]]
+ *     │─ [[ LoadVar ]]
+ *     │─ [[ StoreVar ]]
  *     │─ [[ PushFrame ]]
  *     │─ [[ Return ]]
- *     │─ [[ NewStack ]]
- *     │─ [[ PushStack ]]
- *     │─ [[ PopStacks ]]
+ *     │─ [[ Reset ]]
+ *     │─ [[ Resume ]]
+ *     │─ [[ Shift ]]
  *     │─ [[ ForeignCall ]]
- *     │─ [[ ComposeEvidence ]]
  *     │─ [[ LiteralInt ]]
  *     │─ [[ LiteralDouble ]]
  *     │─ [[ LiteralUTF8String ]]
- *     │─ [[ LiteralEvidence ]]
  *     │─ [[ Hole ]]
  *
  * --------------------------------------------------
@@ -146,19 +144,19 @@ enum Statement {
   case Invoke(receiver: Variable, tag: Tag, arguments: Environment)
 
   /**
-  *  e.g. let x = allocate(42, ev); s
-  */
-  case Allocate(name: Variable, init: Variable, ev: Variable, rest: Statement)
+   * e.g. var x = 42; s
+   */
+  case Var(name: Variable, init: Variable, returnType: Type, rest: Statement)
 
   /**
-  * e.g. let y = load(x, ev); s
-  */
-  case Load(name: Variable, ref: Variable, ev: Variable, rest: Statement)
+   * e.g. let y = loadVar(x); s
+   */
+  case LoadVar(name: Variable, ref: Variable, rest: Statement)
 
   /**
-  * e.g. store(x, 42, ev); s
-  */
-  case Store(ref: Variable, value: Variable, ev: Variable, rest: Statement)
+   * e.g. storeVar(x, 42); s
+   */
+  case StoreVar(ref: Variable, value: Variable, rest: Statement)
 
   /**
    * e.g. push { (x, ...) => s }; s
@@ -171,20 +169,19 @@ enum Statement {
   case Return(arguments: Environment)
 
   /**
-   * e.g. let k = stack { (x, ...) => s }; s
+   * e.g. let prompt = reset { (x, ...) => s }; s
    */
-  case NewStack(name: Variable, frame: Clause, rest: Statement)
+  case Reset(name: Variable, frame: Clause, rest: Statement)
 
   /**
-   * e.g. push k; s
+   * e.g. resume k; s
    */
-  case PushStack(stack: Variable, rest: Statement)
+  case Resume(stack: Variable, rest: Statement)
 
   /**
-   * e.g. let k = shift0 (n+1); s
-   * NOTE: Pops the stacks until the nth, i.e. the first n+1 ones
+   * e.g. let k = shift prompt; s
    */
-  case PopStacks(name: Variable, n: Variable, rest: Statement)
+  case Shift(name: Variable, prompt: Variable, rest: Statement)
 
   /**
    * let x = #infix_add(v1, ...); s
@@ -192,19 +189,19 @@ enum Statement {
   case ForeignCall(name: Variable, builtin: String, arguments: Environment, rest: Statement)
 
   /**
-   * Evidence composition, i.e. currently:
-   * let x = ev1 + ev2; s
-   */
-  case ComposeEvidence(name: Variable, ev1: Variable, ev2: Variable, rest: Statement)
-
-  /**
    * let x = 42; s
    */
   case LiteralInt(name: Variable, value: Long, rest: Statement)
 
+  /**
+   * let x = 42.2; s
+   */
   case LiteralDouble(name: Variable, value: Double, rest: Statement)
+
+  /**
+   * let x = "hello"; s
+   */
   case LiteralUTF8String(name: Variable, utf8: Array[Byte], rest: Statement)
-  case LiteralEvidence(name: Variable, value: Evidence, rest: Statement)
 
   /**
    * Statement that is executed when a Hole is encountered.
@@ -220,21 +217,16 @@ export Statement.*
 enum Type {
   case Positive()
   case Negative()
+  case Prompt()
   case Stack()
   case Int()
   case Byte()
   case Double()
-  case String()
   case Reference(tpe: Type)
 }
 export Type.{ Positive, Negative }
 
-type Evidence = Int
 object builtins {
-
-  val Evidence = Type.Int()
-  val Here: Evidence = 0
-  val There: Evidence = 1
 
   /**
    * Blocks types are interfaces with a single operation.
@@ -247,6 +239,8 @@ object builtins {
   val True: Tag = 1
   val False: Tag = 0
   val BooleanType = Positive()
+
+  val StringType = Positive()
 
   val SingletonRecord: Tag = 0
 }

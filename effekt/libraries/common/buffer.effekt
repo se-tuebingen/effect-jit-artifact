@@ -9,34 +9,22 @@ import array
 
 record BufferOverflow()
 
-/**
- * Fixed-size ring buffers (queues) where one can write
- * elements to the head and read from the tail.
- */
+/// Fixed-size ring buffers (queues) where one can write
+/// elements to the head and read from the tail.
 interface Buffer[T] {
-  /**
-   * The remaining capacity
-   */
+  /// The remaining capacity
   def capacity(): Int
 
-  /**
-   * Is this buffer full?
-   */
+  /// Is this buffer full?
   def full?(): Bool
 
-  /**
-   * Is this buffer empty?
-   */
+  /// Is this buffer empty?
   def empty?(): Bool
 
-  /**
-   * Read an element from the tail of the buffer
-   */
+  /// Read an element from the tail of the buffer
   def read(): Option[T]
 
-  /**
-   * Write an element to the head of the buffer
-   */
+  /// Write an element to the head of the buffer
   def write(el: T): Unit / Exception[BufferOverflow]
 }
 
@@ -46,7 +34,7 @@ def emptyBuffer[T](capacity: Int): Buffer[T] at {global} = {
 }
 def arrayBuffer[T](initialCapacity: Int): Buffer[T] at {global} = {
   // TODO allocate buffer (and array) into a region r.
-  val contents = emptyArray[T](initialCapacity)
+  val contents = array::allocate[T](initialCapacity)
   var head in global = 0
   var tail in global = 0
 
@@ -63,7 +51,7 @@ def arrayBuffer[T](initialCapacity: Int): Buffer[T] at {global} = {
     def read() = {
       if (buffer.empty?) None()
       else {
-        val result: T = contents.remove(head).getOrElse { <> };
+        val result: T = contents.unsafeGet(head);
         head = mod(head + 1, initialCapacity)
         Some(result)
       }
@@ -71,7 +59,7 @@ def arrayBuffer[T](initialCapacity: Int): Buffer[T] at {global} = {
     def write(el: T) = {
       if (buffer.full?) <> // raise(BufferOverflow())
 
-      contents.put(tail, el)
+      contents.unsafeSet(tail, el)
       tail = mod(tail + 1, initialCapacity)
     }
   }

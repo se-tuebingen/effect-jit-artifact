@@ -2,15 +2,15 @@ package effekt
 package core
 
 import scala.collection.mutable.ListBuffer
-import effekt.context.{Annotations, Context, ContextOps}
+import effekt.context.{ Annotations, Context, ContextOps }
 import effekt.symbols.*
 import effekt.symbols.builtins.*
 import effekt.context.assertions.*
 import effekt.core.PatternMatchingCompiler.Clause
-import effekt.source.{MatchGuard, MatchPattern, ResolveExternDefs}
-import effekt.symbols.Binder.{RegBinder, VarBinder}
+import effekt.source.{ MatchGuard, MatchPattern, ResolveExternDefs }
+import effekt.symbols.Binder.{ RegBinder, VarBinder }
 import effekt.typer.Substitutions
-import effekt.util.messages.{ErrorReporter, INTERNAL_ERROR}
+import effekt.util.messages.{ ErrorReporter, INTERNAL_ERROR }
 
 object Transformer extends Phase[Typechecked, CoreTransformed] {
 
@@ -48,7 +48,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
     val exports = transform(mod.exports)
     val toplevelDeclarations = defs.flatMap(d => transformToplevel(d))
 
-    val definitions = toplevelDeclarations.collect { case d: Definition => d }
+    val definitions = toplevelDeclarations.collect { case d: Toplevel => d }
     val externals = toplevelDeclarations.collect { case d: Extern => d }
     val declarations = toplevelDeclarations.collect { case d: Declaration => d }
 
@@ -61,13 +61,13 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
     ModuleDecl(path, mod.includes.map { _.path }, preludeDeclarations ++ declarations, externals, definitions, exports)
   }
 
-  def transformToplevel(d: source.Def)(using Context): List[Definition | Declaration | Extern] = d match {
+  def transformToplevel(d: source.Def)(using Context): List[Toplevel | Declaration | Extern] = d match {
     case f @ source.FunDef(id, tps, vps, bps, ret, body) =>
       val tparams = tps.map { p => p.symbol }
       val cparams = bps.map { b => b.symbol.capture }
       val vparams = vps map transform
       val bparams = bps map transform
-      List(Definition.Def(f.symbol, BlockLit(tparams, cparams, vparams, bparams, transform(body))))
+      List(Toplevel.Def(f.symbol, BlockLit(tparams, cparams, vparams, bparams, transform(body))))
 
     case d @ source.DataDef(id, _, ctors) =>
       val datatype = d.symbol
@@ -83,7 +83,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
         case Some(tpe) => transform(tpe)
         case None => transformed.tpe
       }
-      List(Definition.Let(v.symbol, transformedTpe, Run(transformed)))
+      List(Toplevel.Val(v.symbol, transformedTpe, transformed))
 
     case v @ source.ValDef(id, _, binding) =>
       Context.at(d) { Context.abort("Effectful bindings not allowed on the toplevel") }
@@ -91,41 +91,18 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
     case v @ source.DefDef(id, annot, binding) =>
       val sym = v.symbol
       val (definition, bindings) = Context.withBindings {
-        Definition.Def(sym, transformAsBlock(binding))
+        Toplevel.Def(sym, transformAsBlock(binding))
       }
 
-      // convert binding into Definition.
-      val additionalDefinitions = bindings.toList.map {
-        case Binding.Let(name, tpe, binding) =>
-          Definition.Let(name, tpe, binding)
-        case Binding.Def(name, binding) => Definition.Def(name, binding)
-        case Binding.Val(name, tpe, binding) => Context.at(d) { Context.abort("Effectful bindings not allowed on the toplevel") }
-      }
-      additionalDefinitions ++ List(definition)
+      bindings.map(core.Binding.toToplevel) ++ List(definition)
 
     case _: source.VarDef | _: source.RegDef =>
       Context.at(d) { Context.abort("Mutable variable bindings not allowed on the toplevel") }
 
-    case d @ source.InterfaceDef(id, tparamsInterface, ops, isEffect) =>
+    case d @ source.InterfaceDef(id, tparamsInterface, ops) =>
       val interface = d.symbol
-      List(core.Interface(interface, interface.tparams, interface.operations.map {
-        case op @ symbols.Operation(name, tps, vps, bps, resultType, effects, interface) =>
-          // like in asSeenFrom we need to make up cparams, they cannot occur free in the result type
-          val capabilities = effects.canonical
-          val tparams = tps.drop(tparamsInterface.size)
-          val bparamsBlocks = bps.map(b => transform(b.tpe.getOrElse {
-            INTERNAL_ERROR("Interface declarations should have annotated types.")
-          }))
-          val bparamsCapabilities = capabilities.map(transform)
-          //val bparams = bparamsBlocks ++ bparamsCapabilities
-          val bparams = bparamsCapabilities
-          val vparams = vps.map(p => transform(p.tpe.get))
-          val cparams = capabilities.map { tpe => symbols.CaptureParam(tpe.name) }
-
-          // here we reconstruct the block type
-          val btpe = core.BlockType.Function(tparams, cparams, vparams, bparams, transform(resultType))
-          core.Property(op, btpe)
-      }))
+      List(core.Interface(interface, interface.tparams,
+        interface.operations.map { op => core.Property(op, operationAtDeclaration(interface.tparams, op)) }))
 
     case f @ source.ExternDef(pure, id, _, vps, bps, _, bodies) =>
       val sym@ExternFunction(name, tps, _, _, ret, effects, capt, _) = f.symbol
@@ -173,7 +150,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
     case source.ExprStmt(e, rest) if pureOrIO(e) =>
       val (expr, bs) = Context.withBindings { transformAsExpr(e) }
       val let = Let(Wildcard(), expr.tpe, expr, transform(rest))
-      Context.reifyBindings(let, bs)
+      Binding(bs, let)
 
     // { e; stmt } --> { val _ = e; stmt }
     case source.ExprStmt(e, rest) =>
@@ -195,14 +172,6 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
         val vparams = vps map transform
         val bparams = bps map transform
         Def(f.symbol, BlockLit(tparams, cparams, vparams, bparams, transform(body)), transform(rest))
-
-      case v @ source.ValDef(id, tpe, binding) if pureOrIO(binding) =>
-        val transformed = Run(transform(binding))
-        val transformedTpe = v.symbol.tpe match {
-          case Some(tpe) => transform(tpe)
-          case None => transformed.tpe
-        }
-        Let(v.symbol, transformedTpe, transformed, transform(rest))
 
       case v @ source.ValDef(id, tpe, binding) =>
         val transformed = transform(binding)
@@ -240,11 +209,15 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
     }
   }
 
-  def transformUnbox(tree: source.Term)(implicit C: Context): Block =
-    Unbox(transformAsPure(tree))
+  def transformUnbox(tree: source.Term)(implicit C: Context): Block = tree match {
+    case source.Unbox(b) => Unbox(transformAsPure(b))
+    case _ => Unbox(transformAsPure(tree))
+  }
 
-  def transformBox(tree: source.Term)(implicit C: Context): Pure =
-    Box(transformAsBlock(tree), transform(Context.inferredCapture(tree)))
+  def transformBox(tree: source.Term)(implicit C: Context): Pure = tree match {
+    case source.Box(capt, block) => Box(transformAsBlock(tree), transform(Context.inferredCapture(block)))
+    case _ => Box(transformAsBlock(tree), transform(Context.inferredCapture(tree)))
+  }
 
   /**
    * Transforms the source to a function (expecting to be called using [[core.Stmt.App]] or an interface.
@@ -258,18 +231,9 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
       }
     case _: source.BlockLiteral => transformAsControlBlock(tree)
     case _: source.New => transformAsObject(tree)
-    case _ => transformUnboxOrSelect(tree)
+    case _ => transformUnbox(tree)
   }
-  private def transformUnboxOrSelect(tree: source.Term)(using Context): Block = tree match {
-    case s @ source.Select(receiver, id) =>
-      Member(transformAsObject(receiver), s.definition, transform(Context.inferredBlockTypeOf(tree)))
 
-    case source.Unbox(b) =>
-      Unbox(transformAsPure(b))
-
-    case _ =>
-      transformUnbox(tree)
-  }
   /**
    * Transforms the source to an interface block
    */
@@ -281,9 +245,9 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
       Context.panic(s"Using block literal ${tree} but an object was expected.")
 
     case source.New(impl) =>
-      New(transform(impl, false))
+      New(transform(impl, None))
 
-    case _ => transformUnboxOrSelect(tree)
+    case _ => transformUnbox(tree)
   }
   /**
    * Transforms the source to a function block that expects to be called using [[core.Stmt.App]].
@@ -297,8 +261,8 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
           // if this block argument expects to be called using PureApp or DirectApp, make sure it is
           // by wrapping it in a BlockLit
           val targs = tparams.map(core.ValueType.Var.apply)
-          val vparams: List[Param.ValueParam] = vparamtps.map { t => Param.ValueParam(TmpValue(), transform(t))}
-          val vargs = vparams.map { case Param.ValueParam(id, tpe) => Pure.ValueVar(id, tpe) }
+          val vparams = vparamtps.map { t => core.ValueParam(TmpValue("valueParam"), transform(t))}
+          val vargs = vparams.map { case core.ValueParam(id, tpe) => Pure.ValueVar(id, tpe) }
 
           // [[ f ]] = { (x) => f(x) }
           def etaExpandPure(b: ExternFunction): BlockLit = {
@@ -321,11 +285,11 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
           // [[ f ]] = { (x){g} => let r = f(x){g}; return r }
           def etaExpandDirect(f: ExternFunction): BlockLit = {
             assert(effects.isEmpty)
-            val bparams: List[Param.BlockParam] = bparamtps.map { t => val id = TmpBlock(); Param.BlockParam(id, transform(t), Set(id)) }
+            val bparams = bparamtps.map { t => val id = TmpBlock("etaParam"); core.BlockParam(id, transform(t), Set(id)) }
             val bargs = bparams.map {
-              case Param.BlockParam(id, tpe, capt) => Block.BlockVar(id, tpe, capt)
+              case core.BlockParam(id, tpe, capt) => Block.BlockVar(id, tpe, capt)
             }
-            val result = TmpValue()
+            val result = TmpValue("etaBinding")
             val resultBinding = DirectApp(BlockVar(f), targs, vargs, bargs)
             BlockLit(tparams, bparams.map(_.id), vparams, bparams,
               core.Let(result, resultBinding.tpe, resultBinding,
@@ -352,7 +316,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
     case s @ source.New(impl) =>
       Context.abort(s"Expected a function but got an object instantiation: ${s}")
 
-    case _ => transformUnboxOrSelect(tree)
+    case _ => transformUnbox(tree)
   }
 
   def transformAsPure(tree: source.Term)(using Context): Pure = transformAsExpr(tree) match {
@@ -362,14 +326,10 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
 
   def transformAsExpr(tree: source.Term)(using Context): Expr = tree match {
     case v: source.Var => v.definition match {
-      case sym: VarBinder =>
+      case sym: RefBinder =>
         val stateType = Context.blockTypeOf(sym)
         val tpe = TState.extractType(stateType)
-        Context.bind(Get(sym, Set(sym.capture), transform(tpe)))
-      case sym: RegBinder =>
-        val stateType = Context.blockTypeOf(sym)
-        val getType = operationType(stateType, TState.get)
-        Context.bind(App(Member(BlockVar(sym), TState.get, transform(getType)), Nil, Nil, Nil))
+        Context.bind(Get(sym, transform(Context.captureOf(sym)), transform(tpe)))
       case sym: ValueSymbol => ValueVar(sym)
       case sym: BlockSymbol => transformBox(tree)
     }
@@ -377,8 +337,35 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
     case source.Literal(value, tpe) =>
       Literal(value, transform(tpe))
 
+    // [[ sc.field ]] = val x = sc match { tag: { (_, _, x, _) => return x } }; ...
     case s @ source.Select(receiver, selector) =>
-      Select(transformAsPure(receiver), s.definition, transform(Context.inferredTypeOf(s)))
+      val field: Field = s.definition
+
+      val constructor = field.constructor
+      val dataType: symbols.TypeConstructor = constructor.tpe
+      val universals: List[symbols.TypeParam] = dataType.tparams
+
+      // allTypeParams = universals ++ existentials
+      val allTypeParams: List[symbols.TypeParam] = constructor.tparams
+
+      assert(allTypeParams.length == universals.length, "Existentials on record selection not supported, yet.")
+
+      val scrutineeTypeArgs = Context.inferredTypeOf(receiver) match {
+        case effekt.symbols.ValueType.ValueTypeApp(constructor, args) => args
+        case _ => Context.panic("Should not happen: selection from non ValueTypeApp")
+      }
+
+      val substitution = Substitutions((universals zip scrutineeTypeArgs).toMap, Map.empty)
+
+      val selected = Id("x")
+      val tpe = transform(Context.inferredTypeOf(s))
+      val params = constructor.fields.map {
+        case f: Field =>
+          val tpe = transform(substitution.substitute(f.returnType))
+          core.ValueParam(if f == field then selected else Id("_"), tpe)
+      }
+      Context.bind(Stmt.Match(transformAsPure(receiver),
+        List((constructor, BlockLit(Nil, Nil, params, Nil, Stmt.Return(Pure.ValueVar(selected, tpe))))), None))
 
     case source.Box(capt, block) =>
       transformBox(block)
@@ -411,7 +398,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
     //   def loop$13() = if ([[cond]]) { [[ body ]]; loop$13() } else { return () }
     //   loop$13()
     case source.While(guards, body, default) =>
-      val loopName = TmpBlock()
+      val loopName = TmpBlock("whileLoop")
       val loopType = core.BlockType.Function(Nil, Nil, Nil, Nil, core.Type.TUnit)
 
       // TODO double check: probably we are forgetting the capture of the guards!
@@ -419,16 +406,18 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
       val loopCall = Stmt.App(core.BlockVar(loopName, loopType, loopCapt), Nil, Nil, Nil)
 
       val transformedBody = transform(body)
-      val thenBranch = Stmt.Val(TmpValue(), transformedBody.tpe, transformedBody, loopCall)
+      val thenBranch = Stmt.Val(TmpValue("whileThen"), transformedBody.tpe, transformedBody, loopCall)
       val elseBranch = default.map(transform).getOrElse(Return(Literal((), core.Type.TUnit)))
 
       val loopBody = guards match {
         case List(MatchGuard.BooleanGuard(cond)) =>
           insertBindings { core.If(transformAsPure(cond), thenBranch, elseBranch) }
         case _ =>
-          val thenClause = preprocess(Nil, guards, thenBranch)
-          val elseClause = preprocess(Nil, Nil, elseBranch)
-          PatternMatchingCompiler.compile(List(thenClause, elseClause))
+          insertBindings {
+            val thenClause = preprocess(Nil, guards, thenBranch)
+            val elseClause = preprocess(Nil, Nil, elseBranch)
+            PatternMatchingCompiler.compile(List(thenClause, elseClause))
+          }
       }
 
       Context.bind(loopName, Block.BlockLit(Nil, Nil, Nil, Nil, loopBody))
@@ -449,17 +438,28 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
       Context.bind(compiledMatch)
 
     case source.TryHandle(prog, handlers) =>
-      val (bps, cps) = handlers.map { h =>
-        val cap = h.capability.get.symbol
-        (BlockParam(cap), cap.capture)
-      }.unzip
 
-      val body = BlockLit(Nil, cps, Nil, bps, transform(prog))
+      val transformedProg = transform(prog)
+
+      val answerType = transformedProg.tpe
+
+      // create a fresh prompt, a variable referring to it, and a parameter binding it
+      val promptId   = Id("p")
+      val promptCapt = Id("pCapt")
+      val promptTpe = Type.TPrompt(answerType)
+      val promptVar: core.BlockVar = core.BlockVar(promptId, Type.TPrompt(answerType), Set(promptCapt))
+      val promptParam: core.BlockParam = core.BlockParam(promptId, promptTpe, Set(promptCapt))
 
       val transformedHandlers = handlers.map {
-        case h @ source.Handler(cap, impl) => transform(impl, true)
+        case h @ source.Handler(cap, impl) =>
+          val id = h.capability.get.symbol
+          Binding.Def(id, New(transform(impl, Some(promptVar))))
       }
-      Context.bind(Try(body, transformedHandlers))
+
+      val body: BlockLit = BlockLit(Nil, List(promptCapt), Nil, List(promptParam),
+        Binding(transformedHandlers, transform(prog)))
+
+      Context.bind(Reset(body))
 
     case r @ source.Region(name, body) =>
       val region = r.symbol
@@ -470,15 +470,9 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
     case source.Hole(stmts) =>
       Context.bind(Hole())
 
-    case a @ source.Assign(id, expr) => a.definition match {
-      case sym: VarBinder => Context.bind(Put(sym, Set(sym.capture), transformAsPure(expr)))
-      case sym: RegBinder =>
-        val e = transformAsPure(expr)
-        val sym = a.definition
-        val stateType = Context.blockTypeOf(sym)
-        val putType = operationType(stateType, TState.put)
-        Context.bind(App(Member(BlockVar(sym), TState.put, transform(putType)), Nil, List(e), Nil))
-    }
+    case a @ source.Assign(id, expr) =>
+      val sym = a.definition
+      Context.bind(Put(sym, transform(Context.captureOf(sym)), transformAsPure(expr)))
 
     // methods are dynamically dispatched, so we have to assume they are `control`, hence no PureApp.
     case c @ source.MethodCall(receiver, id, targs, vargs, bargs) =>
@@ -492,12 +486,12 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
 
       val receiverType = Context.inferredBlockTypeOf(receiver)
       val operation = c.definition.asOperation
-      val opType = transform(operationType(receiverType, operation))
+      val opType = transform(operationAtCallsite(receiverType, operation))
 
       // Do not pass type arguments for the type constructor of the receiver.
       val remainingTypeArgs = typeArgs.drop(operation.interface.tparams.size)
 
-      Context.bind(App(Member(rec, operation, opType), remainingTypeArgs, valueArgs, blockArgs))
+      Context.bind(Invoke(rec, operation, opType, remainingTypeArgs, valueArgs, blockArgs))
 
     case c @ source.Call(source.ExprTarget(source.Unbox(expr)), targs, vargs, bargs) =>
 
@@ -511,11 +505,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
       val blockArgs = bargs.map(transformAsBlock)
       // val captArgs = blockArgs.map(b => b.capt) //transform(Context.inferredCapture(b)))
 
-      if (capture.pureOrIO && bargs.forall { pureOrIO }) {
-        Run(App(Unbox(e), typeArgs, valueArgs, blockArgs))
-      } else {
-        Context.bind(App(Unbox(e), typeArgs, valueArgs, blockArgs))
-      }
+      Context.bind(App(Unbox(e), typeArgs, valueArgs, blockArgs))
 
     case c @ source.Call(fun: source.IdTarget, _, vargs, bargs) =>
       // assumption: typer removed all ambiguous references, so there is exactly one
@@ -550,7 +540,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
    * Establishes a canonical ordering of methods by using
    * the order in which they are declared in the signature (like with handlers)
    */
-  def transform(impl: source.Implementation, isHandler: Boolean)(using Context): core.Implementation = {
+  def transform(impl: source.Implementation, prompt: Option[core.BlockVar])(using Context): core.Implementation = {
     val members = impl.clauses
     val clauses = members.map { cl => (cl.definition, cl) }.toMap
     val sig = impl.definition
@@ -565,16 +555,97 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
         val vps = vparams.map(transform)
         val tps = tparams.map { p => p.symbol }
 
-        // We cannot annotate the transparent capture of resume here somewhere since all
-        // block parameters are automatically tracked by our current encoding of core.Tree.
-        // So resume is a separate parameter.
-        val (resumeParam, bps, cps) = if (isHandler) {
-          val resumeSymbol = resume.symbol.asInstanceOf[BlockSymbol]
-          (Some(BlockParam(resumeSymbol)), Nil, Nil)
-        } else {
-          (None, bparams map transform, bparams map { b => b.symbol.capture })
+        prompt match {
+          case Some(prompt) =>
+            val resumeSymbol = resume.symbol.asInstanceOf[BlockSymbol]
+            Context.blockTypeOf(resumeSymbol) match {
+
+              // uni-directional
+              // ---------------
+              // [[ def op(x) = ... resume123(...) ... ]]
+              //   =
+              // def op(x) = shift(p) { k =>
+              //   def resume123(y) = resume(k) { return y };
+              //   ... resume123(...) ...
+              // }
+              //
+              // Function resume123 will hopefully be inlined by the inliner / optimizer
+              case BlockType.FunctionType(_, _, List(result), _, answer, _) =>
+
+                val resultTpe = transform(result)
+                val answerTpe = transform(answer)
+
+                // (1) bind the continuation (k)itself
+
+                // THIS IS NOT CORRECT: in the source language the capture of resume is transparent
+                // This suggests we need to change the representation of Shift and its typing...
+                val resumeCapture = Id("resume")
+                val resumeId = Id("k")
+                val resumeTpe = core.Type.TResume(resultTpe, answerTpe)
+                val resumeParam = core.BlockParam(resumeId, resumeTpe, Set(resumeCapture))
+                val resumeVar: core.BlockVar = core.BlockVar(resumeId, resumeTpe, Set(resumeCapture))
+
+                // (2) eta-expand and bind continuation as a function
+                val resumeArgId = Id("a")
+                val resumeArgParam: core.ValueParam = core.ValueParam(resumeArgId, resultTpe)
+                val resumeFun: core.BlockLit = core.BlockLit(Nil, Nil, List(resumeArgParam), Nil,
+                  core.Stmt.Resume(resumeVar, core.Stmt.Return(core.ValueVar(resumeArgId, resultTpe))))
+
+                core.Operation(op.definition, tps, Nil, vps, Nil,
+                  core.Shift(prompt, core.BlockLit(Nil, List(resumeCapture), Nil, resumeParam :: Nil,
+                    core.Def(resumeSymbol, resumeFun,
+                      transform(body)))))
+
+              // bi-directional
+              // --------------
+              // [[ def op(x) = ... resume123 { {f} => ... } ... ]]
+              //   =
+              // def op(x) {g} = shift(p) { k =>
+              //   def resume123 {h} = resume(k) { h {g} }
+              //   ... resume123 { {f} => ... } ...
+              // }
+              //
+              // Again the typing is wrong in core now. `g` will be tracked, but resume should subtract it.
+              case BlockType.FunctionType(_, _, _, List(argTpe @ BlockType.FunctionType(_, _, _, _, result, _)), answer, _) =>
+                val resultTpe = transform(result)
+                val answerTpe = transform(answer)
+
+                val resumeArgTpe @ core.BlockType.Function(_, cps, _, bps, _) = transform(argTpe) : @unchecked
+
+                // (0) compute the block parameters from the type of the continuation (since this is what typer annotates)
+                val bparams: List[core.BlockParam] = (cps zip bps) map { case (capt, tpe) =>
+                  core.BlockParam(Id("g"), tpe, Set(capt))
+                }
+                val bvars = bparams.map { b => core.BlockVar(b.id, b.tpe, b.capt) }
+
+                // (1) bind the continuation (k) itself
+                val resumeCapture = Id("resume")
+                val resumeId = Id("k")
+                val resumeTpe = core.Type.TResume(resultTpe, answerTpe)
+                val resumeParam: core.BlockParam = core.BlockParam(resumeId, resumeTpe, Set(resumeCapture))
+                val resumeVar: core.BlockVar = core.BlockVar(resumeId, resumeTpe, Set(resumeCapture))
+
+                // (2) eta-expand and bind continuation as a function
+                val resumeArgId = Id("h")
+                val resumeArgCapture = Id("h")
+                val resumeArgParam: core.BlockParam = core.BlockParam(resumeArgId, resumeArgTpe, Set(resumeArgCapture))
+                val resumeArgVar: core.BlockVar = core.BlockVar(resumeArgId, resumeArgTpe, Set(resumeArgCapture))
+                val resumeFun: core.BlockLit = core.BlockLit(Nil, List(resumeArgCapture), Nil, List(resumeArgParam),
+                  core.Stmt.Resume(resumeVar, core.Stmt.App(resumeArgVar, Nil, Nil, bvars)))
+
+                core.Operation(op.definition, tps, cps, vps, bparams,
+                  core.Shift(prompt, core.BlockLit(Nil, List(resumeCapture), Nil, resumeParam :: Nil,
+                    core.Stmt.Def(resumeSymbol, resumeFun,
+                      transform(body)))))
+
+              case _ => ???
+            }
+
+          case None =>
+            val bps = bparams map transform
+            val cps = bparams map { b => b.symbol.capture }
+            core.Operation(op.definition, tps, cps, vps, bps, transform(body))
         }
-        core.Operation(op.definition, tps, cps, vps, bps, resumeParam, transform(body))
     })
   }
 
@@ -611,7 +682,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
 
     // create joinpoint
     val params = patterns.flatMap { case (sc, p) => boundInPattern(p) } ++ guards.flatMap(boundInGuard)
-    val joinpoint = Context.bind(TmpBlock(), BlockLit(Nil, Nil, params, Nil, body))
+    val joinpoint = Context.bind(TmpBlock("k"), BlockLit(Nil, Nil, params, Nil, body))
 
     def transformPattern(p: source.MatchPattern): Pattern = p match {
       case source.AnyPattern(id) =>
@@ -654,7 +725,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
    * If `member` is an operation, the type arguments of the receiver are substituted for the leading type parameters,
    * while the remaining type parameters are kept.
    */
-  def operationType(receiver: symbols.BlockType, member: symbols.Operation)(using Context): BlockType = receiver.asInterfaceType match {
+  def operationAtCallsite(receiver: symbols.BlockType, member: symbols.Operation)(using Context): BlockType = receiver.asInterfaceType match {
     case InterfaceType(i: Interface, targs) => member match {
       // For operations, we substitute the first type parameters by concrete type args.
       case Operation(name, tparams, vparams, bparams, resultType, effects, _) =>
@@ -678,6 +749,23 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
       Context.panic("Cannot select from an extern interface")
   }
 
+  def operationAtDeclaration(tparamsInterface: List[Id], op: symbols.Operation)(using Context): core.BlockType = op match {
+    case symbols.Operation(name, tps, vps, bps, resultType, effects, interface) =>
+      // like in asSeenFrom we need to make up cparams, they cannot occur free in the result type
+      val capabilities = effects.canonical
+      val tparams = tps.drop(tparamsInterface.size)
+      val bparamsBlocks = bps.map(b => transform(b.tpe.getOrElse {
+        INTERNAL_ERROR("Interface declarations should have annotated types.")
+      }))
+      val bparamsCapabilities = capabilities.map(transform)
+      val bparams = bparamsBlocks ++ bparamsCapabilities
+      val vparams = vps.map(p => transform(p.tpe.get))
+      val cparams = bps.map(_.capture) ++ capabilities.map { tpe => symbols.CaptureParam(tpe.name) }
+
+      // here we reconstruct the block type
+      core.BlockType.Function(tparams, cparams, vparams, bparams, transform(resultType))
+    }
+
   def makeFunctionCall(call: source.CallLike, sym: TermSymbol, vargs: List[source.Term], bargs: List[source.Term])(using Context): Expr = {
     // the type arguments, inferred by typer
     val targs = Context.typeArguments(call).map(transform)
@@ -698,8 +786,6 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
         Context.panic("Should have been translated to a method call!")
       case f: Field =>
         Context.panic("Should have been translated to a select!")
-      case f: BlockSymbol if pureOrIO(f) && bargs.forall { pureOrIO } =>
-        Run(App(BlockVar(f), targs, vargsT, bargsT))
       case f: BlockSymbol =>
         Context.bind(App(BlockVar(f), targs, vargsT, bargsT))
       case f: ValueSymbol =>
@@ -713,7 +799,7 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
 
   def insertBindings(stmt: => Stmt)(using Context): Stmt = {
     val (body, bindings) = Context.withBindings { stmt }
-    Context.reifyBindings(body, bindings)
+    Binding(bindings, body)
   }
 
   // Translation on Types
@@ -784,13 +870,8 @@ object Transformer extends Phase[Typechecked, CoreTransformed] {
 
 }
 
-private[core] enum Binding {
-  case Val(name: TmpValue, tpe: core.ValueType, binding: Stmt)
-  case Let(name: TmpValue, tpe: core.ValueType, binding: Expr)
-  case Def(name: BlockSymbol, binding: Block)
-}
-
 trait TransformerOps extends ContextOps { Context: Context =>
+
   /**
    * A _mutable_ ListBuffer that stores all bindings to be inserted at the current scope
    */
@@ -809,7 +890,7 @@ trait TransformerOps extends ContextOps { Context: Context =>
   private[core] def bind(s: Stmt): ValueVar = {
 
     // create a fresh symbol and assign the type
-    val x = TmpValue()
+    val x = TmpValue("r")
 
     val binding = Binding.Val(x, s.tpe, s)
     bindings += binding
@@ -821,7 +902,7 @@ trait TransformerOps extends ContextOps { Context: Context =>
     case x: ValueVar => x
     case e =>
       // create a fresh symbol and assign the type
-      val x = TmpValue()
+      val x = TmpValue("r")
 
       val binding = Binding.Let(x, e.tpe, e)
       bindings += binding
@@ -835,27 +916,12 @@ trait TransformerOps extends ContextOps { Context: Context =>
     BlockVar(name, b.tpe, b.capt)
   }
 
-  private[core] def withBindings[R](block: => R): (R, ListBuffer[Binding]) = Context in {
+  private[core] def withBindings[R](block: => R): (R, List[Binding]) = Context in {
     val before = bindings
     val b = ListBuffer.empty[Binding]
     bindings = b
     val result = block
     bindings = before
-    (result, b)
-  }
-
-  /**
-   * When reifying bindings, insert let bindings and use RUN when statement is pure or IO.
-   */
-  private[core] def reifyBindings(body: Stmt, bindings: ListBuffer[Binding]): Stmt = {
-    bindings.foldRight(body) {
-      // optimization: remove unnecessary binds
-      case (Binding.Val(x, tpe, b), Return(ValueVar(y, _))) if x == y => b
-      case (Binding.Val(x, tpe, b), body) => Val(x, tpe, b, body)
-      case (Binding.Let(x, tpe, Run(s)), Return(ValueVar(y, _))) if x == y => s
-      case (Binding.Let(x, tpe, b: Pure), Return(ValueVar(y, _))) if x == y => Return(b)
-      case (Binding.Let(x, tpe, b), body) => Let(x, tpe, b, body)
-      case (Binding.Def(x, b), body) => Def(x, b, body)
-    }
+    (result, b.toList)
   }
 }

@@ -4,9 +4,9 @@
 /** We represent references like positive types.
  *  The tag is 0 and the obj points to memory with the following layout:
  *
- *   +--[ Header ]--+------------+
- *   | Rc  | Eraser | Field      |
- *   +--------------+------------+
+ *   +--[ Header ]--------------+------------+
+ *   | ReferenceCount  | Eraser | Field      |
+ *   +--------------------------+------------+
  */
 
 void c_ref_erase_field(void *envPtr) {
@@ -31,6 +31,7 @@ struct Pos c_ref_get(const struct Pos ref) {
   struct Pos *fieldPtr = ref.obj + sizeof(struct Header);
   struct Pos element = *fieldPtr;
   sharePositive(element);
+  erasePositive(ref);
   return element;
 }
 
@@ -39,6 +40,7 @@ struct Pos c_ref_set(const struct Pos ref, const struct Pos value) {
   struct Pos element = *fieldPtr;
   erasePositive(element);
   *fieldPtr = value;
+  erasePositive(ref);
   return Unit;
 }
 

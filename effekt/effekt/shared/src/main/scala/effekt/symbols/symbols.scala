@@ -124,7 +124,6 @@ object TrackedParam {
   case class BlockParam(name: Name, tpe: Option[BlockType]) extends TrackedParam
   case class ResumeParam(module: Module) extends TrackedParam { val name = Name.local("resume") }
   case class ExternResource(name: Name, tpe: BlockType) extends TrackedParam
-
 }
 export TrackedParam.*
 
@@ -212,8 +211,8 @@ case class CallTarget(symbols: List[Set[BlockSymbol]]) extends BlockSymbol { val
  * Introduced by Transformer
  */
 case class Wildcard() extends ValueSymbol { val name = Name.local("_") }
-case class TmpValue() extends ValueSymbol { val name = Name.local("tmp" + Symbol.fresh.next()) }
-case class TmpBlock() extends BlockSymbol { val name = Name.local("tmp" + Symbol.fresh.next()) }
+case class TmpValue(hint: String = "tmp") extends ValueSymbol { val name = Name.local("v_" + hint + "_" + Symbol.fresh.next()) }
+case class TmpBlock(hint: String = "tmp") extends BlockSymbol { val name = Name.local("b_" + hint + "_" + Symbol.fresh.next()) }
 
 /**
  * Type Symbols
@@ -322,9 +321,6 @@ sealed trait CaptVar extends TypeSymbol
 /**
  * "Tracked" capture parameters. Like [[TypeParam]] used to abstract
  * over capture. Also see [[BlockParam.capture]].
- *
- * Can be either
- * - [[LexicalRegion]] to model self regions of functions
  */
 enum Capture extends CaptVar {
 
@@ -390,8 +386,8 @@ case class CaptureSet(captures: Set[Capture]) extends Captures {
     // mutable state is now in CPS and not considered IO anymore.
     def isMutableState = c.isInstanceOf[LexicalRegion]
     def isResource = c.isInstanceOf[Resource]
-    def isControl = c == builtins.ControlCapability.capture
-    !(isControl || isMutableState) && (isIO || isResource)
+    def isAsync = c == builtins.AsyncCapability.capture
+    !(isAsync || isMutableState) && (isIO || isResource)
   }
 
   def pure: Boolean = captures.isEmpty
