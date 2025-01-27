@@ -2,12 +2,30 @@ from rpyeffect.util.debug import debug_hooks
 from rpython.rlib import objectmodel
 from rpython.rlib.jit import unroll_safe
 
+ORD_LT = -1
+ORD_EQ = 0
+ORD_GT = 1
+
 class Value(object):
     _attrs_ = []
     _immutable_fields_ = []
 
     def equals(self, other):
         return self == other
+    def compare(self, other):
+        return default_compare(self, other)
+
+def default_compare(this, other):
+    if this.equals(other):
+        return ORD_EQ
+    # First order by class name to make heterogenous comparisons okish
+    elif this.__class__.__name__ < other.__class__.__name__:
+        return ORD_LT
+    elif this.__class__.__name__ > other.__class__.__name__:
+        return ORD_GT
+    else:
+        return -2 # TODO
+    
 
 class ValueNull(Value): pass
 
@@ -63,6 +81,17 @@ class IntValue(UnboxableValue):
             return self.value == other.value
         else:
             return False
+    @objectmodel.always_inline
+    @unroll_safe
+    def compare(self, other):
+        if not isinstance(other, IntValue):
+            return default_compare(self, other)
+        if self.value == other.value:
+            return ORD_EQ
+        elif self.value < other.value:
+            return ORD_LT
+        else:
+            return ORD_GT
 
 @unbox_in_ref
 class DoubleValue(UnboxableValue):
@@ -77,6 +106,17 @@ class DoubleValue(UnboxableValue):
             return self.value == other.value
         else:
             return False
+    @objectmodel.always_inline
+    @unroll_safe
+    def compare(self, other):
+        if not isinstance(other, DoubleValue):
+            return default_compare(self, other)
+        if self.value == other.value:
+            return ORD_EQ
+        elif self.value < other.value:
+            return ORD_LT
+        else:
+            return ORD_GT
 
 @unbox_in_ref
 class BoolValue(UnboxableValue):
@@ -91,6 +131,17 @@ class BoolValue(UnboxableValue):
             return self.value == other.value
         else:
             return False
+    @objectmodel.always_inline
+    @unroll_safe
+    def compare(self, other):
+        if not isinstance(other, BoolValue):
+            return default_compare(self, other)
+        if self.value == other.value:
+            return ORD_EQ
+        elif self.value < other.value:
+            return ORD_LT
+        else:
+            return ORD_GT
 
 class StringValue(Value):
     _immutable_fields_ = ['value']
@@ -104,6 +155,17 @@ class StringValue(Value):
             return self.value == other.value
         else:
             return False
+    @objectmodel.always_inline
+    @unroll_safe
+    def compare(self, other):
+        if not isinstance(other, StringValue):
+            return default_compare(self, other)
+        if self.value == other.value:
+            return ORD_EQ
+        elif self.value < other.value:
+            return ORD_LT
+        else:
+            return ORD_GT
 
 class BytearrayValue(Value):
     _immutable_fields_ = ['value']

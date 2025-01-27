@@ -103,6 +103,10 @@ object Primitives {
     PrimitiveInfo("panic(String): Bottom", List(Base.String), List(Bottom), Purity.Effectful),
     PrimitiveInfo("freshlabel", List(), List(Label(Top, None)), Purity.Effectful),
     PrimitiveInfo("equals(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
+    PrimitiveInfo("infixLt(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
+    PrimitiveInfo("infixGt(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
+    PrimitiveInfo("infixLte(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
+    PrimitiveInfo("infixGte(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
     PrimitiveInfo("ptr_eq", List(Ptr, Ptr), List(Base.Int)),
     PrimitiveInfo("print(String): Unit", List(Base.String), List(Base.Unit), Purity.Effectful),
     PrimitiveInfo("non-exhaustive match", List(), List()), // not actually implemented, but used conventionally

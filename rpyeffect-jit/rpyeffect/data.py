@@ -4,7 +4,7 @@ from rpyeffect.stored_environment import with_environment
 from rpyeffect.representations import generate_representation_accessors, subtpe_representation
 import rpyeffect.config as cfg
 from rpyeffect.util.debug import debug_hooks
-from rpyeffect.value import Value
+from rpyeffect.value import Value, ORD_EQ, ORD_GT, ORD_LT, default_compare
 
 @with_environment(specialized_for=[x for x in range(cfg.specialize_datas[0] + cfg.specialize_datas[1])])
 class Data(Value):
@@ -34,5 +34,15 @@ class Data(Value):
             if not self.get_ptr(i).equals(other.get_ptr(i)):
                 return False
         return True
+    def compare(self, other):
+        if not isinstance(other, Data):
+            return default_compare(self, other)
+        if self.tag != other.tag:
+            return ORD_LT if self.tag.str < other.tag.str else ORD_GT
+        for i in range(self.len_ptr()):
+            cmp = self.get_ptr(i).compare(other.get_ptr(i))
+            if cmp != ORD_EQ:
+                return cmp
+        return ORD_EQ
 
 subtpe_representation("data", "ptr", Data)

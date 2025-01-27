@@ -630,6 +630,31 @@ class Primitives(object):
             r = env.get_ptr(ins.regs[OPAQUE_PTR][1])
             env.set_bool(outs.regs[OPAQUE_PTR][0], l.equals(r))
 
+        elif opid == "compare(Any, Any): Int":
+            l = env.get_ptr(ins.regs[OPAQUE_PTR][0])
+            r = env.get_ptr(ins.regs[OPAQUE_PTR][1])
+            env.set_int(outs.regs[NUMBER][0], l.compare(r))
+
+        elif opid == "infixLt(Any, Any): Bool":
+            l = env.get_ptr(ins.regs[OPAQUE_PTR][0])
+            r = env.get_ptr(ins.regs[OPAQUE_PTR][1])
+            env.set_bool(outs.regs[OPAQUE_PTR][0], l.compare(r) < 0)
+
+        elif opid == "infixGt(Any, Any): Bool":
+            l = env.get_ptr(ins.regs[OPAQUE_PTR][0])
+            r = env.get_ptr(ins.regs[OPAQUE_PTR][1])
+            env.set_bool(outs.regs[OPAQUE_PTR][0], l.compare(r) > 0)
+
+        elif opid == "infixLte(Any, Any): Bool":
+            l = env.get_ptr(ins.regs[OPAQUE_PTR][0])
+            r = env.get_ptr(ins.regs[OPAQUE_PTR][1])
+            env.set_bool(outs.regs[OPAQUE_PTR][0], l.compare(r) <= 0)
+
+        elif opid == "infixGte(Any, Any): Bool":
+            l = env.get_ptr(ins.regs[OPAQUE_PTR][0])
+            r = env.get_ptr(ins.regs[OPAQUE_PTR][1])
+            env.set_bool(outs.regs[OPAQUE_PTR][0], l.compare(r) >= 0)
+
         elif opid == "promote_ptr":
             p = env.get_ptr(ins.regs[OPAQUE_PTR][0])
             c = self._get_ptr_cache(pc_block, pc_instruction, self._ptr_cache_version)

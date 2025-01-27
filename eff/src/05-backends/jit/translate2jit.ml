@@ -595,77 +595,26 @@ let primitive_value_decl = function
       ]
   | S.Primitives.CompareGe ->
       [
-        ( "infixGte(Int, Int): Boolean",
-          [ T.Base T.Int; T.Base T.Int ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixGte(Double, Double): Boolean",
-          [ T.Base T.Double; T.Base T.Double ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixGte(String, String): Boolean",
-          [ T.Base T.String; T.Base T.String ],
-          [ T.Base T.Int ],
-          T.Pure );
+        ("infixGte(Any, Any): Bool", [ T.Top; T.Top ], [ T.Base T.Bool ], T.Pure);
       ]
   | S.Primitives.CompareGt ->
       [
-        ( "infixGt(Int, Int): Boolean",
-          [ T.Base T.Int; T.Base T.Int ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixGt(Double, Double): Boolean",
-          [ T.Base T.Double; T.Base T.Double ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixGt(String, String): Boolean",
-          [ T.Base T.String; T.Base T.String ],
-          [ T.Base T.Int ],
-          T.Pure );
+        ("infixGt(Any, Any): Bool", [ T.Top; T.Top ], [ T.Base T.Bool ], T.Pure);
       ]
   | S.Primitives.CompareLe ->
       [
-        ( "infixLte(Int, Int): Boolean",
-          [ T.Base T.Int; T.Base T.Int ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixLte(Double, Double): Boolean",
-          [ T.Base T.Double; T.Base T.Double ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixLte(String, String): Boolean",
-          [ T.Base T.String; T.Base T.String ],
-          [ T.Base T.Int ],
-          T.Pure );
+        ("infixLte(Any, Any): Bool", [ T.Top; T.Top ], [ T.Base T.Bool ], T.Pure);
       ]
   | S.Primitives.CompareLt ->
       [
-        ( "infixLt(Int, Int): Boolean",
-          [ T.Base T.Int; T.Base T.Int ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixLt(Double, Double): Boolean",
-          [ T.Base T.Double; T.Base T.Double ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixLt(String, String): Boolean",
-          [ T.Base T.String; T.Base T.String ],
-          [ T.Base T.Int ],
-          T.Pure );
+        ("infixLt(Any, Any): Bool", [ T.Top; T.Top ], [ T.Base T.Bool ], T.Pure);
       ]
   | S.Primitives.CompareNe ->
       [
-        ( "infixNeq(Int, Int): Boolean",
-          [ T.Base T.Int; T.Base T.Int ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixNeq(Double, Double): Boolean",
-          [ T.Base T.Double; T.Base T.Double ],
-          [ T.Base T.Int ],
-          T.Pure );
-        ( "infixNeq(String, String): Boolean",
-          [ T.Base T.String; T.Base T.String ],
-          [ T.Base T.Int ],
+        ( "!sexp:(\"not(Boolean): Boolean\" (\"equals(Any, Any): Bool\" \
+           $arg0:top $arg1:top))",
+          [ T.Top; T.Top ],
+          [ T.Base T.Bool ],
           T.Pure );
       ]
   | S.Primitives.FloatAcos ->
