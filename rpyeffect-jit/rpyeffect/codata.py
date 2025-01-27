@@ -1,10 +1,11 @@
 from rpython.rlib.rerased import new_erasing_pair
 from rpyeffect.stored_environment import with_environment
-from rpyeffect.representations import generate_representation_accessors
+from rpyeffect.representations import generate_representation_accessors, subtpe_representation
 import rpyeffect.config as cfg
 from rpython.rlib.jit import unroll_safe
 from rpyeffect.util.debug import debug_hooks
 from rpython.rlib.rerased import Erased
+from rpyeffect.value import Value
 
 class VTable:
     _immutable_fields_ = ['tags[*]', 'targets[*]', 'codata_cls']
@@ -32,8 +33,8 @@ class VTable:
         return ("{ %s }" % (",".join(methods)))
 
 # Codata
-@with_environment(specialized_for=[(x,y) for x in range(cfg.specialize_codatas[0]) for y in range(cfg.specialize_codatas[1])])
-class CoData:
+@with_environment(specialized_for=[x for x in range(cfg.specialize_codatas[0] + cfg.specialize_codatas[1])])
+class CoData(Value):
     _immutable_fields_ = ['vtable']
     def __init__(self, vtable):
         self.vtable = vtable
@@ -43,3 +44,5 @@ class CoData:
 
     def __repr__(self):
         return self.vtable.__repr__() # TODO captures
+
+subtpe_representation("codata", "ptr", CoData)

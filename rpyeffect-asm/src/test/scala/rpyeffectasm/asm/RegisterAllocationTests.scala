@@ -1,7 +1,7 @@
 package rpyeffectasm.asm
 import rpyeffectasm.asm.TypingPrecision.ConcretelyTyped
 class RegisterAllocationTests extends AsmTestSuite[Nothing, Id, Id, Index, ConcretelyTyped]{
-  type Input = Program[Nothing, Id, Id, Id, OperandType[ConcretelyTyped]]
+  type Input = Program[Nothing, Id, Id, Id]
 
   override def runPhase(p: Input): Output = {
     val registerAllocation = new RegisterAllocation[Id, Id]()

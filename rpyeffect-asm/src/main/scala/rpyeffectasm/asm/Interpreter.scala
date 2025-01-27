@@ -7,24 +7,21 @@ import rpyeffectasm.common.Value
 import rpyeffectasm.common
 
 trait LibLoader {
-  def loadLib(path: String): Option[Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]]
+  def loadLib(path: String): Option[Program[AsmFlags, Id, Id, Id]]
 }
 
 object LibLoader {
   object Zero extends LibLoader {
-    override def loadLib(path: String): Option[Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]] = None
+    override def loadLib(path: String): Option[Program[AsmFlags, Id, Id, Id]] = None
   }
 }
 
 
 /** *Inefficient* but correct interpreter for debugging/testing.
  */
-object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]], Interpreter.Result] {
+object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id], Interpreter.Result] {
 
-  import rpyeffectasm.asm.TypingPrecision.ConcretelyTyped
-  import rpyeffectasm.rpyeffect.RegisterType
-
-  type Prog = Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]
+  type Prog = Program[AsmFlags, Id, Id, Id]
 
   case class Result(trace: List[State], terminationCause: TerminationCause, errors: List[rpyeffectasm.util.Error]) {
     def pretty(p: Prog): String = {
@@ -44,10 +41,10 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
     case ReturnToEmptyStack(values: List[Value])
     case EndOfBlock
     case UnknownBlock(id: Id)
-    case TypeError(expected: Type, got: Type, comment: String = "")
-    case ArityError(expected: LhsOpList[AsmFlags, Id, OperandType[TypingPrecision]], got: List[Value])
+    case TypeError(comment: String = "")
+    case ArityError(expected: LhsOpList[AsmFlags, Id], got: List[Value])
     case UnboundPrompt(label: Id, n: Int)
-    case UnboundRegister(name: Var[Id, OperandType[TypingPrecision]])
+    case UnboundRegister(name: Var[Id])
     case UnknownSymbol(name: String, lib: String)
     case FailedProjection(expected: Id, got: Id)
     case FatalError
@@ -60,10 +57,8 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
         case ReturnToEmptyStack(values) =>
           val tValues = values.map{ v => f"\n${Console.WHITE} - ${v.toString}${Console.RESET}" }.mkString
           s"returned to empty stack with:${tValues}\n"
-        case TypeError(e, g, m) =>
-          f"Type error. ${m}.\n${Console.WHITE}  " +
-            f"Expected: ${AsmPrettyPrinter(e.asInstanceOf[OperandType[TypingPrecision]])}\n  " +
-            f"Got:      ${AsmPrettyPrinter(g.asInstanceOf[OperandType[TypingPrecision]])}\n${Console.RESET}"
+        case TypeError(m) =>
+          f"Type error. ${m}.\n${Console.WHITE}  "
         case o => o.toString
       }
       f"\n\n${Console.RED}TERMINATED${Console.RESET} ${msg}"
@@ -81,11 +76,9 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
         ))
         case EndOfBlock => (ListMap("reason" -> "\"end of block\""))
         case UnknownBlock(id) => (ListMap("reason" -> "\"unknown block\"", "name" ->  f"\"${AsmPrettyPrinter(id)}\""))
-        case TypeError(e, g, m) => (ListMap(
+        case TypeError(m) => (ListMap(
           "reason" -> "\"type error\"",
           "comment" -> s"\"${m}\"",
-          "expected" -> JsonPrettyPrinter.toDoc(e.asInstanceOf[OperandType[TypingPrecision]]),
-          "got" -> JsonPrettyPrinter.toDoc(g.asInstanceOf[OperandType[TypingPrecision]])
         ))
         case UnboundRegister(v) => (ListMap("reason" -> "\"unbound register\"",
           "register" -> s"\"${v}\""
@@ -100,36 +93,29 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
   }
 
   sealed trait AValue extends Value {
-    def typ: Type
     def json(p: Prog): String = f"\"${this.toString()}\"" // TODO
-
-    override def tpe(using ErrorReporter) = typ
   }
   extension(self: Value) {
-    def typ: Type = ErrorReporter.ignore{ self.tpe.asAsm }
     def json(p: Prog) = self match {
       case v: AValue => v.json(p)
       case v =>  f"\"${this.toString()}\""
     }
   }
   export common.VBase.{VInt, VDouble, VString}
-  case class VStack(v: List[Frame | Prompt]) extends AValue { def typ = StackT(Nil, Top) } // TODO
-  case class VLabel(i: Id) extends AValue { def typ = LabelT(Top, None) }
+  case class VStack(v: List[Frame | Prompt]) extends AValue { } // TODO
+  case class VLabel(i: Id) extends AValue { }
   case class VData(tpe_tag: Id, tag: Id, fields: List[Value]) extends AValue {
-    def typ = Data(tpe_tag, List((tag, fields.zipWithIndex.map{ case (f, i) => (Index(i), f.typ.asInstanceOf[OperandType[ConcretelyTyped]])})))
   }
   case class VCoData(ifce_tag: Id, vtable: Map[Id, Id], captures: List[Value]) extends AValue {
-    def typ = CoData(ifce_tag, vtable.toList.map{ case (k,v) => (k, Nil, Top)}) // TODO
   }
   object VNull extends AValue {
     val lbl = Name("null_label")
-    def typ = TopPtr
   }
 
   case class State(
       pc_block: Id,
       pc_ins: Int,
-      env: Map[(Id, RegisterType), Value],
+      env: Map[Id, Value],
       stack: List[Frame | Prompt],
       symbols: Map[String, Id],
       libs: Map[String, common.Concrete.VLib[Id]] = Map.empty) {
@@ -140,7 +126,7 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
         case Some(x) => AsmPrettyPrinter(x)
         case None => "???"
       }
-      val oenv = env.map{ case (k, v) => s"${AsmPrettyPrinter(k._1)}(${k._2}): ${v}"}.mkString("\n       ")
+      val oenv = env.map{ case (k, v) => s"${AsmPrettyPrinter(k)}: ${v}"}.mkString("\n       ")
       val ostack = stack.map{
         case Frame(target, env) =>
           val args = env.map{ v => s"\n       ${v}"}.mkString("")
@@ -168,69 +154,34 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
     }
   }
 
-  extension (self: Type) {
-    def registerType: RegisterType = self match {
-      case Top => RegisterType.Ptr
-      case o: OperandType[TypingPrecision.ConcretelyTyped] => Type.getRegisterType(o)
-    }
-  }
-  extension(self: Map[(Id, RegisterType), Value]) def json: String = {
+
+  extension(self: Map[Id, Value]) def json: String = {
     import rpyeffectasm.util.JsonPrinter.*
     import scala.collection.immutable.ListMap
-    jsonListSmall(self.toList.map{ case (k, v) => jsonObjectSmall(ListMap("name" -> JsonPrettyPrinter.toDoc(k._1), "rtpe" -> s"\"${k._2}\"", "value" -> s"\"${v}\""))})// TODO print values
+    jsonListSmall(self.toList.map{ case (k, v) => jsonObjectSmall(ListMap("name" -> JsonPrettyPrinter.toDoc(k), "value" -> s"\"${v}\""))})// TODO print values
   }
   case class Frame(target: Id, env: List[Value])
   case class Prompt(label: Id)
 
-  def get(rhs: RhsOperand[AsmFlags, Id, OperandType[TypingPrecision]], env: Map[(Id, RegisterType), Value])(using ErrorReporter): Value = rhs match {
+  def get(rhs: RhsOperand[AsmFlags, Id], env: Map[Id, Value])(using ErrorReporter): Value = rhs match {
     case Const(value: Int) => VInt(value)
     case Const(value: Double) => VDouble(value)
     case Const(value: String) => VString(value)
-    case Var(Index(i), tpe) if i < 0 => VNull
-    case Var(name, tpe) if env.contains((name, tpe.registerType)) => env((name, tpe.registerType))
-    case Var(name: (Name | Generated), tpe) if env.contains((name, RegisterType.Number)) && tpe.registerType == RegisterType.Ptr =>
-      error(s"Automatically boxing number ${AsmPrettyPrinter(name)}.")
-      VData(Name("boxed_num"), Name("unbox"), List(env((name, RegisterType.Number))))
-    case Var(name: (Name | Generated), tpe) if env.contains((name, RegisterType.Ptr)) && tpe.registerType == RegisterType.Number => env((name, RegisterType.Ptr)) match {
-      case VData(tpe_tag, tag, List(f)) if tpe_tag == Name("boxed_num") && tag == Name("unbox") =>
-        error(s"Automatically unboxing number in ${AsmPrettyPrinter(name)}.")
-        f
-      case VData(tpe_tag, tag, List(f)) =>
-        error("Unboxing data type with wrong tag/tpe_tag.")
-        f
-      case v => throw TerminationCause.TypeError(Data(Name("Box"), List((Name("MkBox"), List((Name("unbox"), Top))))), v.typ)
-    }
-    case v @ Var(name, tpe) => throw TerminationCause.UnboundRegister(v)
+    case Var(Index(i)) if i < 0 => VNull
+    case Var(name) if env.contains(name) => env(name)
+    case v @ Var(name) => throw TerminationCause.UnboundRegister(v)
     case Ref(ref) => get(ref, env) match {
-      case v => throw TerminationCause.TypeError(RefType(Top), v.typ)
+      case v => throw TerminationCause.TypeError()
     }
   }
-  def set(lhs: LhsOperand[AsmFlags, Id, OperandType[TypingPrecision]], value: Value, env: Map[(Id, RegisterType), Value])(using ErrorReporter): Map[(Id, RegisterType), Value] = lhs match {
-    case Var(name, Top) =>
-      validateBinding(lhs, value)
-      env.updated((name, RegisterType.Ptr), value)
-    case Var(name, tpe: OperandType[ConcretelyTyped] @unchecked) =>
-      validateBinding(lhs, value)
-      env.updated((name, Type.getRegisterType(tpe)), value)
-  }
-
-  def validateBinding(lhs: LhsOperand[AsmFlags, Id, OperandType[TypingPrecision]], value: Value)(using ErrorReporter): Unit = lhs.tpe match {
-    case Top => ()
-    case tpe: OperandType[ConcretelyTyped] if Type.getRegisterType(tpe) == value.typ.registerType => ()
-    case tpe => ErrorReporter.error(s"Register type mismatch for ${lhs} with value ${value}.")
-  }
-  def validateEnv(env: Map[(Id, RegisterType), Value])(using ErrorReporter): Unit = {
-    env.foreach{ case ((x, rt), v) =>
-      if(rt != v.typ.registerType) {
-        ErrorReporter.error(s"Register type mismatch for ${x}:${rt} with value ${v}.")
-      }
-    }
+  def set(lhs: LhsOperand[AsmFlags, Id], value: Value, env: Map[Id, Value])(using ErrorReporter): Map[Id, Value] = lhs match {
+    case Var(name) =>
+      env.updated(name, value)
   }
 
   def step(prog: Prog, prev_state: State)(using ErrorReporter): State | TerminationCause = try {
     prev_state match {
       case State(pc_block, pc_ins, env, stack, _, _) =>
-        validateEnv(env)
         val block = prog.blocks.find{ b => b.label == pc_block }.getOrElse{
           throw TerminationCause.UnknownBlock(pc_block)
         }
@@ -246,17 +197,17 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
             (lhss zip rhss).foreach{ case (lhs, rhs) =>
               val v = get(rhs, env)
               lhs match {
-                case x@Var(name, tpe) =>
+                case x@Var(name) =>
                   newEnv = set(x, v, newEnv)
                 case Ref(ref) => get(ref, env) match {
-                  case v => throw TerminationCause.TypeError(RefType(Top), v.typ, "lhs of let")
+                  case v => throw TerminationCause.TypeError( "lhs of let")
                 }
               }
             }
             return state.copy(env = newEnv)
           case LetConst(out, value) =>
             out match {
-              case x@Var(name, tpe) =>
+              case x@Var(name) =>
                 return state.copy(env = set(x, value match {
                   case i: Int => VInt(i)
                   case d: Double => VDouble(d)
@@ -267,8 +218,7 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
           case Primitive(out, name, in) =>
             val tIn = in.map(get(_, env))
             val res = runPrimitive(name, tIn)
-            (out zip res).foreach{ case (x, v) => validateBinding(x, v) }
-            return state.copy(env = env ++ ((out zip res).map{ case (Var(o,t),v) => (o, t.registerType) -> v }.toMap))
+            return state.copy(env = env ++ ((out zip res).map{ case (Var(o),v) => o -> v }.toMap))
           case Push(target, args) =>
             return state.copy(stack = Frame(target, args.map(get(_, env))) :: stack)
           case Return(args) =>
@@ -280,9 +230,8 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
                 val pars = tBlock.params.take(args.length)
                 val spars = tBlock.params.drop(args.length)
                 val newEnv = ((pars zip (args.map(get(_,env)))) ++ (spars zip senv)).map {
-                  case (x@Var(k,t),v) =>
-                    validateBinding(x, v)
-                    (k, t.registerType) -> v
+                  case (x@Var(k),v) =>
+                    k -> v
                 }.toMap
                 return state.copy(pc_block = target, pc_ins = 0, env = newEnv, stack = tail)
               case (_: Prompt) :: tail => ???
@@ -297,7 +246,7 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
               throw TerminationCause.ArityError(tBlock.params, args.map { a => get(a, env) })
             }
             val newEnv = (tBlock.params zip args).map{
-              case (Var(p, t), a) => (p, t.registerType) -> get(a, env)
+              case (Var(p), a) => p -> get(a, env)
             }.toMap
             return state.copy(pc_block = target, pc_ins = 0, env = newEnv)
           case IfZero(arg, thenClause) =>
@@ -306,21 +255,21 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
                 assert(thenClause.params.isEmpty)
                 return state.copy(pc_block = thenClause.target, pc_ins = 0)
               }
-              case v => throw TerminationCause.TypeError(Base.Int, v.typ, "in if0")
+              case v => throw TerminationCause.TypeError( "in if0")
             }
             return state
           case Allocate(ref, init, region) => ???
           case Load(out, ref) => ???
           case Store(ref, in) => ???
-          case Shift(outx@Var(out, outT), nV, label) =>
+          case Shift(outx@Var(out), nV, label) =>
             val lbl = get(label, env) match {
               case VLabel(i) => i
               case VNull => VNull.lbl
-              case l => throw TerminationCause.TypeError(LabelT(Top, None), l.typ, "in shift")
+              case l => throw TerminationCause.TypeError( "in shift")
             }
             val n = get(nV, env) match {
               case VInt(i) => i
-              case v => throw TerminationCause.TypeError(Base.Int, v.typ, "as evidence in shift")
+              case v => throw TerminationCause.TypeError( "as evidence in shift")
             }
             def go(m: Int, stack: List[Frame | Prompt], cont: List[Frame | Prompt]): (List[Frame | Prompt], List[Frame | Prompt]) = {
               stack match {
@@ -332,15 +281,15 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
             }
             val (newStack, cont) = go(n, stack, Nil)
             return state.copy(stack = newStack, env = set(outx, VStack(cont), env))
-          case Control(outx@Var(out, outT), nV, label) =>
+          case Control(outx@Var(out), nV, label) =>
             val lbl = get(label, env) match {
               case VLabel(i) => i
               case VNull => VNull.lbl
-              case l => throw TerminationCause.TypeError(LabelT(Top, None), l.typ, "in control")
+              case l => throw TerminationCause.TypeError( "in control")
             }
             val n = get(nV, env) match {
               case VInt(i) => i
-              case v => throw TerminationCause.TypeError(Base.Int, v.typ, "as evidence in control")
+              case v => throw TerminationCause.TypeError( "as evidence in control")
             }
 
             def go(m: Int, stack: List[Frame | Prompt], cont: List[Frame | Prompt]): (List[Frame | Prompt], List[Frame | Prompt]) = {
@@ -361,18 +310,18 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
             }
             val cont = get(contV, env) match {
               case VStack(v) => v
-              case v => throw TerminationCause.TypeError(StackT(Nil, Top), v.typ)
+              case v => throw TerminationCause.TypeError()
             }
             return state.copy(stack = go(cont, stack))
-          case NewStack(x@Var(name, tpe), region, label, target, args) =>
+          case NewStack(x@Var(name), region, label, target, args) =>
             val lbl = get(label, env) match {
               case VLabel(i) => i
               case VNull => VNull.lbl
-              case v => throw TerminationCause.TypeError(LabelT(Top, None), v.typ)
+              case v => throw TerminationCause.TypeError()
             }
             val senv = args.map { case a => get(a, env) }
             return state.copy(env = set(x, VStack(List(Prompt(lbl), Frame(target, senv))), env))
-          case Construct(outx@Var(out, outT), tpe, tag, args) =>
+          case Construct(outx@Var(out), tpe, tag, args) =>
             return state.copy(env = set(outx, VData(tpe, tag, args.map(get(_,env))), env))
           case Match(tpe, scrutinee, clauses, default) =>
             get(scrutinee, env) match {
@@ -389,11 +338,10 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
                     val tBlock = prog.blocks.find { b => b.label == target }.getOrElse {
                       throw TerminationCause.UnknownBlock(target)
                     }
-                    val cpars = cenv.filterNot{ case Var(p,t) => params.exists{ case Var(p2,t2) => p == p2 && t.registerType == t2.registerType }}
-                    val newEnv = (cpars.map{ case p@Var(name, tpe) => (name, tpe.registerType) -> get(p, env)}.toMap) ++ ((params zip fields).map{
-                      case (x@Var(p,t),v) =>
-                        validateBinding(x, v)
-                        (p,t.registerType) -> v
+                    val cpars = cenv.filterNot{ case Var(p) => params.exists{ case Var(p2) => p == p2 }}
+                    val newEnv = (cpars.map{ case p@Var(name) => name -> get(p, env)}.toMap) ++ ((params zip fields).map{
+                      case (x@Var(p),v) =>
+                        p -> v
                     }.toMap)
                     return state.copy(
                       pc_block = target, pc_ins = 0,
@@ -401,17 +349,13 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
                     )
                   case None => default match { case Clause(params, cenv, target) =>
                     assert(params.isEmpty)
-                    val newEnv = cenv.map { case p@Var(v,t) => (v, t.registerType) -> get(p, env) }.toMap
+                    val newEnv = cenv.map { case p@Var(v) => v -> get(p, env) }.toMap
                     return state.copy(pc_block = target, pc_ins = 0, env = newEnv)
                   }
                 }
-              case v => throw TerminationCause.TypeError(Data(tpe, clauses.map{
-                case (id, Clause(params, env, target)) => (id, params.map{
-                  case Var(n, t) => (n, t)
-                })
-              }), v.typ, "in match")
+              case v => throw TerminationCause.TypeError( "in match")
             }
-          case Proj(outx@Var(out,outT), tpe, scrutinee, etag, field) =>
+          case Proj(outx@Var(out), tpe, scrutinee, etag, field) =>
             get(scrutinee, env) match {
               case VData(tpe_tag, tag, fields) =>
                 if(tpe_tag != tpe) {
@@ -422,17 +366,14 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
                 }
                 return state.copy(env = set(outx, fields(field), env))
               case v =>
-                throw TerminationCause.TypeError(Data(tpe, List((etag,
-                  (List.fill(field)(Top) :+ outT).zipWithIndex.map{ case (v,i) => (Index(i),v)}))),
-                  v.typ)
+                throw TerminationCause.TypeError()
             }
           case Switch(arg, cases, default, cenv) =>
             get(arg, env) match {
               case VInt(got) =>
-                val newEnv = cenv.map { case p@Var(v,t) =>
+                val newEnv = cenv.map { case p@Var(v) =>
                   val newVal = get(p, env)
-                  validateBinding(p, newVal)
-                  (v, t.registerType) -> newVal }.toMap
+                  v -> newVal }.toMap
                 cases.find{ case (exp, _) => exp == got} match {
                   case Some((_, thn)) =>
                     return state.copy(pc_block = thn, pc_ins = 0, env = newEnv)
@@ -440,9 +381,9 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
                     return state.copy(pc_block = default, pc_ins = 0, env = newEnv)
                 }
               case v =>
-                throw TerminationCause.TypeError(Base.Int, v.typ, "in switch")
+                throw TerminationCause.TypeError("in switch")
             }
-          case New(outx@Var(out, outT), ifce, targets, args) =>
+          case New(outx@Var(out), ifce, targets, args) =>
             val r = VCoData(ifce, targets.toMap, args.map(get(_,env)))
             return state.copy(env = set(outx, r, env))
           case Invoke(receiver, ifce, tag, args) =>
@@ -458,19 +399,14 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
                 val pars = tBlock.params.take(args.length)
                 val cpars = tBlock.params.drop(args.length)
                 val newEnv = ((pars zip (args.map(get(_,env)))) ++ (cpars zip captures)).map {
-                  case (x@Var(k,t), v) =>
-                    validateBinding(x, v)
-                    (k, t.registerType) -> v
+                  case (x@Var(k), v) =>
+                    k -> v
                 }.toMap
                 return state.copy(
                   pc_block = target, pc_ins = 0,
                   env = newEnv)
               case v =>
-                throw TerminationCause.TypeError(CoData(ifce, List((tag, args.map {
-                  case Var(n, t) => (n,t)
-                  case Const(value) => ???
-                  case Ref(ref) => ???
-                }, receiver.tpe))), v.typ)
+                throw TerminationCause.TypeError()
             }
           case CallLib(lib, symbol, args) =>
             get(lib, env) match {
@@ -484,12 +420,12 @@ object Interpreter extends Phase[Program[AsmFlags, Id, Id, Id, OperandType[Typin
                       throw TerminationCause.ArityError(tBlock.params, args.map { a => get(a, env) })
                     }
                     val newEnv = (tBlock.params zip args).map{
-                      case (Var(p, t), a) => (p, t.registerType) -> get(a, env)
+                      case (Var(p), a) => p -> get(a, env)
                     }.toMap
                     return state.copy(pc_block = target, pc_ins = 0, env = newEnv)
                   case None => throw TerminationCause.UnknownSymbol(symbol, libname)
                 }
-              case _ => throw TerminationCause.TypeError(TopPtr, lib.tpe, "Expected a library")
+              case _ => throw TerminationCause.TypeError( "Expected a library")
             }
           case LoadLib(path) =>
             // Find lib with modified name

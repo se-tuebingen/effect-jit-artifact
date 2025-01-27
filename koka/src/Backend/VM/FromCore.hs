@@ -48,6 +48,7 @@ externalNames
 intTypes :: [Name]
 intTypes = [nameTpSSizeT,nameInt16,nameInt64,nameInt32,nameSSizeT,nameInternalInt32,nameInternalSSizeT,nameIntPtrT,nameByte,nameTpEvIndex]
 
+
 --------------------------------------------------------------------------
 -- Generate JavaScript code from System-F core language
 --------------------------------------------------------------------------
@@ -126,7 +127,7 @@ transformType (TCon c) | (typeConName c) `elem` intTypes = tpe "Int"
 transformType (TCon c) | nameModule (typeConName c) == "std/core/types" = case (nameStem (typeConName c)) of 
   "unit" -> tpe "Unit" 
   "string" -> tpe "String"
-  "bool" -> tpe "Int"
+  "bool" -> tpe "Bool"
   "int" -> tpe "Int"
   "int32" -> tpe "Int"
   t -> obj [ "op" .= str "Ptr", "extern_ptr_name" .= (str $ show t) ]
@@ -201,9 +202,9 @@ genTypeDef (Data info isExtend)
              penv <- getPrettyEnv
              let singletonValue val = def (var name (transformType (conInfoType c))) val
              if (conInfoName c == nameTrue)
-             then return $ def (var name (tpe "Int")) $ obj [ "op" .= str "Literal", "type" .= tpe "Int", "value" .= text "1" ]
+             then return $ def (var name (tpe "Int")) $ obj [ "op" .= str "Literal", "type" .= tpe "Bool", "value" .= text "true" ]
              else if (conInfoName c == nameFalse)
-             then return $ def (var name (tpe "Int")) $ obj [ "op" .= str "Literal", "type" .= tpe "Int", "value" .= text "0" ]
+             then return $ def (var name (tpe "Int")) $ obj [ "op" .= str "Literal", "type" .= tpe "Bool", "value" .= text "false" ]
              else return $ case repr of
                         -- special
 --                        ConEnum{}
@@ -311,7 +312,7 @@ genMatch scrutinees branches atTpe
         _ -> do bs <- mapM (genBranch scrutinees) branches
                 let ds = map (\(cds,stmts)-> conjunction cds stmts) bs
                 return $ obj [ "op" .= str "AlternativeChoice"
-                             , "choices" .= list ds
+                             , "choices" .= list (ds ++ [appPrim "non-exhaustive match" [] (tpe "Bottom")])
                              ]
   where
     -- | Generates a statement for a branch with given return context
@@ -333,7 +334,7 @@ genMatch scrutinees branches atTpe
            let exprSt' = obj [ "op" .= str "The", "type" .= transformType atTpe, "term" .= exprSt ]
            return $ if isExprTrue t
                       then exprSt'
-                      else ifEqInt testE (text "1") exprSt'
+                      else ifEq testE litTrue exprSt'
                       
     -- | Generates a list of boolish expression for matching the pattern
     genTest :: Name -> (Doc, Pattern) -> Asm ([ConditionDoc], [(TName, Doc)])
@@ -344,21 +345,21 @@ genMatch scrutinees branches atTpe
                 -> do (conds, substs) <- genTest modName (scrutinee,pat)
                       return (conds, (tn, scrutinee):substs)
               PatLit (LitInt i)
-                -> return ([ifEqInt scrutinee (text (show i))], [])
+                -> return ([ifEq scrutinee (text (show i))], [])
               PatLit lit@(LitString _)
                 -> let tmp = var (str "tmp") (tpe "Int") in
                    return ([(\thn -> obj [ "op" .= str "Primitive"
                                     , "name" .= str "infixEq(String, String): Boolean"
                                     , "args" .= list [scrutinee, ppLit lit]
                                     , "returns" .= list [tmp]
-                                    , "rest" .= ifEqInt tmp (text "1") thn
+                                    , "rest" .= ifEq tmp litTrue thn
                                     ])
                    ], [])
               PatCon tn fields repr _ _ _ info skip  --TODO: skip test ?
                 | getName tn == nameTrue
-                -> return ([ifEqInt scrutinee (text "1")], [])
+                -> return ([ifEq scrutinee litTrue], [])
                 | getName tn == nameFalse
-                -> return ([ifEqInt scrutinee (text "0")], [])
+                -> return ([ifEq scrutinee litFalse], [])
                 | otherwise
                 -> case repr of
                      -- special
@@ -383,8 +384,8 @@ genMatch scrutinees branches atTpe
                              --                    (conInfoParams info) fieldNames
                              return ((conTest:fieldTests), subfieldSubsts) -- ++ fieldSubsts)
 
-    ifEqInt :: Doc -> Doc -> ConditionDoc
-    ifEqInt scrutinee lit thn = obj [ "op" .= str "Switch"
+    ifEq :: Doc -> Doc -> ConditionDoc
+    ifEq scrutinee lit thn = obj [ "op" .= str "Switch"
                                         , "scrutinee" .= scrutinee
                                         , "cases" .= list [obj ["value" .= lit, "then" .= thn ]]
                                         , "default" .= obj ["op" .= str "AlternativeFail"]
@@ -509,9 +510,9 @@ genPure expr
      Con name repr | getName name == nameUnit
        -> return $ obj [ "op" .= str "Literal", "type" .= transformType (tnameType name) ]
      Con name repr | getName name == nameTrue
-       -> return $ obj [ "op" .= str "Literal", "value" .= text "1", "type" .= transformType (tnameType name) ]
+       -> return $ obj [ "op" .= str "Literal", "value" .= text "true", "type" .= transformType (tnameType name) ]
      Con name repr | getName name == nameFalse
-       -> return $ obj [ "op" .= str "Literal", "value" .= text "0", "type" .= transformType (tnameType name) ]
+       -> return $ obj [ "op" .= str "Literal", "value" .= text "false", "type" .= transformType (tnameType name) ]
      Con name repr
        -> genTName name
      Lit l
@@ -843,6 +844,12 @@ primitive outs name ins body = obj
   , "returns" .= list outs
   , "rest" .= body
   ]
+
+litTrue :: Doc
+litTrue = obj ["type" .= (tpe "Bool"), "value" .= (text "true")]
+
+litFalse :: Doc
+litFalse = obj ["type" .= (tpe "Bool"), "value" .= (text "false")]
 
 -- | Simplified primitive smart-constructor (works almost like function application)
 appPrim :: String -- ^ name

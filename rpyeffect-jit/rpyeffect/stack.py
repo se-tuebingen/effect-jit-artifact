@@ -2,14 +2,15 @@ from rpython.rlib.rerased import new_erasing_pair
 from rpython.rlib.jit import JitDriver, purefunction, elidable, hint, unroll_safe, promote, assert_green, promote_string, we_are_jitted, record_exact_class, record_exact_value, not_rpython
 from rpython.rlib import objectmodel
 from rpyeffect.stored_environment import with_environment
-from rpyeffect.representations import generate_representation_accessors
+from rpyeffect.representations import generate_representation_accessors, subtpe_representation
 import rpyeffect.config as cfg
 from rpyeffect.representations import eNone
+from rpyeffect.value import Value
 
 # Stacks
-class StackLike: pass
+class StackLike(Value): pass
 
-@with_environment(specialized_for=[(x,y) for x in range(cfg.specialize_stacks[0]) for y in range(cfg.specialize_stacks[1])])
+@with_environment(specialized_for=[x for x in range(cfg.specialize_stacks[0] + cfg.specialize_stacks[1])])
 class Stack(StackLike):
     _immutable_fields_ = [ 'target', 'tail' ]
     def __init__(self, target, tail):
@@ -29,10 +30,7 @@ class Stack(StackLike):
         class copy_wrapped:
             def __init__(self, inner):
                 self.inner = inner
-                self.values_num = [copy.deepcopy(inner.get_num(i), memo) for i in range(inner.len_num())]
                 self.values_ptr = [copy.deepcopy(inner.get_ptr(i), memo) for i in range(inner.len_ptr())]
-            def get_num(self, i):
-                return self.values_num[i]
             def get_ptr(self, i):
                 return self.values_ptr[i]
 
@@ -61,9 +59,11 @@ class ConcatStack(StackLike):
 
 # Metastacks
 erase_cont, unerase_cont = new_erasing_pair("MetaStackLike")
-class MetaStackLike:
+class MetaStackLike(Value):
     _attrs_ = ['stack']
     _immutable_fields_ = ['stack']
+
+subtpe_representation("cont", "ptr", MetaStackLike)
 
 class MetaStack(MetaStackLike):
     _immutable_fields_ = [ 'stack', 'region', 'tail' , 'label']
@@ -162,10 +162,12 @@ def get_dynamic(metastack, n, label):
     else:
         return get_dynamic(metastack.tail, n - (1 if metastack.label == label else 0), label)
 
-class Label:
+class Label(Value):
     _immutable_fields_ = [ "origin" ]
     def __init__(self, origin):
         self.origin = origin
+subtpe_representation("label", "ptr", Label)
+
 def eq_label(x, y):
     if x is None and y is None:
         return True

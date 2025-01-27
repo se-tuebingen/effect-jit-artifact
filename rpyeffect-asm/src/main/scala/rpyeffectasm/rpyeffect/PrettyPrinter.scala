@@ -34,15 +34,7 @@ object PrettyPrinter extends JsonPrinter with Phase[rpyeffect.Program, Output] {
     case Type.Reference(to) => (jsonObjectSmall(ListMap("type" -> "\"ref\"", "target" -> toDoc(to))))
     case Type.Region() => (jsonObjectSmall(ListMap("type" -> "\"region\"")))
   }
-
-  extension(rtpe: RegisterType) {
-    def name: String = rtpe match {
-      case RegisterType.Number => "num"
-      case RegisterType.Ptr => "ptr"
-    }
-  }
-  def toDoc(rtpe: RegisterType): String = "\"%s\"".format(rtpe.name)
-
+  
   def toDoc(block: BasicBlock): Doc = block match {
     case BasicBlock(id, frameDescriptor, instructions, terminator) => {
       jsonObject(ListMap(
@@ -54,20 +46,22 @@ object PrettyPrinter extends JsonPrinter with Phase[rpyeffect.Program, Output] {
   }
 
   def toDoc(frameDescriptor: FrameDescriptor): Doc = {
-    jsonObjectSmall(RegisterType.values.map(ty => ("regs_%s".format(ty.name)) ->
-      (frameDescriptor.locals.getOrElse(ty, 0).toString: Doc)
-    ).toMap)
+    jsonObjectSmall(Map(("regs_any") ->
+      (frameDescriptor.locals.toString: Doc)
+    ))
   }
 
   def toDoc(instruction: Instruction): Doc = instruction match {
     case Const(out, value) => jsonObjectSmall(ListMap("op" -> "\"Const\"",
-      "type" -> toDoc(RegisterType.Number), "format" -> "\"int\"", "out" -> toDoc(out), "value" -> value.toString))
+      "format" -> "\"int\"", "out" -> toDoc(out), "value" -> value.toString))
+    case ConstBool(out, value) => jsonObjectSmall(ListMap("op" -> "\"Const\"",
+      "format" -> "\"bool\"", "out" -> toDoc(out), "value" -> value.toString))
     case ConstDouble(out, value) => jsonObjectSmall(ListMap("op" -> "\"Const\"",
-      "type" -> toDoc(RegisterType.Number), "format" -> "\"double\"", "out" -> toDoc(out), "value" -> value.toString))
+      "format" -> "\"double\"", "out" -> toDoc(out), "value" -> value.toString))
     case ConstString(out, value) => jsonObjectSmall(ListMap("op" -> "\"Const\"",
-      "type" -> toDoc(RegisterType.Ptr), "format" -> "\"string\"", "out" -> toDoc(out), "value" -> "\"%s\"".format(escape(value))))
+      "format" -> "\"string\"", "out" -> toDoc(out), "value" -> "\"%s\"".format(escape(value))))
     case ConstFormat(out, value, fmt) => jsonObjectSmall(ListMap("op" -> "\"Const\"",
-      "type" -> toDoc(RegisterType.Ptr), "format" -> s"\"${fmt}\"", "out" -> toDoc(out), "value" -> "\"%s\"".format(escape(value))))
+      "format" -> s"\"${fmt}\"", "out" -> toDoc(out), "value" -> "\"%s\"".format(escape(value))))
     case PrimOp(name, out, in) => jsonObjectSmall(ListMap("op" -> "\"PrimOp\"",
       "name" -> dquotes(escape(name)),
       "out" -> toDoc(out),
@@ -83,15 +77,14 @@ object PrettyPrinter extends JsonPrinter with Phase[rpyeffect.Program, Output] {
     case IfZero(arg, thenClause) => jsonObjectSmall(ListMap("op" -> "\"IfZero\"",
       "cond" -> toDoc(arg),
       "then" -> toDoc(thenClause)))
-    case Copy(tpe, from, to) => jsonObjectSmall(ListMap("op" -> "\"Copy\"",
-      "type" -> toDoc(tpe),
+    case Copy(from, to) => jsonObjectSmall(ListMap("op" -> "\"Copy\"",
       "from" -> toDoc(from), "to" -> toDoc(to)
     ))
-    case Drop(tpe, reg) => jsonObjectSmall(ListMap("op" -> "\"Drop\"",
-      "type" -> toDoc(tpe), "reg" -> toDoc(reg)
+    case Drop(reg) => jsonObjectSmall(ListMap("op" -> "\"Drop\"",
+      "reg" -> toDoc(reg)
     ))
-    case Swap(tpe, a, b) => jsonObjectSmall(ListMap("op" -> "\"Swap\"",
-      "type" -> toDoc(tpe), "a" -> toDoc(a), "b" -> toDoc(b)
+    case Swap(a, b) => jsonObjectSmall(ListMap("op" -> "\"Swap\"",
+      "a" -> toDoc(a), "b" -> toDoc(b)
     ))
     case Construct(out, adt_type, tag, args) => jsonObjectSmall(ListMap("op" -> "\"Construct\"",
       "out" -> toDoc(out),
@@ -123,29 +116,25 @@ object PrettyPrinter extends JsonPrinter with Phase[rpyeffect.Program, Output] {
       "args" -> toDoc(args),
       "tags" -> jsonListSmall(tags map toDoc)
     ))
-    case Allocate(out, tpe, init, region) => jsonObjectSmall(ListMap("op" -> "\"Allocate\"",
+    case Allocate(out, init, region) => jsonObjectSmall(ListMap("op" -> "\"Allocate\"",
       "out" -> toDoc(out),
-      "type" -> toDoc(tpe),
       "init" -> toDoc(init),
       "region" -> toDoc(region)
     ))
-    case Load(out, tpe, ref) => jsonObjectSmall(ListMap("op" -> "\"Load\"",
+    case Load(out, ref) => jsonObjectSmall(ListMap("op" -> "\"Load\"",
       "out" -> toDoc(out),
-      "type" -> toDoc(tpe),
       "ref" -> toDoc(ref)
     ))
-    case Store(ref, tpe, value) => jsonObjectSmall(ListMap("op" -> "\"Store\"",
+    case Store(ref, value) => jsonObjectSmall(ListMap("op" -> "\"Store\"",
       "ref" -> toDoc(ref),
-      "type" -> toDoc(tpe),
       "value" -> toDoc(value)
     ))
-    case Proj(out, adt_type, scrutinee, tag, field, field_tpe) => jsonObjectSmall(ListMap("op" -> "\"Proj\"",
+    case Proj(out, adt_type, scrutinee, tag, field) => jsonObjectSmall(ListMap("op" -> "\"Proj\"",
       "out" -> toDoc(out),
       "type" -> toDoc(adt_type),
       "scrutinee" -> toDoc(scrutinee),
       "tag" -> toDoc(tag),
-      "field" -> toDoc(field),
-      "field_type" -> toDoc(field_tpe)
+      "field" -> toDoc(field)
     ))
     case GetDynamic(out, n, label) => jsonObjectSmall(ListMap("op" -> "\"GetDynamic\"",
       "out" -> toDoc(out), "n" -> toDoc(n), "label" -> toDoc(label)))
@@ -192,12 +181,16 @@ object PrettyPrinter extends JsonPrinter with Phase[rpyeffect.Program, Output] {
 
   def toDoc(args: RegList): Doc = args match
     case RegList(args) => {
-      jsonObjectSmall(RegisterType.values.map(ty => ty.name ->
-        jsonListSmall(args.getOrElse(ty, List()).map(toDoc))
-      ).toMap)
+      jsonObjectSmall(Map("any" ->
+        jsonListSmall(args.map(toDoc))
+      ))
     }
 
-  def toDoc(i: Int): Doc = i.toString()
+  def toDoc(i: asm.LiteralType): Doc = i match {
+    case i: Int => i.toString
+    case b: Boolean => b.toString
+    case _ => ???
+  }
 
   def format(prog: Program): Document = {
     pretty(toDoc(prog))

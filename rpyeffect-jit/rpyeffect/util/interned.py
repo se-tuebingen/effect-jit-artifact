@@ -1,3 +1,4 @@
+from rpyeffect.value import Value
 
 class InternTable:
     def __init__(self):
@@ -9,7 +10,7 @@ class InternTable:
             self.interned[str] = InternedString(str)
         return self.interned[str]
            
-class InternedString:
+class InternedString(Value):
     _immutable_fields_ = ['str']
     def __init__(self, str):
         self.str = str

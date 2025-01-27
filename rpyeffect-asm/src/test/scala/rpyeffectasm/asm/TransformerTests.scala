@@ -6,13 +6,13 @@ class TransformerTests extends munit.FunSuite {
   import rpyeffectasm.util
 
   private val asmParser = new AsmParser()
-  def parseInput(s: String): Program[Nothing, Index, Index, Index, OperandType[ConcretelyTyped]] = {
+  def parseInput(s: String): Program[Nothing, Index, Index, Index] = {
     asmParser.parse(asmParser.program, s) match {
       case asmParser.Success(result, next) =>
         if(!next.atEnd){
           fail(s"Parsing failed, trailing garbage: ```\n${next.source.subSequence(next.offset, Math.min(next.offset+80, next.source.length()))}\n...```")
         }
-        result.asInstanceOf[Program[Nothing, Index, Index, Index, OperandType[ConcretelyTyped]]] // TODO actually check
+        result.asInstanceOf[Program[Nothing, Index, Index, Index]] // TODO actually check
       case e => fail(s"Parsing failed: ${e}")
     }
   }

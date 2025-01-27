@@ -26,6 +26,7 @@ class JsonParser extends JsonParsers with Phase[Source, Program[ATerm]] {
     case "Num" => const(Num)
     case "Bottom" => const(Bottom)
     case "Int" => const(Base.Int)
+    case "Bool" => const(Base.Bool)
     case "Double" => const(Base.Double)
     case "String" => const(Base.String)
     case "Label" => optional("at" -> tpe) & optional("binding" -> tpe) ^ { (at, bnd) => Base.Label(at.getOrElse(Top), bnd) }
@@ -42,6 +43,19 @@ class JsonParser extends JsonParsers with Phase[Source, Program[ATerm]] {
   def v: JsonParser[Var] = obj("id" -> id & "type" -> tpe) ^ Var.apply
   def lhsOperand = v
   def clause: JsonParser[Clause[ATerm]] = obj("params" -> list(lhsOperand) & "body" -> term) ^ { case (ps, b) => Clause(ps, b) }
+  def literal: JsonParser[Literal] = ("type" -> tpe &= {
+    case Base.Int => "value" -> int ^ { i => Literal.Int(i) }
+    case Base.Bool => "value" -> bool ^ { b => Literal.Bool(b) }
+    case Base.Double => "value" -> double ^ { d => Literal.Double(d) }
+    case Base.String => "value" -> string & optional("format" -> string) ^ {
+      case (s, None) => Literal.String(s)
+      case (s, Some(fmt)) => Literal.StringWithFormat(s, fmt)
+    }
+    case Base.Label(_,_) => const(Literal.Label)
+    case Base.Unit => const(Literal.Unit)
+    case o =>
+      fail(s"Literals of non-base type ${o} are not supported.")
+  }) ^ { case (_, r) => r }
   def term: JsonParser[Term[ATerm]] = obj("op" -> string &= {
     case "Var" => v // spliced in
     case "Abs" => ("params" -> list(lhsOperand) & "body" -> term) ^ Abs.apply
@@ -53,7 +67,7 @@ class JsonParser extends JsonParsers with Phase[Source, Program[ATerm]] {
     case "Construct" => ("type_tag" -> id & "tag" -> id & "args" -> list(term)) ^ { case ((tt,t),args) => Construct(tt,t,args) }
     case "Project" => ("scrutinee" -> term & "type_tag" -> id & "tag" -> id & "field" -> int) ^ { case (((s,tt),t),f) => Project(s,tt,t,f) }
     case "Match" => ("scrutinee" -> term & "type_tag" -> id & "clauses" -> list(obj("tag" -> id & clause /* spliced in */)) & "default_clause" -> obj(clause)) ^ { case (((s,tt),cs),d) => Match(s, tt, cs, d) }
-    case "Switch" => ("scrutinee" -> term & "cases" -> list(obj("value" -> int & "then" -> term)) & "default" -> term) ^ { case ((s,c),d) => Switch(s, c, d) }
+    case "Switch" => ("scrutinee" -> term & "cases" -> list(obj("value" -> ((int ^ Literal.Int) || obj(literal)) & "then" -> term)) & "default" -> term) ^ { case ((s,c),d) => Switch(s, c, d) }
     case "New" => ("ifce_tag" -> id & "methods" -> list(obj("tag" -> id & clause /* spliced in */))) ^ New.apply
     case "Invoke" => ("receiver" -> term & "ifce_tag" -> id & "tag" -> id & "args" -> list(term)) ^ { case (((r,tt),t),args) => Invoke(r,tt,t,args) }
     case "LetRef" => ("ref" -> lhsOperand & "region" -> term & "binding" -> term & "body" -> term) ^ { case (((ref,reg),init),body) => LetRef(ref,reg,init,body) }
@@ -67,17 +81,7 @@ class JsonParser extends JsonParsers with Phase[Source, Program[ATerm]] {
     case "Primitive" => ("name" -> string & "args" -> list(term) & "returns" -> list(lhsOperand) & "rest" -> term) ^ { case (((name,args),rets),rest) => Primitive(name,args,rets,rest) }
     case "Resume" => ("k" -> term & "args" -> list(term)) ^ Resume.apply
     case "Resumed" => ("k" -> term & "body" -> term) ^ Resumed.apply
-    case "Literal" => ("type" -> tpe &= {
-      case Base.Int => "value" -> int ^ { i => Literal.Int(i) }
-      case Base.Double => "value" -> double ^ { d => Literal.Double(d) }
-      case Base.String => "value" -> string & optional("format" -> string) ^ {
-        case (s, None) => Literal.String(s)
-        case (s, Some(fmt)) => Literal.StringWithFormat(s, fmt)
-      }
-      case Base.Label(_,_) => const(Literal.Label)
-      case Base.Unit => const(Literal.Unit)
-      case o => fail(s"Literals of non-base type ${o} are not supported.")
-    }) ^ { case (_, r) => r }
+    case "Literal" => literal
     case "Handle" => ("tpe" -> (string ^ HandlerSugar.HandlerType.valueOf) & "tag" -> id
       & "handlers" -> list(obj("tag" -> id & "params" -> list(lhsOperand) & "body" -> term))
       & "body" -> term & optional("ret" -> clause)) ^ {

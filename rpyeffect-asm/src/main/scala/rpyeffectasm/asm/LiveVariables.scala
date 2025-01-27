@@ -2,32 +2,32 @@ package rpyeffectasm.asm
 
 // This is a **reverse** analysis, so everything works backwards!
 // With `compose`, this is forward again.
-class LiveVariables[Flags <: AsmFlags, Tag <: Id, Label <: Id, Var <: Id, P <: TypingPrecision, OTpe >: OperandType[P] <: OperandType[TypingPrecision]] {
-  type Res = List[Var]
+class LiveVariables[Flags <: AsmFlags, Tag <: Id, Label <: Id, V <: Id] {
+  type Res = List[V]
 
-  def use(v: Var): Res => Res = { frees => if (frees contains v) { frees } else { v :: frees } }
-  def use(o: RhsOperand[Flags, Var, OTpe]): Res => Res = o match {
-    case Var(name, _) => use(name)
+  def use(v: V): Res => Res = { frees => if (frees contains v) { frees } else { v :: frees } }
+  def use(o: RhsOperand[Flags, V]): Res => Res = o match {
+    case Var(name) => use(name)
     case Ref(ref) => use(ref)
-    case o: RhsOperand[Flags, Nothing, OTpe] @unchecked => identity
+    case o: RhsOperand[Flags, Nothing] @unchecked => identity
   }
-  def provide(v: Var): Res => Res = { frees => if (frees contains v) { frees.filterNot(_==v) } else { frees } }
-  def provide(o: LhsOperand[Flags, Var, OTpe]): Res => Res = o match {
-    case Var(name, _) => provide(name)
+  def provide(v: V): Res => Res = { frees => if (frees contains v) { frees.filterNot(_==v) } else { frees } }
+  def provide(o: LhsOperand[Flags, V]): Res => Res = o match {
+    case Var(name) => provide(name)
     case Ref(ref) => use(ref)
-    case o: LhsOperand[Flags, Nothing, OTpe] @unchecked => identity
+    case o: LhsOperand[Flags, Nothing] @unchecked => identity
   }
   def alternatives(l: Iterable[Res => Res]): Res => Res = { frees =>
     l.toSet.flatMap(_(frees).toSet).toList
   }
   def alternatives(l: (Res => Res)*): Res => Res = alternatives(l.toList)
-  def read(opList: RhsOpList[Flags, Var, OTpe]): Res => Res = opList.foldRight(identity[Res]) { case (rhs, o) => use(rhs) compose o }
-  def write(opList: LhsOpList[Flags, Var, OTpe]): Res => Res = opList.foldRight(identity[Res]) { case (lhs, o) => provide(lhs) compose o }
-  def exec(c: Clause[Flags, Tag, Var, OTpe]): Res => Res = c match {
+  def read(opList: RhsOpList[Flags, V]): Res => Res = opList.foldRight(identity[Res]) { case (rhs, o) => use(rhs) compose o }
+  def write(opList: LhsOpList[Flags, V]): Res => Res = opList.foldRight(identity[Res]) { case (lhs, o) => provide(lhs) compose o }
+  def exec(c: Clause[Flags, Tag, V]): Res => Res = c match {
     case Clause(params, capts, target) =>
       write(params) compose read(capts)
   }
-  def exec(i: Instruction[Flags, Label, Tag, Var, OTpe]): Res => Res = i match {
+  def exec(i: Instruction[Flags, Label, Tag, V]): Res => Res = i match {
     case Let(lhss, rhss) => read(rhss) compose write(lhss)
     case LetConst(out, value) => provide(out)
     case Primitive(out, name, in) => read(in) compose write(out)
@@ -65,14 +65,14 @@ class LiveVariables[Flags <: AsmFlags, Tag <: Id, Label <: Id, Var <: Id, P <: T
       read(traced)
   }
 
-  def zipInstructionsWith(l: List[Instruction[Flags, Label, Tag, Var, OTpe]]): List[(Instruction[Flags, Label, Tag, Var, OTpe], List[Var])] = {
-    def go(l: List[Instruction[Flags, Label, Tag, Var, OTpe]]) = l.foldRight((List.empty[(Instruction[Flags, Label, Tag, Var, OTpe], Res)], List.empty[Var])) {
+  def zipInstructionsWith(l: List[Instruction[Flags, Label, Tag, V]]): List[(Instruction[Flags, Label, Tag, V], List[V])] = {
+    def go(l: List[Instruction[Flags, Label, Tag, V]]) = l.foldRight((List.empty[(Instruction[Flags, Label, Tag, V], Res)], List.empty[V])) {
       case (hd, (rtl, rhd)) =>
         ((hd, rhd) :: rtl, exec(hd)(rhd))
     }
     go(l)._1
   }
-  def apply(l: List[Instruction[Flags, Label, Tag, Var, OTpe]]): List[Var] = {
-    l.foldRight(List.empty[Var]) { case (i, l) => exec(i)(l) }
+  def apply(l: List[Instruction[Flags, Label, Tag, V]]): List[V] = {
+    l.foldRight(List.empty[V]) { case (i, l) => exec(i)(l) }
   }
 }

@@ -12,23 +12,15 @@ from rpyeffect.util.generic import generic
 from rpyeffect.util.annotations import assert_big_enough
 import rpyeffect.config as cfg
 from rpyeffect.util.debug import debug_hooks
+from rpyeffect.value import IntValue
 
 # Environments
 class Environment:
-    _virtualizable_ = ['values_num[*]', 'values_ptr[*]']
+    _virtualizable_ = ['values_ptr[*]']
     @unroll_safe
     def __init__(self, program):
         self = hint(self, access_directly = True, fresh_virtualizable=True)
-        self.values_num = [0] * (program.frame_size[NUMBER])
         self.values_ptr = [eNone] * program.frame_size[OPAQUE_PTR]
-    @objectmodel.always_inline
-    def get_num(self, name):
-        name = promote(name)
-        debug_hooks.get_num(name)
-        if name >= 0:
-            return self.values_num[name]
-        else:
-            return 0
     @objectmodel.always_inline
     def get_ptr(self, name):
         name = promote(name)
@@ -38,21 +30,12 @@ class Environment:
         else:
             return eNone
     @objectmodel.always_inline
-    def set_num(self, name, value):
-        name = promote(name)
-        debug_hooks.set_num(name, value)
-        if name >= 0:
-            self.values_num[name] = value
-    @objectmodel.always_inline
     def set_ptr(self, name, value):
         name = promote(name)
         debug_hooks.set_ptr(name, value)
         if name >= 0:
             self.values_ptr[name] = value
 
-    @objectmodel.always_inline
-    def len_num(self):
-        return len(self.values_num)
     @objectmodel.always_inline
     def len_ptr(self):
         return len(self.values_ptr)
@@ -62,8 +45,6 @@ class Environment:
     @objectmodel.always_inline
     def copy(self, program):
         res = Environment(program)
-        for i in range(len(self.values_num)):
-            res.values_num[i] = self.values_num[i]
         for i in range(len(self.values_ptr)):
             res.values_ptr[i] = self.values_ptr[i]
         return res
@@ -72,11 +53,6 @@ class Environment:
     @unroll_safe
     @objectmodel.always_inline
     def setfrom(self, stored, parameter_index_start, program):
-        assert_big_enough(stored.len_num())
-        i0 = promote(parameter_index_start[NUMBER])
-        assert(i0 >= 0)
-        for i in range(min(stored.len_num(), len(self.values_num) - i0)):
-            self.values_num[i0+i] = stored.get_num(i)
         assert_big_enough(stored.len_ptr())
         i0 = promote(parameter_index_start[OPAQUE_PTR])
         assert(i0 >= 0)
@@ -84,5 +60,5 @@ class Environment:
             self.values_ptr[i0+i] = stored.get_ptr(i)
 
     def __repr__(self):
-        return ("{\"num\": %s, \"ptr\": %s}"
-                % (self.values_num, self.values_ptr))
+        return ("{\"ptr\": %s}"
+                % (self.values_ptr))

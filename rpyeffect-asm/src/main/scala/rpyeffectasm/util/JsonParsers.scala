@@ -4,7 +4,7 @@ import rpyeffectasm.util.ErrorReporter.{error, fatal}
 
 enum Json {
   case Str(s: String)
-  case Int(i: scala.Int)
+  case Int(i: scala.Long)
   case Double(d: scala.Double)
   case Bool(b: Boolean)
   case Null
@@ -14,7 +14,7 @@ enum Json {
 
   def pprint: String = this match {
     case Str(s: String) => JsonPrinter.jsonString(s)
-    case Int(i: scala.Int) => i.toString
+    case Int(i: scala.Long) => i.toString
     case Double(d: scala.Double) => d.toString
     case Bool(b: Boolean) => b.toString
     case Null => "null"
@@ -50,7 +50,7 @@ trait JsonParsers {
       jsonStr ^^ Json.Str.apply
         | floatingPointNumber ^^ { s =>
           try {
-            Json.Int(s.toInt)
+            Json.Int(s.toLong)
           } catch {
             case _: NumberFormatException => Json.Double(s.toDouble)
           }
@@ -127,7 +127,7 @@ trait JsonParsers {
     override def message: String = _msg
   }}
   def int: JsonParser[Int] = new JsonParser[Int] { def apply(json: Json) = json match {
-    case Json.Int(s) => OK(s)
+    case Json.Int(s) => OK(s.toInt)
     case r => new JsonError { def message = s"Expected int, got ${r}" }
   }}
   def double: JsonParser[Double] = new JsonParser[Double] { def apply(json: Json) = json match {

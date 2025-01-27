@@ -155,7 +155,7 @@ case class Interpreter(filename: String = "__main__", loader: LibLoader[ATerm] =
     case FConstruct(tpe_tag: Id, tag: Id)
     case FProj(tpe_tag: Id, tag: Id, field: Int)
     case FMatch(tpe_tag: Id, clauses: List[(Id, Clause[ATerm])], default_clause: Clause[ATerm], env: Env)
-    case FSwitch(cases: List[(Int, Term[ATerm])], default: Term[ATerm], env: Env)
+    case FSwitch(cases: List[(Literal, Term[ATerm])], default: Term[ATerm], env: Env)
     case FInvoke1(ifce_tag: Id, method: Id, args: List[Term[ATerm]], env: Env)
     case FInvoke2(ifce_tag: Id, method: Id, rcv: Value)
     case FMany(evaluated: List[Value], unevaluated: List[Term[ATerm]], env: Env)
@@ -234,8 +234,8 @@ case class Interpreter(filename: String = "__main__", loader: LibLoader[ATerm] =
         "env" --> env.json
       )
       case Frame.FSwitch(cases, default, env) => List(
-        "cases" --> listOf[(Int, Term[ATerm])]{
-          case (v, t) => obj("value" --> v.json, "then" --> t.tjson)
+        "cases" --> listOf[(Literal, Term[ATerm])]{
+          case (v, t) => obj("value" --> raw(v.toString), "then" --> t.tjson)
         }(cases),
         "default" --> default.tjson,
         "env" --> env.json
@@ -580,7 +580,7 @@ case class Interpreter(filename: String = "__main__", loader: LibLoader[ATerm] =
         case _ => Error.ProjNonData(v)
       }
       case FSwitch(cases, default, env) => v match {
-        case VInt(got) => cases.find{ (exp, _) => exp == got } match {
+        case VInt(got) => cases.find{ case (Literal.Int(exp), _) => exp == got } match {
           case Some((_, t)) =>
             state.pop().copy(focused = t, env = env)
           case None =>

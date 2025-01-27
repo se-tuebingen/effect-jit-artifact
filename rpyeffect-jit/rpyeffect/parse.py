@@ -1,12 +1,13 @@
 from rpyeffect.instructions import *
 from rpyeffect.program import *
 from rpyeffect.types import *
-from rpyeffect.representations import encode_str, encode_double, encode_interned
+from rpyeffect.representations import encode_str, encode_double, encode_interned, encode_bool
 from rpyeffect.codata import VTable, CoData
 from rpyeffect.symbol import Symbol
 from rpyeffect.util.debug import debug
 import rpyeffect.config as cfg
 from rpython.rlib.objectmodel import always_inline
+from rpyeffect.value import *
 
 def file_chars(filename, buffer_size = 128):
     """
@@ -37,6 +38,11 @@ class DoubleToken(Token):
         self.value = value
     def __repr__(self):
         return "Double(%d)" % self.value
+class BoolToken(Token):
+    def __init__(self, value):
+        self.value = value
+    def __repr__(self):
+        return "Bool(%d)" % self.value
 class OpToken(Token):
     def __init__(self, op):
         self.op = op
@@ -60,7 +66,7 @@ def tokens(char_gen):
     """
     Generator iterating over the tokens in a character generator
     """
-    S_START, S_INT, S_STR, S_STR_ESC, S_DOUBLE_FRAC, S_DOUBLE_EXP_START, S_DOUBLE_EXP, S_COMMENT = range(8)
+    S_START, S_INT, S_STR, S_STR_ESC, S_DOUBLE_FRAC, S_DOUBLE_EXP_START, S_DOUBLE_EXP, S_COMMENT, S_SKIP_ID = range(9)
     state = S_START
     token = ""
     for c in char_gen:
@@ -104,6 +110,11 @@ def tokens(char_gen):
             else:
                 yield DoubleToken(float(token))
                 state = S_START
+        elif state == S_SKIP_ID:
+            if c >= 'a' and c <= 'z':
+                continue
+            else:
+                state = S_START
         # intentionally fall through here because a new token might start here after a number
         if state == S_START:
             if c == '"':
@@ -115,6 +126,12 @@ def tokens(char_gen):
             elif c == ']': yield BRACKET_CLOSE
             elif c == ',': yield COMMA
             elif c == ':': yield COLON
+            elif c == 't':
+                yield BoolToken(True)
+                state=S_SKIP_ID
+            elif c == 'f':
+                yield BoolToken(False)
+                state=S_SKIP_ID
             elif c.isdigit() or c == '-':
                 token=c
                 state=S_INT
@@ -189,6 +206,12 @@ def parse_int(tokens):
     tok = tokens.next()
     p_assert (isinstance(tok, IntToken))
     assert (isinstance(tok, IntToken))
+    return tok.value
+
+def parse_bool(tokens):
+    tok = tokens.next()
+    p_assert (isinstance(tok, BoolToken))
+    assert (isinstance(tok, BoolToken))
     return tok.value
 
 def parse_double(tokens):
@@ -426,6 +449,28 @@ def parse_int_list(tokens):
     token = tokens.next()
     while token != BRACKET_CLOSE:
         if isinstance(token, IntToken):
+            res = res + [IntValue(token.value)]
+        token = tokens.next()
+    return res
+
+def parse_lit_list(tokens):
+    expect(BRACKET_OPEN, tokens)
+    res = []
+    token = tokens.next()
+    while token != BRACKET_CLOSE:
+        if isinstance(token, IntToken):
+            res = res + [IntValue(token.value)]
+        elif isinstance(token, BoolToken):
+            res = res + [BoolValue(token.value)]
+        token = tokens.next()
+    return res
+
+def parse_idx_list(tokens):
+    expect(BRACKET_OPEN, tokens)
+    res = []
+    token = tokens.next()
+    while token != BRACKET_CLOSE:
+        if isinstance(token, IntToken):
             res = res + [token.value]
         token = tokens.next()
     return res
@@ -456,11 +501,11 @@ def parse_register_list(tokens):
     expect(BRACE_OPEN, tokens)
     res = [[]] * NUMBER_OF_TYPES
     for key in json_keys(tokens):
-        if key == "num":
-            res[NUMBER] = parse_int_list(tokens)
-        elif key == "ptr":
-            res[OPAQUE_PTR] = parse_int_list(tokens)
-        elif key == 'double'\
+        if key == "any":
+            res[OPAQUE_PTR] = parse_idx_list(tokens)
+        elif key == "num" \
+        or key == "ptr" \
+        or key == 'double'\
         or key == 'string'\
         or key == "cont"\
         or key == 'codata'\
@@ -508,8 +553,7 @@ def parse_type(tokens):
 
 def parse_CONST(tokens, primitives):
     out = 0
-    value_num = 0
-    value_ptr = encode_str("")
+    value = IntValue(0)
     fmt = "int"
     ty = NUMBER
     for key in json_keys(tokens):
@@ -520,22 +564,21 @@ def parse_CONST(tokens, primitives):
         elif key == 'format':
             fmt = parse_string(tokens)
         elif key == "value":
-            if ty == NUMBER and fmt == "int":
-                value_num = parse_int(tokens)
-            elif ty == NUMBER and fmt == "double":
-                value_num = encode_double(parse_double(tokens))
-            elif ty == OPAQUE_PTR and fmt == "string":
-                value_ptr = encode_str(parse_string(tokens))
-            elif ty == OPAQUE_PTR and fmt == "path":
-                value_ptr = encode_str(primitives.resolve_path(parse_string(tokens)))
-            elif ty == OPAQUE_PTR and fmt == "interned":
-                value_ptr = encode_interned(parse_interned(tokens, primitives))
+            if fmt == "int":
+                value = IntValue(parse_int(tokens))
+            elif fmt == "double":
+                value = encode_double(parse_double(tokens))
+            elif fmt == "string":
+                value = encode_str(parse_string(tokens))
+            elif fmt == "path":
+                value = encode_str(primitives.resolve_path(parse_string(tokens)))
+            elif fmt == "interned":
+                value = encode_interned(parse_interned(tokens, primitives))
+            elif fmt == "bool":
+                value = encode_bool(parse_bool(tokens))
         else:
             skip_value(tokens)
-    if ty == NUMBER:
-        return CONST_NUMBER(out, value_num)
-    elif ty == OPAQUE_PTR:
-        return CONST_PTR(out, value_ptr, fmt)
+    return CONST_PTR(out, value, fmt)
 
 def parse_PRIM_OP(tokens):
     name = ""
@@ -755,7 +798,7 @@ def parse_SWITCH(tokens, relocate_by):
         if key == "arg":
             arg = parse_int(tokens)
         elif key == "values":
-            values = parse_int_list(tokens)
+            values = parse_lit_list(tokens)
         elif key == "targets":
             targets = parse_target_list(tokens, relocate_by)
         elif key == "default":

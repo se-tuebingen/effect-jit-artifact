@@ -1,5 +1,4 @@
 package rpyeffectasm.asm
-import rpyeffectasm.asm.TypingPrecision.ConcretelyTyped
 import rpyeffectasm.rpyeffect
 import rpyeffectasm.util.Phase
 import rpyeffectasm.util.ErrorReporter
@@ -9,20 +8,18 @@ import scala.collection.mutable
 import scala.util.control.NonLocalReturns.{returning, throwReturn}
 
 class RegisterAllocation[Tag <: Id, Label <: Id]
-  extends Phase[Program[Nothing, Tag, Label, Id, OperandType[ConcretelyTyped]], Program[Nothing, Tag, Label, Index, OperandType[ConcretelyTyped]]]{
+  extends Phase[Program[Nothing, Tag, Label, Id], Program[Nothing, Tag, Label, Index]]{
 
-  type OTpe = OperandType[ConcretelyTyped]
-
-  case class Register(idx: Int, tpe: rpyeffect.RegisterType) {
+  case class Register(idx: Int) {
     def asIndex(debug: String): Index = IndexWithDebug(idx, debug)
   }
 
-  def possibleRegistersFor(x: Var[Id, OTpe]): LazyList[Register] = x.name match {
-    case Index(i) => LazyList(Register(i, Type.getRegisterType(x.tpe)))
-    case _ => LazyList.from(0).map(Register(_, Type.getRegisterType(x.tpe)))
+  def possibleRegistersFor(x: Var[Id]): LazyList[Register] = x.name match {
+    case Index(i) => LazyList(Register(i))
+    case _ => LazyList.from(0).map(Register(_))
   }
 
-  case class State(var registerContents: Map[Register, Var[Id, OTpe]], var block: Id, var ins: Int = 0)
+  case class State(var registerContents: Map[Register, Var[Id]], var block: Id, var ins: Int = 0)
   {
     var isAvailable: Register => Boolean = { r => !this.registerContents.contains(r) }
 
@@ -49,7 +46,7 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
       withMask { a => r =>
         if this.registerContents.get(r).exists { v => liveIds.contains(v.name) } then false else a(r)
       }
-    def withAdditionalLiveV[R](liveVars: Seq[Var[Id, OTpe]]): ContextHandler[R] =
+    def withAdditionalLiveV[R](liveVars: Seq[Var[Id]]): ContextHandler[R] =
       withAdditionalLive(liveVars.map(_.name))
 
     def reserving[R](reserve: Seq[Register]): ContextHandler[R] = withMask{ a => r => if !reserve.contains(r) then a(r) else false }
@@ -59,10 +56,10 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
     //--------------------------------------------------------------------------------
     // Moving and finding registers
     //--------------------------------------------------------------------------------
-    def freshFor(x: Var[Id, OTpe]): Option[Register] = {
+    def freshFor(x: Var[Id]): Option[Register] = {
       possibleRegistersFor(x).find(this.isAvailable)
     }
-    def freshFor(xs: Seq[Var[Id, OTpe]]): Option[Iterable[Register]] = returning {
+    def freshFor(xs: Seq[Var[Id]]): Option[Iterable[Register]] = returning {
       val r = new mutable.HashSet[Register]()
       reservingIf(r.contains) {
         Some(xs.map{ x =>
@@ -73,34 +70,34 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
       }
     }
 
-    def put(r: Register, x: Var[Id, OTpe]): Unit = {
+    def put(r: Register, x: Var[Id]): Unit = {
       require(isAvailable(r))
       registerContents = registerContents.updated(r, x)
     }
     def clr(r: Register): Unit = {
       registerContents = registerContents.removed(r)
     }
-    def put(r: Register, x: Id): Unit = put(r, Var(x, Type.fromRegisterType(r.tpe)))
+    def put(r: Register, x: Id): Unit = put(r, Var(x))
 
     def find(x: Id): Option[Register] = registerContents.collectFirst{ case (r, y) if y.name == x => r }
-    def find(x: Var[Id, OTpe]): Option[Register] =
-      registerContents.collectFirst{ case (r, y) if y.name == x.name && Type.getRegisterType(x.tpe) == r.tpe => r }
-    def asVar(r: Register): Var[Index, OTpe] = {
+    def find(x: Var[Id]): Option[Register] =
+      registerContents.collectFirst{ case (r, y) if y.name == x.name => r }
+    def asVar(r: Register): Var[Index] = {
       val contents = registerContents.get(r)
       val idx = contents match {
         case Some(c) => IndexWithDebug(r.idx, c.name.toString)
         case None => Index(r.idx)
       }
-      Var(idx, contents.map(_.tpe).getOrElse{ Type.fromRegisterType(r.tpe) })
+      Var(idx)
     }
 
-    def move(from: Register, to: Register)(using em: Emit[Instruction[Nothing, Tag, Label, Index, OTpe]]): Unit = if(from != to) {
+    def move(from: Register, to: Register)(using em: Emit[Instruction[Nothing, Tag, Label, Index]]): Unit = if(from != to) {
       require(registerContents.contains(from), "moving from unassigned register makes no sense")
       em.emit(Let(List(asVar(to)), List(asVar(from))))
       put(to, registerContents(from))
       clr(from)
     }
-    def moveAll(froms: List[Register], tos: List[Register])(using em: Emit[Instruction[Nothing, Tag, Label, Index, OTpe]]): Unit = {
+    def moveAll(froms: List[Register], tos: List[Register])(using em: Emit[Instruction[Nothing, Tag, Label, Index]]): Unit = {
       // TODO: Here, 0 -> 0 & 0 -> 1 does not work properly!! (Removes mapping for 0 -> 0) TODO TODO
       require(froms.forall(registerContents.contains), "moving from unassigned register makes no sense")
       val (_froms, _tos) = (froms zip tos).filterNot{ (x,y) => x == y }.unzip
@@ -114,11 +111,11 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
     }
   }
 
-  def lookupW(id: Id, tpe: OTpe)(using s: State, em: Emit[Instruction[Nothing, Tag, Label, Index, OTpe]]): Index = { id match {
+  def lookupW(id: Id)(using s: State, em: Emit[Instruction[Nothing, Tag, Label, Index]]): Index = { id match {
     case idx @ Index(i) =>
-      val reg = Register(i, Type.getRegisterType(tpe))
+      val reg = Register(i)
       s.registerContents.get(reg) match {
-        case Some(Var(Index(ii), _)) if i == ii => idx
+        case Some(Var(Index(ii))) if i == ii => idx
         case _ if s.isAvailable(reg) =>
           s.put(reg, idx)
           idx
@@ -127,17 +124,17 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
           val replacement = s.freshFor(v).getOrElse{ ??? }
           s.move(reg, replacement)
           // now, we can use the specified register
-          s.put(reg, Var(id, tpe))
+          s.put(reg, Var(id))
           idx
       }
     case id =>
       s.find(id).foreach(s.clr) // remove from previous contents (since now overwritten)
-      val r = s.freshFor(Var(id, tpe)).get
-      s.put(r, Var(id, tpe))
+      val r = s.freshFor(Var(id)).get
+      s.put(r, Var(id))
       IndexWithDebug(r.idx, id.toString)
-  }} ensuring { r => s.registerContents.get(Register(r.i, Type.getRegisterType(tpe))).map(_.name).contains(id) }
+  }} ensuring { r => s.registerContents.get(Register(r.i)).map(_.name).contains(id) }
 
-  def lookupR(id: Id, tpe: OTpe)(using s: State, E: ErrorReporter): Index = { id match {
+  def lookupR(id: Id)(using s: State, E: ErrorReporter): Index = { id match {
     case idx: Index => idx
     case id =>
       s.find(id).getOrElse {
@@ -145,31 +142,30 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
       }.asIndex(id.name.toString)
   }}// ensuring { r => id.isInstanceOf[Index] || s.registerContents.get(Register(r.i, Type.getRegisterType(tpe))).map(_.name).contains(id) }
 
-  def read(o: RhsOperand[Nothing, Id, OTpe])(using s: State, e: ErrorReporter): RhsOperand[Nothing, Index, OTpe] = o match {
-    case Var(name, tpe) => Var(lookupR(name, tpe), tpe)
+  def read(o: RhsOperand[Nothing, Id])(using s: State, e: ErrorReporter): RhsOperand[Nothing, Index] = o match {
+    case Var(name) => Var(lookupR(name))
   }
-  def write[OTpe2 <: OTpe](o: LhsOperand[Nothing, Id, OTpe2])(using State, Emit[Instruction[Nothing, Tag, Label, Index, OTpe]]): LhsOperand[Nothing, Index, OTpe2] = o match {
-    case Var(name, tpe) => Var(lookupW(name, tpe), tpe)
+  def write(o: LhsOperand[Nothing, Id])(using State, Emit[Instruction[Nothing, Tag, Label, Index]]): LhsOperand[Nothing, Index] = o match {
+    case Var(name) => Var(lookupW(name))
   }
-  def readArgs(l: RhsOpList[Nothing, Id, OTpe])(using State, ErrorReporter): RhsOpList[Nothing, Index, OTpe] = {
+  def readArgs(l: RhsOpList[Nothing, Id])(using State, ErrorReporter): RhsOpList[Nothing, Index] = {
     l.zipWithIndex.map { case (rhs, i) => read(rhs) }
   }
-  def writeArgs(l: LhsOpList[Nothing, Id, OTpe])(using Emit[Instruction[Nothing, Tag, Label, Index, OTpe]], State): LhsOpList[Nothing, Index, OTpe] = {
+  def writeArgs(l: LhsOpList[Nothing, Id])(using Emit[Instruction[Nothing, Tag, Label, Index]], State): LhsOpList[Nothing, Index] = {
     l.zipWithIndex.map { case (lhs, i) => write(lhs) }
   }
 
-  def getArgumentRegisters(args: RhsOpList[Nothing, Id, OTpe] | LhsOpList[Nothing, Id, OTpe]): List[Register] = {
-    val counters: mutable.Map[rpyeffect.RegisterType, Int] = mutable.HashMap.empty.withDefault(_ => -1)
+  def getArgumentRegisters(args: RhsOpList[Nothing, Id] | LhsOpList[Nothing, Id]): List[Register] = {
+    var counter = -1
     args.map {
-      case arg: Var[Id, OTpe] =>
-        val rtpe = Type.getRegisterType(arg.tpe)
-        counters(rtpe) += 1
-        Register(counters(rtpe), rtpe)
+      case arg: Var[Id] =>
+        counter += 1
+        Register(counter)
     }
   }
-  def doPrepareJump(args: RhsOpList[Nothing, Id, OTpe], preserving: List[Id] = Nil)(using s: State, e: ErrorReporter, em: Emit[Instruction[Nothing, Tag, Label, Index, OTpe]]): RhsOpList[Nothing, Index, OTpe] = {
+  def doPrepareJump(args: RhsOpList[Nothing, Id], preserving: List[Id] = Nil)(using s: State, e: ErrorReporter, em: Emit[Instruction[Nothing, Tag, Label, Index]]): RhsOpList[Nothing, Index] = {
     require(preserving.forall{x => s.find(x).isDefined})
-    val argSourceRegs = args.map{ arg => s.find(arg.asInstanceOf[Var[Id, OTpe]]).getOrElse { ErrorReporter.fatal(s"Unbound register as argument to jump: ${arg}") } }
+    val argSourceRegs = args.map{ arg => s.find(arg.asInstanceOf[Var[Id]]).getOrElse { ErrorReporter.fatal(s"Unbound register as argument to jump: ${arg}") } }
     val argTargetRegs = getArgumentRegisters(args)
     val inTheWay = s.withAdditionalLive(preserving) { s.overwriting(argSourceRegs) { argTargetRegs.filterNot(s.isAvailable) } }
     val inTheWayVars = inTheWay.map(s.registerContents)
@@ -179,19 +175,19 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
     argTargetRegs.map(s.asVar)
   } ensuring { _ =>
     val argt = getArgumentRegisters(args)
-    (args zip argt).forall{ case (Var(a, _), t) =>
+    (args zip argt).forall{ case (Var(a), t) =>
       s.registerContents.get(t).map(_.name).contains(a)
     } && preserving.forall{ x => s.find(x).isDefined }
   }
 
-  def restrictTo(args: RhsOpList[Nothing, Id, RegisterAllocation.this.OTpe])(using s: State): Unit = {
+  def restrictTo(args: RhsOpList[Nothing, Id])(using s: State): Unit = {
     val n = s.registerContents.filter{
-      case (r, Var(x, _)) => args.exists{ case Var(y, _) => x == y }
+      case (r, Var(x)) => args.exists{ case Var(y) => x == y }
     }
     s.registerContents = n
-  } ensuring { _ => s.registerContents.forall{ case (_, Var(x, _)) => args.exists{ case Var(y, _) => x == y } } }
+  } ensuring { _ => s.registerContents.forall{ case (_, Var(x)) => args.exists{ case Var(y) => x == y } } }
 
-  def apply(i: Instruction[Nothing, Tag, Label, Id, OTpe])(using em: Emit[Instruction[Nothing,Tag,Label,Index,OTpe]], s: State, er: ErrorReporter): Unit = {
+  def apply(i: Instruction[Nothing, Tag, Label, Id])(using em: Emit[Instruction[Nothing,Tag,Label,Index]], s: State, er: ErrorReporter): Unit = {
     import Emit.emit
     ErrorReporter.withLocation(s"In instruction ${AsmPrettyPrinter.apply(i)}"){ i match {
     case Let(lhss, rhss) =>
@@ -263,8 +259,8 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
       val tArgs = readArgs(args)
       val tOut = write(out)
       emit(Construct(tOut, tpe, tag, tArgs))
-    case Match(tpe, scrutinee@Var(scrId, _), clauses, default) =>
-      val bodyFrees = default.env.map{ case Var(x,_) => x }
+    case Match(tpe, scrutinee@Var(scrId), clauses, default) =>
+      val bodyFrees = default.env.map{ case Var(x) => x }
       doPrepareJump(default.env, scrId :: bodyFrees)
       val tScrutinee = read(scrutinee)
       restrictTo(default.env)
@@ -273,7 +269,7 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
         val tDefault = apply(default)
         emit(Match(tpe, tScrutinee, tClauses, tDefault))
       }
-    case Switch(arg@Var(argId, _), cases, default, env) =>
+    case Switch(arg@Var(argId), cases, default, env) =>
       doPrepareJump(env, List(argId))
       emit(Switch(read(arg), cases, default, readArgs(env)))
     case Proj(out, tpe, scrutinee, tag, field) =>
@@ -284,7 +280,7 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
       val tArgs = readArgs(args)
       val tOut = write(out)
       emit(New(tOut, ifce, targets, tArgs))
-    case Invoke(receiver@Var(rcvId, _), ifce, tag, args) =>
+    case Invoke(receiver@Var(rcvId), ifce, tag, args) =>
       // TODO make sure receiver survived jump preparation
       val tArgs = doPrepareJump(args, List(rcvId))
       emit(Invoke(read(receiver), ifce, tag, tArgs))
@@ -293,34 +289,34 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
   }}
   }
 
-  def apply(clause: Clause[Nothing, Label, Id, OTpe])(using em: Emit[Instruction[Nothing, Tag, Label, Index, OTpe]], s: State, E: ErrorReporter): Clause[Nothing, Label, Index, OTpe] = clause match {
+  def apply(clause: Clause[Nothing, Label, Id])(using em: Emit[Instruction[Nothing, Tag, Label, Index]], s: State, E: ErrorReporter): Clause[Nothing, Label, Index] = clause match {
     case Clause(pars, frs, target) =>
-      s.withAdditionalLiveV(frs.asInstanceOf[Seq[Var[Id, OTpe]]]) {
+      s.withAdditionalLiveV(frs.asInstanceOf[Seq[Var[Id]]]) {
         val tPars = writeArgs(pars)
         val tFrs = readArgs(frs)
         Clause(tPars, tFrs, target)
       }
   }
-  def apply(l: List[(Instruction[Nothing, Tag, Label, Id, OTpe], List[Id])])(using em: Emit[Instruction[Nothing, Tag, Label, Index, OTpe]], s: State, E: ErrorReporter): Unit = {
+  def apply(l: List[(Instruction[Nothing, Tag, Label, Id], List[Id])])(using em: Emit[Instruction[Nothing, Tag, Label, Index]], s: State, E: ErrorReporter): Unit = {
     l.zipWithIndex.foreach { case ((i, f),idx) => ErrorReporter.withLocation(s"Instruction number ${idx}"){
         s.withLive(f){ apply(i) }
       }
     }
   }
-  def apply(block: Block[Nothing, Tag, Label, Id, OTpe])(using ErrorReporter): Block[Nothing, Tag, Label, Index, OTpe] = block match {
-    case Block(label, params, ret, instructions, export_as) =>
+  def apply(block: Block[Nothing, Tag, Label, Id])(using ErrorReporter): Block[Nothing, Tag, Label, Index] = block match {
+    case Block(label, params, instructions, export_as) =>
       val state: State = State(Map.empty, block=label)
       given State = state
       val paramRegs = getArgumentRegisters(params)
-      (paramRegs zip params).foreach{ case (r, x: Var[Id, OTpe]) => state.put(r, x) }
+      (paramRegs zip params).foreach{ case (r, x: Var[Id]) => state.put(r, x) }
       val tParams = paramRegs.map(state.asVar)
 
       DebugInfo.log("asm", "RegisterAllocation", state.block.toString, "entry", "registerContents")(state.registerContents)
-      val instructionsWithLive: List[(Instruction[Nothing, Tag, Label, Id, OTpe], List[Id])] = new LiveVariables().zipInstructionsWith(instructions)
+      val instructionsWithLive: List[(Instruction[Nothing, Tag, Label, Id], List[Id])] = new LiveVariables().zipInstructionsWith(instructions)
       DebugInfo.log("asm", "RegisterAllocation", state.block.toString, "liveVariables")(instructionsWithLive)
 
-      Block(label, tParams, ret, Emit.collecting_[Instruction[Nothing, Tag, Label, Index, OTpe]]{
-        Emit.withOnEmit[Instruction[Nothing, Tag, Label, Index, OTpe], Unit]{ i =>
+      Block(label, tParams, Emit.collecting_[Instruction[Nothing, Tag, Label, Index]]{
+        Emit.withOnEmit[Instruction[Nothing, Tag, Label, Index], Unit]{ i =>
           DebugInfo.log("asm", "RegisterAllocation", state.block.toString, state.ins.toString, "registerContents")(state.registerContents)
           DebugInfo.log("asm", "RegisterAllocation", state.block.toString, state.ins.toString, "emittedBy"){Thread.currentThread().getStackTrace() }
           state.ins = state.ins + 1
@@ -329,7 +325,7 @@ class RegisterAllocation[Tag <: Id, Label <: Id]
         }
       }, export_as)
   }
-  override def apply(program: Program[Nothing, Tag, Label, Id, OTpe])(using ErrorReporter): Program[Nothing, Tag, Label, Index, OTpe] = program match {
+  override def apply(program: Program[Nothing, Tag, Label, Id])(using ErrorReporter): Program[Nothing, Tag, Label, Index] = program match {
     case Program(blocks) => Program(blocks.zipWithIndex map { (b, idx) => ErrorReporter.withLocation(s"During Register Allocation in block ${idx}(\"${b.label}\")"){
       apply(b) }})
   }

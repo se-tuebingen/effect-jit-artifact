@@ -1,8 +1,8 @@
 from rpyeffect.instructions import *
 from rpyeffect.symbol import Symbol
-from rpyeffect.region import NumBox, PtrBox # reused for globals
 from rpyeffect.representations import eNone
 from rpython.rlib.jit import elidable
+from rpyeffect.value import IntValue
 
 NAME_OF_ENTRYPOINT = "$entrypoint"
 
@@ -71,15 +71,7 @@ class Program(object):
         return self._get_global(name, self.lib_version)
 
     def get_global_ptr(self, name):
-        r = self.get_global(name)
-        if r is not None and isinstance(r, PtrBox):
-            return r.get()
-        else: return eNone
-    def get_global_num(self, name):
-        r = self.get_global(name)
-        if r is not None and isinstance(r, NumBox):
-            return r.get()
-        else: return 0
+        return self.get_global(name)
     
     @elidable
     def _get_global(self, name, lib_version):
@@ -91,9 +83,9 @@ class Program(object):
         self.globals[name] = value
 
     def add_global_ptr(self, name, ptr):
-        self.add_global(name, PtrBox(ptr))
+        self.add_global(name, ptr)
     def add_global_num(self, name, num):
-        self.add_global(name, NumBox(num))
+        self.add_global(name, num)
 
 DEFAULT_SYMBOLS = {NAME_OF_ENTRYPOINT: Symbol(NAME_OF_ENTRYPOINT, 0)}
 EMPTY_PROGRAM = Program([],[0] * NUMBER_OF_TYPES, DEFAULT_SYMBOLS)

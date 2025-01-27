@@ -46,7 +46,8 @@ class DebugHooks():
         "load_lib",
         "return_through_label",
         "debugout",
-        "enter_static_init"
+        "enter_static_init",
+        "mk_value"
         ]
     _generate_debug_hook_methods()
     

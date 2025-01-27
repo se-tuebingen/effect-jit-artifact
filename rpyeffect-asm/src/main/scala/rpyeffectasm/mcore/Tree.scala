@@ -51,7 +51,7 @@ case class IfZero[+O <: ATerm](cond: O, thn: Term[O], els: Term[O]) extends Term
 case class Construct[+O <: Term[ATerm]](tpe_tag: Id, tag: Id, args: List[O]) extends Term[O]
 case class Project[+O <: Term[ATerm]](scrutinee: O, tpe_tag: Id, tag: Id, field: Int) extends Term[O]
 case class Match[+O <: ATerm](scrutinee: O, tpe_tag: Id, clauses: List[(Id, Clause[O])], default_clause: Clause[O]) extends Term[O]
-case class Switch[+O <: ATerm](scrutinee: O, cases: List[(Int, Term[O])], default: Term[O]) extends Term[O]
+case class Switch[+O <: ATerm](scrutinee: O, cases: List[(Literal, Term[O])], default: Term[O]) extends Term[O]
 
 // Codata
 case class New[+O <: ATerm](ifce_tag: Id, methods: List[(Id, Clause[O])]) extends Term[O]
@@ -81,6 +81,7 @@ trait Literal extends Term[Nothing] {
   def value: tpe.ScalaType
 }
 object Literal {
+  case class Bool(value: scala.Boolean) extends Literal { val tpe: Base.Bool.type = Base.Bool }
   case class Int(value: scala.Int) extends Literal { val tpe: Base.Int.type = Base.Int }
   case class Double(value: scala.Double) extends Literal { val tpe: Base.Double.type = Base.Double }
   case class String(value: java.lang.String) extends Literal { val tpe: Base.String.type = Base.String }
@@ -157,7 +158,8 @@ case class AlternativeChoice(choices: List[Term[ATerm]]) extends Sugar {
   def expand(term: Term[ATerm], leftover: List[Term[ATerm]])(using ErrorReporter): Term[ATerm] = {
     val impl = new Structural[ATerm, ATerm] {
       override def term: PartialFunction[Term[ATerm], Term[ATerm]] = {
-        case AlternativeFail if leftover.isEmpty => ErrorReporter.fatal("AlternativeFail must be wrapped in AlternativeChoice, and cannot occur in the last choice")
+        case AlternativeFail if leftover.isEmpty =>
+          ErrorReporter.fatal("AlternativeFail must be wrapped in AlternativeChoice, and cannot occur in the last choice")
         case AlternativeFail => expand(leftover.head, leftover.tail)
         case AlternativeChoice(choices) => AlternativeChoice(choices.init :+ expand(choices.last, leftover))
         case sugar: Sugar => apply(sugar.desugared) // FIXME in [[Structural]]

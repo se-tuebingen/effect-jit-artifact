@@ -1,4 +1,6 @@
-class Symbol(object):
+from rpyeffect.value import Value
+
+class Symbol(Value):
     """named (exported) symbol in a program"""
     __immutable_fields__ = ['name', 'position']
     def __init__(self, name, position):

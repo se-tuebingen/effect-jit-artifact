@@ -11,7 +11,7 @@ import rpyeffectasm.mcore
 import rpyeffectasm.main.Config
 import rpyeffectasm.main.Format.*
 import rpyeffectasm.main.*
-import rpyeffectasm.mcore.{ATerm, MonomorphizeCodata, OrganizeValueBindings}
+import rpyeffectasm.mcore.{ATerm, OrganizeValueBindings}
 
 import scala.collection.mutable
 import scala.io.Source
@@ -24,9 +24,6 @@ def mcoreToAsm = (mcore.Desugar
   >> mcore.LambdaLifting
   >> new mcore.Dealiasing[mcore.Var]
   >> new OrganizeValueBindings[mcore.Var]
-  >> mcore.ANF
-  >> new MonomorphizeCodata[mcore.Var]
-  >> new mcore.Boxing
   >> mcore.ANF
   >> new mcore.Transformer)
 def asmToRpyeffect = ((new asm.Elaboration)
@@ -98,7 +95,7 @@ def debug[F,T](c: Config, p: Phase[F,T]): Phase[F,T] = {
         def go[T](suffix: String, f: T): Unit = {
           // TODO this should be a proper thing
           f match {
-            case program: asm.Program[asm.AsmFlags, asm.Id, asm.Id, asm.Id, asm.OperandType[asm.TypingPrecision]]@unchecked =>
+            case program: asm.Program[asm.AsmFlags, asm.Id, asm.Id, asm.Id]@unchecked =>
               asm.AsmPrettyPrinter(program).emitTo(FileTarget(to / s"${thename}${suffix}_out.asm"))
               asm.JsonPrettyPrinter(program).emitTo(FileTarget(to / s"${thename}${suffix}_out.asm.json"))
               val renamed = (new Renamer)(program)

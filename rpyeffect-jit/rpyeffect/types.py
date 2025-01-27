@@ -1,7 +1,7 @@
-NUMBER_OF_TYPES = 2
-NUMBER, OPAQUE_PTR = range(NUMBER_OF_TYPES)
+NUMBER_OF_TYPES = 1
+OPAQUE_PTR, = range(NUMBER_OF_TYPES)
+NUMBER = OPAQUE_PTR
 
 def type_repr(ty):
-    if ty == NUMBER: return "num"
-    elif ty == OPAQUE_PTR: return "ptr"
+    if ty == OPAQUE_PTR: return "any"
     else: return "!ERR!"

@@ -5,7 +5,7 @@ import scala.collection.mutable
 
 object Primitives {
 
-  import rpyeffectasm.asm.TopPtr
+  import rpyeffectasm.common.Purity.Pure
 
   trait PrimitiveException extends Exception
   case class PrimitiveInfo(name: String, insT: List[Type], outsT: List[Type], purity: Purity = Purity.Pure)
@@ -103,7 +103,13 @@ object Primitives {
     PrimitiveInfo("unsafeIndex(Bytes, Int): Int", List(ExternPtr("Bytes"), Base.Int), List(Base.Int), Purity.ErrorFlag),
     PrimitiveInfo("unsafeGetFileContents(String): String", List(Base.String), List(Base.String), Purity.Effectful),
     PrimitiveInfo("panic(String): Bottom", List(Base.String), List(Bottom), Purity.Effectful),
-    PrimitiveInfo("freshlabel", List(), List(Label(TopPtr, None)), Purity.Effectful),
+    PrimitiveInfo("freshlabel", List(), List(Label(Top, None)), Purity.Effectful),
+    PrimitiveInfo("equals(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
+    PrimitiveInfo("infixLt(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
+    PrimitiveInfo("infixGt(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
+    PrimitiveInfo("infixLte(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
+    PrimitiveInfo("infixGte(Any, Any): Bool", List(Top, Top), List(Base.Bool), Purity.Pure),
+    PrimitiveInfo("show(Any): String", List(Top), List(Base.String), Purity.Pure),
     PrimitiveInfo("ptr_eq", List(Ptr, Ptr), List(Base.Int)),
     PrimitiveInfo("print(String): Unit", List(Base.String), List(Base.Unit), Purity.Effectful),
     PrimitiveInfo("non-exhaustive match", List(), List()), // not actually implemented, but used conventionally

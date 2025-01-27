@@ -108,6 +108,7 @@ extern pure def show(value: Byte): String =
 extern pure def genericShow[R](value: R): String =
   js "$effekt.show(${value})"
   chez "(show_impl ${value})"
+  jit "show(Any): String"
 
 extern io def inspect[R](value: R): Unit =
   js { println(genericShow(value)) }
@@ -211,6 +212,7 @@ extern pure def equals[R](x: R, y: R): Bool =
   js "$effekt.equals(${x}, ${y})"
   chez "(equal? ${x} ${y})"
   ml "${x} = ${y}"
+  jit "equals(Any, Any): Bool"
 
 def differsFrom[R](x: R, y: R): Bool =
   not(equals(x, y))

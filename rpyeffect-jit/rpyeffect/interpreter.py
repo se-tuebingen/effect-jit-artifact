@@ -15,6 +15,7 @@ from rpython.rlib.rerased import new_erasing_pair
 import rpyeffect.config as cfg
 from rpyeffect.dynlib import load_lib
 from rpyeffect.util.debug import debug, debug_hooks
+from rpyeffect.value import *
 
 # Initialize JIT stuff
 def get_location(pc_block, pc_instruction, context, program, primitives):
@@ -82,8 +83,6 @@ def jump_to(target, program, pc_block, pc_instruction, stack_label, stack_bindin
 def do_return(args_regs, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context):
     while stack is None: # will always be unrolled. OK?
         if metastack is None:
-            for arg in args_regs[NUMBER]:
-                print(str(env.get_int(arg)))
             return len(program.blocks)+10, 0, stack_label, stack_binding, stack, metastack, context
         else:
             assert isinstance(metastack, MetaStack)
@@ -104,7 +103,7 @@ def do_return(args_regs, program, pc_block, pc_instruction, stack_label, stack_b
         record_exact_class(stack, program.blocks[target].stack_type)
 
     js = [len(a) for a in args_regs]
-    if cfg.debug: debug("  Restored %s" % (", ".join(["%s: %d" % (type_repr(j), j) for j in js])))
+    if cfg.debug: debug("  Restored %s" % (", ".join(["%s: %d" % (type_repr(i), j) for i,j in enumerate(js)])))
     env.setfrom_stack(stack, js, program)
     stack = stack.tail
 
@@ -121,22 +120,16 @@ def do_return(args_regs, program, pc_block, pc_instruction, stack_label, stack_b
 def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context):
     op = program.get_instruction(pc_block, pc_instruction)
     if cfg.debug: debug("%d<%s>+%d:\n \033[96m%s\033[0m" % (pc_block, program.blocks[pc_block].name, pc_instruction, op.__repr__()))
-    if isinstance(op, CONST_NUMBER):
-        env.set_num(op.out, op.value)
-    elif isinstance(op, CONST_PTR):
-        env.set_ptr(op.out, op.value)
+    if isinstance(op, CONST_PTR):
+        env.set_ptr(op.out, op.value_ptr)
     elif isinstance(op, PRIM_OP):
         #opid = promote_string(op.name) # Should be const
         if cfg.debug and cfg.print_debug:
-            for i in op.ins.regs[NUMBER]:
-                debug("  num %d is %d" %(i, env.get_num(i)))
             for i in op.ins.regs[OPAQUE_PTR]:
                 debug("  ptr %d is %s" %(i, env.get_ptr(i)))
         primitives.run_primitive(env, op.name, op.ins, op.outs, program, pc_block, pc_instruction, metastack, stack, stack_label, stack_binding)
         if cfg.debug:
             debug("  Out:")
-            for i in op.outs.regs[NUMBER]:
-                debug("  num %d is %d" %(i, env.get_num(i)))
             for i in op.outs.regs[OPAQUE_PTR]:
                 debug("  ptr %d is %s" %(i, env.get_ptr(i)))
     elif isinstance(op, ADD):
@@ -158,8 +151,8 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
     elif isinstance(op, JUMP):
         return jump_to(op.target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, IFZERO):
-        cond = env.get_int(op.cond)
-        if (cond == 0):
+        cond = env.get_num(op.cond)
+        if (isinstance(cond, BoolValue) and not cond.value) or (isinstance(cond, IntValue) and cond.value == 0):
             return jump_to(op.then.target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, SHIFT):
         if op.n == 0:
@@ -223,24 +216,13 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
             stack = None
         context = get_context(pc_block, pc_instruction, stack, metastack)
     elif isinstance(op, COPY):
-        if op.ty == NUMBER:
-            env.set_num(op.to, env.get_int(op.fr))
-        elif op.ty == OPAQUE_PTR:
-            env.set_ptr(op.to, env.get_ptr(op.fr))
+        env.set_ptr(op.to, env.get_ptr(op.fr))
     elif isinstance(op, DROP):
-        if op.ty == NUMBER:
-            env.set_num(op.reg, 0)
-        elif op.ty == OPAQUE_PTR:
-            env.set_ptr(op.reg, eNone)
+        env.set_ptr(op.reg, eNone)
     elif isinstance(op, SWAP):
-        if op.ty == NUMBER:
-            tmp = env.get_num(op.b)
-            env.set_num(op.b, env.get_int(op.a))
-            env.set_num(op.a, tmp)
-        elif op.ty == OPAQUE_PTR:
-            tmp = env.get_ptr(op.b)
-            env.set_ptr(op.b, env.get_ptr(op.a))
-            env.set_ptr(op.a, tmp)
+        tmp = env.get_ptr(op.b)
+        env.set_ptr(op.b, env.get_ptr(op.a))
+        env.set_ptr(op.a, tmp)
     elif isinstance(op, CONSTRUCT):
         env.set_data(op.out, Data.make(op.args, env, op.tag))
     elif isinstance(op, MATCH):
@@ -255,21 +237,18 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
         if clause is None:
             clause = op.default_clause
             # we know that the default clause takes no parameters
-            record_exact_value(len(clause.args.regs[NUMBER]), 0)
             record_exact_value(len(clause.args.regs[OPAQUE_PTR]), 0)
         elif we_are_jitted():
             record_exact_class(arg, clause.scrutinee_cls)
 
-        for i in range(len(clause.args.regs[NUMBER])):
-            env.set_num(clause.args.regs[NUMBER][i], arg.get_num(i))
         for i in range(len(clause.args.regs[OPAQUE_PTR])):
             env.set_ptr(clause.args.regs[OPAQUE_PTR][i], arg.get_ptr(i))
         return jump_to(clause.target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, SWITCH):
-        arg = env.get_int(op.arg)
+        arg = env.get_num(op.arg)
         target = op.default_target
         for idx, value in enumerate(op.values):
-            if arg == value:
+            if equal(arg, value):
                 target = op.targets[idx]
                 break
         return jump_to(target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
@@ -277,10 +256,7 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
         arg = env.get_data(op.scrutinee)
         tag = promote(arg.get_tag())
         if tag != op.tag: primitives.panic("Projection from invalid case")
-        if op.field_tpe == NUMBER:
-            env.set_num(op.out, arg.get_num(op.field))
-        elif op.field_tpe == OPAQUE_PTR:
-            env.set_ptr(op.out, arg.get_ptr(op.field))
+        env.set_ptr(op.out, arg.get_ptr(op.field))
     elif isinstance(op, NEW_STACK):
         reg = Region()
 
@@ -327,32 +303,18 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
 
         return jump_to(target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, ALLOCATE):
-        if op.ty == NUMBER:
-            ref = NumRef(env.get_num(op.init))
-            region = env.get_region(op.region)
-            env.set_ref(op.out, ref)
-            region.register(ref)
-        elif op.ty == OPAQUE_PTR:
-            ref = PtrRef(env.get_ptr(op.init))
-            region = env.get_region(op.region)
-            env.set_ref(op.out, ref)
-            region.register(ref)
+        ref = Ref(env.get_ptr(op.init))
+        region = env.get_region(op.region)
+        env.set_ref(op.out, ref)
+        region.register(ref)
     elif isinstance(op, LOAD):
         ref = env.get_ref(op.ref)
-        if op.ty == NUMBER:
-            assert(isinstance(ref, NumRef))
-            env.set_num(op.out, ref.get_num())
-        elif op.ty == OPAQUE_PTR:
-            assert(isinstance(ref, PtrRef))
-            env.set_ptr(op.out, ref.get_ptr())
+        assert(isinstance(ref, Ref))
+        env.set_ptr(op.out, ref.get_ptr())
     elif isinstance(op, STORE):
         ref = env.get_ref(op.ref)
-        if op.ty == NUMBER:
-            assert(isinstance(ref, NumRef))
-            ref.put_num(env.get_num(op.value))
-        elif op.ty == OPAQUE_PTR:
-            assert(isinstance(ref, PtrRef))
-            ref.put_ptr(env.get_ptr(op.value))
+        assert(isinstance(ref, Ref))
+        ref.put_ptr(env.get_ptr(op.value_reg))
     elif isinstance(op, LOAD_LIB):
         lib, flag = load_lib(program, env.get_str(op.path), primitives)
         env.set_lib(0, lib)
@@ -364,7 +326,7 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
             return jump_to(lib.symbols["$static-init"].position, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
         else:
             # directly return, already initialized (or no $static-init)
-            return do_return([[],[0]], program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
+            return do_return([[0]], program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, CALL_LIB):
         lib = promote(env.get_lib(op.lib))
         if lib is None:
@@ -387,8 +349,6 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
                 jit_debug(op.msg)
             else:
                 # debug(op.msg)
-                for reg in op.traced.regs[NUMBER]:
-                    debug("  NUM %d: %d" % (reg, env.get_num(reg)))                
                 for reg in op.traced.regs[OPAQUE_PTR]:
                     debug("  PTR %d: %s" % (reg, env.get_ptr(reg)))                
 
