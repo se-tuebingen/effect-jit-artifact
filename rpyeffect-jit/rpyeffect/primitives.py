@@ -7,7 +7,7 @@ from rpyeffect.types import *
 from rpyeffect.stack import fresh_label
 from rpyeffect.dynlib import load_lib
 from rpyeffect.environment import Environment
-from rpyeffect.region import Ref, PtrRef
+from rpyeffect.region import Ref, Ref
 from timeit import default_timer
 import math
 from rpyeffect.util.path import abspath, dirname
@@ -579,26 +579,26 @@ class Primitives(object):
             program.add_global_num(env.get_str(ins.regs[OPAQUE_PTR][0]), env.get_num(ins.regs[NUMBER][0]))
 
         elif opid == "mkRef(Ptr): Ref[Ptr]":
-            env.set_ref(outs.regs[OPAQUE_PTR][0], PtrRef(env.get_ptr(ins.regs[OPAQUE_PTR][0])))
+            env.set_ref(outs.regs[OPAQUE_PTR][0], Ref(env.get_ptr(ins.regs[OPAQUE_PTR][0])))
         elif opid == "mkRef(Num): Ref[Num]":
-            env.set_ref(outs.regs[OPAQUE_PTR][0], PtrRef(env.get_num(ins.regs[NUMBER][0])))
+            env.set_ref(outs.regs[OPAQUE_PTR][0], Ref(env.get_num(ins.regs[NUMBER][0])))
 
         elif opid == "getRef(Ref[Ptr]): Ptr":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
-            assert isinstance(r, PtrRef)
+            assert isinstance(r, Ref)
             env.set_ptr(outs.regs[OPAQUE_PTR][0], r.get_ptr())
         elif opid == "getRef(Ref[Num]): Num":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
-            assert isinstance(r, PtrRef)
+            assert isinstance(r, Ref)
             env.set_num(outs.regs[NUMBER][0], r.get_ptr())
 
         elif opid == "setRef(Ref[Ptr], Ptr): Unit":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
-            assert isinstance(r, PtrRef)
+            assert isinstance(r, Ref)
             r.put_ptr(env.get_ptr(ins.regs[OPAQUE_PTR][1]))
         elif opid == "setRef(Ref[Num], Num): Unit":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
-            assert isinstance(r, PtrRef)
+            assert isinstance(r, Ref)
             r.put_ptr(env.get_num(ins.regs[NUMBER][1]))
 
         elif opid == "box(Num): Ptr":

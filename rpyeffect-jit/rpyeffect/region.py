@@ -1,36 +1,33 @@
 from rpython.rlib.rerased import new_erasing_pair
 from rpython.rlib import objectmodel
-from rpython.rlib.jit import purefunction, elidable, hint, unroll_safe, promote, promote_string, we_are_jitted
+from rpython.rlib.jit import purefunction, elidable, hint, unroll_safe, promote, promote_string, we_are_jitted, record_exact_class
 from rpyeffect.value import Value, ValueNull, UnboxableValue, UnboxedRef
 from rpyeffect.representations import subtpe_representation
 
 class Ref(Value):
-    def freeze(self): return ValueNull()
-    def restore(self, box): pass
-class PtrRef(Ref):
-    _immutable_fields_ = ["is_unboxed?"]
+    _immutable_fields_ = ["unboxed_tpe?"]
     def __init__(self, value):
         if isinstance(value, UnboxableValue):
-            self.is_unboxed = True
             self.value = value.make_unboxed_ref()
+            self.unboxed_tpe = self.value.__class__
         else:
-            self.is_unboxed = False
+            self.unboxed_tpe = None
             self.value = value
     def get_ptr(self):
-        if self.is_unboxed:
+        if self.unboxed_tpe is not None:
             bn = self.value
-            assert isinstance(bn, UnboxedRef)
+            assert isinstance(bn, self.unboxed_tpe)
             return bn.get_boxed_contents()
         else:
             return self.value
     def put_ptr(self, value):
-        if self.is_unboxed:
-            bn = (self.value)
-            assert isinstance(bn, UnboxedRef)
+        if self.unboxed_tpe is not None:
+            bn = self.value
+            assert isinstance(bn, self.unboxed_tpe)
             if bn.try_set_from(value):
                 pass
             else:
-                self.is_unboxed = False
+                self.unboxed_tpe = None
                 self.value = value
         else:
             self.value = value
