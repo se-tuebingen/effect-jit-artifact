@@ -186,6 +186,7 @@ object JsonPrettyPrinter extends JsonPrinter with Phase[Program[ATerm], Output] 
     ))
     case literal: Literal => jsonObjectSmall(ListMap("op" -> "\"Literal\"", "type" -> toDoc(literal.tpe)) ++ (literal match {
       case Literal.Int(v) => ListMap("value" -> s"${v}")
+      case Literal.Bool(v) => ListMap("value" -> v.toString)
       case Literal.Double(v) => ListMap("value" -> s"${v}")
       case Literal.String(s) => ListMap("value" -> s"\"${rpyeffectasm.util.escape(s)}\"") // TODO escape
       case Literal.StringWithFormat(s, f) => ListMap("value" -> toDoc(s), "format" -> toDoc(f))

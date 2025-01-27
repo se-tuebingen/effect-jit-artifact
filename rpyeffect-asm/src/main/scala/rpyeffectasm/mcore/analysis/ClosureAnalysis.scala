@@ -24,7 +24,9 @@ object ClosureAnalysis {
   }
 
   def apply(t: Term[ATerm])(using env: Env, E: ErrorReporter): Tpe = t match {
-    case Var(name, tpe) => env.lookup(name).getOrElse{ ErrorReporter.fatal(s"Unbound variable ${name}") }
+    case Var(name, tpe) => env.lookup(name).getOrElse{
+      ErrorReporter.fatal(s"Unbound variable ${name}")
+    }
     case Abs(params, body) =>
       val capts = FreeVariables(body).removedAll(params).toSet.flatMap{
         capt =>
