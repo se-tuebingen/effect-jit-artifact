@@ -305,6 +305,9 @@ class Primitives(object):
             else:
                 env.set_str(outs.regs[OPAQUE_PTR][0], "true")
 
+        elif opid == "show(Any): String":
+            env.set_str(outs.regs[OPAQUE_PTR][0], env.get_ptr(ins.regs[OPAQUE_PTR][0]).show())
+
         elif opid == "read(String): Int":
             s = env.get_str(ins.regs[OPAQUE_PTR][0])
             v = 0

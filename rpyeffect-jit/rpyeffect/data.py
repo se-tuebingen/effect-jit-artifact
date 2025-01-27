@@ -44,5 +44,10 @@ class Data(Value):
             if cmp != ORD_EQ:
                 return cmp
         return ORD_EQ
+    def show(self):
+        fields = []
+        for i in range(self.len_ptr()):
+            fields.append(self.get_ptr(i).show())
+        return "%s(%s)" % (self.tag.str, ", ".join(fields))
 
 subtpe_representation("data", "ptr", Data)

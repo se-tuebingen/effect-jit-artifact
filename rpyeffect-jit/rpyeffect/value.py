@@ -14,6 +14,8 @@ class Value(object):
         return self == other
     def compare(self, other):
         return default_compare(self, other)
+    def show(self):
+        return "<%s>" % self.__class__.__name__
 
 def default_compare(this, other):
     if this.equals(other):
@@ -93,6 +95,9 @@ class IntValue(UnboxableValue):
         else:
             return ORD_GT
 
+    def show(self):
+        return "%d" % self.value
+
 @unbox_in_ref
 class DoubleValue(UnboxableValue):
     _immutable_fields_ = ['value']
@@ -117,6 +122,9 @@ class DoubleValue(UnboxableValue):
             return ORD_LT
         else:
             return ORD_GT
+
+    def show(self):
+        return "%f" % self.value
 
 @unbox_in_ref
 class BoolValue(UnboxableValue):
@@ -143,6 +151,15 @@ class BoolValue(UnboxableValue):
         else:
             return ORD_GT
 
+    def show(self):
+        if self.value:
+            return "true"
+        else:
+            return "false"
+
+def escape_string(str):
+    return str # TODO
+
 class StringValue(Value):
     _immutable_fields_ = ['value']
     def __init__(self, value):
@@ -166,6 +183,9 @@ class StringValue(Value):
             return ORD_LT
         else:
             return ORD_GT
+
+    def show(self):
+        return "\"%s\"" % escape_string(self.value)
 
 class BytearrayValue(Value):
     _immutable_fields_ = ['value']
