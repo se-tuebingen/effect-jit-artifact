@@ -32,7 +32,7 @@ class EffektBackend(Language):
 
         if self.backend == "jit":
             result_path = os.path.abspath(f"./.effekt-out/{uniq_prefix}/")
-            e_proc = run(["sbt", "project effektJVM", f"run {additional_opts}--backend jit -o {result_path} --compile {path}"], cwd="./effekt")
+            e_proc = run(["sbt", "project effektJVM", f"run {additional_opts}--backend jit --no-optimize -o {result_path} --compile {path}"], cwd="./effekt")
             e_output = tee(e_proc, "[blue]effekt[/blue]| ")
             a_proc = run(["rpyeffect-asm/target/universal/stage/bin/rpyeffectasm", result_path + f"/{fname}.mcore.json", result_path + f"/{fname}.rpyeffect"])
             a_output = tee(a_proc, "[purple]rpyasm[/purple]| ")
