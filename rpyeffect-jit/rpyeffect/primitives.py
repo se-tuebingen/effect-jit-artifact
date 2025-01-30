@@ -15,6 +15,7 @@ from rpyeffect.util.debug import debug, debug_hooks
 from rpyeffect.util.interned import InternTable
 import rpyeffect.config as cfg
 from rpyeffect.representations import encode_str
+from rpyeffect.value import ValueNull
 
 LINE_BUFFER_LENGTH = 1024
 
@@ -627,6 +628,16 @@ class Primitives(object):
             arr = env.get_array(ins.regs[OPAQUE_PTR][0])
             i = env.get_int(ins.regs[NUMBER][1])
             env.set_ptr(outs.regs[OPAQUE_PTR][0], arr[i])
+
+        elif opid == "allocate(Int): Array[Top]":
+            arr = [ValueNull()] * env.get_int(ins.regs[NUMBER][0])
+            env.set_array(outs.regs[OPAQUE_PTR][0], arr)
+
+        elif opid == "unsafeSet(Array[Top], Int, Top): Unit":
+            arr = env.get_array(ins.regs[OPAQUE_PTR][0])
+            idx = env.get_int(ins.regs[NUMBER][1])
+            nv = env.get_ptr(ins.regs[OPAQUE_PTR][2])
+            arr[idx] = nv
 
         elif opid == "equals(Any, Any): Bool":
             l = env.get_ptr(ins.regs[OPAQUE_PTR][0])

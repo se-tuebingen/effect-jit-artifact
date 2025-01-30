@@ -17,6 +17,7 @@ extern global def allocate[T](size: Int): Array[T] =
     ret %Pos %z
   """
   vm "array::allocate(Int)"
+  jit "allocate(Int): Array[Top]"
 
 /// Creates a new Array of size `size` filled with the value `init`
 def array[T](size: Int, init: T): Array[T] = {
@@ -48,6 +49,7 @@ extern pure def size[T](arr: Array[T]): Int =
     ret %Int %z
   """
   vm "array::size[T](Array[T])"
+  jit "length(Array[Ptr]): Int"
 
 /// Gets the element of the `arr` at given `index` in constant time.
 /// Unchecked Precondition: `index` is in bounds (0 ≤ index < arr.size)
@@ -82,6 +84,7 @@ extern global def unsafeSet[T](arr: Array[T], index: Int, value: T): Unit =
     ret %Pos %z
   """
   vm "array::unsafeSet[T](Array[T], Int, T)"
+  jit "unsafeSet(Array[Top], Int, Top): Unit"
 
 
 
