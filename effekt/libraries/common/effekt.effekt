@@ -685,18 +685,21 @@ extern pure def bitwiseAnd(x: Int, y: Int): Int =
   chez "(logand ${x} ${y})"
   llvm "%z = and %Int ${x}, ${y} ret %Int %z"
   vm "effekt::bitwiseAnd(Int, Int)"
+  jit "infixAnd(Int, Int): Int"
 
 extern pure def bitwiseOr(x: Int, y: Int): Int =
   js "(${x} | ${y})"
   chez "(logior ${x} ${y})"
   llvm "%z = or %Int ${x}, ${y} ret %Int %z"
   vm "effekt::bitwiseOr(Int, Int)"
+  jit "infixOr(Int, Int): Int"
 
 extern pure def bitwiseXor(x: Int, y: Int): Int =
   js "(${x} ^ ${y})"
   chez "(logxor ${x} ${y})"
   llvm "%z = xor %Int ${x}, ${y} ret %Int %z"
   vm "effekt::bitwiseXor(Int, Int)"
+  jit "xor(Int, Int): Int"
 
 
 // Byte operations
