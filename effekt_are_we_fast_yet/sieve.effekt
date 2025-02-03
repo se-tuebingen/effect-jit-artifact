@@ -15,27 +15,14 @@ def run(size: Int) = {
       }
     }
   }
-  primeCount;
+  primeCount
 }
 
-def main() = benchmark(5000){run}
-
-
-def benchmark(testSize: Int) { run: Int => Int }: Unit = commandLineArgs() match {
-  // test mode
-  case Nil() => println(run(testSize))
-
-  // bench mode
-  case Cons(problemSize, _) =>
-    with on[WrongFormat].panic;
-
-    val n = problemSize.toInt
-
-    val before = relativeTimestamp()
-    relevant(run(n))
-    val after = relativeTimestamp()
-    val nanos = after - before
-    println(nanos)
+def main() = {
+  val n = on[WrongFormat].default{10}{ commandLineArgs().headOption.getOrElse{ "" }.toInt };
+  each(0, n - 1) { i => relevant(run(5000)) }
+  val r = run(5000)
+  println(r)
 }
 
 /**
@@ -45,4 +32,3 @@ def benchmark(testSize: Int) { run: Int => Int }: Unit = commandLineArgs() match
  */
 extern io def relevant(value: Int): Unit =
   default { () }
-

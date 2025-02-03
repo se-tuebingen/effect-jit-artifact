@@ -672,6 +672,7 @@ extern pure def bitwiseShl(x: Int, y: Int): Int =
   chez "(ash ${x} ${y})"
   llvm "%z = shl %Int ${x}, ${y} ret %Int %z"
   vm "effekt::bitwiseShl(Int, Int)"
+  jit "asl(Int, Int): Int"
 
 /// Arithmetic right shift
 extern pure def bitwiseShr(x: Int, y: Int): Int =

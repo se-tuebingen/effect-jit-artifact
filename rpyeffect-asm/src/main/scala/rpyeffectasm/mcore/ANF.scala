@@ -49,7 +49,9 @@ object BindHelper {
   }
 
   def letrec(d: List[Definition[Var]])(body: Binder ?=> Term[Var])(using B: Binder, ER: ErrorReporter): Term[Var] = {
-    B.current.addAll(d.map((_, true)))
+    for (bnd <- d) {
+      emit(bnd)
+    }
     body
   }
 
@@ -107,10 +109,11 @@ object ANF extends Phase[Program[ATerm], Program[Var]] {
         case Definition(name, binding, _) => Definition(name, in(name){ apply(binding) }, Nil)
       }){ apply(body) }
     case LetRec(Nil, body) => apply(body)
-    case LetRec(defs, body) => letrec(defs.map{
-      case Definition(name, Abs(params, body), _) => Definition(name, in(name){ Abs(params, bindHere { apply(body)}) }, Nil)
-      case Definition(name, binding, _) => Definition(name, in(name){ apply(binding) }, Nil)
-    }){ apply(body) }
+    case LetRec(defs, body) => defs.foreach {
+        case Definition(name, Abs(params, body), _) => emit(Definition(name, in(name){ Abs(params, bindHere { apply(body)}) }, Nil))
+        case Definition(name, binding, _) => emit(Definition(name, in(name){ apply(binding) }, Nil))
+      }
+      apply(body)
     case IfZero(cond, thn, els) => bindHere{ IfZero(bindAs(apply(cond.unroll), Base.Int), bindHere{ apply(thn) }, bindHere{ apply(els) }) }
     case Seq(ts) =>
       Seq(ts.map{ t => bindHere{ apply(t) }})

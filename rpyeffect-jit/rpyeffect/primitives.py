@@ -552,7 +552,7 @@ class Primitives(object):
         elif opid == "xor(Int, Int): Int":
             env.set_int(outs.regs[NUMBER][0], env.get_int(ins.regs[NUMBER][0]) ^ env.get_int(ins.regs[NUMBER][1]))
 
-        elif opid == "lsl(Int, Int): Int":
+        elif opid == "lsl(Int, Int): Int" or opid == "asl(Int, Int): Int":
             env.set_int(outs.regs[NUMBER][0], env.get_int(ins.regs[NUMBER][0]) << env.get_int(ins.regs[NUMBER][1]))
 
         elif opid == "lsr(Int, Int): Int":

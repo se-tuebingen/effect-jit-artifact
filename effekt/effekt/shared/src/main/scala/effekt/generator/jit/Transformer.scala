@@ -166,6 +166,9 @@ object Transformer {
       jit.Reset(jit.FreshLabel(), transform(reg), transform(body), Clause(List(r), r))
     case core.Stmt.Region(body) =>
       assert(false, "body of a `Region` is always a `BlockLit` with exactly one block param.")
+    case core.Stmt.Alloc(id, init, region, body) if region == symbols.builtins.globalRegion =>
+      jit.Primitive("mkRef(Ptr): Ref[Ptr]", List(transform(init)), List(jit.Var(id, jit.Ref(transform(core.Type.inferType(init))))),
+        transform(body))
     case core.Stmt.Alloc(id, init, region, body) =>
       jit.LetRef(jit.Var(id, jit.Ref(transform(core.Type.inferType(init)))), jit.Var(region, jit.Region), transform(init),
         transform(body))

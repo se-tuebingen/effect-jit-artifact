@@ -65,24 +65,11 @@ def run(n: Int) = {
   movesDone
 }
 
-def main() = benchmark(13){run}
-
-
-def benchmark(testSize: Int) { run: Int => Int }: Unit = commandLineArgs() match {
-  // test mode
-  case Nil() => println(run(testSize))
-
-  // bench mode
-  case Cons(problemSize, _) =>
-    with on[WrongFormat].panic;
-
-    val n = problemSize.toInt
-
-    val before = relativeTimestamp()
-    relevant(run(n))
-    val after = relativeTimestamp()
-    val nanos = after - before
-    println(nanos)
+def main() =  {
+  val n = on[WrongFormat].default{10}{ commandLineArgs().headOption.getOrElse{ "" }.toInt };
+  each(0, n - 1) { i => relevant(run(13)) }
+  val r = run(13)
+  println(r)
 }
 
 /**

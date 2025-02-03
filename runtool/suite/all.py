@@ -7,17 +7,18 @@ from runtool.util import store_logdict
 from runtool.suite.handler_bench import HandlerBenchmark
 from runtool.suite.my_benchmarks import MyBenchmarks
 from runtool.suite.koka_bench import KokaBench
-from runtool.suite.effekt_are_we_fast_yet import EffektAreWeFastYet
+from runtool.suite.are_we_fast_yet import AreWeFastYet
 
 suites = [
     HandlerBenchmark,
     MyBenchmarks,
     KokaBench,
-    EffektAreWeFastYet
+    AreWeFastYet
 ]
 
 benchmarks = [
     *HandlerBenchmark.all(),
+    *AreWeFastYet.all(),
     *[bm for bm in MyBenchmarks.all() if bm.name in ["multiple_handlers", "to_outermost_handler", "unused_handlers", "startup"]],
     # Benchmark("countdown", ["200000000"], ["0"], HandlerBenchmark()),
     # Benchmark("fibonacci_recursive", ["42"], ["267914296"], HandlerBenchmark()),

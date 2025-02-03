@@ -28,6 +28,7 @@ object JsonPrettyPrinter extends JsonPrinter with Phase[Program[AsmFlags, Id, Id
     case i: Int => i.toString
     case d: Double => d.toString
     case s: String => s"\"${escape(s)}\""
+    case b: Boolean => s"${b}"
     case FormatConst(fmt, value) => jsonObjectSmall(ListMap("format" -> toDoc(fmt), "value" -> toDoc(value)))
   }
 
