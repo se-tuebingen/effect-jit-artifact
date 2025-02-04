@@ -161,7 +161,7 @@ end
 
 end -- class NBodySystem
 
-local nbody = {} do
+local nbody = { NBodySystem = NBodySystem } do
 setmetatable(nbody, {__index = require'benchmark'})
 
 function nbody:inner_benchmark_loop (inner_iterations)

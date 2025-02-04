@@ -37,6 +37,13 @@ def dorun(runcmd: list[str], lang: Language, benchmark: Benchmark, args: list[st
     print(f"RUNNING {runcmd + args}")
     log(benchmark.name, lang.name, None)
     log(benchmark.name, lang.name, "args", args)
+
+    if runcmd[0].startswith("PWD="):
+        pwd = runcmd[0].split("=", 1)[1]
+        env["PWD"] = pwd
+        os.chdir(pwd)
+        runcmd = runcmd[1:]
+    
     try:
         proc = run((["timeout", timeout] if timeout is not None else [])+ runcmd + args, env=env)
         output = tee(proc, "[green]run[/green] | ")
@@ -50,6 +57,8 @@ def dorun(runcmd: list[str], lang: Language, benchmark: Benchmark, args: list[st
         log(benchmark.name, lang.name, "run", "failed")
         print("FAILED")
         return list()
+    
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     print("DONE")
     if args == benchmark.inputs and benchmark.expected is not None:
         fail = False
@@ -331,13 +340,18 @@ def doplot(cbenchmark: Benchmark, clangs: list[Language], sargs: list[str] | Non
     plt.show()
 
 def mkcmd(runcmd: list[str], benchmark: Benchmark, args: list[str] | None = None, param = None) -> str:
+    cd = ""
+    final_runcmd = runcmd
+    if runcmd[0].startswith("PWD="):
+        cd = f"cd {runcmd[0].split('=', 1)[1]}; "
+        final_runcmd = runcmd[1:]
     if args is None:
         args = benchmark.inputs
     if param is not None:
         args = [re.sub(r"[$]p=(.*)", str(param), arg) for arg in args]
     else:
         args = [re.sub(r"[$]p=(.*)", lambda m: m[1], arg) for arg in args]
-    return (f"timeout {timeout} " if timeout is not None else "") + " ".join(c.replace(" ", "\\ ").replace('"', "\\\"") for c in (runcmd + args))
+    return (f"{cd}timeout {timeout} " if timeout is not None else "") + " ".join(c.replace(" ", "\\ ").replace('"', "\\\"") for c in (final_runcmd + args))
 
 
 

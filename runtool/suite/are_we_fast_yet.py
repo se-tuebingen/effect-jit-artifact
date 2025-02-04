@@ -6,6 +6,7 @@ from runtool.suite import BenchmarkSuite, Benchmark
 def translate_lang_names_for_smarr_are_we_fast_yet(lang_name):
     match lang_name:
         case "python": return "Python"
+        case "lua": return "Lua"
         case _: return lang_name
 
 
