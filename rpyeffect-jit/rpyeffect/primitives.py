@@ -16,6 +16,7 @@ from rpyeffect.util.interned import InternTable
 import rpyeffect.config as cfg
 from rpyeffect.representations import encode_str
 from rpyeffect.value import ValueNull
+from rpyeffect.instructions import ALLOCATE
 
 LINE_BUFFER_LENGTH = 1024
 
@@ -582,10 +583,8 @@ class Primitives(object):
         elif opid == "setGlobal(String, Num): Unit":
             program.add_global_num(env.get_str(ins.regs[OPAQUE_PTR][0]), env.get_num(ins.regs[NUMBER][0]))
 
-        elif opid == "mkRef(Ptr): Ref[Ptr]":
-            env.set_ref(outs.regs[OPAQUE_PTR][0], Ref(env.get_ptr(ins.regs[OPAQUE_PTR][0])))
-        elif opid == "mkRef(Num): Ref[Num]":
-            env.set_ref(outs.regs[OPAQUE_PTR][0], Ref(env.get_num(ins.regs[NUMBER][0])))
+        elif opid == "mkRef(Ptr): Ref[Ptr]" or opid == "mkRef(Num): Ref[Num]":
+            self.panic("mkRef in parsed program. Should have been desugared while loading.")
 
         elif opid == "getRef(Ref[Ptr]): Ptr":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
@@ -599,11 +598,13 @@ class Primitives(object):
         elif opid == "setRef(Ref[Ptr], Ptr): Unit":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
             assert isinstance(r, Ref)
-            r.put_ptr(env.get_ptr(ins.regs[OPAQUE_PTR][1]))
+            val = env.get_ptr(ins.regs[OPAQUE_PTR][1])
+            r.put_ptr(val)
         elif opid == "setRef(Ref[Num], Num): Unit":
             r = env.get_ref(ins.regs[OPAQUE_PTR][0])
             assert isinstance(r, Ref)
-            r.put_ptr(env.get_num(ins.regs[NUMBER][1]))
+            val = env.get_num(ins.regs[NUMBER][1])
+            r.put_ptr(val)
 
         elif opid == "box(Num): Ptr":
             env.set_ptr(outs.regs[OPAQUE_PTR][0], env.get_num(ins.regs[NUMBER][0]))

@@ -593,7 +593,10 @@ def parse_PRIM_OP(tokens):
             ins = parse_register_list(tokens)
         else:
             skip_value(tokens)
-    return PRIM_OP(name, outs, ins)
+    if name == "mkRef(Ptr): Ref[Ptr]" or name == "mkRef(Num): Ref[Num]":
+        return ALLOCATE(outs[OPAQUE_PTR][0], OPAQUE_PTR, ins[OPAQUE_PTR][0], -1)
+    else:
+        return PRIM_OP(name, outs, ins)
 
 def parse_ADD(tokens):
     out, in1, in2 = 0,0,0

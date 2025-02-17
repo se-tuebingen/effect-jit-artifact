@@ -363,12 +363,13 @@ class INVOKE(Instr):
                 % (self.receiver, self.tag.__repr__(), self.args.__repr__()))
 
 class ALLOCATE(Instr):
-    _immutable_fields_ = [ 'out', 'ty', 'init', 'region' ]
+    _immutable_fields_ = [ 'out', 'ty', 'init', 'region', 'unboxed_tpe?' ]
     def __init__(self, out, ty, init, region):
         self.out = out
         self.ty = ty
         self.init = init
         self.region = region
+        self.unboxed_tpe = None
 
     def __repr__(self):
         return ("{\"op\": \"Allocate\", \"out\": %d, \"type\": \"%s\", \"init\": %d, \"region\": %d}"

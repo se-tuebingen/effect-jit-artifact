@@ -303,10 +303,12 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
 
         return jump_to(target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, ALLOCATE):
-        ref = Ref(env.get_ptr(op.init))
-        region = env.get_region(op.region)
+        init = env.get_ptr(op.init)
+        ref = Ref(init, op)
         env.set_ref(op.out, ref)
-        region.register(ref)
+        if op.region >= 0:
+            region = env.get_region(op.region)
+            region.register(ref)
     elif isinstance(op, LOAD):
         ref = env.get_ref(op.ref)
         assert(isinstance(ref, Ref))
@@ -314,7 +316,8 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
     elif isinstance(op, STORE):
         ref = env.get_ref(op.ref)
         assert(isinstance(ref, Ref))
-        ref.put_ptr(env.get_ptr(op.value_reg))
+        val = env.get_ptr(op.value_reg)
+        ref.put_ptr(val)
     elif isinstance(op, LOAD_LIB):
         lib, flag = load_lib(program, env.get_str(op.path), primitives)
         env.set_lib(0, lib)
