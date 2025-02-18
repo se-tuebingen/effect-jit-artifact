@@ -7,6 +7,7 @@ def translate_lang_names_for_smarr_are_we_fast_yet(lang_name):
     match lang_name:
         case "python": return "Python"
         case "lua": return "Lua"
+        case "js": return "JavaScript"
         case _: return lang_name
 
 
@@ -14,7 +15,7 @@ def translate_lang_names_for_smarr_are_we_fast_yet(lang_name):
 class AreWeFastYet(BenchmarkSuite):
     inputs_and_outputs = {
         "bounce": (10000, 1331),
-        "queens": (1, True),
+        "queens": (10000, True),
         "list_tail": (10000, 10),
         "mandelbrot": (500, 191),
         "nbody": (250000, "%f" % -0.1690859889909308),

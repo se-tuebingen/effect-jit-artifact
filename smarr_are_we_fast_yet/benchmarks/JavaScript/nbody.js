@@ -186,3 +186,4 @@ class NBody extends Benchmark {
 }
 
 exports.newInstance = () => new NBody();
+exports.NBodySystem = NBodySystem;
