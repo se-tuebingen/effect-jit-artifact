@@ -84,6 +84,14 @@ out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-opt: $(PYTHON_FILES)
 	$(PYTHON) pypy/rpython/bin/rpython --output=rpyeffect-jit-$(ARCH)-$(OS)-no-specialization --opt=jit ./rpyeffect/main.py
 	mv ./rpyeffect-jit-$(ARCH)-$(OS)-no-specialization $@
 	mv rpyeffect/config.py.bak rpyeffect/config.py
+out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-labelbydefsite: $(PYTHON_FILES)
+	echo "Without label by def site:"
+	cp rpyeffect/config.py rpyeffect/config.py.bak
+	sed -i 's/^allocation_site_based_eq_label *= *True$$/allocation_site_based_eq_label *= *False/g' rpyeffect/config.py
+	mkdir -p out/bin/$(ARCH)-$(OS)
+	$(PYTHON) pypy/rpython/bin/rpython --output=rpyeffect-jit-$(ARCH)-$(OS)-no-labelbydefsite --opt=jit ./rpyeffect/main.py
+	mv ./rpyeffect-jit-$(ARCH)-$(OS)-no-labelbydefsite $@
+	mv rpyeffect/config.py.bak rpyeffect/config.py
 
 
 benchmark: benchmark_results.json

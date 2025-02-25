@@ -22,7 +22,9 @@ adjustments = [
     # "no-addcej-no-context", # not built rn.
     "no-context",
     # "no-opt", # not built rn.
-    "no-specialization"
+    "no-specialization",
+    # "no-labelbydefsite"
+    "no-labelbydefsite",
 ]
 
 def with_adjusted_jit_backends(l: Language) -> list[Language]:

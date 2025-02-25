@@ -16,3 +16,6 @@ debug = False
 
 # Enable additional debug output
 print_debug = debug
+
+# Enable label_eq based on allocation site
+allocation_site_based_eq_label = True

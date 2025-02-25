@@ -165,10 +165,13 @@ def get_dynamic(metastack, n, label):
 class Label(Value):
     _immutable_fields_ = [ "origin" ]
     def __init__(self, origin):
-        self.origin = origin
+        if cfg.allocation_site_based_eq_label:
+            self.origin = origin
 subtpe_representation("label", "ptr", Label)
 
 def eq_label(x, y):
+    if not cfg.allocation_site_based_eq_label:
+        return x == y
     if x is None and y is None:
         return True
     elif x is None or y is None:
@@ -178,7 +181,10 @@ def eq_label(x, y):
     else:
         return x == y
 def fresh_label(bl, ins):
-    return Label(bl * 1024 + ins)
+    if cfg.allocation_site_based_eq_label:
+        return Label(bl * 1024 + ins)
+    else:
+        return Label(0)
 
 def metastack_depth(metastack):
     cur = metastack
