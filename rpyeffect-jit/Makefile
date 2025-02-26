@@ -2,10 +2,14 @@ PYTHON_FILES = $(shell find rpyeffect/ -type f -iname '*.py')
 BENCHMARKS = $(patsubst test/%,results/%,$(filter-out test/shift_resume, $(filter-out %.args,$(wildcard test/*))))
 OS = $(shell uname -s)
 ARCH = $(shell uname -m)
+ifeq (, $(shell which pypy))
 $(info Note: Compiling using cpython, might be slower)
 PYTHON = python2
+else
+PYTHON = pypy
+endif
 
-all: out/bin/$(ARCH)-$(OS)/rpyeffect-jit out/bin/$(ARCH)-$(OS)/rpyeffect-interpret out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-specialization out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-context out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-addcej out/bin/$(ARCH)-$(OS)/rpyeffect-jit-2-context
+all: out/bin/$(ARCH)-$(OS)/rpyeffect-jit out/bin/$(ARCH)-$(OS)/rpyeffect-interpret out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-specialization out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-context out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-addcej out/bin/$(ARCH)-$(OS)/rpyeffect-jit-2-context out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-labelbydefsite
 
 .PHONY: benchmark all test jitlogs
 
@@ -87,7 +91,7 @@ out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-opt: $(PYTHON_FILES)
 out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-labelbydefsite: $(PYTHON_FILES)
 	echo "Without label by def site:"
 	cp rpyeffect/config.py rpyeffect/config.py.bak
-	sed -i 's/^allocation_site_based_eq_label *= *True$$/allocation_site_based_eq_label *= *False/g' rpyeffect/config.py
+	sed -i 's/^allocation_site_based_eq_label *= *True$$/allocation_site_based_eq_label = False/g' rpyeffect/config.py
 	mkdir -p out/bin/$(ARCH)-$(OS)
 	$(PYTHON) pypy/rpython/bin/rpython --output=rpyeffect-jit-$(ARCH)-$(OS)-no-labelbydefsite --opt=jit ./rpyeffect/main.py
 	mv ./rpyeffect-jit-$(ARCH)-$(OS)-no-labelbydefsite $@

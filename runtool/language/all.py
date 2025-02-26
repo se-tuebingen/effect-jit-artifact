@@ -22,7 +22,7 @@ langs: list[Language] = [
     EffBackend("plain-ocaml"),
     OldEffBackend("plain-ocaml"),
     *with_adjusted_jit_backends(EffBackend("jit")),
-    HeliumBackend("rpyeffect"),
+    # HeliumBackend("rpyeffect"),
     KokaBackend("js"), KokaBackend("c"),
     *with_adjusted_jit_backends(KokaBackend("vm")),
     JSBackend("v8"), JSBackend("spider"),

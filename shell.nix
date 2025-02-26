@@ -13,6 +13,7 @@ pkgs.mkShell {
     nodejs
     # effekt, asm
     sbtWithJre myJre
+    libuv
     # koka
     stack cmake
     # eff
