@@ -37,11 +37,11 @@ class OldEffBackend(Language):
             shutil.copy(os.path.join(os.path.dirname(path), "./wrapper.ml"), os.path.join(result_path, "./wrapper.ml"))
 
             # Ocamlformat
-            f_proc = run_to_file(["opam", "exec", "--switch", "4.12.0", "--", "ocamlformat", result_path + f"/{fname}.{ext}", "--enable-outside-detected-project"], result_path + f"/generated.ml", cwd=result_path)
+            f_proc = run_to_file(["ocamlformat", result_path + f"/{fname}.{ext}", "--enable-outside-detected-project"], result_path + f"/generated.ml", cwd=result_path)
             f_output = tee_stderr(f_proc, "[blue]  fmt [/blue]|")
 
             # Ocamlopt
-            o_proc = run(["opam", "exec", "--switch", "4.12.0", "--", "ocamlopt", "-O3", "-o", result_path + f"/{fname}", "OcamlHeader.ml", "generated.ml", "wrapper.ml"], cwd=result_path)
+            o_proc = run(["ocamlopt", "-O3", "-o", result_path + f"/{fname}", "OcamlHeader.ml", "generated.ml", "wrapper.ml"], cwd=result_path)
             o_output = tee(o_proc, "[blue]   opt[/blue]|")
 
             return [result_path + f"/{fname}"] if os.path.exists(result_path + f"/{fname}") else None

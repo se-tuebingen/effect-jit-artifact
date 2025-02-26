@@ -22,9 +22,18 @@ class KokaBackend(Language):
         output = tee(proc, "[blue]comp[/blue]| ")
         c = output[-1]
         result_path, result = None, None
+        use_next = False
         for c in output:
+            if use_next:
+                path_component = c.lstrip().rstrip()
+                result_path = os.path.abspath("./koka/" + path_component)
+                use_next = False
             if re.match("[^A-Za-z]*created[^A-Za-z]*.*", c):
-                result_path = os.path.abspath("./koka/" + c.split(":")[-1].lstrip().rstrip())
+                path_component = c.split(":")[-1].lstrip().rstrip()
+                if path_component == "":
+                    use_next = True
+                else:
+                    result_path = os.path.abspath("./koka/" + path_component)
         if result_path is not None:
             uniq_prefix = name + "_" + str(uuid.uuid4())
             new_result_path = os.path.join(os.path.dirname(os.path.dirname(result_path)), 

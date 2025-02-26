@@ -13,7 +13,7 @@
 #   $ cabal new-run koka
 # See also <https://github.com/koka-lang/koka#build-notes>.
 
-arch: aarch64
+arch: x86_64 #aarch64
 
 resolver: lts-22.11            # ghc 9.6.4 -- on windows set the codepage to utf-8: `chcp 65001`
 # resolver: lts-21.24           # ghc 9.4.8
@@ -47,3 +47,7 @@ allow-newer: true
 flags:
   mintty:
     Win32-2-13-1: false
+
+nix:
+  enable: true
+  packages: [temurin-jre-bin-11]
