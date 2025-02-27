@@ -1,0 +1,22 @@
+def greaterFifteen() = {
+  var total = 0;
+  each(0, 100) { (i) {label} =>
+    total = total + i;
+    if (total > 15) label.break()
+    println(i)
+  }
+}
+
+def sumPositive() = {
+  var total = 0;
+  each(-10, 10) { (i) {label} =>
+    if (i < 0) label.continue()
+    total = total + i
+  }
+  println(total)
+}
+
+def main() = {
+  greaterFifteen()
+  sumPositive()
+}

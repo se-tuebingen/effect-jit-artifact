@@ -1,0 +1,135 @@
+module parser
+
+effect flip(): Bool
+effect next(): String
+effect fail(msg: String): Nothing
+effect error(msg: String): Nothing
+
+type Stream {
+  Cons(el: String, rest: Stream);
+  Nil()
+}
+
+type Option[R] {
+  Some(n: R);
+  None()
+}
+
+type ParseResult[R] {
+  Success(t: R);
+  Failure(msg: String);
+  ParseError(msg: String)
+}
+
+def accept(exp: String) = {
+    val got = do next();
+    if (got == exp) {
+        got
+    } else {
+        do fail("Expected " ++ exp ++ " but got " ++ got)
+    }
+}
+
+def or[R] { p: => R } { q: => R } =
+  if (do flip()) { p() } else { q() }
+
+def asOrB(): Int / { flip, next, fail } =
+  or { accept("a"); asOrB() + 1 } { accept("b"); 0 }
+
+def parens(): Int / { flip, next, fail } =
+  or { accept("()"); 0 }
+     { accept("("); val res = parens(); accept(")"); res + 1 }
+
+// Int = Result
+def reader[R](s: Stream) { p : => R / next } : R / fail = {
+    var inn = s;
+    try{
+      p()
+    } with next { () => inn match {
+        case Nil() =>
+          do fail("Unexpected Nil")
+        case Cons(el, rest) =>
+          inn = rest;
+          resume(el)
+      }
+    }
+}
+
+def eager[R] { p: => R / { flip, fail, error } }: ParseResult[R] = try {
+  Success(p())
+} with flip { () =>
+    resume(true) match {
+        case Failure(msg) => resume(false)
+        case Success(res) => Success(res)
+        case ParseError(msg) => ParseError(msg)
+    }
+} with fail { (msg) =>
+    Failure(msg)
+} with error { (msg) =>
+    ParseError(msg)
+}
+
+def commit[R] { p : => R / fail } : R / error =
+  try { p() } with fail { (msg) =>
+    do error(msg)
+  }
+
+def nocut[R] { p: => R / error } : R / fail =
+  try { p() } with error { (msg) =>
+     do fail(msg)
+  }
+
+def opt[R] { p: => R }: Option[R] / flip =
+   or { Some(p()) } { None() }
+
+def parse[R](s: Stream) { p : => R / { flip, next, fail, error } } =
+  eager {
+    reader(s) {
+      p()
+    }
+  }
+
+def ex() =
+  or {
+    accept("do");
+    commit { accept("foo"); 0 }
+  } {
+    accept("do");
+    accept("bar");
+    1
+  }
+
+def p1() = {
+  val inn = ["a", "a", "a", "b"];
+  parse(inn) { asOrB() } match {
+    case Success(n) => println(n)
+    case Failure(msg) => ()
+    case ParseError(msg) => ()
+  }
+}
+
+def p2() = {
+  val inn = ["do", "foo"];
+  parse(inn) { ex() } match {
+    case Success(n) => println(n)
+    case Failure(msg) => ()
+    case ParseError(msg) => ()
+  }
+}
+
+def p4() = {
+  val inn = ["(", "(", "()", ")", ")"];
+  parse(inn) { parens() } match {
+    case Success(n) => println(n)
+    case Failure(msg) => ()
+    case ParseError(msg) => ()
+  }
+}
+
+
+
+def main() = {
+    p1();
+    p2();
+    p4()
+}
