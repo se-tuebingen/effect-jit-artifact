@@ -40,7 +40,7 @@ class EffektBackend(Language):
             return [jit_path, rpypath] if os.path.exists(rpypath) else None
         elif self.backend == "ml":
             result_path = os.path.abspath(f"./.effekt-out/{uniq_prefix}/")
-            e_proc = run(["sbt", "project effektJVM", f"run {additional_opts}--backend {self.backend} -o {result_path} --build {path}"], cwd="./effekt")
+            e_proc = run(["sbt", "project effektJVM", f"run {additional_opts}--backend {self.backend} -o {result_path} --build {path}"], cwd="./effekt-ml")
             e_output = tee(e_proc, "[blue]effekt[/blue]| ")
             exepath = f"{result_path}/mlton-main"
             return [exepath] if os.path.exists(exepath) else None
