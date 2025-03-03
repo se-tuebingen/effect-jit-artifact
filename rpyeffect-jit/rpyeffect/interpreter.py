@@ -307,9 +307,8 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
         ref = Ref(init, op)
         if op.region >= 0:
             region = env.get_region(op.region)
-        env.set_ref(op.out, ref)
-        if op.region >= 0:
             region.register(ref)
+        env.set_ref(op.out, ref)
     elif isinstance(op, LOAD):
         ref = env.get_ref(op.ref)
         assert(isinstance(ref, Ref))
