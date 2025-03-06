@@ -311,15 +311,19 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
     columns = [be for lang in supercolumns for be in columns_dict[lang]]
     with open(fname_abs, "w") as f:
         f.write(f"\\begin{{tabular}}{{l{' r' * len(columns)}}}\n\\toprule")
-        for lang in supercolumns:
-            f.write(f" & \\multicolumn{{{len(columns_dict[lang])}}}{{c}}{{{lang.replace('_','-')}}}")
-        f.write(" \\\\\n")
-        last_end = 1
-        for lang in supercolumns:
-            end = last_end + len(columns_dict[lang])
-            f.write(f"\\cmidrule(l){{{last_end+1}-{end}}}")
-            last_end = end
-        f.write(" \n")
+        if len(supercolumns) > 1:
+            for lang in supercolumns:
+                f.write(f" & \\multicolumn{{{len(columns_dict[lang])}}}{{c}}{{{lang.replace('_','-')}}}")
+            f.write(" \\\\\n")
+            last_end = 1
+            for lang in supercolumns:
+                end = last_end + len(columns_dict[lang])
+                f.write(f"\\cmidrule(l){{{last_end+1}-{end}}}")
+                last_end = end
+            f.write(" \n")
+        else:
+            f.write(" ")
+            f.write(supercolumns[0].replace('_','-'))
         for lang in supercolumns:
             for be in columns_dict[lang]:
                 bname = re.sub(f'^{lang}-', "", be.name)
