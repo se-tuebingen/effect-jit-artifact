@@ -330,13 +330,13 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
 
         # geometric mean vs JIT
         f.write("\n\\midrule")
-        f.write("\n geomean speedup")
+        f.write("\n geomean slowdown")
         if all(len(geomean_data[lang]) > 1 for lang in supercolumns):
             # within group
             for lang in supercolumns:
                 base_be = columns_dict[lang][0]
                 for be in columns_dict[lang]:
-                    speedups = [geomean_data[lang][base_be][bm] / geomean_data[lang][be][bm] for bm in geomean_data[lang][be].keys() if bm in geomean_data[lang][base_be]]
+                    speedups = [geomean_data[lang][be][bm] / geomean_data[lang][base_be][bm] for bm in geomean_data[lang][be].keys() if bm in geomean_data[lang][base_be]]
                     if len(speedups) == 0:
                         f.write(" & ")
                         continue
@@ -348,7 +348,7 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
             base_be = columns_dict[base_lang][0]
             for lang in supercolumns:
                 for be in columns_dict[lang]:
-                    speedups = [geomean_data[base_lang][base_be][bm] / geomean_data[lang][be][bm] for bm in geomean_data[lang][be].keys() if bm in geomean_data[base_lang][base_be]]
+                    speedups = [geomean_data[lang][be][bm] / geomean_data[base_lang][base_be][bm] for bm in geomean_data[lang][be].keys() if bm in geomean_data[base_lang][base_be]]
                     if len(speedups) == 0:
                         f.write(" & ")
                         continue
