@@ -19,6 +19,8 @@ from runtool.config import SYSTEM, jit_path, timeout
 from runtool.language.all import Language, langs, getlangs
 from runtool.suite.all import Benchmark, getbenchmarks
 from runtool.suite import get_benchmark_path, getcmd, docompile
+from statistics import geometric_mean
+import hashlib
 
 # Change working directory to the directory containing this file
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
@@ -271,7 +273,13 @@ def doexport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[s
 
 def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None) -> None:
     os.makedirs("./.exported", exist_ok=True)
-    export_dir = f"./.exported/{'_'.join(sorted(b.name for b in cbenchmarks))}/{'_'.join(sorted(l.name for l in clangs))}"
+    export_dirname = '_'.join(sorted(b.name for b in cbenchmarks))
+    if len(export_dirname) > 250:
+        export_dirname = f"{export_dirname[:150]}__{hashlib.md5(export_dirname.encode('utf-8')).hexdigest()}"
+    export_subdirname = '_'.join(sorted(l.name for l in clangs))
+    if len(export_subdirname) > 250:
+        export_subdirname = f"{export_subdirname[:150]}__{hashlib.md5(export_subdirname.encode('utf-8')).hexdigest()}"
+    export_dir = f"./.exported/{export_dirname}/{export_subdirname}"
     os.makedirs(export_dir, exist_ok=True)
     fname_abs = f"{export_dir}/table.tex"
     columns_dict = {}
@@ -302,6 +310,7 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
                 f.write(f" & {bname}")
         f.write(" \\\\\n\\midrule")
 
+        geomean_data = {lang: {be: dict() for be in columns_dict[lang]} for lang in supercolumns}
         for benchmark in sorted(cbenchmarks, key=lambda x: x.name):
             f.write(f"\n{benchmark.name.replace('_','-')}")
             for lang in supercolumns:
@@ -313,9 +322,42 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
                         f.write(f" & ")
                     elif rel_result == 1.0:
                         f.write(f" & $\\mathbf{{{abs_result:.3f}}}$")
+                        geomean_data[lang][be][benchmark] = abs_result
                     else:
                         f.write(f" & ${abs_result:.3f}$")
+                        geomean_data[lang][be][benchmark] = abs_result
             f.write(" \\\\")
+
+        # geometric mean vs JIT
+        f.write("\n\\midrule")
+        f.write("\n geomean speedup")
+        if all(len(geomean_data[lang]) > 1 for lang in supercolumns):
+            # within group
+            for lang in supercolumns:
+                base_be = columns_dict[lang][0]
+                for be in columns_dict[lang]:
+                    speedups = [geomean_data[lang][base_be][bm] / geomean_data[lang][be][bm] for bm in geomean_data[lang][be].keys() if bm in geomean_data[lang][base_be]]
+                    if len(speedups) == 0:
+                        f.write(" & ")
+                        continue
+                    geomean = geometric_mean(speedups)
+                    f.write(f" & ${geomean:.3f}$")
+        else:
+            # globally
+            base_lang = "effekt"
+            base_be = columns_dict[base_lang][0]
+            for lang in supercolumns:
+                for be in columns_dict[lang]:
+                    speedups = [geomean_data[base_lang][base_be][bm] / geomean_data[lang][be][bm] for bm in geomean_data[lang][be].keys() if bm in geomean_data[base_lang][base_be]]
+                    if len(speedups) == 0:
+                        f.write(" & ")
+                        continue
+                    geomean = geometric_mean(speedups)
+                    f.write(f" & ${geomean:.3f}$")
+            
+        f.write(" \\\\")
+
+        # end of table
         f.write(f"\n\\bottomrule\n\\end{{tabular}}")
     
     return fname_abs
