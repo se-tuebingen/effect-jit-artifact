@@ -22,6 +22,22 @@ from runtool.suite import get_benchmark_path, getcmd, docompile
 from statistics import geometric_mean
 import hashlib
 
+extended_handler_suite = "suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers"
+paper_tables = {
+    "table.tex": 
+        { "langs": "eff-jit,eff-plain-ocaml,oldeff-plain-ocaml,effekt-jit,effekt-js,effekt-llvm,effekt-ml,koka-vm,koka-c,koka-js",
+            "benchmarks": extended_handler_suite },
+    "table_baseline.tex": 
+        { "langs": "effekt-jit,js-v8,ocaml5,python-cpython,python-pypy,lua-lua,lua-luajit",
+            "benchmarks": "suite:are-we-fast-yet" },
+    "table_effects_in_other_languages.tex":
+        { "langs": "eff-jit,effekt-jit,js-v8,koka-vm,ocaml5,python-cpython,python-pypy",
+            "benchmarks": "countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup" },
+    "eff_ablation_table.tex": { "langs": "/eff-jit.*", "benchmarks": extended_handler_suite },
+    "effekt_ablation_table.tex": { "langs": "/effekt-jit.*", "benchmarks": extended_handler_suite },
+    "koka_ablation_table.tex": { "langs": "/koka-vm.*", "benchmarks": extended_handler_suite },
+}
+
 # Change working directory to the directory containing this file
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -395,7 +411,38 @@ def mkcmd(runcmd: list[str], benchmark: Benchmark, args: list[str] | None = None
         args = [re.sub(r"[$]p=(.*)", lambda m: m[1], arg) for arg in args]
     return (f"{cd}timeout {timeout} " if timeout is not None else "") + " ".join(c.replace(" ", "\\ ").replace('"', "\\\"") for c in (final_runcmd + args))
 
+def dobenchmarkall(cbenchmarks, clangs, sargs):
+    # Compile
+    runcmds: dict[Benchmark,dict[Language,list[str] | None]] = dict()
+    for benchmark in cbenchmarks:
+        runcmds[benchmark] = {}
+        for lang in clangs:
+            runcmd = docompile(lang, benchmark)
+            runcmds[benchmark][lang] = runcmd
 
+    # Do a test run
+    for benchmark in cbenchmarks:
+        for lang in clangs:
+            runcmd = runcmds[benchmark][lang]
+            res = None
+            if runcmd is not None:
+                res = dorun(runcmd, lang, benchmark, sargs)
+            if res is None:
+                runcmds[benchmark][lang] = None  # TODO error reporting
+    
+    os.makedirs("./.results/", exist_ok=True)
+    
+    # Run and benchmark
+    for benchmark in cbenchmarks:
+        print("Unsupported: " + ",".join(l.name for l, rc in runcmds[benchmark].items() if rc is None))
+        benchmark_name = benchmark.name
+        if sargs is not None:
+            benchmark_name += "_" + "_".join(sargs)
+        hargs = [x for lang, runcmd in runcmds[benchmark].items() if runcmd is not None for x in ["-n", f"{lang.name}:{benchmark_name}", mkcmd(runcmd, benchmark, sargs)]]
+        cmd = (["hyperfine", "-i", "--export-json", f"./.results/.{benchmark_name}-results.json", *hargs])
+        ecmd = [f"'{c}'" for c in cmd]
+        print(f"cmd: {' '.join(ecmd)}")
+        subprocess.run(cmd)
 
 if __name__ == "__main__":
     sargs = None
@@ -444,40 +491,24 @@ if __name__ == "__main__":
         clangs = getlangs(args.langs)
         cbenchmarks = getbenchmarks(args.benchmarks)
 
-        # Compile
-        runcmds: dict[Benchmark,dict[Language,list[str] | None]] = dict()
-        for benchmark in cbenchmarks:
-            runcmds[benchmark] = {}
-            for lang in clangs:
-                runcmd = docompile(lang, benchmark)
-                runcmds[benchmark][lang] = runcmd
-
-        # Do a test run
-        for benchmark in cbenchmarks:
-            for lang in clangs:
-                runcmd = runcmds[benchmark][lang]
-                res = None
-                if runcmd is not None:
-                    res = dorun(runcmd, lang, benchmark, sargs)
-                if res is None:
-                    runcmds[benchmark][lang] = None  # TODO error reporting
-        
-        os.makedirs("./.results/", exist_ok=True)
-        
-        # Run and benchmark
-        for benchmark in cbenchmarks:
-            print("Unsupported: " + ",".join(l.name for l, rc in runcmds[benchmark].items() if rc is None))
-            benchmark_name = benchmark.name
-            if sargs is not None:
-                benchmark_name += "_" + "_".join(sargs)
-            hargs = [x for lang, runcmd in runcmds[benchmark].items() if runcmd is not None for x in ["-n", f"{lang.name}:{benchmark_name}", mkcmd(runcmd, benchmark, sargs)]]
-            cmd = (["hyperfine", "-i", "--export-json", f"./.results/.{benchmark_name}-results.json", *hargs])
-            ecmd = [f"'{c}'" for c in cmd]
-            print(f"cmd: {' '.join(ecmd)}")
-            subprocess.run(cmd)
+        dobenchmarkall(cbenchmarks, clangs, sargs)
 
         # Report
         doreport(cbenchmarks, clangs, sargs)
+
+      case "benchmark-for-paper":
+        clangs = set()
+        cbenchmarks = set()
+        for name, conf in paper_tables.items():
+            clangs |= getlangs(conf['langs'])
+            cbenchmarks |= getbenchmarks(conf['benchmarks'])
+        
+        a = dobenchmarkall(cbenchmarks, clangs, sargs)
+
+        for name, conf in paper_tables.items():
+            lclangs = getlangs(conf['langs'])
+            lcbenchmarks = getbenchmarks(conf['benchmarks'])
+            doreport(lcbenchmarks, lclangs, sargs)
 
       case "bm-param":
           parser = ArgumentParser()
@@ -607,22 +638,6 @@ if __name__ == "__main__":
             target = "./.exported/paper_tables/"
         else:
             target = args.target
-
-        extended_handler_suite = "suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers"
-        paper_tables = {
-            "table.tex": 
-                { "langs": "eff-jit,eff-plain-ocaml,oldeff-plain-ocaml,effekt-jit,effekt-js,effekt-llvm,effekt-ml,koka-vm,koka-c,koka-js",
-                  "benchmarks": extended_handler_suite },
-            "table_baseline.tex": 
-                { "langs": "effekt-jit,js-v8,ocaml5,python-cpython,python-pypy,lua-lua,lua-luajit",
-                  "benchmarks": "suite:are-we-fast-yet" },
-            "table_effects_in_other_languages.tex":
-                { "langs": "eff-jit,effekt-jit,js-v8,koka-vm,ocaml5,python-cpython,python-pypy",
-                  "benchmarks": "countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup" },
-            "eff_ablation_table.tex": { "langs": "/eff-jit.*", "benchmarks": extended_handler_suite },
-            "effekt_ablation_table.tex": { "langs": "/effekt-jit.*", "benchmarks": extended_handler_suite },
-            "koka_ablation_table.tex": { "langs": "/koka-vm.*", "benchmarks": extended_handler_suite },
-        }
 
         for name, conf in paper_tables.items():
             clangs = getlangs(conf['langs'])
