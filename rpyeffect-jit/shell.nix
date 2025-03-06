@@ -112,13 +112,14 @@ let
 in
 mkShell {
   nativeBuildInputs = [
-    myPython2
     pkg-config
     libffi
     hyperfine
     graphviz
   ] ++ lib.optionals (!stdenv.isDarwin) [
     myPypy
+  ] ++ lib.optionals (stdenv.isDarwin) [
+    myPython2
   ];
   # Hack to make pypy find packages
   shellHook = ''

@@ -58,12 +58,16 @@ def tee(proc: subprocess.Popen[str], prefix: str = "> ") -> list[str]:
         text = proc.stdout.readline()
         while text != "":
             log.append(text)
-            sys.stdout.write(styled(prefix) + remove_control_characters(text))
+            plaintext = remove_control_characters(text)
+            if plaintext.lstrip().rstrip() != "":
+                sys.stdout.write(styled(prefix) + plaintext)
             text = proc.stdout.readline()
         text = proc.stderr.readline()
         while text != "":
             log.append(text)
-            sys.stderr.write(styled(prefix) + remove_control_characters(text))
+            plaintext = remove_control_characters(text)
+            if plaintext.lstrip().rstrip() != "":
+                sys.stderr.write(styled(prefix) + plaintext)
             text = proc.stderr.readline()
     return log
 def tee_stderr(proc: subprocess.Popen[str], prefix: str = "> ") -> list[str]:
@@ -73,7 +77,9 @@ def tee_stderr(proc: subprocess.Popen[str], prefix: str = "> ") -> list[str]:
         text = proc.stderr.readline()
         while text != "":
             log.append(text)
-            sys.stderr.write(styled(prefix) + remove_control_characters(text))
+            plaintext = remove_control_characters(text)
+            if plaintext.lstrip().rstrip() != "":
+                sys.stderr.write(styled(prefix) + plaintext)
             text = proc.stderr.readline()
     return log
 

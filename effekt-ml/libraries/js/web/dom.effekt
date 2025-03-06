@@ -1,0 +1,45 @@
+module web/dom
+
+extern type Node
+
+// can be null
+extern pure def getElementById(id: String): Node =
+  js "document.getElementById(${id})"
+
+extern pure def createElement(tag: String): Node =
+  js "document.createElement(${tag})"
+
+extern pure def createTextNode(text: String): Node =
+  js "document.createTextNode(${text})"
+
+extern pure def setAttribute(node: Node, key: String, value: String): Node =
+  js "${node}.setAttribute(${key}, ${value})"
+
+// the string return type is wrong here...
+extern pure def getAttribute(node: Node, key: String): String =
+  js "${node}.getAttribute(${key})"
+
+extern pure def appendChild(node: Node, child: Node): Node =
+  js "${node}.appendChild(${child})"
+
+extern pure def innerHTML(node: Node, contents: String): Node =
+  js "(function() { ${node}.innerHTML = ${contents}; return ${node} })()"
+
+extern type IdleDeadline
+
+extern pure def requestIdleCallback(callback: (IdleDeadline) => Unit at {io}): Unit =
+  js "window.requestIdleCallback(deadline => ${callback}(deadline).run())"
+
+extern pure def didDimeout(deadline: IdleDeadline): Bool =
+  js "${deadline}.didTimeout"
+
+extern pure def timeRemaining(deadline: IdleDeadline): Double =
+  js "${deadline}.timeRemaining()"
+
+extern pure def onClick(node: Node, handler: () => Unit at {io}): Node =
+  js "(function() { ${node}.onclick = () => ${handler}().run(); return ${node} })()"
+
+extern def sleep(n: Int): Unit =
+  js "$effekt.callcc(k => window.setTimeout(() => k(null), ${n}))"
+
+def clear(node: Node) = node.innerHTML("")
