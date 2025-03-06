@@ -26,7 +26,7 @@ class Ocaml5Backend(Language):
         os.makedirs(result_path, exist_ok=True)
 
         # Ocamlopt
-        o_proc = run(["ocamlopt", "-O3", "-o", result_path + f"/{fname}", path], cwd=result_path)
+        o_proc = run(["nix-shell", "-p", "ocaml-ng.ocamlPackages_5_2.ocaml", "--command", f"ocamlopt -O3 -o {result_path}/{fname} {path}"], cwd=result_path)
         o_output = tee(o_proc, "[blue]   opt[/blue]|")
 
         return [result_path + f"/{fname}"] if os.path.exists(result_path + f"/{fname}") else None

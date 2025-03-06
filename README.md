@@ -3,6 +3,7 @@
 
 For the below instructions to work, you need to have `nix` [TODO Link] installed.
 Otherwise, you will have to manually ensure that all dependencies are installed.
+Also, the benchmarking tool will directly use `nix` to benchmark Ocaml 5.
 The `shell.nix` files in the respective subfolders should list all the necessary dependencies.
 
 ## Running
@@ -38,6 +39,5 @@ If you are on a x86 architecture running linux, you can just use the pre-compile
 - run `cmake .`
 - run `make`
 
-## Notes for non-x64_64
-- The `stack.yaml` file in `koka/` specifies the architecture explicitly, so this needs to be changed.
-  Then, everything should also work on `aarch64`, e.g.
+## Notes for MacOS
+- On MacOS, the package for mlton does not work, so it will have to be installed manually (e.g. via brew)

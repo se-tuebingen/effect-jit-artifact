@@ -2,6 +2,8 @@
 let
   myJre = pkgs.temurin-jre-bin-11;
   sbtWithJre = pkgs.sbt.override { jre = myJre; };
+  myOcamlPackages = pkgs.ocaml-ng.ocamlPackages_4_14;
+  myOcaml = myOcamlPackages.ocaml;
 in
 pkgs.mkShell {
   buildInputs = with pkgs; [
@@ -13,13 +15,15 @@ pkgs.mkShell {
     nodejs
     # effekt, asm
     sbtWithJre myJre
-    libuv mlton
+    libuv
     # koka
     stack cmake
     # eff
-    ocaml
-    ocamlPackages.ocamlformat_0_25_1
-    ocamlPackages.menhir
-    ocamlPackages.dune_3
-  ];
+    myOcaml
+    myOcamlPackages.ocamlformat_0_25_1
+    myOcamlPackages.menhir
+    myOcamlPackages.dune_3
+  ] ++ (pkgs.lib.optionals (!pkgs.stdenv.isDarwin) [
+    mlton # needs to be manually installed on MacOS
+  ]);
 }
