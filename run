@@ -596,6 +596,43 @@ if __name__ == "__main__":
         print(a)
         sys.exit(0)
 
+      case "export-all-paper-tables":
+        parser = ArgumentParser()
+        parser.add_argument("--target", default=None, required=False, help="Prefix to prepend to the output filename (i.e. target directory + /)")
+        args = parser.parse_args(myargs)
+
+        if args.target is None:
+            os.makedirs("./.exported", exist_ok=True)
+            os.makedirs("./.exported/paper_tables", exist_ok=True)
+            target = "./.exported/paper_tables/"
+        else:
+            target = args.target
+
+        extended_handler_suite = "suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers"
+        paper_tables = {
+            "table.tex": 
+                { "langs": "eff-jit,eff-plain-ocaml,oldeff-plain-ocaml,effekt-jit,effekt-js,effekt-llvm,effekt-ml,koka-vm,koka-c,koka-js",
+                  "benchmarks": extended_handler_suite },
+            "table_baseline.tex": 
+                { "langs": "effekt-jit,js-v8,ocaml5,python-cpython,python-pypy,lua-lua,lua-luajit",
+                  "benchmarks": "suite:are-we-fast-yet" },
+            "table_effects_in_other_languages.tex":
+                { "langs": "eff-jit,effekt-jit,js-v8,koka-vm,ocaml5,python-cpython,python-pypy",
+                  "benchmarks": "countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup" },
+            "eff_ablation_table.tex": { "langs": "/eff-jit.*", "benchmarks": extended_handler_suite },
+            "effekt_ablation_table.tex": { "langs": "/effekt-jit.*", "benchmarks": extended_handler_suite },
+            "koka_ablation_table.tex": { "langs": "/koka-vm.*", "benchmarks": extended_handler_suite },
+        }
+
+        for name, conf in paper_tables.items():
+            clangs = getlangs(conf['langs'])
+            cbenchmarks = getbenchmarks(conf['benchmarks'])
+            a = doexport_tex(cbenchmarks, clangs, sargs)
+            shutil.copy(a, target + name)
+
+        print(target)
+        sys.exit(0)
+
       case "getcmd":
         parser = ArgumentParser()
         parser.add_argument("langs")
