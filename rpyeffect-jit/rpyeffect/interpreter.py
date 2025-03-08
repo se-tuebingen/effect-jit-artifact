@@ -70,13 +70,18 @@ def interpret(program, args, primitives):
 ################################################################################
 @unroll_safe
 @objectmodel.always_inline
-def jump_to(target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context):
-    old_pc_block = pc_block
-    pc_block, pc_instruction = target, 0
-    if pc_block <= old_pc_block:
+def maybe_cej(cej, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context):
+    if cej or (cfg.additional_can_enter_jit_locations and isinstance(program.get_instruction(pc_block, pc_instruction), PUSH)):
         context = get_context(pc_block, pc_instruction, stack, metastack)
         jitdriver.can_enter_jit(program = program, pc_block=pc_block, pc_instruction=pc_instruction, stack_label=stack_label, stack_binding=stack_binding, stack=stack, env=env, metastack=metastack, primitives=primitives, context=context)
     return pc_block, pc_instruction, stack_label, stack_binding, stack, metastack, context
+
+@unroll_safe
+@objectmodel.always_inline
+def jump_to(target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context):
+    old_pc_block = pc_block
+    pc_block, pc_instruction = target, 0
+    return maybe_cej(pc_block <= old_pc_block, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
 
 @unroll_safe
 @objectmodel.always_inline
@@ -142,12 +147,6 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
 
         if program.blocks[target].stack_type is None:
             program.blocks[target].stack_type = Stack.get_concrete_class(op.args)
-
-        if cfg.additional_can_enter_jit_locations:
-            context = get_context(pc_block, pc_instruction, stack, metastack)
-            pc_block, pc_instruction = program.next_pc(pc_block, pc_instruction)
-            jitdriver.can_enter_jit(program=program, pc_block=pc_block, pc_instruction=pc_instruction, stack_label=stack_label, stack_binding=stack_binding, stack=stack,env=env, metastack=metastack, primitives=primitives, context=context)
-            return pc_block, pc_instruction, stack_label, stack_binding, stack, metastack, context
     elif isinstance(op, JUMP):
         return jump_to(op.target, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
     elif isinstance(op, IFZERO):
@@ -359,4 +358,4 @@ def interpret_instruction(program, pc_block, pc_instruction, stack_label, stack_
     else:
         print("Instruction not implemented, skipping")
     pc_block, pc_instruction = program.next_pc(pc_block, pc_instruction)
-    return pc_block, pc_instruction, stack_label, stack_binding, stack, metastack, context
+    return maybe_cej(False, program, pc_block, pc_instruction, stack_label, stack_binding, stack, env, metastack, primitives, context)
