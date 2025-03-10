@@ -38,6 +38,13 @@ paper_tables = {
     "koka_ablation_table.tex": { "langs": "/koka-vm.*", "benchmarks": extended_handler_suite },
 }
 
+# Hyperfine config
+hyperfine_opts = [
+    "-w", 1, # one warmup run
+    "-m", 10, # at least 10 runs (default is 10)
+    "-N", # do not run an intermediate shell
+]
+
 # Change working directory to the directory containing this file
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -443,7 +450,7 @@ def dobenchmarkall(cbenchmarks, clangs, sargs):
         if sargs is not None:
             benchmark_name += "_" + "_".join(sargs)
         hargs = [x for lang, runcmd in runcmds[benchmark].items() if runcmd is not None for x in ["-n", f"{lang.name}:{benchmark_name}", mkcmd(runcmd, benchmark, sargs)]]
-        cmd = (["hyperfine", "-i", "--export-json", f"./.results/.{benchmark_name}-results.json", *hargs])
+        cmd = (["hyperfine", *hyperfine_opts, "-i", "--export-json", f"./.results/.{benchmark_name}-results.json", *hargs])
         ecmd = [f"'{c}'" for c in cmd]
         print(f"cmd: {' '.join(ecmd)}")
         subprocess.run(cmd)
@@ -553,7 +560,7 @@ if __name__ == "__main__":
               if sargs is not None:
                   benchmark_name += "_" + "_".join(sargs)
               hargs = [x for lang, runcmd in runcmds[benchmark].items() if runcmd is not None for x in ["-n", f"{lang.name}:{benchmark_name}", mkcmd(runcmd, benchmark, sargs, param=param)]]
-              cmd = (["hyperfine", "-i", "--export-json", f"./.results/.{benchmark_name}-{param}-results.json", *hargs])
+              cmd = (["hyperfine", *hyperfine_opts, "-i", "--export-json", f"./.results/.{benchmark_name}-{param}-results.json", *hargs])
               ecmd = [f"'{c}'" for c in cmd]
               print(f"cmd: {' '.join(ecmd)}")
               subprocess.run(cmd)
