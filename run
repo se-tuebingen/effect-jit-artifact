@@ -315,7 +315,7 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
         columns_dict[lang_name].append(lang)
     for key in columns_dict:
         columns_dict[key].sort(key=lambda x: (not ("jit" in x.name or "vm" in x.name), adjustment_index(x), x.name))
-    supercolumns = sorted(columns_dict.keys())
+    supercolumns = sorted(columns_dict.keys(), key = lambda x: (not ("eff" in x or "koka" in x), x))
 
     columns = [be for lang in supercolumns for be in columns_dict[lang]]
     with open(fname_abs, "w") as f:
