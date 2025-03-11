@@ -21,6 +21,7 @@ from runtool.suite.all import Benchmark, getbenchmarks
 from runtool.suite import get_benchmark_path, getcmd, docompile
 from statistics import geometric_mean
 import hashlib
+from runtool.language.adjusted_jit import adjustment_index
 
 extended_handler_suite = "suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers"
 paper_tables = {
@@ -31,7 +32,7 @@ paper_tables = {
         { "langs": "effekt-jit,js-v8,ocaml5,python-cpython,python-pypy,lua-lua,lua-luajit",
             "benchmarks": "suite:are-we-fast-yet" },
     "table_effects_in_other_languages.tex":
-        { "langs": "eff-jit,effekt-jit,js-v8,koka-vm,ocaml5,python-cpython,python-pypy",
+        { "langs": "eff-jit,effekt-jit,js-v8,koka-vm,python-cpython,python-pypy",
             "benchmarks": "countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup" },
     "eff_ablation_table.tex": { "langs": "/eff-jit.*", "benchmarks": extended_handler_suite },
     "effekt_ablation_table.tex": { "langs": "/effekt-jit.*", "benchmarks": extended_handler_suite },
@@ -313,7 +314,7 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
             columns_dict[lang_name] = []
         columns_dict[lang_name].append(lang)
     for key in columns_dict:
-        columns_dict[key].sort(key=lambda x: (not ("jit" in x.name or "vm" in x.name), x.name))
+        columns_dict[key].sort(key=lambda x: (not ("jit" in x.name or "vm" in x.name), adjustment_index(x), x.name))
     supercolumns = sorted(columns_dict.keys())
 
     columns = [be for lang in supercolumns for be in columns_dict[lang]]

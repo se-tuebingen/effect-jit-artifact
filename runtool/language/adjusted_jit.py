@@ -16,15 +16,15 @@ class AdjustedJitBackend(Language):
         return self.inner.compile(path, name, jit_path = adjusted_jit_path)
 
 adjustments = [
+    "no-addcej",
+    "no-labelbydefsite",
+    "no-specialization",
+    "no-context",
     "2-context",
     # "debug", # not built rn.
-    "no-addcej",
     # "no-addcej-no-context", # not built rn.
-    "no-context",
     # "no-opt", # not built rn.
-    "no-specialization",
     # "no-labelbydefsite"
-    "no-labelbydefsite",
 ]
 
 def with_adjusted_jit_backends(l: Language) -> list[Language]:
@@ -32,3 +32,9 @@ def with_adjusted_jit_backends(l: Language) -> list[Language]:
     for adjustment in adjustments:
         res.append(AdjustedJitBackend(l, adjustment))
     return res
+
+def adjustment_index(l: Language) -> int:
+    if isinstance(l, AdjustedJitBackend):
+        return adjustments.index(l.adjustment)
+    else:
+        return -1
