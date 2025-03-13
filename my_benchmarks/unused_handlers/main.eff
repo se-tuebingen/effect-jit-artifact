@@ -23,7 +23,7 @@ let handled n d =
 
 let run n d =
   (handle
-    countdown ()
+    handled n d
   with
   | x -> fun _ -> x
   | effect (Get ()) k -> fun s -> (k s) s
