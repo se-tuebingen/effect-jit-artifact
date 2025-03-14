@@ -84,6 +84,7 @@ out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-opt: $(PYTHON_FILES)
 	sed -i 's/^specialize_\([a-zA-Z]*\) *= *.*$$/specialize_\1 = 0, 0/g' rpyeffect/config.py
 	sed -i 's/^loop_context_depth *= *[0-9]*$$/loop_context_depth = 0/g' rpyeffect/config.py
 	sed -i 's/^additional_can_enter_jit_locations *= *.*$$/additional_can_enter_jit_locations = False/g' rpyeffect/config.py
+	sed -i 's/^allocation_site_based_eq_label *= *True$$/allocation_site_based_eq_label = False/g' rpyeffect/config.py
 	mkdir -p out/bin/$(ARCH)-$(OS)
 	$(PYTHON) pypy/rpython/bin/rpython --output=rpyeffect-jit-$(ARCH)-$(OS)-no-specialization --opt=jit ./rpyeffect/main.py
 	mv ./rpyeffect-jit-$(ARCH)-$(OS)-no-specialization $@
