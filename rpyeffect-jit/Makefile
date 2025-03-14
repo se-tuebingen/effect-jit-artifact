@@ -9,7 +9,7 @@ else
 PYTHON = pypy
 endif
 
-all: out/bin/$(ARCH)-$(OS)/rpyeffect-jit out/bin/$(ARCH)-$(OS)/rpyeffect-interpret out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-specialization out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-context out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-addcej out/bin/$(ARCH)-$(OS)/rpyeffect-jit-2-context out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-labelbydefsite
+all: out/bin/$(ARCH)-$(OS)/rpyeffect-jit out/bin/$(ARCH)-$(OS)/rpyeffect-interpret out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-specialization out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-context out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-addcej out/bin/$(ARCH)-$(OS)/rpyeffect-jit-2-context out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-labelbydefsite out/bin/$(ARCH)-$(OS)/rpyeffect-jit-no-opt
 
 .PHONY: benchmark all test jitlogs
 

@@ -21,9 +21,9 @@ adjustments = [
     "no-specialization",
     "no-context",
     "2-context",
+    "no-opt"
     # "debug", # not built rn.
     # "no-addcej-no-context", # not built rn.
-    # "no-opt", # not built rn.
     # "no-labelbydefsite"
 ]
 
