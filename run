@@ -679,6 +679,7 @@ if __name__ == "__main__":
         parser = ArgumentParser()
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
+        parser.add_argument("-v", action="store_true", help="Enable verbose traces")
         args = parser.parse_args(myargs)
         langs = getlangs(args.langs)
         benchmarks = getbenchmarks(args.benchmarks)
@@ -693,7 +694,8 @@ if __name__ == "__main__":
                     benchmark_name += "_" + "_".join(sargs)
                 if runcmd is not None:
                     env = os.environ.copy()
-                    env["PYPYLOG"] = f"jit-log-opt,jit-summary:./.jitlogs/{lang.name}_{benchmark_name}.log"
+                    logtypes = "jit" if args.v else "jit-log-opt,jit-summary"
+                    env["PYPYLOG"] = f"{logtypes}:./.jitlogs/{lang.name}_{benchmark_name}.log"
                     dorun(runcmd, lang, benchmark, sargs, env=env)
                 else:
                     print(f"Unsupported: {benchmark.name} for {lang.name}")
