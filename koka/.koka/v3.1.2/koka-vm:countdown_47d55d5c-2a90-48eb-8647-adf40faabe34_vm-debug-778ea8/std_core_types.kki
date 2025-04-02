@@ -1,0 +1,839 @@
+/* Primitive types and functions.
+
+   This module is implicitly imported and all functions and types
+   are always available.
+   These types are required to be defined for the compiler
+   to work correctly (i.e. types like `:int` or `:div`)
+
+   The _kinds_ of types are all builtin:
+
+   * `V`   value types (i.e. the star kind)
+   * `E`   effect rows (`<div,exn|e>`)
+   * `X`   a single effect (`div`, `exn`, `parse`, etc.), also called atomic effect
+   * `H`   heap types (always a phantom type without actual values)
+   * `HX`  a short-hand for user defined effect handlers of kind `(E,V) -> V`
+
+*/
+module interface std/core/types
+ 
+//------------------------------
+//#kki: import declarations
+ 
+ 
+//------------------------------
+//#kki: external imports
+ 
+ 
+//------------------------------
+//#kki: fixity declarations
+ 
+infixr 80 (^);
+infixl 70 (*);
+infixl 70 (%);
+infixl 70 (/);
+infixl 70 cdiv;
+infixl 70 cmod;
+infixr 60 (++);
+infixl 60 (+);
+infixl 60 (-);
+infixr 55 (++.);
+infix 40 (!=);
+infix 40 (==);
+infix 40 (<=);
+infix 40 (>=);
+infix 40 (<);
+infix 40 (>);
+infixr 30 (&&);
+infixr 20 (||);
+ 
+//------------------------------
+//#kki: local imported aliases
+ 
+ 
+//------------------------------
+//#kki: type declarations
+ 
+// _Internal_. Internal type for constructor contexts.
+// Holds the address to a field of type `:a` in a constructor.
+pub type @field-addr[477,1,477,23] <a> :: V -> V ;
+// _Internal_: Optional is used by the compiler to pass optional arguments.
+// It is usually displayed as `: ? tp` for some type `:tp`.
+pub value{0,2,8} type @optional[455,1,459,11] <a> :: V -> V {
+  // The `Optional` constructor is used when an optional argument is given.
+  pub con @Optional[457,7,457,15](value: a){0,2,8} : forall<a> (value : a) -> (@optional :: V -> V)<a>;
+  // `None` is used when an optional argument is not provided.
+  pub con @None[459,7,459,11]{0,1,8} : forall<a> (@optional :: V -> V)<a>;
+};
+// Internal type used for in-place update of unique pattern matches.
+pub type @reuse[108,1,108,15] ;
+// Internal: used for value effects
+pub value{1,0,1} type @valueop[445,1,446,14] <(e :: E),a> :: (E, V) -> V {
+  pub con @Valueop[446,7,446,14]{0,0,0} : forall<(e :: E),a> (@valueop :: (E, V) -> V)<(e :: E),a>;
+};
+// The alloc effect signifies a function may allocate in a heap `:h`
+pub type alloc[130,1,130,24] <(h :: H)> :: H -> X ;
+// An any type. Used for external calls.
+pub type any[105,1,105,12] ;
+// The type of booleans has two inhabitants: `True` and `False`.
+pub value{1,0,1} type bool[171,1,173,10] {
+  pub con False[172,7,172,11]{0,0,0} : bool;
+  pub con True[173,7,173,10]{0,0,0} : bool;
+};
+// Explicitly box values using the `Box` constructor.
+pub value{0,1,8} type box[242,1,243,22] <a> :: V -> V {
+  pub con Box[243,7,243,9](unbox: a){0,1,8} : forall<a> (unbox : a) -> (box :: V -> V)<a>;
+};
+// First-class constructor context (for _tail recursion modulo cons_ (TRMC) optimization).
+// See also ``samples/syntax/contexts`` for further examples.
+pub value{0,2,8} type cctx[486,1,487,48] <a,b> :: (V, V) -> V {
+  con @Cctx[487,7,487,11](res: a, holeptr: (@field-addr :: V -> V)<b>){0,2,8} : forall<a,b> (res : a, holeptr : (@field-addr :: V -> V)<b>) -> (cctx :: (V, V) -> V)<a,b>;
+};
+// A unicode character.
+// Characters are unicode _codepoint_\/s.
+// This is different from a unicode _grapheme_ which represents a single displayed
+// symbol and can consists of multiple codepoints due to combining characters and marks.
+// (see also `module std/core/char` and the `module std/text/unicode` module).
+pub value{4,0,4} type char[57,1,57,19] ;
+// A first-class constructor context where the hole is of the same type as the root of the structure.
+pub alias ctx[490,1,490,28]<a> :: V -> V = (cctx :: (V, V) -> V)<a,a> = 1;
+// The divergence effect: a divergent function may not terminate.
+pub type div[124,1,124,17] :: X ;
+// The predicate `:ediv<x,a,e>` signifies that if the type `:a` contains a reference to effect constant `:x",
+// then the effect `:e` must contain the divergent effect (`:div`). This constraint is generated
+// for operations on first-class effects where code can diverge through operations.
+pub type ediv[330,1,330,29] <(a :: X),b,(e :: E)> :: (X, V, E) -> P ;
+// The effect constructor extends an effect row with another effect.
+// Usually written as `<_|_>`
+pub type effect-extend[121,1,121,36] <(a :: X),(e :: E)> :: (X, E) -> E ;
+// The choice type represents one of two possible types `:a` or `:b`.
+// See also `module std/core/either`.
+pub value{0,2,8} type either[203,1,207,24] <a,b> :: (V, V) -> V {
+  // Left result, usually used for errors.
+  pub con Left[205,7,205,10](left: a){0,2,8} : forall<a,b> (left : a) -> (either :: (V, V) -> V)<a,b>;
+  // Right result, usually used for success.
+  pub con Right[207,7,207,11](right: b){0,2,8} : forall<a,b> (right : b) -> (either :: (V, V) -> V)<a,b>;
+};
+// A 32-bit IEEE 754 single precision floating point value.
+// Provides currently no operations and currently only used for storage and for interaction with external code.
+pub value{4,0,4} type float32[98,1,98,22] ;
+// A 64-bit IEEE 754 double precision floating point value.
+// See `module std/num/float64` for operations on `:float64`s.
+pub value{8,0,8} type float64[50,1,50,22] ;
+// The `:global` heap is a special heap constant to denote the global shared heap
+pub type global[142,1,142,20] :: H ;
+// Handled effects are lifted to an atomic effect using the `:handled` type constructor
+// All user defined effects are `:handled` since they require a handler to be dismissed.
+// In contrast, some built-in effects, like `:div` or `:st` do not require a handler
+// as these are handled by the system.
+// In particular, the runtime evidence vector only contains `:handled` (and `:handled1`) effects.
+pub type handled[149,1,149,30] <(a :: (E, V) -> V)> :: ((E, V) -> V) -> X ;
+// Linear effects are lifted to an atomic effect using the `:handled1` type constructor
+pub type handled1[152,1,152,30] <(a :: (E, V) -> V)> :: ((E, V) -> V) -> X ;
+// The predicate `:hdiv<h,a,e>` signifies that if the type `:a` contains a reference to `:h`,
+// then the effect `:e` must contain the divergent effect (`:div`). This constraint is generated
+// when reading from the heap (see `(!)`) and is necessary to catch cases where code can diverge
+// by storing self referential functions in the heap.
+pub type hdiv[325,1,325,29] <(h :: H),a,(e :: E)> :: (H, V, E) -> P ;
+// An arbitrary precision signed integer.
+// See `module std/core/int` for integer operations.
+pub type int[46,1,46,12] ;
+// A 16-bit signed integer (represented in two's complement).
+// Provides no operations and used only for storage and interaction with external code.
+pub value{2,0,2} type int16[73,1,73,20] ;
+// A 32-bit signed integer (represented in two's complement).
+// See the `module std/num/int32` module for operations on 32-bit integers.
+pub value{4,0,4} type int32[77,1,77,20] ;
+// A 64-bit signed integer (represented in two's complement).
+// See the `module std/num/int64` module for operations on 64-bit integers.
+pub value{8,0,8} type int64[81,1,81,20] ;
+// A 8-bit signed integer (represented in two's complement).
+// Provides no operations and used only for storage and interaction with external code.
+pub value{1,0,1} type int8[69,1,69,19] ;
+// A signed two's complement integer equal to an `intptr_t` in C, i.e.
+// it has the same bit-size as a native pointer (`void*`).
+// Provides no operations but is used mostly for interaction with external code.
+// The Javascript backend uses `int64` for this.
+pub value{8,0,8} type intptr_t[94,1,94,23] ;
+// The type of lists, which can be either empty (`Nil`) or an element followed
+// by a list (`Cons`).
+// See `module std/core/list` for operations on lists.
+pub recursive type list[234,1,238,35] <a> :: V -> V {
+  // The empty list.
+  pub con Nil[236,7,236,9]{0,0,0} : forall<a> (list :: V -> V)<a>;
+  // A ``head``  element followed by the ``tail``  of the list.
+  pub con Cons[238,7,238,10](head: a, tail: (list :: V -> V)<a>){0,2,8} : forall<a> (head : a, tail : (list :: V -> V)<a>) -> (list :: V -> V)<a>;
+};
+// A local heap effect.
+pub type local[389,1,389,26] <(h :: H)> :: H -> X ;
+// A local variable `:local-var<s,a>` points to a value of type `:a` in local scope `:s`.
+pub type local-var[392,1,392,32] <(h :: H),a> :: (H, V) -> V ;
+// The `:maybe` type is used to represent either a value (`Just(x)`) or `Nothing`.
+// This type is often used to represent values that can be _null_.
+// See also `module std/core/maybe`.
+pub value{0,2,8} type maybe[195,1,199,23] <a> :: V -> V {
+  // No result
+  pub con Nothing[197,7,197,13]{0,1,8} : forall<a> (maybe :: V -> V)<a>;
+  // A single result
+  pub con Just[199,7,199,10](value: a){0,2,8} : forall<a> (value : a) -> (maybe :: V -> V)<a>;
+};
+// The non-determinism effect.
+pub type ndet[127,1,127,18] :: X ;
+// Named effects are lifted to an atomic effect with the `:nhandled` type constructor.
+// In contrast to `:handled` effects, these effects are not passed in the evidence vector.
+pub type nhandled[156,1,156,31] <(a :: (E, V) -> V)> :: ((E, V) -> V) -> X ;
+// Linear named effects are lifted to an atomic effect using the `:nhandled1` type constructor
+pub type nhandled1[159,1,159,31] <(a :: (E, V) -> V)> :: ((E, V) -> V) -> X ;
+// An enumeration to represent order: `Lt`, `Eq`, or `Gt`.
+// See also `module std/core/order`.
+pub value{1,0,1} type order[211,1,217,4] {
+  // lower-than
+  pub con Lt[213,3,213,4]{0,0,0} : order;
+  // equal
+  pub con Eq[215,3,215,4]{0,0,0} : order;
+  // greater-than
+  pub con Gt[217,3,217,4]{0,0,0} : order;
+};
+// Represent two elements in ascending order. This is used to
+// allow comparison on elements to be used linearly for `fip` functions.
+// See also `module std/core/order`
+pub value{0,3,8} type order2[222,1,228,22] <a> :: V -> V {
+  // The elements compared lower-than, with `lt < gt`.
+  pub con Lt2[224,3,224,5](lt: a, gt: a){0,3,8} : forall<a> (lt : a, gt : a) -> (order2 :: V -> V)<a>;
+  // The elements compared equal (with value `eq`).
+  pub con Eq2[226,3,226,5](eq: a){0,2,8} : forall<a> (eq : a) -> (order2 :: V -> V)<a>;
+  // The elements compared greater-than, with `lt < gt`.
+  pub con Gt2[228,3,228,5](lt: a, gt: a){0,3,8} : forall<a> (lt : a, gt : a) -> (order2 :: V -> V)<a>;
+};
+// The read effect: signifies that a function may read from from heap `:h`.
+pub type read[133,1,133,23] <(h :: H)> :: H -> X ;
+// A reference `:ref<h,a>` points to a value of type `:a` in heap `:h`.
+pub type ref[334,1,334,26] <(h :: H),a> :: (H, V) -> V ;
+// A signed two's complement integer equal to a signed `size_t` in C, i.e.
+// it can hold the byte size of any object, in particular the maximum possible
+// byte size of a vector or string.
+// Provides no operations but is used mostly for interaction with external code.
+// The Javascript backend uses `int32` for this.
+pub value{8,0,8} type ssize_t[88,1,88,22] ;
+// The _total_ effect represents the absence of any effect.
+// Usually written as `<>`
+pub type total[117,1,117,19] :: E ;
+// The write effect: signifies that a function may write to heap `:h`.
+pub type write[136,1,136,24] <(h :: H)> :: H -> X ;
+// Stateful functions can manipulate heap `:h` using allocations, reads and writes.
+pub alias st[139,1,139,47]<(h :: H)> :: H -> E = <(read :: H -> X)<(h :: H)>,(write :: H -> X)<(h :: H)>,(alloc :: H -> X)<(h :: H)>> = 1;
+// A string is a sequence of unicode character points (`char`).
+// The encoding of a string is internal and there
+// is no constant-time indexing of characters in a string.
+// Use the `:sslice` type for efficient matching and retrieving
+// sub-strings from string. See `module std/core/string` and
+// `module std/core/sslice` for string operations.
+pub type string[65,1,65,15] ;
+// A pair of values `:a` and `:b`. Usually written as `(x,y)` (for types and terms)
+pub value{0,2,8} type tuple2[181,1,181,41] <a,b> :: (V, V) -> V {
+  // A pair of values `:a` and `:b`. Usually written as `(x,y)` (for types and terms)
+  pub con Tuple2[181,18,181,23](fst: a, snd: b){0,2,8} : forall<a,b> (fst : a, snd : b) -> (a, b);
+};
+// A triple of values. Usually written as `(x,y,z)` (for types and terms)
+pub value{0,3,8} type tuple3[184,1,184,49] <a,b,c> :: (V, V, V) -> V {
+  // A triple of values. Usually written as `(x,y,z)` (for types and terms)
+  pub con Tuple3[184,18,184,23](fst: a, snd: b, thd: c){0,3,8} : forall<a,b,c> (fst : a, snd : b, thd : c) -> (a, b, c);
+};
+// A quadruple of values. Usually written as `(a,b,c,d)` (for types and terms)
+pub type tuple4[187,1,187,54] <a,b,c,d> :: (V, V, V, V) -> V {
+  // A quadruple of values. Usually written as `(a,b,c,d)` (for types and terms)
+  pub con Tuple4[187,12,187,17](fst: a, snd: b, thd: c, field4: d){0,4,8} : forall<a,b,c,d> (fst : a, snd : b, thd : c, field4 : d) -> (a, b, c, d);
+};
+// A quintuple of values. Usually written as `(a,b,c,d,e)` (for types and terms)
+pub type tuple5[190,1,190,65] <a,b,c,d,a1> :: (V, V, V, V, V) -> V {
+  // A quintuple of values. Usually written as `(a,b,c,d,e)` (for types and terms)
+  pub con Tuple5[190,12,190,17](fst: a, snd: b, thd: c, field4: d, field5: a1){0,5,8} : forall<a,b,c,d,a1> (fst : a, snd : b, thd : c, field4 : d, field5 : a1) -> (a, b, c, d, a1);
+};
+// The unit type `:unit` is inhabited by just a single value, namely `Unit`.
+// Usually the type and constructor are written as `()`.
+// See also the `:void` type and the `:bool` type.
+pub value{1,0,1} type unit[178,1,178,15] {
+  // The unit type `:unit` is inhabited by just a single value, namely `Unit`.
+// Usually the type and constructor are written as `()`.
+// See also the `:void` type and the `:bool` type.
+  pub con Unit[178,12,178,15]{0,0,0} : ();
+};
+// The type of immutable polymorphic arrays is called `:vector`.
+// See `module std/core/vector` for vector operations.
+pub type vector[102,1,102,18] <a> :: V -> V ;
+// The `:void` type is empty and has no constructors.
+// See also the `:()` unit type and the `:bool` type.
+pub type void[168,1,168,13] ;
+ 
+//------------------------------
+//#kki: declarations
+ 
+// Automatically generated. Tests for the `False` constructor of the `:bool` type.
+pub fip fun is-false[172,7,172,11] : (^ bool : bool) -> bool;
+// Automatically generated. Tests for the `True` constructor of the `:bool` type.
+pub fip fun is-true[173,7,173,10] : (^ bool : bool) -> bool;
+// Automatically generated. Retrieves the `unbox` constructor field of the `:box` type.
+pub  fun box/unbox[243,12,243,16] : forall<a> (^ box : (box :: V -> V)<a>) -> a;
+pub  fun box/@copy[243,7,243,9] : forall<a> (@this : (box :: V -> V)<a>, unbox : (@optional :: V -> V)<a>) -> (box :: V -> V)<a>;
+// Automatically generated. Retrieves the `res` constructor field of the `:cctx` type.
+ fun cctx/res[487,14,487,16] : forall<a,b> (^ cctx : (cctx :: (V, V) -> V)<a,b>) -> a;
+// Automatically generated. Retrieves the `holeptr` constructor field of the `:cctx` type.
+ fun cctx/holeptr[487,23,487,29] : forall<a,b> (^ cctx : (cctx :: (V, V) -> V)<a,b>) -> (@field-addr :: V -> V)<b>;
+// Automatically generated. Tests for the `Left` constructor of the `:either` type.
+pub fip fun is-left[205,7,205,10] : forall<a,b> (^ either : (either :: (V, V) -> V)<a,b>) -> bool;
+// Automatically generated. Tests for the `Right` constructor of the `:either` type.
+pub fip fun is-right[207,7,207,11] : forall<a,b> (^ either : (either :: (V, V) -> V)<a,b>) -> bool;
+// Automatically generated. Tests for the `Nil` constructor of the `:list` type.
+pub fip fun is-nil[236,7,236,9] : forall<a> (^ list : (list :: V -> V)<a>) -> bool;
+// Automatically generated. Tests for the `Cons` constructor of the `:list` type.
+pub fip fun is-cons[238,7,238,10] : forall<a> (^ list : (list :: V -> V)<a>) -> bool;
+// Automatically generated. Tests for the `Nothing` constructor of the `:maybe` type.
+pub fip fun is-nothing[197,7,197,13] : forall<a> (^ maybe : (maybe :: V -> V)<a>) -> bool;
+// Automatically generated. Tests for the `Just` constructor of the `:maybe` type.
+pub fip fun is-just[199,7,199,10] : forall<a> (^ maybe : (maybe :: V -> V)<a>) -> bool;
+// Automatically generated. Tests for the `Lt` constructor of the `:order` type.
+pub fip fun is-lt[213,3,213,4] : (^ order : order) -> bool;
+// Automatically generated. Tests for the `Eq` constructor of the `:order` type.
+pub fip fun is-eq[215,3,215,4] : (^ order : order) -> bool;
+// Automatically generated. Tests for the `Gt` constructor of the `:order` type.
+pub fip fun is-gt[217,3,217,4] : (^ order : order) -> bool;
+// Automatically generated. Tests for the `Lt2` constructor of the `:order2` type.
+pub fip fun is-lt2[224,3,224,5] : forall<a> (^ order2 : (order2 :: V -> V)<a>) -> bool;
+// Automatically generated. Tests for the `Eq2` constructor of the `:order2` type.
+pub fip fun is-eq2[226,3,226,5] : forall<a> (^ order2 : (order2 :: V -> V)<a>) -> bool;
+// Automatically generated. Tests for the `Gt2` constructor of the `:order2` type.
+pub fip fun is-gt2[228,3,228,5] : forall<a> (^ order2 : (order2 :: V -> V)<a>) -> bool;
+// Automatically generated. Retrieves the `fst` constructor field of the `:tuple2` type.
+pub  fun tuple2/fst[181,30,181,32] : forall<a,b> (^ tuple2 : (a, b)) -> a;
+// Automatically generated. Retrieves the `snd` constructor field of the `:tuple2` type.
+pub  fun tuple2/snd[181,36,181,38] : forall<a,b> (^ tuple2 : (a, b)) -> b;
+pub  fun tuple2/@copy[181,18,181,23] : forall<a,b> (@this : (a, b), fst : (@optional :: V -> V)<a>, snd : (@optional :: V -> V)<b>) -> (a, b);
+// Automatically generated. Retrieves the `fst` constructor field of the `:tuple3` type.
+pub  fun tuple3/fst[184,32,184,34] : forall<a,b,c> (^ tuple3 : (a, b, c)) -> a;
+// Automatically generated. Retrieves the `snd` constructor field of the `:tuple3` type.
+pub  fun tuple3/snd[184,38,184,40] : forall<a,b,c> (^ tuple3 : (a, b, c)) -> b;
+// Automatically generated. Retrieves the `thd` constructor field of the `:tuple3` type.
+pub  fun tuple3/thd[184,44,184,46] : forall<a,b,c> (^ tuple3 : (a, b, c)) -> c;
+pub  fun tuple3/@copy[184,18,184,23] : forall<a,b,c> (@this : (a, b, c), fst : (@optional :: V -> V)<a>, snd : (@optional :: V -> V)<b>, thd : (@optional :: V -> V)<c>) -> (a, b, c);
+// Automatically generated. Retrieves the `fst` constructor field of the `:tuple4` type.
+pub  fun tuple4/fst[187,28,187,30] : forall<a,b,c,d> (^ tuple4 : (a, b, c, d)) -> a;
+// Automatically generated. Retrieves the `snd` constructor field of the `:tuple4` type.
+pub  fun tuple4/snd[187,34,187,36] : forall<a,b,c,d> (^ tuple4 : (a, b, c, d)) -> b;
+// Automatically generated. Retrieves the `thd` constructor field of the `:tuple4` type.
+pub  fun tuple4/thd[187,40,187,42] : forall<a,b,c,d> (^ tuple4 : (a, b, c, d)) -> c;
+// Automatically generated. Retrieves the `field4` constructor field of the `:tuple4` type.
+pub  fun tuple4/field4[187,46,187,51] : forall<a,b,c,d> (^ tuple4 : (a, b, c, d)) -> d;
+pub  fun tuple4/@copy[187,12,187,17] : forall<a,b,c,d> (@this : (a, b, c, d), fst : (@optional :: V -> V)<a>, snd : (@optional :: V -> V)<b>, thd : (@optional :: V -> V)<c>, field4 : (@optional :: V -> V)<d>) -> (a, b, c, d);
+// Automatically generated. Retrieves the `fst` constructor field of the `:tuple5` type.
+pub  fun tuple5/fst[190,30,190,32] : forall<a,b,c,d,a1> (^ tuple5 : (a, b, c, d, a1)) -> a;
+// Automatically generated. Retrieves the `snd` constructor field of the `:tuple5` type.
+pub  fun tuple5/snd[190,36,190,38] : forall<a,b,c,d,a1> (^ tuple5 : (a, b, c, d, a1)) -> b;
+// Automatically generated. Retrieves the `thd` constructor field of the `:tuple5` type.
+pub  fun tuple5/thd[190,42,190,44] : forall<a,b,c,d,a1> (^ tuple5 : (a, b, c, d, a1)) -> c;
+// Automatically generated. Retrieves the `field4` constructor field of the `:tuple5` type.
+pub  fun tuple5/field4[190,48,190,53] : forall<a,b,c,d,a1> (^ tuple5 : (a, b, c, d, a1)) -> d;
+// Automatically generated. Retrieves the `field5` constructor field of the `:tuple5` type.
+pub  fun tuple5/field5[190,57,190,62] : forall<a,b,c,d,a1> (^ tuple5 : (a, b, c, d, a1)) -> a1;
+pub  fun tuple5/@copy[190,12,190,17] : forall<a,b,c,d,a1> (@this : (a, b, c, d, a1), fst : (@optional :: V -> V)<a>, snd : (@optional :: V -> V)<b>, thd : (@optional :: V -> V)<c>, field4 : (@optional :: V -> V)<d>, field5 : (@optional :: V -> V)<a1>) -> (a, b, c, d, a1);
+pub  fun unit/@copy[178,12,178,15] : (@this : ()) -> ();
+// _Internal_. Internal function name for field addresses.
+pub fip fun @field-addr-of[480,16,480,29] : forall<a> (x : a, conname : string, fieldname : string) -> (@field-addr :: V -> V)<a>;
+// Convert an integer to an `:ssize_t`. The number is _clamped_ to the maximal or minimum `:ssize_t`
+// value if it is outside the range of an `:ssize_t`.
+// Needed for evidence indices in `module std/core/hnd`
+pub fip fun @make-ssize_t[299,16,299,28] : (i : int) -> ssize_t;
+pub  fun @no-reuse[110,12,110,20] : () -> @reuse;
+// _Internal_: generated by type inference and later refined into one of the `open` variants in `std/core/hnd`.
+pub  fun @open[313,21,313,25] : forall<(e :: E),(e1 :: E),a,b> (x : a) -> (e1 :: E) b;
+// Logical conjunction. This is compiled specially avoid evaluating the second argument if `x==False`.
+pub fip fun (&&)[268,13,268,16] : (x : bool, y : bool) -> bool;
+// Append two strings
+pub  fun (++)[306,12,306,15] : (x : string, y : string) -> string;
+// The identity function returns its argument unchanged
+pub fip fun id[264,13,264,14] : forall<a> (x : a) -> a;
+// Prevent inlining an expression by passing it to `keep` (which is a non-inlineable identity function)
+pub fip fun keep[256,22,256,25] : forall<a> (x : a) -> a;
+// _Internal_: if local mutation is unobservable, the `:local` effect can be erased by using the `local-scope` function.
+// See also: _State in Haskell, by Simon Peyton Jones and John Launchbury_.
+pub  fun local-scope[417,16,417,26] : forall<a,(e :: E)> (action : forall<(h :: H)> () -> <(local :: H -> X)<(h :: H)>|(e :: E)> a) -> (e :: E) a;
+// Logical negation
+pub fip fun not[280,13,280,15] : (b : bool) -> bool;
+// If a heap effect is unobservable, the heap effect can be erased by using the `run` fun.
+// See also: _State in Haskell, by Simon Peyton Jones and John Launchbury_.
+pub  fun run[368,12,368,14] : forall<(e :: E),a> (action : forall<(h :: H)> () -> <(alloc :: H -> X)<(h :: H)>,(read :: H -> X)<(h :: H)>,(write :: H -> X)<(h :: H)>|(e :: E)> a) -> (e :: E) a;
+// Logical disjunction. This is compiled specially avoid evaluating the second argument if `x==True`.
+pub fip fun (||)[272,13,272,16] : (x : bool, y : bool) -> bool;
+// Logical negation
+pub fip fun bool/(!)[276,13,276,20] : (b : bool) -> bool;
+ 
+//------------------------------
+//#kki: external declarations
+ 
+// Convert an integer to an `:int32`. The number is _clamped_ to the maximal or minimum `:int32`
+// value if it is outside the range of an `:int32`.
+// Needed for control flow contexts in `module std/core/hnd`
+pub fip extern @make-int32[290,23,290,33] : (i : int) -> int32 {
+  c inline "kk_integer_clamp32(#1,kk_context())";
+  cs inline "Primitive.IntToInt32(#1)";
+  js inline "$std_core_types._int_clamp32(#1)";
+};
+// Allocate a fresh reference with an initial value.
+pub  extern ref[337,19,337,21] : forall<a,(h :: H)> (value : a) -> <(alloc :: H -> X)<(h :: H)>> (ref :: (H, V) -> V)<(h :: H),a> {
+  c inline "kk_ref_alloc(#1,kk_context())";
+  cs inline "new Ref<##1,##2>(#1)";
+  js inline "{ value: #1 }";
+  vm inline "mkRef(Ptr): Ref[Ptr]";
+};
+// Assign a new value to a reference.
+pub  extern set[344,19,344,21] : forall<a,(h :: H)> (^ ref : (ref :: (H, V) -> V)<(h :: H),a>, assigned : a) -> <(write :: H -> X)<(h :: H)>> () {
+  c inline "kk_ref_set_borrow(#1,#2,kk_context())";
+  cs inline "#1.Set(#2)";
+  js inline "((#1).value = #2)";
+  vm inline "setRef(Ref[Ptr], Ptr): Unit";
+};
+// Read the value of a reference.
+pub  extern ref/(!)[351,19,351,25] : forall<(h :: H),a,(e :: E)> (ref : (ref :: (H, V) -> V)<(h :: H),a>) -> <(read :: H -> X)<(h :: H)>|(e :: E)> a with hdiv<(h :: H),a,(e :: E)> {
+  c inline "kk_ref_get(#1,kk_context())";
+  cs inline "#1.Value";
+  js inline "#1.value";
+  vm inline "getRef(Ref[Ptr]): Ptr";
+};
+// Modify the value of a reference.
+// This is especially useful when the reference contains a vector, because
+// getting the vector into a local variable and then setting it back into the reference later
+// would mean that we hold on to a copy (and we can't update the vector in place then!).
+// In contrast, this function passes the ownership to the given function.
+pub  extern modify[362,19,362,24] : forall<(h :: H),a,b,(e :: E)> (ref : (ref :: (H, V) -> V)<(h :: H),a>, f : forall<(h1 :: H)> ((local-var :: (H, V) -> V)<(h1 :: H),a>) -> <(local :: H -> X)<(h1 :: H)>|(e :: E)> b) -> <(read :: H -> X)<(h :: H)>,(write :: H -> X)<(h :: H)>|(e :: E)> b with hdiv<(h :: H),a,(e :: E)> {
+  c inline "kk_ref_modify(#1,#2,kk_context())";
+  js inline "((#2)(#1))";
+};
+// Mask the state effect. This is more convenient than masking each `:read`, `:write`, and `:alloc` effect separately.
+pub  extern mask-st[375,19,375,25] : forall<a,(h :: H),(e :: E)> (() -> (e :: E) a) -> (() -> <(st :: H -> E)<(h :: H)>|(e :: E)> a) = inline "#1";
+// Allocate a fresh local with an initial value.
+pub  extern local-new[395,19,395,27] : forall<a,(e :: E),(h :: H)> (value : a) -> <(local :: H -> X)<(h :: H)>|(e :: E)> (local-var :: (H, V) -> V)<(h :: H),a> {
+  c inline "kk_ref_alloc(#1,kk_context())";
+  cs inline "new Ref<##1,##2>(#1)";
+  js inline "{ value: #1 }";
+  vm inline "mkRef(Ptr): Ref[Ptr]";
+};
+// Assign a new value to a local variable
+pub  extern local-set[402,19,402,27] : forall<a,(e :: E),(h :: H)> (^ v : (local-var :: (H, V) -> V)<(h :: H),a>, assigned : a) -> <(local :: H -> X)<(h :: H)>|(e :: E)> () {
+  c inline "kk_ref_set_borrow(#1,#2,kk_context())";
+  cs inline "#1.Set(#2)";
+  js inline "((#1).value = #2)";
+  vm inline "setRef(Ref[Ptr], Ptr): Unit";
+};
+// Read the value of a local variable.
+pub  extern local-get[409,19,409,27] : forall<a,(h :: H),(e :: E)> (v : (local-var :: (H, V) -> V)<(h :: H),a>) -> <(local :: H -> X)<(h :: H)>|(e :: E)> a with hdiv<(h :: H),a,(e :: E)> {
+  c inline "kk_ref_get(#1,kk_context())";
+  cs inline "#1.Value";
+  js inline "((#1).value)";
+  vm inline "getRef(Ref[Ptr]): Ptr";
+};
+ extern unsafe-no-local-cast[420,15,420,34] : forall<a,(e :: E)> (action : forall<(h :: H)> () -> <(local :: H -> X)<(h :: H)>|(e :: E)> a) -> (() -> (e :: E) a) = inline "#1";
+// _Internal_: used to pass locals by reference.
+pub  extern @byref[431,19,431,24] : forall<a> (loc : a) -> a = inline "#1";
+// Magic casting to the `:any` type.
+pub  extern @toany[440,19,440,24] : forall<a> (x : a) -> any {
+  inline "#1";
+  cs inline "(object)(#1)";
+};
+// _Internal_. Create a hole for a context
+pub fip extern @cctx-hole-create[493,23,493,39] : forall<a> () -> a {
+  c inline "kk_cctx_hole()";
+  js inline "undefined";
+};
+// _Internal_. Create an initial non-empty context.
+pub fip extern @cctx-create[498,23,498,34] : forall<a,b> (x : a, xhole : (@field-addr :: V -> V)<b>) -> (cctx :: (V, V) -> V)<a,b> {
+  c inline "kk_cctx_create(#1,#2,kk_context())";
+  js inline "$std_core_types._cctx_create(#1,#2)";
+};
+// _Internal_. Extend a constructor context with a guaranteed non-empty context
+pub fip extern @cctx-extend[503,23,503,34] : forall<a,b,c> (c : (cctx :: (V, V) -> V)<a,b>, x : b, xhole : (@field-addr :: V -> V)<c>) -> (cctx :: (V, V) -> V)<a,c> {
+  c inline "kk_cctx_extend(#1,#2,#3,kk_context())";
+  js inline "$std_core_types._cctx_extend(#1,#2,#3)";
+};
+// _Internal_. Compose a constructor context with a guaranteed non-empty context
+pub fip extern @cctx-compose-extend[508,23,508,42] : forall<a,b,c> (c1 : (cctx :: (V, V) -> V)<a,b>, c2 : (cctx :: (V, V) -> V)<b,c>) -> (cctx :: (V, V) -> V)<a,c> {
+  c inline "kk_cctx_extend(#1,#2.res,#2.holeptr,kk_context())";
+  js inline "$std_core_types._cctx_compose(#1,#2)";
+};
+// Apply a constructor context to its final value (of type `:b`), which is
+// put into the hole of the context, and returns the root of the resulting structure `:a`.
+// This is a constant time operation for unique contexts.
+//
+// `(ctx Cons(1,_)) ++ (ctx Cons(_,Nil)) ++. 3 == [1,3]`
+pub fip extern cctx/(++.)[517,23,517,32] : forall<a,b> (c : (cctx :: (V, V) -> V)<a,b>, x : b) -> a {
+  c inline "kk_cctx_apply(#1,#2,kk_context())";
+  js inline "$std_core_types._cctx_apply(#1,#2)";
+};
+// Compose two constructor contexts.
+// This is a constant time operation for unique contexts.
+//
+// `(ctx Cons(1,_)) ++ (ctx Cons(2,_)) ++. Nil == [1,2]`
+pub fip extern cctx/(++)[525,23,525,31] : forall<a,b,c> (c1 : (cctx :: (V, V) -> V)<a,b>, c2 : (cctx :: (V, V) -> V)<b,c>) -> (cctx :: (V, V) -> V)<a,c> {
+  c inline "kk_cctx_compose(#1,#2,kk_context())";
+  js inline "$std_core_types._cctx_compose(#1,#2)";
+};
+// Create an empty context. Usually written directly as an empty context `ctx _`.
+pub fip extern cctx/empty[530,23,530,32] : forall<a> () -> (cctx :: (V, V) -> V)<a,a> {
+  c inline "kk_cctx_empty(kk_context())";
+  js inline "$std_core_types._cctx_empty()";
+};
+ 
+//------------------------------
+//#kki: inline definitions
+ 
+//.inline-section
+inline borrow "^" fip fun is-false // inline size: 1
+  = fn(bool: bool){
+    match (bool) {
+      ((std/core/types/False() : bool ) as @pat: bool)
+         -> std/core/types/True;
+      ((@skip std/core/types/True() : bool ) as @pat@0: bool)
+         -> std/core/types/False;
+    };
+  };
+inline borrow "^" fip fun is-true // inline size: 1
+  = fn(bool: bool){
+    match (bool) {
+      ((std/core/types/True() : bool ) as @pat: bool)
+         -> std/core/types/True;
+      ((@skip std/core/types/False() : bool ) as @pat@0: bool)
+         -> std/core/types/False;
+    };
+  };
+inline borrow "^"  fun box/unbox // inline size: 0
+  = forall<a> fn(box: (box :: V -> V)<a>){
+    (match (box) {
+      ((@skip std/core/types/Box((@x: a) : a) : (box :: V -> V)<a> ) as @pat: ((box :: V -> V)<a>))
+         -> @x;
+    });
+  };
+ fun box/@copy // inline size: 2
+  = forall<a> fn(@this: (box :: V -> V)<a>, unbox: (@optional :: V -> V)<a>){
+    std/core/types/Box<a>((match (unbox) {
+      ((std/core/types/@Optional((@uniq-unbox@485: a) : a) : (@optional :: V -> V)<a> ) as @pat: ((@optional :: V -> V)<a>))
+         -> @uniq-unbox@485;
+      ((@skip std/core/types/@None() : (@optional :: V -> V)<a> ) as @pat@0: ((@optional :: V -> V)<a>))
+         -> (match (@this) {
+          ((@skip std/core/types/Box((@x: a) : a) : (box :: V -> V)<a> ) as @pat@1: ((box :: V -> V)<a>))
+             -> @x;
+        });
+    }));
+  };
+inline borrow "^"  fun cctx/res // inline size: 0
+  = forall<a,b> fn(cctx: (cctx :: (V, V) -> V)<a,b>){
+    (match (cctx) {
+      ((@skip std/core/types/@Cctx((@x: a) : a, (@pat@0: (@field-addr :: V -> V)<b>) : (@field-addr :: V -> V)<b>) : (cctx :: (V, V) -> V)<a,b> ) as @pat: ((cctx :: (V, V) -> V)<a,b>))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun cctx/holeptr // inline size: 0
+  = forall<a,b> fn(cctx: (cctx :: (V, V) -> V)<a,b>){
+    (match (cctx) {
+      ((@skip std/core/types/@Cctx((@pat@0: a) : a, (@x: (@field-addr :: V -> V)<b>) : (@field-addr :: V -> V)<b>) : (cctx :: (V, V) -> V)<a,b> ) as @pat: ((cctx :: (V, V) -> V)<a,b>))
+         -> @x;
+    });
+  };
+inline borrow "^" fip fun is-left // inline size: 1
+  = forall<a,b> fn(either: (either :: (V, V) -> V)<a,b>){
+    (match (either) {
+      ((std/core/types/Left((@pat@0: a) : a) : (either :: (V, V) -> V)<a,b> ) as @pat: ((either :: (V, V) -> V)<a,b>))
+         -> std/core/types/True;
+      (@pat@1: ((either :: (V, V) -> V)<a,b>))
+         -> std/core/types/False;
+    });
+  };
+inline borrow "^" fip fun is-right // inline size: 1
+  = forall<a,b> fn(either: (either :: (V, V) -> V)<a,b>){
+    (match (either) {
+      ((std/core/types/Right((@pat@0: b) : b) : (either :: (V, V) -> V)<a,b> ) as @pat: ((either :: (V, V) -> V)<a,b>))
+         -> std/core/types/True;
+      (@pat@1: ((either :: (V, V) -> V)<a,b>))
+         -> std/core/types/False;
+    });
+  };
+inline borrow "^" fip fun is-nil // inline size: 1
+  = forall<a> fn(list: (list :: V -> V)<a>){
+    (match (list) {
+      ((std/core/types/Nil() : (list :: V -> V)<a> ) as @pat: ((list :: V -> V)<a>))
+         -> std/core/types/True;
+      (@pat@0: ((list :: V -> V)<a>))
+         -> std/core/types/False;
+    });
+  };
+inline borrow "^" fip fun is-cons // inline size: 1
+  = forall<a> fn(list: (list :: V -> V)<a>){
+    (match (list) {
+      ((std/core/types/Cons((@pat@0: a) : a, (@pat@1: (list :: V -> V)<a>) : (list :: V -> V)<a>) : (list :: V -> V)<a> ) as @pat: ((list :: V -> V)<a>))
+         -> std/core/types/True;
+      ((@skip std/core/types/Nil() : (list :: V -> V)<a> ) as @pat@2: ((list :: V -> V)<a>))
+         -> std/core/types/False;
+    });
+  };
+inline borrow "^" fip fun is-nothing // inline size: 1
+  = forall<a> fn(maybe: (maybe :: V -> V)<a>){
+    (match (maybe) {
+      ((std/core/types/Nothing() : (maybe :: V -> V)<a> ) as @pat: ((maybe :: V -> V)<a>))
+         -> std/core/types/True;
+      (@pat@0: ((maybe :: V -> V)<a>))
+         -> std/core/types/False;
+    });
+  };
+inline borrow "^" fip fun is-just // inline size: 1
+  = forall<a> fn(maybe: (maybe :: V -> V)<a>){
+    (match (maybe) {
+      ((std/core/types/Just((@pat@0: a) : a) : (maybe :: V -> V)<a> ) as @pat: ((maybe :: V -> V)<a>))
+         -> std/core/types/True;
+      ((@skip std/core/types/Nothing() : (maybe :: V -> V)<a> ) as @pat@1: ((maybe :: V -> V)<a>))
+         -> std/core/types/False;
+    });
+  };
+inline borrow "^" fip fun is-lt // inline size: 1
+  = fn(order: order){
+    match (order) {
+      ((std/core/types/Lt() : order ) as @pat: order)
+         -> std/core/types/True;
+      (@pat@0: order)
+         -> std/core/types/False;
+    };
+  };
+inline borrow "^" fip fun is-eq // inline size: 1
+  = fn(order: order){
+    match (order) {
+      ((std/core/types/Eq() : order ) as @pat: order)
+         -> std/core/types/True;
+      (@pat@0: order)
+         -> std/core/types/False;
+    };
+  };
+inline borrow "^" fip fun is-gt // inline size: 1
+  = fn(order: order){
+    match (order) {
+      ((std/core/types/Gt() : order ) as @pat: order)
+         -> std/core/types/True;
+      (@pat@0: order)
+         -> std/core/types/False;
+    };
+  };
+inline borrow "^" fip fun is-lt2 // inline size: 1
+  = forall<a> fn(order2: (order2 :: V -> V)<a>){
+    (match (order2) {
+      ((std/core/types/Lt2((@pat@0: a) : a, (@pat@1: a) : a) : (order2 :: V -> V)<a> ) as @pat: ((order2 :: V -> V)<a>))
+         -> std/core/types/True;
+      (@pat@2: ((order2 :: V -> V)<a>))
+         -> std/core/types/False;
+    });
+  };
+inline borrow "^" fip fun is-eq2 // inline size: 1
+  = forall<a> fn(order2: (order2 :: V -> V)<a>){
+    (match (order2) {
+      ((std/core/types/Eq2((@pat@0: a) : a) : (order2 :: V -> V)<a> ) as @pat: ((order2 :: V -> V)<a>))
+         -> std/core/types/True;
+      (@pat@1: ((order2 :: V -> V)<a>))
+         -> std/core/types/False;
+    });
+  };
+inline borrow "^" fip fun is-gt2 // inline size: 1
+  = forall<a> fn(order2: (order2 :: V -> V)<a>){
+    (match (order2) {
+      ((std/core/types/Gt2((@pat@0: a) : a, (@pat@1: a) : a) : (order2 :: V -> V)<a> ) as @pat: ((order2 :: V -> V)<a>))
+         -> std/core/types/True;
+      (@pat@2: ((order2 :: V -> V)<a>))
+         -> std/core/types/False;
+    });
+  };
+inline borrow "^"  fun tuple2/fst // inline size: 0
+  = forall<a,b> fn(tuple2: (a, b)){
+    (match (tuple2) {
+      ((@skip std/core/types/Tuple2((@x: a) : a, (@pat@0: b) : b) : (a, b) ) as @pat: (a, b))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple2/snd // inline size: 0
+  = forall<a,b> fn(tuple2: (a, b)){
+    (match (tuple2) {
+      ((@skip std/core/types/Tuple2((@pat@0: a) : a, (@x: b) : b) : (a, b) ) as @pat: (a, b))
+         -> @x;
+    });
+  };
+ fun tuple2/@copy // inline size: 3
+  = forall<a,b> fn(@this: (a, b), fst: (@optional :: V -> V)<a>, snd: (@optional :: V -> V)<b>){
+    std/core/types/Tuple2<a,b>((match (fst) {
+        ((std/core/types/@Optional((@uniq-fst@795: a) : a) : (@optional :: V -> V)<a> ) as @pat: ((@optional :: V -> V)<a>))
+           -> @uniq-fst@795;
+        ((@skip std/core/types/@None() : (@optional :: V -> V)<a> ) as @pat@0: ((@optional :: V -> V)<a>))
+           -> (match (@this) {
+            ((@skip std/core/types/Tuple2((@x: a) : a, (@pat@0@0: b) : b) : (a, b) ) as @pat@1: (a, b))
+               -> @x;
+          });
+      }), (match (snd) {
+        ((std/core/types/@Optional((@uniq-snd@808: b) : b) : (@optional :: V -> V)<b> ) as @pat@1@0: ((@optional :: V -> V)<b>))
+           -> @uniq-snd@808;
+        ((@skip std/core/types/@None() : (@optional :: V -> V)<b> ) as @pat@2: ((@optional :: V -> V)<b>))
+           -> (match (@this) {
+            ((@skip std/core/types/Tuple2((@pat@0@1: a) : a, (@x@0: b) : b) : (a, b) ) as @pat@3: (a, b))
+               -> @x@0;
+          });
+      }));
+  };
+inline borrow "^"  fun tuple3/fst // inline size: 0
+  = forall<a,b,c> fn(tuple3: (a, b, c)){
+    (match (tuple3) {
+      ((@skip std/core/types/Tuple3((@x: a) : a, (@pat@0: b) : b, (@pat@1: c) : c) : (a, b, c) ) as @pat: (a, b, c))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple3/snd // inline size: 0
+  = forall<a,b,c> fn(tuple3: (a, b, c)){
+    (match (tuple3) {
+      ((@skip std/core/types/Tuple3((@pat@0: a) : a, (@x: b) : b, (@pat@1: c) : c) : (a, b, c) ) as @pat: (a, b, c))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple3/thd // inline size: 0
+  = forall<a,b,c> fn(tuple3: (a, b, c)){
+    (match (tuple3) {
+      ((@skip std/core/types/Tuple3((@pat@0: a) : a, (@pat@1: b) : b, (@x: c) : c) : (a, b, c) ) as @pat: (a, b, c))
+         -> @x;
+    });
+  };
+ fun tuple3/@copy // inline size: 4
+  = forall<a,b,c> fn(@this: (a, b, c), fst: (@optional :: V -> V)<a>, snd: (@optional :: V -> V)<b>, thd: (@optional :: V -> V)<c>){
+    std/core/types/Tuple3<a,b,c>((match (fst) {
+        ((std/core/types/@Optional((@uniq-fst@956: a) : a) : (@optional :: V -> V)<a> ) as @pat: ((@optional :: V -> V)<a>))
+           -> @uniq-fst@956;
+        ((@skip std/core/types/@None() : (@optional :: V -> V)<a> ) as @pat@0: ((@optional :: V -> V)<a>))
+           -> (match (@this) {
+            ((@skip std/core/types/Tuple3((@x: a) : a, (@pat@0@0: b) : b, (@pat@1@0: c) : c) : (a, b, c) ) as @pat@1: (a, b, c))
+               -> @x;
+          });
+      }), (match (snd) {
+        ((std/core/types/@Optional((@uniq-snd@979: b) : b) : (@optional :: V -> V)<b> ) as @pat@1@1: ((@optional :: V -> V)<b>))
+           -> @uniq-snd@979;
+        ((@skip std/core/types/@None() : (@optional :: V -> V)<b> ) as @pat@2: ((@optional :: V -> V)<b>))
+           -> (match (@this) {
+            ((@skip std/core/types/Tuple3((@pat@0@1: a) : a, (@x@0: b) : b, (@pat@1@2: c) : c) : (a, b, c) ) as @pat@3: (a, b, c))
+               -> @x@0;
+          });
+      }), (match (thd) {
+        ((std/core/types/@Optional((@uniq-thd@995: c) : c) : (@optional :: V -> V)<c> ) as @pat@3@0: ((@optional :: V -> V)<c>))
+           -> @uniq-thd@995;
+        ((@skip std/core/types/@None() : (@optional :: V -> V)<c> ) as @pat@4: ((@optional :: V -> V)<c>))
+           -> (match (@this) {
+            ((@skip std/core/types/Tuple3((@pat@0@2: a) : a, (@pat@1@3: b) : b, (@x@1: c) : c) : (a, b, c) ) as @pat@5: (a, b, c))
+               -> @x@1;
+          });
+      }));
+  };
+inline borrow "^"  fun tuple4/fst // inline size: 0
+  = forall<a,b,c,d> fn(tuple4: (a, b, c, d)){
+    (match (tuple4) {
+      ((@skip std/core/types/Tuple4((@x: a) : a, (@pat@0: b) : b, (@pat@1: c) : c, (@pat@2: d) : d) : (a, b, c, d) ) as @pat: (a, b, c, d))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple4/snd // inline size: 0
+  = forall<a,b,c,d> fn(tuple4: (a, b, c, d)){
+    (match (tuple4) {
+      ((@skip std/core/types/Tuple4((@pat@0: a) : a, (@x: b) : b, (@pat@1: c) : c, (@pat@2: d) : d) : (a, b, c, d) ) as @pat: (a, b, c, d))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple4/thd // inline size: 0
+  = forall<a,b,c,d> fn(tuple4: (a, b, c, d)){
+    (match (tuple4) {
+      ((@skip std/core/types/Tuple4((@pat@0: a) : a, (@pat@1: b) : b, (@x: c) : c, (@pat@2: d) : d) : (a, b, c, d) ) as @pat: (a, b, c, d))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple4/field4 // inline size: 0
+  = forall<a,b,c,d> fn(tuple4: (a, b, c, d)){
+    (match (tuple4) {
+      ((@skip std/core/types/Tuple4((@pat@0: a) : a, (@pat@1: b) : b, (@pat@2: c) : c, (@x: d) : d) : (a, b, c, d) ) as @pat: (a, b, c, d))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple5/fst // inline size: 0
+  = forall<a,b,c,d,a1> fn(tuple5: (a, b, c, d, a1)){
+    (match (tuple5) {
+      ((@skip std/core/types/Tuple5((@x: a) : a, (@pat@0: b) : b, (@pat@1: c) : c, (@pat@2: d) : d, (@pat@3: a1) : a1) : (a, b, c, d, a1) ) as @pat: (a, b, c, d, a1))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple5/snd // inline size: 0
+  = forall<a,b,c,d,a1> fn(tuple5: (a, b, c, d, a1)){
+    (match (tuple5) {
+      ((@skip std/core/types/Tuple5((@pat@0: a) : a, (@x: b) : b, (@pat@1: c) : c, (@pat@2: d) : d, (@pat@3: a1) : a1) : (a, b, c, d, a1) ) as @pat: (a, b, c, d, a1))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple5/thd // inline size: 0
+  = forall<a,b,c,d,a1> fn(tuple5: (a, b, c, d, a1)){
+    (match (tuple5) {
+      ((@skip std/core/types/Tuple5((@pat@0: a) : a, (@pat@1: b) : b, (@x: c) : c, (@pat@2: d) : d, (@pat@3: a1) : a1) : (a, b, c, d, a1) ) as @pat: (a, b, c, d, a1))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple5/field4 // inline size: 0
+  = forall<a,b,c,d,a1> fn(tuple5: (a, b, c, d, a1)){
+    (match (tuple5) {
+      ((@skip std/core/types/Tuple5((@pat@0: a) : a, (@pat@1: b) : b, (@pat@2: c) : c, (@x: d) : d, (@pat@3: a1) : a1) : (a, b, c, d, a1) ) as @pat: (a, b, c, d, a1))
+         -> @x;
+    });
+  };
+inline borrow "^"  fun tuple5/field5 // inline size: 0
+  = forall<a,b,c,d,a1> fn(tuple5: (a, b, c, d, a1)){
+    (match (tuple5) {
+      ((@skip std/core/types/Tuple5((@pat@0: a) : a, (@pat@1: b) : b, (@pat@2: c) : c, (@pat@3: d) : d, (@x: a1) : a1) : (a, b, c, d, a1) ) as @pat: (a, b, c, d, a1))
+         -> @x;
+    });
+  };
+inline  fun unit/@copy // inline size: 0
+  = fn(@this: ()){
+    std/core/types/Unit;
+  };
+fip fun (&&) // inline size: 1
+  = fn(x: bool, y: bool){
+    match (x) {
+      ((std/core/types/True() : bool ) as @pat: bool)
+         -> y;
+      ((@skip std/core/types/False() : bool ) as @pat@0: bool)
+         -> std/core/types/False;
+    };
+  };
+inline fip fun id // inline size: 0
+  = forall<a> fn(x: a){
+    x;
+  };
+inline  fun local-scope // inline size: 3
+  = forall<a,(e :: E)> fn<(e :: E)>(action: forall<(h :: H)> () -> <(local :: H -> X)<(h :: H)>|(e :: E)> a){
+    std/core/types/@open<(total :: E),(e :: E),(action : forall<(h :: H)> () -> <(local :: H -> X)<(h :: H)>|(e :: E)> a) -> (() -> (e :: E) a),(action : forall<(h :: H)> () -> <(local :: H -> X)<(h :: H)>|(e :: E)> a) -> (e :: E) (() -> (e :: E) a)>((std/core/types/unsafe-no-local-cast<a,(e :: E)>))(action)();
+  };
+fip fun not // inline size: 1
+  = fn(b: bool){
+    match (b) {
+      ((std/core/types/True() : bool ) as @pat: bool)
+         -> std/core/types/False;
+      ((@skip std/core/types/False() : bool ) as @pat@0: bool)
+         -> std/core/types/True;
+    };
+  };
+fip fun (||) // inline size: 1
+  = fn(x: bool, y: bool){
+    match (x) {
+      ((std/core/types/True() : bool ) as @pat: bool)
+         -> std/core/types/True;
+      ((@skip std/core/types/False() : bool ) as @pat@0: bool)
+         -> y;
+    };
+  };
+fip fun bool/(!) // inline size: 1
+  = fn(b: bool){
+    match (b) {
+      ((std/core/types/True() : bool ) as @pat: bool)
+         -> std/core/types/False;
+      ((@skip std/core/types/False() : bool ) as @pat@0: bool)
+         -> std/core/types/True;
+    };
+  };

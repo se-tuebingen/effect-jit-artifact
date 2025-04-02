@@ -1,0 +1,2 @@
+#!/bin/sh
+'/Users/gaisseml/dev/effect-jit/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-no-opt' '/Users/gaisseml/dev/effect-jit/.effekt-out/effekt-jit-no-opt:mandelbrot_53341d00-7b0e-4c0f-998a-cbfd940fc99f/mandelbrot.rpyeffect' "$@"

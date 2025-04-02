@@ -1,0 +1,21 @@
+\begin{tabular}{l r r r r r r r r r r}
+\toprule & \multicolumn{3}{c}{eff} & \multicolumn{4}{c}{effekt} & \multicolumn{3}{c}{koka} \\
+\cmidrule(l){2-4}\cmidrule(l){5-8}\cmidrule(l){9-11} 
+ & jit & plain-ocaml & oldeff-plain-ocaml & jit & llvm & js & ml & vm & c & js \\
+\midrule
+countdown &  &  &  &  &  &  &  & $\mathbf{0.242}$ & $3.254$ &  \\
+fibonacci-recursive & $6.246$ &  &  & $5.540$ &  & > 90s &  & $\mathbf{2.802}$ &  &  \\
+generator & $\mathbf{0.325}$ &  &  & $0.524$ & > 90s &  & - & $0.505$ &  &  \\
+handler-sieve & $2.434$ &  & > 90s & $\mathbf{2.054}$ &  & > 90s & x-handler_sieve-effekt-ml & $2.166$ &  & stack overflowed \\
+iterator & $0.061$ &  &  & $\mathbf{0.020}$ &  &  &  & $0.191$ &  &  \\
+nqueens & $\mathbf{0.521}$ & x-nqueens-eff-plain-ocaml &  & $0.898$ & > 90s &  &  & $0.581$ &  &  \\
+parsing-dollars & $\mathbf{0.214}$ &  &  & $0.425$ &  &  &  & $0.611$ &  &  \\
+product-early & $0.420$ &  &  & $\mathbf{0.259}$ &  &  &  & $0.435$ &  &  \\
+resume-nontail & $0.126$ &  &  & $\mathbf{0.112}$ &  & stack overflowed &  & $0.294$ &  & stack overflowed \\
+startup & $0.006$ & $0.004$ & x-startup-oldeff-plain-ocaml & $0.006$ & $0.004$ & $0.043$ & x-startup-effekt-ml & $0.172$ & $\mathbf{0.004}$ & $0.058$ \\
+tree-explore & $0.362$ &  &  & $\mathbf{0.223}$ &  & stack overflowed &  & $0.408$ &  &  \\
+triples & $0.169$ &  &  & $\mathbf{0.107}$ & > 90s &  &  & $0.440$ &  &  \\
+\midrule
+ geomean speedup & $1.000$ & $1.511$ &  & $1.000$ & $1.420$ & $0.144$ &  & $1.000$ & $1.814$ & $2.950$ \\
+\bottomrule
+\end{tabular}

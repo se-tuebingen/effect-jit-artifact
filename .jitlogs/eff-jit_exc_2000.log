@@ -1,0 +1,218 @@
+[5d7b7a] {jit-log-opt-loop
+# Loop 1 (13<main.rpyeffect:5(Name(>=_1))>+0: {"op": "New", "out": 0, "targets": [12], "args": {"any": [0]}}) : loop with 183 ops
+[p0, p1, p2, p3, p4]
++264: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 16>)
++272: p7 = getarrayitem_gc_r(p5, 0, descr=<ArrayP 8>)
++276: p9 = getarrayitem_gc_r(p5, 1, descr=<ArrayP 8>)
++280: p11 = getarrayitem_gc_r(p5, 2, descr=<ArrayP 8>)
++284: p13 = getarrayitem_gc_r(p5, 3, descr=<ArrayP 8>)
++288: p15 = getarrayitem_gc_r(p5, 4, descr=<ArrayP 8>)
++292: p17 = getarrayitem_gc_r(p5, 5, descr=<ArrayP 8>)
++296: p19 = getarrayitem_gc_r(p5, 6, descr=<ArrayP 8>)
++300: p21 = getarrayitem_gc_r(p5, 7, descr=<ArrayP 8>)
++304: p23 = getarrayitem_gc_r(p5, 8, descr=<ArrayP 8>)
++308: p25 = getarrayitem_gc_r(p5, 9, descr=<ArrayP 8>)
++312: p27 = getarrayitem_gc_r(p5, 10, descr=<ArrayP 8>)
++316: p29 = getarrayitem_gc_r(p5, 11, descr=<ArrayP 8>)
++320: p31 = getarrayitem_gc_r(p5, 12, descr=<ArrayP 8>)
++324: p33 = getarrayitem_gc_r(p5, 13, descr=<ArrayP 8>)
++328: p35 = getarrayitem_gc_r(p5, 14, descr=<ArrayP 8>)
++332: p37 = getarrayitem_gc_r(p5, 15, descr=<ArrayP 8>)
++336: label(p0, p1, p2, p3, p4, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, descr=TargetToken(5509163872))
+debug_merge_point(0, 0, '13<main.rpyeffect:5(Name(>=_1))>+0: {"op": "New". "out": 0. "targets": [12]. "args": {"any": [0]}}')
++396: guard_not_invalidated(descr=<Guard0x1485da8d8>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '13<main.rpyeffect:5(Name(>=_1))>+1: {"op": "Return". "args": {"any": [0]}}')
++400: guard_nonnull(p1, descr=<Guard0x1485fa6b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++412: i38 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++420: guard_value(i38, 111, descr=<Guard0x1485fa680>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++432: p40 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__1.inst_values_ptr_0 32 pure>)
++436: p41 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x1485df9a0>"}')
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+1: {"op": "Push". "target": 110. "args": {"any": [1]}}')
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+2: {"op": "Copy". "type": "any". "from": 0. "to". 1}')
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+3: {"op": "Copy". "type": "any". "from": 2. "to". 0}')
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+4: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '12<main.rpyeffect:4([method_apply@Name(>=_1)#11])>+0: {"op": "Jump". "target": 11}')
+debug_merge_point(0, 0, '11<main.rpyeffect:3([mcore:[#14]#8])>+0: {"op": "PrimOp". "name": "infixGte(Any. Any): Bool". "out": {"any": [0]}. "in": {"any": [1. 0]}}')
++440: guard_class(p7, ConstClass(IntValue), descr=<Guard0x1485fa650>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++456: i43 = getfield_gc_i(p7, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
++460: i45 = int_eq(i43, 0)
+guard_false(i45, descr=<Guard0x1485fa620>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++468: i46 = int_lt(i43, 0)
+guard_false(i46, descr=<Guard0x1485fa5f0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '11<main.rpyeffect:3([mcore:[#14]#8])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '110<main.rpyeffect:102([k@[k@Name(loop_61)#167]#171])>+0: {"op": "Switch". "scrutinee": 0. "values": [<BoolValue object at 0x1485df9b0>]. "targets": [106]. "default": 109}')
++476: guard_nonnull(p41, descr=<Guard0x1485fa5c0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++484: i47 = getfield_gc_i(p41, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++488: guard_value(i47, 113, descr=<Guard0x1485fa590>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+1: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+3: {"op": "Push". "target": 105. "args": {"any": [1]}}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+4: {"op": "Copy". "type": "any". "from": 2. "to". 1}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+5: {"op": "Jump". "target": 102}')
+debug_merge_point(0, 0, '102<main.rpyeffect:94(Name(outer_53))>+0: {"op": "Match". "type": Interned({"op": "eff$Tuple". "elements": []}). "scrutinee": 0. "clauses": [{"tag": Interned({"op": "eff$Tuple". "elements": []}). "target": 101. "args": {"any": []}}]. "default": {"tag": Interned(df01c490-2f64-4ea4-bfbf-12a2e2fad65b#[Missing Tag#304]). "target": 99. "args": {"any": []}}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:93([#155])>+0: {"op": "New". "out": 0. "targets": [100]. "args": {"any": []}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:93([#155])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '101<main.rpyeffect:93([#155])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:93([#155])>+3: {"op": "Jump". "target": 97}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+0: {"op": "New". "out": 1. "targets": [95]. "args": {"any": []}}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+1: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+3: {"op": "NewStackWithBinding". "out": 1. "target": 96. "region": 2. "args": {"any": []}. "label": 2. "binding": 1}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+4: {"op": "PushStack". "arg": 1}')
++504: i50 = instance_ptr_eq(p4, ConstPtr(ptr49))
+guard_true(i50, descr=<Guard0x1485fa500>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+5: {"op": "Invoke". "receiver": 0. "tag": Interned(apply). "args" : {"any": []}}')
+debug_merge_point(0, 0, '100<main.rpyeffect:92([method_apply@[#155]#157])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '100<main.rpyeffect:92([method_apply@[#155]#157])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '100<main.rpyeffect:92([method_apply@[#155]#157])>+2: {"op": "Jump". "target": 98}')
+debug_merge_point(0, 0, '98<main.rpyeffect:90([mcore:[#39]#146])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '98<main.rpyeffect:90([mcore:[#39]#146])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '98<main.rpyeffect:90([mcore:[#39]#146])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '98<main.rpyeffect:90([mcore:[#39]#146])>+3: {"op": "Jump". "target": 91}')
+debug_merge_point(0, 0, '91<main.rpyeffect:83(Name(inner_48))>+0: {"op": "Match". "type": Interned({"op": "eff$Tuple". "elements": []}). "scrutinee": 0. "clauses": [{"tag": Interned({"op": "eff$Tuple". "elements": []}). "target": 90. "args": {"any": []}}]. "default": {"tag": Interned(df01c490-2f64-4ea4-bfbf-12a2e2fad65b#[Missing Tag#302]). "target": 88. "args": {"any": []}}}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "int". "value": "<IntValue object at 0x1485fe040>"}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+3: {"op": "GetDynamic". "out": 0. "n": 0. "label": 1}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+4: {"op": "Construct". "out": 1. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+5: {"op": "Push". "target": 89. "args": {"any": []}}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+6: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+7: {"op": "Invoke". "receiver": 1. "tag": Interned(Exc_0). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1485dfe80>"}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+1: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+3: {"op": "ShiftDyn". "out": 1. "n": 1. "label": 2}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+4: {"op": "Match". "type": Interned({"op": "eff$Tuple". "elements": []}). "scrutinee": 0. "clauses": [{"tag": Interned({"op": "eff$Tuple". "elements": []}). "target": 94. "args": {"any": []}}]. "default": {"tag": Interned(df01c490-2f64-4ea4-bfbf-12a2e2fad65b#[Missing Tag#303]). "target": 93. "args": {"any": []}}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:86([#138])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:86([#138])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '105<main.rpyeffect:97([k@[switch case for Bool(true)#172]#179])>+0: {"op": "Push". "target": 104. "args": {"any": []}}')
+debug_merge_point(0, 0, '105<main.rpyeffect:97([k@[switch case for Bool(true)#172]#179])>+1: {"op": "Copy". "type": "any". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '105<main.rpyeffect:97([k@[switch case for Bool(true)#172]#179])>+2: {"op": "Jump". "target": 74}')
+debug_merge_point(0, 0, '74<main.rpyeffect:66(Name(-_34))>+0: {"op": "New". "out": 0. "targets": [73]. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '74<main.rpyeffect:66(Name(-_34))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '104<main.rpyeffect:96([#181])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1485dfb40>"}')
+debug_merge_point(0, 0, '104<main.rpyeffect:96([#181])>+1: {"op": "Push". "target": 103. "args": {"any": []}}')
+debug_merge_point(0, 0, '104<main.rpyeffect:96([#181])>+2: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '104<main.rpyeffect:96([#181])>+3: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '73<main.rpyeffect:65([method_apply@Name(-_34)#96])>+0: {"op": "Jump". "target": 72}')
+debug_merge_point(0, 0, '72<main.rpyeffect:64([mcore:[#29]#93])>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"any": [0]}. "in": {"any": [1. 0]}}')
++516: i51 = getfield_gc_i(p40, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
++520: i53 = int_sub(i51, 1)
+debug_merge_point(0, 0, '72<main.rpyeffect:64([mcore:[#29]#93])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '103<main.rpyeffect:95([k@[#181]#185])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '103<main.rpyeffect:95([k@[#181]#185])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '103<main.rpyeffect:95([k@[#181]#185])>+2: {"op": "Jump". "target": 112}')
+debug_merge_point(0, 0, '112<main.rpyeffect:104(Name(loop_61))>+0: {"op": "Push". "target": 111. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '112<main.rpyeffect:104(Name(loop_61))>+1: {"op": "Jump". "target": 13}')
+debug_merge_point(0, 0, '13<main.rpyeffect:5(Name(>=_1))>+0: {"op": "New". "out": 0. "targets": [12]. "args": {"any": [0]}}')
++524: label(p0, p41, i53, p2, p3, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, descr=TargetToken(5509163808))
+debug_merge_point(0, 0, '13<main.rpyeffect:5(Name(>=_1))>+0: {"op": "New". "out": 0. "targets": [12]. "args": {"any": [0]}}')
++528: guard_not_invalidated(descr=<Guard0x1485dafe0>) [p2, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p3, p41, i53]
+debug_merge_point(0, 0, '13<main.rpyeffect:5(Name(>=_1))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x1485df9a0>"}')
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+1: {"op": "Push". "target": 110. "args": {"any": [1]}}')
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+2: {"op": "Copy". "type": "any". "from": 0. "to". 1}')
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+3: {"op": "Copy". "type": "any". "from": 2. "to". 0}')
+debug_merge_point(0, 0, '111<main.rpyeffect:103([k@Name(loop_61)#167])>+4: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '12<main.rpyeffect:4([method_apply@Name(>=_1)#11])>+0: {"op": "Jump". "target": 11}')
+debug_merge_point(0, 0, '11<main.rpyeffect:3([mcore:[#14]#8])>+0: {"op": "PrimOp". "name": "infixGte(Any. Any): Bool". "out": {"any": [0]}. "in": {"any": [1. 0]}}')
++532: i55 = int_eq(i53, 0)
+guard_false(i55, descr=<Guard0x1485fbfa0>) [p2, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p3, p41, i53]
++540: i56 = int_lt(i53, 0)
+guard_false(i56, descr=<Guard0x1485fbf70>) [p2, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p3, p41, i53]
+debug_merge_point(0, 0, '11<main.rpyeffect:3([mcore:[#14]#8])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '110<main.rpyeffect:102([k@[k@Name(loop_61)#167]#171])>+0: {"op": "Switch". "scrutinee": 0. "values": [<BoolValue object at 0x1485df9b0>]. "targets": [106]. "default": 109}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+1: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+3: {"op": "Push". "target": 105. "args": {"any": [1]}}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+4: {"op": "Copy". "type": "any". "from": 2. "to". 1}')
+debug_merge_point(0, 0, '106<main.rpyeffect:98([switch case for Bool(true)#172])>+5: {"op": "Jump". "target": 102}')
+debug_merge_point(0, 0, '102<main.rpyeffect:94(Name(outer_53))>+0: {"op": "Match". "type": Interned({"op": "eff$Tuple". "elements": []}). "scrutinee": 0. "clauses": [{"tag": Interned({"op": "eff$Tuple". "elements": []}). "target": 101. "args": {"any": []}}]. "default": {"tag": Interned(df01c490-2f64-4ea4-bfbf-12a2e2fad65b#[Missing Tag#304]). "target": 99. "args": {"any": []}}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:93([#155])>+0: {"op": "New". "out": 0. "targets": [100]. "args": {"any": []}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:93([#155])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '101<main.rpyeffect:93([#155])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:93([#155])>+3: {"op": "Jump". "target": 97}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+0: {"op": "New". "out": 1. "targets": [95]. "args": {"any": []}}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+1: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+3: {"op": "NewStackWithBinding". "out": 1. "target": 96. "region": 2. "args": {"any": []}. "label": 2. "binding": 1}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+4: {"op": "PushStack". "arg": 1}')
+debug_merge_point(0, 0, '97<main.rpyeffect:89([mcore:[#37]#127])>+5: {"op": "Invoke". "receiver": 0. "tag": Interned(apply). "args" : {"any": []}}')
+debug_merge_point(0, 0, '100<main.rpyeffect:92([method_apply@[#155]#157])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '100<main.rpyeffect:92([method_apply@[#155]#157])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '100<main.rpyeffect:92([method_apply@[#155]#157])>+2: {"op": "Jump". "target": 98}')
+debug_merge_point(0, 0, '98<main.rpyeffect:90([mcore:[#39]#146])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '98<main.rpyeffect:90([mcore:[#39]#146])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '98<main.rpyeffect:90([mcore:[#39]#146])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '98<main.rpyeffect:90([mcore:[#39]#146])>+3: {"op": "Jump". "target": 91}')
+debug_merge_point(0, 0, '91<main.rpyeffect:83(Name(inner_48))>+0: {"op": "Match". "type": Interned({"op": "eff$Tuple". "elements": []}). "scrutinee": 0. "clauses": [{"tag": Interned({"op": "eff$Tuple". "elements": []}). "target": 90. "args": {"any": []}}]. "default": {"tag": Interned(df01c490-2f64-4ea4-bfbf-12a2e2fad65b#[Missing Tag#302]). "target": 88. "args": {"any": []}}}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "int". "value": "<IntValue object at 0x1485fe040>"}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+3: {"op": "GetDynamic". "out": 0. "n": 0. "label": 1}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+4: {"op": "Construct". "out": 1. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+5: {"op": "Push". "target": 89. "args": {"any": []}}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+6: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '90<main.rpyeffect:82([#116])>+7: {"op": "Invoke". "receiver": 1. "tag": Interned(Exc_0). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1485dfe80>"}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+1: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+3: {"op": "ShiftDyn". "out": 1. "n": 1. "label": 2}')
+debug_merge_point(0, 0, '95<main.rpyeffect:87([method_Exc_0@[mcore:[#37]#127]#129])>+4: {"op": "Match". "type": Interned({"op": "eff$Tuple". "elements": []}). "scrutinee": 0. "clauses": [{"tag": Interned({"op": "eff$Tuple". "elements": []}). "target": 94. "args": {"any": []}}]. "default": {"tag": Interned(df01c490-2f64-4ea4-bfbf-12a2e2fad65b#[Missing Tag#303]). "target": 93. "args": {"any": []}}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:86([#138])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:86([#138])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '105<main.rpyeffect:97([k@[switch case for Bool(true)#172]#179])>+0: {"op": "Push". "target": 104. "args": {"any": []}}')
+debug_merge_point(0, 0, '105<main.rpyeffect:97([k@[switch case for Bool(true)#172]#179])>+1: {"op": "Copy". "type": "any". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '105<main.rpyeffect:97([k@[switch case for Bool(true)#172]#179])>+2: {"op": "Jump". "target": 74}')
+debug_merge_point(0, 0, '74<main.rpyeffect:66(Name(-_34))>+0: {"op": "New". "out": 0. "targets": [73]. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '74<main.rpyeffect:66(Name(-_34))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '104<main.rpyeffect:96([#181])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1485dfb40>"}')
+debug_merge_point(0, 0, '104<main.rpyeffect:96([#181])>+1: {"op": "Push". "target": 103. "args": {"any": []}}')
+debug_merge_point(0, 0, '104<main.rpyeffect:96([#181])>+2: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '104<main.rpyeffect:96([#181])>+3: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '73<main.rpyeffect:65([method_apply@Name(-_34)#96])>+0: {"op": "Jump". "target": 72}')
+debug_merge_point(0, 0, '72<main.rpyeffect:64([mcore:[#29]#93])>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"any": [0]}. "in": {"any": [1. 0]}}')
++548: i58 = int_sub(i53, 1)
+debug_merge_point(0, 0, '72<main.rpyeffect:64([mcore:[#29]#93])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '103<main.rpyeffect:95([k@[#181]#185])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Exc_0)"}')
+debug_merge_point(0, 0, '103<main.rpyeffect:95([k@[#181]#185])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '103<main.rpyeffect:95([k@[#181]#185])>+2: {"op": "Jump". "target": 112}')
+debug_merge_point(0, 0, '112<main.rpyeffect:104(Name(loop_61))>+0: {"op": "Push". "target": 111. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '112<main.rpyeffect:104(Name(loop_61))>+1: {"op": "Jump". "target": 13}')
+debug_merge_point(0, 0, '13<main.rpyeffect:5(Name(>=_1))>+0: {"op": "New". "out": 0. "targets": [12]. "args": {"any": [0]}}')
++552: jump(p0, p41, i58, p2, p3, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, descr=TargetToken(5509163808))
++556: --end of the loop--
+[620519] jit-log-opt-loop}
+[62ba16] {jit-summary
+Tracing:      	1	0.001122
+Backend:      	1	0.000106
+TOTAL:      		0.001253
+ops:             	3446
+heapcached ops:  	446
+recorded ops:    	1543
+  calls:         	1179
+guards:          	91
+opt ops:         	164
+opt guards:      	12
+opt guards shared:	10
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	2
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[62d92d] jit-summary}

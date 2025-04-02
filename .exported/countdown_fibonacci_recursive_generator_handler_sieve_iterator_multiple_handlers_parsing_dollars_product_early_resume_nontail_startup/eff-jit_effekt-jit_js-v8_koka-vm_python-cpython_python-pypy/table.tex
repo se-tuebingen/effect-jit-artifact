@@ -1,0 +1,19 @@
+\begin{tabular}{l r r r r r r}
+\toprule & \multicolumn{1}{c}{eff} & \multicolumn{1}{c}{effekt} & \multicolumn{1}{c}{koka} & \multicolumn{1}{c}{js} & \multicolumn{2}{c}{python} \\
+\cmidrule(l){2-2}\cmidrule(l){3-3}\cmidrule(l){4-4}\cmidrule(l){5-5}\cmidrule(l){6-7} 
+ & jit & jit & vm & v8 & cpython & pypy \\
+\midrule
+countdown & $\mathbf{0.196}$ & $0.437$ & $0.239$ & $6.790$ & $66.153$ & $7.361$ \\
+fibonacci-recursive & $6.205$ & $5.318$ & $3.309$ & $\mathbf{2.436}$ & $30.533$ & $6.665$ \\
+generator & $\mathbf{0.353}$ & $0.555$ & $0.514$ & $23.901$ & $24.062$ & $8.096$ \\
+handler-sieve & $2.407$ & $\mathbf{2.089}$ & $2.123$ & stack overflowed & returned 1 & > 90s \\
+iterator & $0.061$ & $\mathbf{0.020}$ & $0.192$ & $0.753$ & $1.892$ & $0.200$ \\
+multiple-handlers & $1.209$ & $1.019$ & $\mathbf{0.998}$ & $8.006$ & $11.408$ & $1.088$ \\
+parsing-dollars & $\mathbf{0.176}$ & $0.420$ & $0.605$ & $6.170$ & $45.775$ & $1.482$ \\
+product-early & $0.403$ & $\mathbf{0.253}$ & $0.423$ & $6.644$ & returned 1 & $4.384$ \\
+resume-nontail & $0.122$ & $\mathbf{0.109}$ & $0.288$ & - & - & - \\
+startup & $\mathbf{0.006}$ & $0.006$ & $0.170$ & $0.035$ & $0.016$ & $0.064$ \\
+\midrule
+ geomean slowdown & $1.000$ & $1.000$ & $1.884$ & $10.994$ & $27.490$ & $6.209$ \\
+\bottomrule
+\end{tabular}

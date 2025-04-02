@@ -1,0 +1,25 @@
+\begin{tabular}{l r r r r r r r r r r}
+\toprule & \multicolumn{3}{c}{eff} & \multicolumn{4}{c}{effekt} & \multicolumn{3}{c}{koka} \\
+\cmidrule(l){2-4}\cmidrule(l){5-8}\cmidrule(l){9-11} 
+ & jit & plain-ocaml & oldeff-plain-ocaml & jit & llvm & js & ml & vm & c & js \\
+\midrule
+countdown & $0.196$ & $8.109$ & $0.128$ & $0.437$ & $1.017$ & $0.893$ & $\mathbf{0.066}$ & $0.239$ & $3.228$ & $0.837$ \\
+counter & - & - & - & - & - & - & - & $\mathbf{0.317}$ & $1.970$ & $0.545$ \\
+fibonacci-recursive & $6.195$ & $40.663$ & $1.434$ & $5.307$ & $1.650$ & $17.889$ & $2.104$ & $3.259$ & $\mathbf{1.301}$ & $3.513$ \\
+generator & $\mathbf{0.348}$ & $2.472$ & $2.018$ & $0.548$ & $4.520$ & $3.863$ & - & $0.508$ & $50.532$ & $13.917$ \\
+handler-sieve & $2.376$ & $25.293$ & $8.326$ & $2.067$ & $\mathbf{0.379}$ & $2.291$ & x-handler_sieve-effekt-ml & $2.121$ & $3.837$ & stack overflowed \\
+iterator & $0.060$ & $2.972$ & $1.015$ & $\mathbf{0.019}$ & $0.228$ & $0.245$ & $0.191$ & $0.188$ & $0.343$ & $0.402$ \\
+multiple-handlers & $1.208$ & $10.205$ & x-multiple_handlers-oldeff-plain-ocaml & $1.019$ & $0.972$ & $4.359$ & $\mathbf{0.643}$ & $0.997$ & $12.271$ & $7.047$ \\
+nqueens & $0.500$ & x-nqueens-eff-plain-ocaml & $0.294$ & $0.832$ & $0.892$ & $1.177$ & $\mathbf{0.110}$ & $0.562$ & $8.130$ & $2.089$ \\
+parsing-dollars & $0.175$ & $16.664$ & $1.173$ & $0.419$ & $2.757$ & $0.568$ & $\mathbf{0.129}$ & $0.605$ & $3.536$ & $6.115$ \\
+product-early & $0.403$ & $4.991$ & $0.973$ & $0.253$ & $\mathbf{0.215}$ & $0.655$ & $0.383$ & $0.440$ & $10.246$ & $2.736$ \\
+resume-nontail & $0.122$ & $1.492$ & $0.229$ & $\mathbf{0.109}$ & $0.127$ & returned -6 & $0.112$ & $0.287$ & $9.102$ & stack overflowed \\
+startup & $0.005$ & $0.004$ & $0.004$ & $0.006$ & $0.004$ & $0.037$ & $0.004$ & $0.169$ & $\mathbf{0.004}$ & $0.052$ \\
+to-outermost-handler & - & - & - & $0.787$ & $0.995$ & $0.895$ & x-to_outermost_handler-effekt-ml & $\mathbf{0.587}$ & $3.992$ & $1.300$ \\
+tree-explore & $0.323$ & $1.206$ & $0.180$ & $0.215$ & $0.362$ & $0.893$ & $\mathbf{0.177}$ & $0.393$ & $0.824$ & $0.571$ \\
+triples & $0.163$ & $0.581$ & $0.150$ & $0.103$ & $0.227$ & $0.857$ & $\mathbf{0.043}$ & $0.445$ & $12.562$ & $2.642$ \\
+unused-handlers & $2.129$ & > 90s & x-unused_handlers-oldeff-plain-ocaml & $0.438$ & $0.994$ & $0.896$ & x-unused_handlers-effekt-ml & $\mathbf{0.240}$ & $3.226$ & $0.864$ \\
+\midrule
+ geomean slowdown & $1.000$ & $10.088$ & $1.617$ & $1.000$ & $1.541$ & $3.099$ & $0.624$ & $1.000$ & $5.617$ & $3.226$ \\
+\bottomrule
+\end{tabular}

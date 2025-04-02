@@ -1,0 +1,654 @@
+[c90bef] {jit-log-opt-loop
+# Loop 1 (103<main.rpyeffect:90(Name(countdown_48))>+5: {"op": "Push", "target": 102, "args": {"any": []}}) : loop with 619 ops
+[p0, p1, p2, p3, p4]
++1928: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 16>)
++1936: p7 = getarrayitem_gc_r(p5, 0, descr=<ArrayP 8>)
++1940: p9 = getarrayitem_gc_r(p5, 1, descr=<ArrayP 8>)
++1944: p11 = getarrayitem_gc_r(p5, 2, descr=<ArrayP 8>)
++1948: p13 = getarrayitem_gc_r(p5, 3, descr=<ArrayP 8>)
++1952: p15 = getarrayitem_gc_r(p5, 4, descr=<ArrayP 8>)
++1956: p17 = getarrayitem_gc_r(p5, 5, descr=<ArrayP 8>)
++1960: p19 = getarrayitem_gc_r(p5, 6, descr=<ArrayP 8>)
++1964: p21 = getarrayitem_gc_r(p5, 7, descr=<ArrayP 8>)
++1968: p23 = getarrayitem_gc_r(p5, 8, descr=<ArrayP 8>)
++1972: p25 = getarrayitem_gc_r(p5, 9, descr=<ArrayP 8>)
++1976: p27 = getarrayitem_gc_r(p5, 10, descr=<ArrayP 8>)
++1980: p29 = getarrayitem_gc_r(p5, 11, descr=<ArrayP 8>)
++1984: p31 = getarrayitem_gc_r(p5, 12, descr=<ArrayP 8>)
++1988: p33 = getarrayitem_gc_r(p5, 13, descr=<ArrayP 8>)
++1992: p35 = getarrayitem_gc_r(p5, 14, descr=<ArrayP 8>)
++1996: p37 = getarrayitem_gc_r(p5, 15, descr=<ArrayP 8>)
++2000: label(p0, p1, p2, p3, p4, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, descr=TargetToken(5643390816))
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+5: {"op": "Push". "target": 102. "args": {"any": []}}')
++2056: guard_not_invalidated(descr=<Guard0x1505daba8>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+6: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+7: {"op": "Invoke". "receiver": 1. "tag": Interned(Get_0). "args" : {"any": [0]}}')
++2060: p38 = getfield_gc_r(p7, descr=<FieldP rpyeffect.codata.CoData.inst_vtable 8 pure>)
++2068: guard_value(p38, ConstPtr(ptr39), descr=<Guard0x15062ee30>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2076: p40 = getfield_gc_r(p7, descr=<FieldP rpyeffect.stored_environment.CoData__1.inst_values_ptr_0 24 pure>)
+debug_merge_point(0, 0, '141<main.rpyeffect:128([method_Get_0@[mcore:[#60]#286]#295])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x150604080>"}')
+debug_merge_point(0, 0, '141<main.rpyeffect:128([method_Get_0@[mcore:[#60]#286]#295])>+1: {"op": "ShiftDyn". "out": 1. "n": 2. "label": 1}')
++2084: i42 = instance_ptr_eq(p4, ConstPtr(ptr41))
+guard_false(i42, descr=<Guard0x15062ee60>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2096: guard_nonnull(p0, descr=<Guard0x15062ee90>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2108: guard_nonnull(p40, descr=<Guard0x15062eec0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2116: i43 = getfield_gc_i(p0, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2124: guard_value(i43, 157737, descr=<Guard0x15062eef0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2140: i45 = getfield_gc_i(p40, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2144: guard_value(i45, 149504, descr=<Guard0x15062ef20>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2160: p47 = getfield_gc_r(p3, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2168: guard_isnull(p47, descr=<Guard0x15062ef50>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2176: p48 = getfield_gc_r(p3, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2180: guard_nonnull(p48, descr=<Guard0x15062ef80>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2188: i49 = getfield_gc_i(p48, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2192: guard_value(i49, 157737, descr=<Guard0x15062efb0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2208: p51 = getfield_gc_r(p3, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2212: p52 = getfield_gc_r(p51, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2216: guard_isnull(p52, descr=<Guard0x15062efe0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2224: p53 = getfield_gc_r(p51, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2228: guard_nonnull(p53, descr=<Guard0x15062f010>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2236: i54 = getfield_gc_i(p53, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2240: guard_value(i54, 157737, descr=<Guard0x15062f040>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2256: p56 = getfield_gc_r(p51, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2260: p57 = getfield_gc_r(p56, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2264: guard_isnull(p57, descr=<Guard0x15062f070>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2272: p58 = getfield_gc_r(p56, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2276: guard_nonnull(p58, descr=<Guard0x15062f0a0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2284: i59 = getfield_gc_i(p58, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2288: guard_value(i59, 157737, descr=<Guard0x15062f0d0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2304: p61 = getfield_gc_r(p56, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2308: p62 = getfield_gc_r(p61, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2312: guard_isnull(p62, descr=<Guard0x15062f100>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2320: p63 = getfield_gc_r(p61, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2324: guard_nonnull(p63, descr=<Guard0x15062f130>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2332: i64 = getfield_gc_i(p63, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2336: guard_value(i64, 157737, descr=<Guard0x15062f160>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2352: p66 = getfield_gc_r(p61, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2356: p67 = getfield_gc_r(p66, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2360: guard_isnull(p67, descr=<Guard0x15062f190>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2368: p68 = getfield_gc_r(p66, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2372: guard_nonnull(p68, descr=<Guard0x15062f1c0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2380: i69 = getfield_gc_i(p68, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2388: guard_value(i69, 157737, descr=<Guard0x15062f1f0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2408: p71 = getfield_gc_r(p66, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2412: p72 = getfield_gc_r(p71, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2416: guard_isnull(p72, descr=<Guard0x15062f220>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2424: p73 = getfield_gc_r(p71, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2428: guard_nonnull(p73, descr=<Guard0x15062f250>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2436: i74 = getfield_gc_i(p73, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2444: guard_value(i74, 157737, descr=<Guard0x15062f280>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2464: p76 = getfield_gc_r(p71, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2468: p77 = getfield_gc_r(p76, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2472: guard_isnull(p77, descr=<Guard0x15062f2b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2480: p78 = getfield_gc_r(p76, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2484: guard_nonnull(p78, descr=<Guard0x15062f2e0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2492: i79 = getfield_gc_i(p78, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2500: guard_value(i79, 157737, descr=<Guard0x15062f310>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2520: p81 = getfield_gc_r(p76, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2524: p82 = getfield_gc_r(p81, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2528: guard_isnull(p82, descr=<Guard0x15062f340>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2536: p83 = getfield_gc_r(p81, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2540: guard_nonnull(p83, descr=<Guard0x15062f370>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2548: i84 = getfield_gc_i(p83, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2556: guard_value(i84, 157737, descr=<Guard0x15062f3a0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2576: p86 = getfield_gc_r(p81, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2580: p87 = getfield_gc_r(p86, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2584: guard_isnull(p87, descr=<Guard0x15062f3d0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2592: p88 = getfield_gc_r(p86, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2596: guard_nonnull(p88, descr=<Guard0x15062f400>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2604: i89 = getfield_gc_i(p88, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2612: guard_value(i89, 157737, descr=<Guard0x15062f430>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2632: p91 = getfield_gc_r(p86, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2636: p92 = getfield_gc_r(p91, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2640: guard_isnull(p92, descr=<Guard0x15062f460>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2648: p93 = getfield_gc_r(p91, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2652: guard_nonnull(p93, descr=<Guard0x15062f490>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2660: i94 = getfield_gc_i(p93, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2668: guard_value(i94, 157732, descr=<Guard0x15062f4c0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2684: p96 = getfield_gc_r(p91, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2688: p97 = getfield_gc_r(p96, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2692: guard_isnull(p97, descr=<Guard0x15062f4f0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2700: p98 = getfield_gc_r(p96, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2704: guard_nonnull(p98, descr=<Guard0x15062f520>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2712: i99 = getfield_gc_i(p98, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2720: guard_value(i99, 157727, descr=<Guard0x15062f550>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2740: p101 = getfield_gc_r(p96, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2744: p102 = getfield_gc_r(p101, descr=<FieldP rpyeffect.stack.MetaStack.inst_region 24 pure>)
++2748: guard_isnull(p102, descr=<Guard0x15062f580>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2756: p103 = getfield_gc_r(p101, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++2760: guard_nonnull(p103, descr=<Guard0x15062f5b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2768: i104 = getfield_gc_i(p103, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++2772: guard_value(i104, 149504, descr=<Guard0x15062f5e0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2788: i106 = instance_ptr_eq(p103, p40)
+guard_true(i106, descr=<Guard0x15062f610>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2796: p107 = getfield_gc_r(p101, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++2800: guard_class(p101, 4368640384, descr=<Guard0x15062f640>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2816: p109 = getfield_gc_r(p101, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++2820: p110 = getfield_gc_r(p96, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++2824: guard_class(p96, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f670>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2840: p112 = getfield_gc_r(p96, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++2844: i114 = instance_ptr_eq(p112, ConstPtr(ptr113))
+guard_false(i114, descr=<Guard0x15062f6a0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2852: p115 = getfield_gc_r(p91, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++2856: guard_class(p91, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f6d0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2872: p117 = getfield_gc_r(p91, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++2876: i119 = instance_ptr_eq(p117, ConstPtr(ptr118))
+guard_false(i119, descr=<Guard0x15062f700>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2884: p120 = getfield_gc_r(p86, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++2892: guard_class(p86, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f730>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2908: p122 = getfield_gc_r(p86, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++2912: i124 = instance_ptr_eq(p122, ConstPtr(ptr123))
+guard_false(i124, descr=<Guard0x15062f760>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2920: p125 = getfield_gc_r(p81, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++2928: guard_class(p81, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f790>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2944: p127 = getfield_gc_r(p81, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++2948: i129 = instance_ptr_eq(p127, ConstPtr(ptr128))
+guard_false(i129, descr=<Guard0x15062f7c0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2956: p130 = getfield_gc_r(p76, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++2964: guard_class(p76, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f7f0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2980: p132 = getfield_gc_r(p76, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++2984: i134 = instance_ptr_eq(p132, ConstPtr(ptr133))
+guard_false(i134, descr=<Guard0x15062f820>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++2992: p135 = getfield_gc_r(p71, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++3000: guard_class(p71, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f850>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3016: p137 = getfield_gc_r(p71, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++3020: i139 = instance_ptr_eq(p137, ConstPtr(ptr138))
+guard_false(i139, descr=<Guard0x15062f880>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3028: p140 = getfield_gc_r(p66, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++3036: guard_class(p66, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f8b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3052: p142 = getfield_gc_r(p66, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++3056: i144 = instance_ptr_eq(p142, ConstPtr(ptr143))
+guard_false(i144, descr=<Guard0x15062f8e0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3064: p145 = getfield_gc_r(p61, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++3072: guard_class(p61, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f910>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3088: p147 = getfield_gc_r(p61, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++3092: i149 = instance_ptr_eq(p147, ConstPtr(ptr148))
+guard_false(i149, descr=<Guard0x15062f940>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3100: p150 = getfield_gc_r(p56, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++3108: guard_class(p56, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f970>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3124: p152 = getfield_gc_r(p56, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++3128: i154 = instance_ptr_eq(p152, ConstPtr(ptr153))
+guard_false(i154, descr=<Guard0x15062f9a0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3136: p155 = getfield_gc_r(p51, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++3144: guard_class(p51, ConstClass(MetaStackWithBinding), descr=<Guard0x15062f9d0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3160: p157 = getfield_gc_r(p51, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++3164: i159 = instance_ptr_eq(p157, ConstPtr(ptr158))
+guard_false(i159, descr=<Guard0x15062fa00>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3172: p160 = getfield_gc_r(p3, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++3188: guard_class(p3, ConstClass(MetaStackWithBinding), descr=<Guard0x15062fa30>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3204: p162 = getfield_gc_r(p3, descr=<FieldP rpyeffect.stack.MetaStackWithBinding.inst_binding 40 pure>)
++3212: i164 = instance_ptr_eq(p162, ConstPtr(ptr163))
+guard_false(i164, descr=<Guard0x15062fa60>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3220: i166 = instance_ptr_eq(p4, ConstPtr(ptr165))
+guard_false(i166, descr=<Guard0x15062fa90>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3236: guard_nonnull_class(p109, 4368640384, descr=<Guard0x1505dabf0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3260: p168 = getfield_gc_r(p109, descr=<FieldP rpyeffect.stack.MetaStackLike.inst_stack 8 pure>)
++3264: p169 = getfield_gc_r(p109, descr=<FieldP rpyeffect.stack.MetaStack.inst_label 16 pure>)
++3272: p170 = getfield_gc_r(p109, descr=<FieldP rpyeffect.stack.MetaStack.inst_tail 32 pure>)
++3276: guard_nonnull(p168, descr=<Guard0x15062fac0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3284: p171 = getfield_gc_r(p168, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
++3292: guard_nonnull(p171, descr=<Guard0x15062faf0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3300: i172 = getfield_gc_i(p168, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++3308: i174 = int_lshift(i172, 14)
++3320: i175 = getfield_gc_i(p171, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++3324: i176 = int_add(i174, i175)
++3328: guard_value(i176, 2179073, descr=<Guard0x15062fb20>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '141<main.rpyeffect:128([method_Get_0@[mcore:[#60]#286]#295])>+2: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '141<main.rpyeffect:128([method_Get_0@[mcore:[#60]#286]#295])>+3: {"op": "Match". "type": Interned({"op": "eff$Tuple". "elements": []}). "scrutinee": 1. "clauses": [{"tag": Interned({"op": "eff$Tuple". "elements": []}). "target": 140. "args": {"any": []}}]. "default": {"tag": Interned(c3d1f53a-86f3-4ba3-a32c-def726e06013#[Missing Tag#486]). "target": 138. "args": {"any": []}}}')
++3348: p178 = getfield_gc_r(p9, descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++3360: guard_value(p178, ConstPtr(ptr179), descr=<Guard0x15062fb50>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '140<main.rpyeffect:127([#301])>+0: {"op": "New". "out": 0. "targets": [139]. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '140<main.rpyeffect:127([#301])>+1: {"op": "Return". "args": {"any": [0]}}')
++3368: guard_value(i172, 133, descr=<Guard0x15062fb80>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3380: p181 = getfield_gc_r(p168, descr=<FieldP rpyeffect.stored_environment.Stack__1.inst_values_ptr_0 32 pure>)
++3384: p182 = getfield_gc_r(p171, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
++3388: guard_isnull(p182, descr=<Guard0x15062fbb0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3396: guard_value(i175, 1, descr=<Guard0x15062fbe0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '133<main.rpyeffect:120([k@[mcore:[#57]#280]#284])>+0: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '133<main.rpyeffect:120([k@[mcore:[#57]#280]#284])>+1: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '139<main.rpyeffect:126([method_apply@[#301]#304])>+0: {"op": "Jump". "target": 131}')
+debug_merge_point(0, 0, '131<main.rpyeffect:118([mcore:[#53]#277])>+0: {"op": "Push". "target": 130. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '131<main.rpyeffect:118([mcore:[#53]#277])>+1: {"op": "Jump". "target": 129}')
+debug_merge_point(0, 0, '129<main.rpyeffect:116(Name(k_96))>+0: {"op": "PushStack". "arg": 1}')
++3408: i185 = instance_ptr_eq(p112, ConstPtr(ptr184))
+guard_false(i185, descr=<Guard0x15062fc10>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3416: i187 = instance_ptr_eq(p117, ConstPtr(ptr186))
+guard_false(i187, descr=<Guard0x15062fc40>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3424: i189 = instance_ptr_eq(p122, ConstPtr(ptr188))
+guard_false(i189, descr=<Guard0x15062fc70>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3432: i191 = instance_ptr_eq(p127, ConstPtr(ptr190))
+guard_false(i191, descr=<Guard0x15062fca0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3440: i193 = instance_ptr_eq(p132, ConstPtr(ptr192))
+guard_false(i193, descr=<Guard0x15062fcd0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3448: i195 = instance_ptr_eq(p137, ConstPtr(ptr194))
+guard_false(i195, descr=<Guard0x15062fd00>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3456: i197 = instance_ptr_eq(p142, ConstPtr(ptr196))
+guard_false(i197, descr=<Guard0x15062fd30>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3464: i199 = instance_ptr_eq(p147, ConstPtr(ptr198))
+guard_false(i199, descr=<Guard0x15062fd60>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3472: i201 = instance_ptr_eq(p152, ConstPtr(ptr200))
+guard_false(i201, descr=<Guard0x15062fd90>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3480: i203 = instance_ptr_eq(p157, ConstPtr(ptr202))
+guard_false(i203, descr=<Guard0x15062fdc0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3492: i205 = instance_ptr_eq(p162, ConstPtr(ptr204))
+guard_false(i205, descr=<Guard0x15062fdf0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3504: i207 = instance_ptr_eq(p4, ConstPtr(ptr206))
+guard_false(i207, descr=<Guard0x15062fe20>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3516: guard_nonnull(p1, descr=<Guard0x15062fe50>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3528: i208 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++3540: i210 = int_add(1671168, i208)
++3552: guard_value(i210, 1671274, descr=<Guard0x15062fe80>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '129<main.rpyeffect:116(Name(k_96))>+1: {"op": "Return". "args": {"any": [0]}}')
++3568: p212 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
++3572: guard_isnull(p212, descr=<Guard0x15062feb0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '102<main.rpyeffect:89([k@Name(countdown_48)#122])>+0: {"op": "Push". "target": 101. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '102<main.rpyeffect:89([k@Name(countdown_48)#122])>+1: {"op": "Jump". "target": 15}')
+debug_merge_point(0, 0, '15<main.rpyeffect:2(Name(=_0))>+0: {"op": "New". "out": 0. "targets": [14]. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '15<main.rpyeffect:2(Name(=_0))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x1505df720>"}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+1: {"op": "Push". "target": 100. "args": {"any": [1]}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+2: {"op": "Copy". "type": "any". "from": 0. "to". 1}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+3: {"op": "Copy". "type": "any". "from": 2. "to". 0}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+4: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '14<main.rpyeffect:1([method_apply@Name(=_0)#6])>+0: {"op": "Jump". "target": 13}')
+debug_merge_point(0, 0, '13<main.rpyeffect:0([mcore:[#12]#3])>+0: {"op": "PrimOp". "name": "equals(Any. Any): Bool". "out": {"any": [0]}. "in": {"any": [1. 0]}}')
++3580: guard_class(p181, ConstClass(IntValue), descr=<Guard0x15062fee0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3596: i214 = getfield_gc_i(p181, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
++3600: i216 = int_eq(i214, 0)
+debug_merge_point(0, 0, '13<main.rpyeffect:0([mcore:[#12]#3])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '100<main.rpyeffect:87([k@[k@[k@Name(countdown_48)#122]#124]#128])>+0: {"op": "Switch". "scrutinee": 0. "values": [<BoolValue object at 0x1505df730>]. "targets": [93]. "default": 99}')
+guard_false(i216, descr=<Guard0x15062ff10>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '99<main.rpyeffect:86([switch default case#130])>+0: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '99<main.rpyeffect:86([switch default case#130])>+1: {"op": "Switch". "scrutinee": 1. "values": [<BoolValue object at 0x1505df740>]. "targets": [97]. "default": 98}')
+debug_merge_point(0, 0, '97<main.rpyeffect:84([switch case for Bool(false)#131])>+0: {"op": "Push". "target": 96. "args": {"any": []}}')
+debug_merge_point(0, 0, '97<main.rpyeffect:84([switch case for Bool(false)#131])>+1: {"op": "Jump". "target": 79}')
+debug_merge_point(0, 0, '79<main.rpyeffect:66(Name(-_34))>+0: {"op": "New". "out": 0. "targets": [78]. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '79<main.rpyeffect:66(Name(-_34))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '96<main.rpyeffect:83([k@[switch case for Bool(false)#131]#133])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1505df800>"}')
+debug_merge_point(0, 0, '96<main.rpyeffect:83([k@[switch case for Bool(false)#131]#133])>+1: {"op": "Push". "target": 95. "args": {"any": []}}')
+debug_merge_point(0, 0, '96<main.rpyeffect:83([k@[switch case for Bool(false)#131]#133])>+2: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '96<main.rpyeffect:83([k@[switch case for Bool(false)#131]#133])>+3: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '78<main.rpyeffect:65([method_apply@Name(-_34)#96])>+0: {"op": "Jump". "target": 77}')
+debug_merge_point(0, 0, '77<main.rpyeffect:64([mcore:[#28]#93])>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"any": [0]}. "in": {"any": [1. 0]}}')
++3608: i218 = int_sub(i214, 1)
+debug_merge_point(0, 0, '77<main.rpyeffect:64([mcore:[#28]#93])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1505df880>"}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+1: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Set_1)"}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+3: {"op": "GetDynamic". "out": 1. "n": 1. "label": 2}')
++3616: i220 = instance_ptr_eq(p0, ConstPtr(ptr219))
+guard_false(i220, descr=<Guard0x15062ff40>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3628: i222 = instance_ptr_eq(p48, ConstPtr(ptr221))
+guard_false(i222, descr=<Guard0x15062ff70>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3640: i224 = instance_ptr_eq(p53, ConstPtr(ptr223))
+guard_false(i224, descr=<Guard0x15062ffa0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3656: i226 = instance_ptr_eq(p58, ConstPtr(ptr225))
+guard_false(i226, descr=<Guard0x15062ffd0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3668: i228 = instance_ptr_eq(p63, ConstPtr(ptr227))
+guard_false(i228, descr=<Guard0x150634020>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3680: i230 = instance_ptr_eq(p68, ConstPtr(ptr229))
+guard_false(i230, descr=<Guard0x150634050>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3692: i232 = instance_ptr_eq(p73, ConstPtr(ptr231))
+guard_false(i232, descr=<Guard0x150634080>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3704: i234 = instance_ptr_eq(p78, ConstPtr(ptr233))
+guard_false(i234, descr=<Guard0x1506340b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3716: i236 = instance_ptr_eq(p83, ConstPtr(ptr235))
+guard_false(i236, descr=<Guard0x1506340e0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3728: i238 = instance_ptr_eq(p88, ConstPtr(ptr237))
+guard_false(i238, descr=<Guard0x150634110>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3740: i240 = instance_ptr_eq(p93, ConstPtr(ptr239))
+guard_true(i240, descr=<Guard0x150634140>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+4: {"op": "Push". "target": 94. "args": {"any": []}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+5: {"op": "Invoke". "receiver": 1. "tag": Interned(Set_1). "args" : {"any": [0]}}')
++3752: p241 = getfield_gc_r(p117, descr=<FieldP rpyeffect.codata.CoData.inst_vtable 8 pure>)
++3760: guard_value(p241, ConstPtr(ptr242), descr=<Guard0x150634170>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3768: p243 = getfield_gc_r(p117, descr=<FieldP rpyeffect.stored_environment.CoData__1.inst_values_ptr_0 24 pure>)
+debug_merge_point(0, 0, '144<main.rpyeffect:131([method_Set_1@[mcore:[#60]#286]#313])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x1505dffd0>"}')
+debug_merge_point(0, 0, '144<main.rpyeffect:131([method_Set_1@[mcore:[#60]#286]#313])>+1: {"op": "ShiftDyn". "out": 1. "n": 2. "label": 1}')
++3772: i245 = instance_ptr_eq(p4, ConstPtr(ptr244))
+guard_false(i245, descr=<Guard0x1506341a0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3780: guard_nonnull(p243, descr=<Guard0x1506341d0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3788: i246 = getfield_gc_i(p243, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++3792: guard_value(i246, 149504, descr=<Guard0x150634200>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3812: i248 = instance_ptr_eq(p103, p243)
+guard_true(i248, descr=<Guard0x150634230>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3824: i250 = instance_ptr_eq(p112, ConstPtr(ptr249))
+guard_false(i250, descr=<Guard0x150634260>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3832: i252 = instance_ptr_eq(p122, ConstPtr(ptr251))
+guard_false(i252, descr=<Guard0x150634290>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3840: i254 = instance_ptr_eq(p127, ConstPtr(ptr253))
+guard_false(i254, descr=<Guard0x1506342c0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3848: i256 = instance_ptr_eq(p132, ConstPtr(ptr255))
+guard_false(i256, descr=<Guard0x1506342f0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3856: i258 = instance_ptr_eq(p137, ConstPtr(ptr257))
+guard_false(i258, descr=<Guard0x150634320>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3864: i260 = instance_ptr_eq(p142, ConstPtr(ptr259))
+guard_false(i260, descr=<Guard0x150634350>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3872: i262 = instance_ptr_eq(p147, ConstPtr(ptr261))
+guard_false(i262, descr=<Guard0x150634380>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3880: i264 = instance_ptr_eq(p152, ConstPtr(ptr263))
+guard_false(i264, descr=<Guard0x1506343b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3888: i266 = instance_ptr_eq(p157, ConstPtr(ptr265))
+guard_false(i266, descr=<Guard0x1506343e0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3896: i268 = instance_ptr_eq(p162, ConstPtr(ptr267))
+guard_false(i268, descr=<Guard0x150634410>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3908: i270 = instance_ptr_eq(p4, ConstPtr(ptr269))
+guard_false(i270, descr=<Guard0x150634440>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '144<main.rpyeffect:131([method_Set_1@[mcore:[#60]#286]#313])>+2: {"op": "New". "out": 0. "targets": [143]. "args": {"any": [1. 0]}}')
+debug_merge_point(0, 0, '144<main.rpyeffect:131([method_Set_1@[mcore:[#60]#286]#313])>+3: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '130<main.rpyeffect:117([k@[mcore:[#53]#277]#279])>+0: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '130<main.rpyeffect:117([k@[mcore:[#53]#277]#279])>+1: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '143<main.rpyeffect:130([#318])>+0: {"op": "Jump". "target": 134}')
+debug_merge_point(0, 0, '134<main.rpyeffect:121([mcore:[#57]#280])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '134<main.rpyeffect:121([mcore:[#57]#280])>+1: {"op": "Push". "target": 133. "args": {"any": [2]}}')
+debug_merge_point(0, 0, '134<main.rpyeffect:121([mcore:[#57]#280])>+2: {"op": "Jump". "target": 132}')
+debug_merge_point(0, 0, '132<main.rpyeffect:119(Name(k_100))>+0: {"op": "PushStack". "arg": 1}')
++3916: i272 = instance_ptr_eq(p112, ConstPtr(ptr271))
+guard_false(i272, descr=<Guard0x150634470>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3924: i274 = instance_ptr_eq(p122, ConstPtr(ptr273))
+guard_false(i274, descr=<Guard0x1506344a0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3932: i276 = instance_ptr_eq(p127, ConstPtr(ptr275))
+guard_false(i276, descr=<Guard0x1506344d0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3940: i278 = instance_ptr_eq(p132, ConstPtr(ptr277))
+guard_false(i278, descr=<Guard0x150634500>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3948: i280 = instance_ptr_eq(p137, ConstPtr(ptr279))
+guard_false(i280, descr=<Guard0x150634530>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3956: i282 = instance_ptr_eq(p142, ConstPtr(ptr281))
+guard_false(i282, descr=<Guard0x150634560>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3964: i284 = instance_ptr_eq(p147, ConstPtr(ptr283))
+guard_false(i284, descr=<Guard0x150634590>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3972: i286 = instance_ptr_eq(p152, ConstPtr(ptr285))
+guard_false(i286, descr=<Guard0x1506345c0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3980: i288 = instance_ptr_eq(p157, ConstPtr(ptr287))
+guard_false(i288, descr=<Guard0x1506345f0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3988: i290 = instance_ptr_eq(p162, ConstPtr(ptr289))
+guard_false(i290, descr=<Guard0x150634620>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++3996: i292 = instance_ptr_eq(p4, ConstPtr(ptr291))
+guard_false(i292, descr=<Guard0x150634650>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '132<main.rpyeffect:119(Name(k_100))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Get_0)"}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+3: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Set_1)"}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+4: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+5: {"op": "Jump". "target": 103}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "int". "value": "<IntValue object at 0x1505df6d0>"}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Get_0)"}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+3: {"op": "GetDynamic". "out": 0. "n": 0. "label": 1}')
++4008: i294 = instance_ptr_eq(p0, ConstPtr(ptr293))
+guard_false(i294, descr=<Guard0x150634680>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4016: i296 = instance_ptr_eq(p48, ConstPtr(ptr295))
+guard_false(i296, descr=<Guard0x1506346b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4024: i298 = instance_ptr_eq(p53, ConstPtr(ptr297))
+guard_false(i298, descr=<Guard0x1506346e0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4040: i300 = instance_ptr_eq(p58, ConstPtr(ptr299))
+guard_false(i300, descr=<Guard0x150634710>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4052: i302 = instance_ptr_eq(p63, ConstPtr(ptr301))
+guard_false(i302, descr=<Guard0x150634740>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4064: i304 = instance_ptr_eq(p68, ConstPtr(ptr303))
+guard_false(i304, descr=<Guard0x150634770>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4076: i306 = instance_ptr_eq(p73, ConstPtr(ptr305))
+guard_false(i306, descr=<Guard0x1506347a0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4088: i308 = instance_ptr_eq(p78, ConstPtr(ptr307))
+guard_false(i308, descr=<Guard0x1506347d0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4100: i310 = instance_ptr_eq(p83, ConstPtr(ptr309))
+guard_false(i310, descr=<Guard0x150634800>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4112: i312 = instance_ptr_eq(p88, ConstPtr(ptr311))
+guard_false(i312, descr=<Guard0x150634830>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4124: i314 = instance_ptr_eq(p93, ConstPtr(ptr313))
+guard_false(i314, descr=<Guard0x150634860>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++4136: i316 = instance_ptr_eq(p98, ConstPtr(ptr315))
+guard_true(i316, descr=<Guard0x150634890>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+4: {"op": "Construct". "out": 1. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+5: {"op": "Push". "target": 102. "args": {"any": []}}')
++4148: label(p0, p1, p2, p160, p48, p155, p53, p150, p58, p145, p63, p140, p68, p135, p73, p130, p78, p125, p83, p120, p88, p115, p93, p110, p98, p107, p103, p171, i218, p169, p170, p112, p117, p122, p127, p132, p137, p142, p147, p152, p157, p162, p4, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p243, descr=TargetToken(5643390880))
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+5: {"op": "Push". "target": 102. "args": {"any": []}}')
++4148: guard_not_invalidated(descr=<Guard0x1505dac38>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+6: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+7: {"op": "Invoke". "receiver": 1. "tag": Interned(Get_0). "args" : {"any": [0]}}')
++4152: p317 = getfield_gc_r(p112, descr=<FieldP rpyeffect.codata.CoData.inst_vtable 8 pure>)
++4164: guard_value(p317, ConstPtr(ptr318), descr=<Guard0x1506348c0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4172: p319 = getfield_gc_r(p112, descr=<FieldP rpyeffect.stored_environment.CoData__1.inst_values_ptr_0 24 pure>)
+debug_merge_point(0, 0, '141<main.rpyeffect:128([method_Get_0@[mcore:[#60]#286]#295])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x150604080>"}')
+debug_merge_point(0, 0, '141<main.rpyeffect:128([method_Get_0@[mcore:[#60]#286]#295])>+1: {"op": "ShiftDyn". "out": 1. "n": 2. "label": 1}')
++4176: guard_nonnull(p319, descr=<Guard0x1506348f0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4184: i320 = getfield_gc_i(p319, descr=<FieldS rpyeffect.stack.Label.inst_origin 8 pure>)
++4188: guard_value(i320, 149504, descr=<Guard0x150634920>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4208: i322 = instance_ptr_eq(p103, p319)
+guard_true(i322, descr=<Guard0x150634950>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4220: i324 = instance_ptr_eq(p122, ConstPtr(ptr323))
+guard_false(i324, descr=<Guard0x150634980>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4228: i326 = instance_ptr_eq(p127, ConstPtr(ptr325))
+guard_false(i326, descr=<Guard0x1506349b0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4236: i328 = instance_ptr_eq(p132, ConstPtr(ptr327))
+guard_false(i328, descr=<Guard0x1506349e0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4244: i330 = instance_ptr_eq(p137, ConstPtr(ptr329))
+guard_false(i330, descr=<Guard0x150634a10>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4252: i332 = instance_ptr_eq(p142, ConstPtr(ptr331))
+guard_false(i332, descr=<Guard0x150634a40>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4260: i334 = instance_ptr_eq(p147, ConstPtr(ptr333))
+guard_false(i334, descr=<Guard0x150634a70>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4268: i336 = instance_ptr_eq(p152, ConstPtr(ptr335))
+guard_false(i336, descr=<Guard0x150634aa0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4276: i338 = instance_ptr_eq(p157, ConstPtr(ptr337))
+guard_false(i338, descr=<Guard0x150634ad0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4284: i340 = instance_ptr_eq(p162, ConstPtr(ptr339))
+guard_false(i340, descr=<Guard0x150634b00>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4292: i342 = instance_ptr_eq(p4, ConstPtr(ptr341))
+guard_false(i342, descr=<Guard0x150634b30>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
+debug_merge_point(0, 0, '141<main.rpyeffect:128([method_Get_0@[mcore:[#60]#286]#295])>+2: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '141<main.rpyeffect:128([method_Get_0@[mcore:[#60]#286]#295])>+3: {"op": "Match". "type": Interned({"op": "eff$Tuple". "elements": []}). "scrutinee": 1. "clauses": [{"tag": Interned({"op": "eff$Tuple". "elements": []}). "target": 140. "args": {"any": []}}]. "default": {"tag": Interned(c3d1f53a-86f3-4ba3-a32c-def726e06013#[Missing Tag#486]). "target": 138. "args": {"any": []}}}')
+debug_merge_point(0, 0, '140<main.rpyeffect:127([#301])>+0: {"op": "New". "out": 0. "targets": [139]. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '140<main.rpyeffect:127([#301])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '133<main.rpyeffect:120([k@[mcore:[#57]#280]#284])>+0: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '133<main.rpyeffect:120([k@[mcore:[#57]#280]#284])>+1: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '139<main.rpyeffect:126([method_apply@[#301]#304])>+0: {"op": "Jump". "target": 131}')
+debug_merge_point(0, 0, '131<main.rpyeffect:118([mcore:[#53]#277])>+0: {"op": "Push". "target": 130. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '131<main.rpyeffect:118([mcore:[#53]#277])>+1: {"op": "Jump". "target": 129}')
+debug_merge_point(0, 0, '129<main.rpyeffect:116(Name(k_96))>+0: {"op": "PushStack". "arg": 1}')
++4300: i344 = instance_ptr_eq(p122, ConstPtr(ptr343))
+guard_false(i344, descr=<Guard0x150634b60>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4308: i346 = instance_ptr_eq(p127, ConstPtr(ptr345))
+guard_false(i346, descr=<Guard0x150634b90>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4316: i348 = instance_ptr_eq(p132, ConstPtr(ptr347))
+guard_false(i348, descr=<Guard0x150634bc0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4324: i350 = instance_ptr_eq(p137, ConstPtr(ptr349))
+guard_false(i350, descr=<Guard0x150634bf0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4332: i352 = instance_ptr_eq(p142, ConstPtr(ptr351))
+guard_false(i352, descr=<Guard0x150634c20>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4340: i354 = instance_ptr_eq(p147, ConstPtr(ptr353))
+guard_false(i354, descr=<Guard0x150634c50>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4348: i356 = instance_ptr_eq(p152, ConstPtr(ptr355))
+guard_false(i356, descr=<Guard0x150634c80>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4356: i358 = instance_ptr_eq(p157, ConstPtr(ptr357))
+guard_false(i358, descr=<Guard0x150634cb0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4364: i360 = instance_ptr_eq(p162, ConstPtr(ptr359))
+guard_false(i360, descr=<Guard0x150634ce0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4372: i362 = instance_ptr_eq(p4, ConstPtr(ptr361))
+guard_false(i362, descr=<Guard0x150634d10>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
+debug_merge_point(0, 0, '129<main.rpyeffect:116(Name(k_96))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '102<main.rpyeffect:89([k@Name(countdown_48)#122])>+0: {"op": "Push". "target": 101. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '102<main.rpyeffect:89([k@Name(countdown_48)#122])>+1: {"op": "Jump". "target": 15}')
+debug_merge_point(0, 0, '15<main.rpyeffect:2(Name(=_0))>+0: {"op": "New". "out": 0. "targets": [14]. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '15<main.rpyeffect:2(Name(=_0))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x1505df720>"}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+1: {"op": "Push". "target": 100. "args": {"any": [1]}}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+2: {"op": "Copy". "type": "any". "from": 0. "to". 1}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+3: {"op": "Copy". "type": "any". "from": 2. "to". 0}')
+debug_merge_point(0, 0, '101<main.rpyeffect:88([k@[k@Name(countdown_48)#122]#124])>+4: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '14<main.rpyeffect:1([method_apply@Name(=_0)#6])>+0: {"op": "Jump". "target": 13}')
+debug_merge_point(0, 0, '13<main.rpyeffect:0([mcore:[#12]#3])>+0: {"op": "PrimOp". "name": "equals(Any. Any): Bool". "out": {"any": [0]}. "in": {"any": [1. 0]}}')
++4380: i364 = int_eq(i218, 0)
+debug_merge_point(0, 0, '13<main.rpyeffect:0([mcore:[#12]#3])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '100<main.rpyeffect:87([k@[k@[k@Name(countdown_48)#122]#124]#128])>+0: {"op": "Switch". "scrutinee": 0. "values": [<BoolValue object at 0x1505df730>]. "targets": [93]. "default": 99}')
+guard_false(i364, descr=<Guard0x150634d40>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
+debug_merge_point(0, 0, '99<main.rpyeffect:86([switch default case#130])>+0: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '99<main.rpyeffect:86([switch default case#130])>+1: {"op": "Switch". "scrutinee": 1. "values": [<BoolValue object at 0x1505df740>]. "targets": [97]. "default": 98}')
+debug_merge_point(0, 0, '97<main.rpyeffect:84([switch case for Bool(false)#131])>+0: {"op": "Push". "target": 96. "args": {"any": []}}')
+debug_merge_point(0, 0, '97<main.rpyeffect:84([switch case for Bool(false)#131])>+1: {"op": "Jump". "target": 79}')
+debug_merge_point(0, 0, '79<main.rpyeffect:66(Name(-_34))>+0: {"op": "New". "out": 0. "targets": [78]. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '79<main.rpyeffect:66(Name(-_34))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '96<main.rpyeffect:83([k@[switch case for Bool(false)#131]#133])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1505df800>"}')
+debug_merge_point(0, 0, '96<main.rpyeffect:83([k@[switch case for Bool(false)#131]#133])>+1: {"op": "Push". "target": 95. "args": {"any": []}}')
+debug_merge_point(0, 0, '96<main.rpyeffect:83([k@[switch case for Bool(false)#131]#133])>+2: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '96<main.rpyeffect:83([k@[switch case for Bool(false)#131]#133])>+3: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '78<main.rpyeffect:65([method_apply@Name(-_34)#96])>+0: {"op": "Jump". "target": 77}')
+debug_merge_point(0, 0, '77<main.rpyeffect:64([mcore:[#28]#93])>+0: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"any": [0]}. "in": {"any": [1. 0]}}')
++4392: i366 = int_sub(i218, 1)
+debug_merge_point(0, 0, '77<main.rpyeffect:64([mcore:[#28]#93])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1505df880>"}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+1: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Set_1)"}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+3: {"op": "GetDynamic". "out": 1. "n": 1. "label": 2}')
++4404: i368 = instance_ptr_eq(p0, ConstPtr(ptr367))
+guard_false(i368, descr=<Guard0x150634d70>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4412: i370 = instance_ptr_eq(p48, ConstPtr(ptr369))
+guard_false(i370, descr=<Guard0x150634da0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4420: i372 = instance_ptr_eq(p53, ConstPtr(ptr371))
+guard_false(i372, descr=<Guard0x150634dd0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4432: i374 = instance_ptr_eq(p58, ConstPtr(ptr373))
+guard_false(i374, descr=<Guard0x150634e00>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4444: i376 = instance_ptr_eq(p63, ConstPtr(ptr375))
+guard_false(i376, descr=<Guard0x150634e30>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4456: i378 = instance_ptr_eq(p68, ConstPtr(ptr377))
+guard_false(i378, descr=<Guard0x150634e60>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4468: i380 = instance_ptr_eq(p73, ConstPtr(ptr379))
+guard_false(i380, descr=<Guard0x150634e90>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4480: i382 = instance_ptr_eq(p78, ConstPtr(ptr381))
+guard_false(i382, descr=<Guard0x150634ec0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4492: i384 = instance_ptr_eq(p83, ConstPtr(ptr383))
+guard_false(i384, descr=<Guard0x150634ef0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4504: i386 = instance_ptr_eq(p88, ConstPtr(ptr385))
+guard_false(i386, descr=<Guard0x150634f20>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4516: i388 = instance_ptr_eq(p93, ConstPtr(ptr387))
+guard_true(i388, descr=<Guard0x150634f50>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+4: {"op": "Push". "target": 94. "args": {"any": []}}')
+debug_merge_point(0, 0, '95<main.rpyeffect:82([#137])>+5: {"op": "Invoke". "receiver": 1. "tag": Interned(Set_1). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '144<main.rpyeffect:131([method_Set_1@[mcore:[#60]#286]#313])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "int". "value": "<IntValue object at 0x1505dffd0>"}')
+debug_merge_point(0, 0, '144<main.rpyeffect:131([method_Set_1@[mcore:[#60]#286]#313])>+1: {"op": "ShiftDyn". "out": 1. "n": 2. "label": 1}')
++4528: i390 = instance_ptr_eq(p4, ConstPtr(ptr389))
+guard_false(i390, descr=<Guard0x150634f80>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4536: i391 = instance_ptr_eq(p103, p243)
+guard_true(i391, descr=<Guard0x150634fb0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4548: i393 = instance_ptr_eq(p122, ConstPtr(ptr392))
+guard_false(i393, descr=<Guard0x150634fe0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4556: i395 = instance_ptr_eq(p127, ConstPtr(ptr394))
+guard_false(i395, descr=<Guard0x150635010>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4564: i397 = instance_ptr_eq(p132, ConstPtr(ptr396))
+guard_false(i397, descr=<Guard0x150635040>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4572: i399 = instance_ptr_eq(p137, ConstPtr(ptr398))
+guard_false(i399, descr=<Guard0x150635070>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4580: i401 = instance_ptr_eq(p142, ConstPtr(ptr400))
+guard_false(i401, descr=<Guard0x1506350a0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4588: i403 = instance_ptr_eq(p147, ConstPtr(ptr402))
+guard_false(i403, descr=<Guard0x1506350d0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4596: i405 = instance_ptr_eq(p152, ConstPtr(ptr404))
+guard_false(i405, descr=<Guard0x150635100>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4604: i407 = instance_ptr_eq(p157, ConstPtr(ptr406))
+guard_false(i407, descr=<Guard0x150635130>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4612: i409 = instance_ptr_eq(p162, ConstPtr(ptr408))
+guard_false(i409, descr=<Guard0x150635160>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4620: i411 = instance_ptr_eq(p4, ConstPtr(ptr410))
+guard_false(i411, descr=<Guard0x150635190>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
+debug_merge_point(0, 0, '144<main.rpyeffect:131([method_Set_1@[mcore:[#60]#286]#313])>+2: {"op": "New". "out": 0. "targets": [143]. "args": {"any": [1. 0]}}')
+debug_merge_point(0, 0, '144<main.rpyeffect:131([method_Set_1@[mcore:[#60]#286]#313])>+3: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '130<main.rpyeffect:117([k@[mcore:[#53]#277]#279])>+0: {"op": "Swap". "type": "any". "a": 0. "b". 1}')
+debug_merge_point(0, 0, '130<main.rpyeffect:117([k@[mcore:[#53]#277]#279])>+1: {"op": "Invoke". "receiver": 1. "tag": Interned(apply). "args" : {"any": [0]}}')
+debug_merge_point(0, 0, '143<main.rpyeffect:130([#318])>+0: {"op": "Jump". "target": 134}')
+debug_merge_point(0, 0, '134<main.rpyeffect:121([mcore:[#57]#280])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '134<main.rpyeffect:121([mcore:[#57]#280])>+1: {"op": "Push". "target": 133. "args": {"any": [2]}}')
+debug_merge_point(0, 0, '134<main.rpyeffect:121([mcore:[#57]#280])>+2: {"op": "Jump". "target": 132}')
+debug_merge_point(0, 0, '132<main.rpyeffect:119(Name(k_100))>+0: {"op": "PushStack". "arg": 1}')
++4628: i413 = instance_ptr_eq(p122, ConstPtr(ptr412))
+guard_false(i413, descr=<Guard0x1506351c0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4636: i415 = instance_ptr_eq(p127, ConstPtr(ptr414))
+guard_false(i415, descr=<Guard0x1506351f0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4644: i417 = instance_ptr_eq(p132, ConstPtr(ptr416))
+guard_false(i417, descr=<Guard0x150635220>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4652: i419 = instance_ptr_eq(p137, ConstPtr(ptr418))
+guard_false(i419, descr=<Guard0x150635250>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4660: i421 = instance_ptr_eq(p142, ConstPtr(ptr420))
+guard_false(i421, descr=<Guard0x150635280>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4668: i423 = instance_ptr_eq(p147, ConstPtr(ptr422))
+guard_false(i423, descr=<Guard0x1506352b0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4676: i425 = instance_ptr_eq(p152, ConstPtr(ptr424))
+guard_false(i425, descr=<Guard0x1506352e0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4684: i427 = instance_ptr_eq(p157, ConstPtr(ptr426))
+guard_false(i427, descr=<Guard0x150635310>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4692: i429 = instance_ptr_eq(p162, ConstPtr(ptr428))
+guard_false(i429, descr=<Guard0x150635340>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4700: i431 = instance_ptr_eq(p4, ConstPtr(ptr430))
+guard_false(i431, descr=<Guard0x150635370>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
+debug_merge_point(0, 0, '132<main.rpyeffect:119(Name(k_100))>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+0: {"op": "Construct". "out": 0. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Get_0)"}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+3: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(Set_1)"}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+4: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '94<main.rpyeffect:81([k@[#137]#145])>+5: {"op": "Jump". "target": 103}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "int". "value": "<IntValue object at 0x1505df6d0>"}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(Get_0)"}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+3: {"op": "GetDynamic". "out": 0. "n": 0. "label": 1}')
++4716: i433 = instance_ptr_eq(p0, ConstPtr(ptr432))
+guard_false(i433, descr=<Guard0x1506353a0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4724: i435 = instance_ptr_eq(p48, ConstPtr(ptr434))
+guard_false(i435, descr=<Guard0x1506353d0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4732: i437 = instance_ptr_eq(p53, ConstPtr(ptr436))
+guard_false(i437, descr=<Guard0x150635400>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4748: i439 = instance_ptr_eq(p58, ConstPtr(ptr438))
+guard_false(i439, descr=<Guard0x150635430>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4764: i441 = instance_ptr_eq(p63, ConstPtr(ptr440))
+guard_false(i441, descr=<Guard0x150635460>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4780: i443 = instance_ptr_eq(p68, ConstPtr(ptr442))
+guard_false(i443, descr=<Guard0x150635490>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4796: i445 = instance_ptr_eq(p73, ConstPtr(ptr444))
+guard_false(i445, descr=<Guard0x1506354c0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4812: i447 = instance_ptr_eq(p78, ConstPtr(ptr446))
+guard_false(i447, descr=<Guard0x1506354f0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4828: i449 = instance_ptr_eq(p83, ConstPtr(ptr448))
+guard_false(i449, descr=<Guard0x150635520>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4844: i451 = instance_ptr_eq(p88, ConstPtr(ptr450))
+guard_false(i451, descr=<Guard0x150635550>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4860: i453 = instance_ptr_eq(p93, ConstPtr(ptr452))
+guard_false(i453, descr=<Guard0x150635580>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4868: i455 = instance_ptr_eq(p98, ConstPtr(ptr454))
+guard_true(i455, descr=<Guard0x1506355b0>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i218, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+4: {"op": "Construct". "out": 1. "type": Interned({"op": "eff$Tuple". "elements": []}). "tag": Interned({"op": "eff$Tuple". "elements": []}). "args": {"any": []}}')
+debug_merge_point(0, 0, '103<main.rpyeffect:90(Name(countdown_48))>+5: {"op": "Push". "target": 102. "args": {"any": []}}')
++4884: i456 = instance_ptr_eq(p4, ConstPtr(ptr291))
+guard_false(i456, descr=<Guard0x1505dac80>) [p2, p112, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p4, i366, None, p171, p170, p169, p103, p107, p98, p110, p117, p93, p115, p122, p88, p120, p127, p83, p125, p132, p78, p130, p137, p73, p135, p142, p68, p140, p147, p63, p145, p152, p58, p150, p157, p53, p155, p162, p48, p160]
++4892: jump(p0, p1, p2, p160, p48, p155, p53, p150, p58, p145, p63, p140, p68, p135, p73, p130, p78, p125, p83, p120, p88, p115, p93, p110, p98, p107, p103, p171, i366, p169, p170, p112, p117, p122, p127, p132, p137, p142, p147, p152, p157, p162, p4, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p243, descr=TargetToken(5643390880))
++4992: --end of the loop--
+[d2b34a] jit-log-opt-loop}
+[8a49bed7] {jit-summary
+Tracing:      	1	0.002332
+Backend:      	1	0.001126
+TOTAL:      		2.312014
+ops:             	4628
+heapcached ops:  	836
+recorded ops:    	2047
+  calls:         	666
+guards:          	551
+opt ops:         	601
+opt guards:      	216
+opt guards shared:	212
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	16
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[8a49efff] jit-summary}
