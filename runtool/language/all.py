@@ -7,7 +7,6 @@ from runtool.language import Language
 from runtool.language.effekt import EffektBackend
 from runtool.language.eff import EffBackend
 from runtool.language.oldeff import OldEffBackend
-from runtool.language.helium import HeliumBackend
 from runtool.language.koka import KokaBackend
 from runtool.language.js import JSBackend
 from runtool.language.python import PythonBackend
@@ -22,7 +21,6 @@ langs: list[Language] = [
     EffBackend("plain-ocaml"),
     OldEffBackend("plain-ocaml"),
     *with_adjusted_jit_backends(EffBackend("jit")),
-    # HeliumBackend("rpyeffect"),
     KokaBackend("js"), KokaBackend("c"),
     *with_adjusted_jit_backends(KokaBackend("vm")),
     JSBackend("v8"), JSBackend("spider"),
