@@ -88,9 +88,12 @@ def shell_escape(arg):
         return f"'{arg}'"
     return arg
 
-def run(args: list[str], cwd=".", env=os.environ):
+def run(args: list[str], cwd=".", env=os.environ, check=False):
     rich.print(f"[red]RUNNING[/red] [grey50]{' '.join(map(shell_escape,args))}[/grey50]")
-    return subprocess.Popen(args, env=env, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8')
+    res = subprocess.Popen(args, env=env, cwd=cwd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding='utf-8')
+    if check:
+        pass # TODO
+    return res
 def run_to_file(args: list[str], out: str, cwd=".", env=os.environ):
     rich.print(f"[red]RUNNING[/red] [grey50]{' '.join(map(shell_escape,args))}[/grey50]")
     with open(out, "w") as f:

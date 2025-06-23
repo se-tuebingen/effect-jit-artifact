@@ -3,7 +3,8 @@ import uuid
 import shutil
 from runtool.language import Language
 from runtool.util import run, run_to_file, tee, tee_stderr
-import runtool.config as cfg
+from runtool.config import Config
+import functools
 
 class EffBackend(Language):
     def __init__(self, backend):
@@ -13,7 +14,12 @@ class EffBackend(Language):
         self.main_uppercase = False
         self.backend = backend
 
-    def compile(self, path: str, name: str, jit_path: str = cfg.jit_path) -> list[str] | None:
+    def setup(self) -> None:
+        proc = run(["nix-shell", "--command", "cd eff; make"], check=True)
+        tee(proc, "[blue]make[/blue]")
+
+    @functools.cache
+    def compile(self, path: str, name: str, jit_path: str = Config.jit_path) -> list[str] | None:
         path = os.path.abspath(path)
         fname = os.path.basename(path)
         if fname.endswith(".eff"):

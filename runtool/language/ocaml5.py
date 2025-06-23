@@ -4,7 +4,7 @@ import os
 import uuid
 from runtool.language import Language
 from runtool.util import run, run_to_file, tee, tee_stderr
-import runtool.config as cfg
+from runtool.config import Config
 
 class Ocaml5Backend(Language):
     def __init__(self):
@@ -14,7 +14,7 @@ class Ocaml5Backend(Language):
         self.main_uppercase = False
         self.backend = ""
 
-    def compile(self, path: str, name: str, jit_path: str = cfg.jit_path) -> list[str] | None:
+    def compile(self, path: str, name: str, jit_path: str = Config.jit_path) -> list[str] | None:
         path = os.path.abspath(path)
         fname = os.path.basename(path)
         if fname.endswith(".ml"):

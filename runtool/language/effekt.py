@@ -1,9 +1,10 @@
 import os
 import uuid
 from runtool.language import Language
-import runtool.config as cfg
+from runtool.config import Config
 from runtool.util import run, tee
 import re
+import functools
 
 class EffektBackend(Language):
     def __init__(self, backend):
@@ -12,8 +13,15 @@ class EffektBackend(Language):
         self.extension = "effekt"
         self.main_uppercase = False
         self.backend = backend
+    
+    def setup(self) -> None:
+        proc = run(["nix-shell", "--command", "cd effekt; sbt effektJVM/compile"], check=True)
+        tee(proc, "[blue]sbt [/blue]|")
+        procm = run(["nix-shell", "--command", "cd effekt-ml; sbt effektJVM/compile"], check=True)
+        tee(procm, "[blue]sbt [/blue]|")
 
-    def compile(self, path: str, name: str, jit_path: str = cfg.jit_path) -> list[str] | None:
+    @functools.cache
+    def compile(self, path: str, name: str, jit_path: str = Config.jit_path) -> list[str] | None:
         path = os.path.abspath(path)
         fname = os.path.basename(path)
         if fname.endswith(".effekt"):

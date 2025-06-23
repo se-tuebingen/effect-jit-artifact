@@ -1,24 +1,18 @@
 #!/usr/bin/env nix-shell
 #! nix-shell -i python -p "python3.withPackages (ps: [ps.rich ps.matplotlib ps.numpy])" hyperfine
 from argparse import ArgumentParser
-from dataclasses import dataclass
-from abc import ABC, abstractmethod
-from typing import TypeVar
 import subprocess, re, os, sys
-import uuid
 import shutil
-import rich, rich.table, rich.console
+import rich
 from rich import box
 import json
-import re
-import os
 import matplotlib.pyplot as plt
 import numpy as np
 from runtool.util import *
-from runtool.config import SYSTEM, jit_path, timeout, hyperfine_opts
+from runtool.config import Config
 from runtool.language.all import Language, langs, getlangs
 from runtool.suite.all import Benchmark, getbenchmarks
-from runtool.suite import get_benchmark_path, getcmd, docompile
+from runtool.suite import getcmd, docompile
 from statistics import geometric_mean
 import hashlib
 from runtool.language.adjusted_jit import adjustment_index
@@ -64,12 +58,12 @@ def dorun(runcmd: list[str], lang: Language, benchmark: Benchmark, args: list[st
         runcmd = runcmd[1:]
     
     try:
-        proc = run((["timeout", timeout] if timeout is not None else [])+ runcmd + args, env=env)
+        proc = run((["timeout", Config.timeout] if Config.timeout is not None else [])+ runcmd + args, env=env)
         output = tee(proc, "[green]run[/green] | ")
         log_output(lang, benchmark, args, "run", output)
         if proc.returncode == 124:
             print("TIMEOUT")
-            log(benchmark.name, lang.name, "run", f"timed out (> {timeout})")
+            log(benchmark.name, lang.name, "run", f"timed out (> {Config.timeout})")
         elif proc.returncode != 0:
             log(benchmark.name, lang.name, "run", f"returned {proc.returncode}")
     except FileNotFoundError:
@@ -164,7 +158,7 @@ def numeric_results_with_timeout_str(benchmark: Benchmark, l: Language, sargs: l
             return f"x-{benchmark_name}-{l.name}", np.nan
         elif "run" in res:
             if res["run"].startswith("timed out"):
-                return f"> {timeout}", np.nan
+                return f"> {Config.timeout}", np.nan
             return res["run"], np.nan
         elif "run-result" in res:
             return np.nan, np.nan
@@ -414,7 +408,7 @@ def mkcmd(runcmd: list[str], benchmark: Benchmark, args: list[str] | None = None
         args = [re.sub(r"[$]p=(.*)", str(param), arg) for arg in args]
     else:
         args = [re.sub(r"[$]p=(.*)", lambda m: m[1], arg) for arg in args]
-    return (f"{cd}timeout {timeout} " if timeout is not None else "") + " ".join(c.replace(" ", "\\ ").replace('"', "\\\"") for c in (final_runcmd + args))
+    return (f"{cd}timeout {Config.timeout} " if Config.timeout is not None else "") + " ".join(c.replace(" ", "\\ ").replace('"', "\\\"") for c in (final_runcmd + args))
 
 def dobenchmarkall(cbenchmarks, clangs, sargs):
     # Compile
@@ -444,7 +438,7 @@ def dobenchmarkall(cbenchmarks, clangs, sargs):
         if sargs is not None:
             benchmark_name += "_" + "_".join(sargs)
         hargs = [x for lang, runcmd in runcmds[benchmark].items() if runcmd is not None for x in ["-n", f"{lang.name}:{benchmark_name}", mkcmd(runcmd, benchmark, sargs)]]
-        cmd = (["hyperfine", *hyperfine_opts, "-i", "--export-json", f"./.results/.{benchmark_name}-results.json", *hargs])
+        cmd = (["hyperfine", *Config.hyperfine_opts, "-i", "--export-json", f"./.results/.{benchmark_name}-results.json", *hargs])
         ecmd = [f"'{c}'" for c in cmd]
         print(f"cmd: {' '.join(ecmd)}")
         subprocess.run(cmd)
@@ -461,6 +455,18 @@ if __name__ == "__main__":
       print("Life is like a box of chocolates: You never know what you get.")
       sys.exit(0)
     match sys.argv[1]:
+      case "setup":
+        # Compile the JIT
+        procjit = run(["nix-shell", "--command", "make"], cwd="./rpyeffect-jit", check=True)
+        tee(procjit, "[blue]compile jit[/blue]|")
+        # Compile Asm
+        procasm = run(["nix-shell", "--command", "cd ./rpyeffect-asm; sbt stage"], check=True)
+        tee(procasm, "[blue]compile asm[/blue]|")
+        # Compile language frontends
+        for lang in langs:
+            lang.setup()
+        sys.exit(0)
+
       case "run":
         parser = ArgumentParser()
         parser.add_argument("langs")
@@ -491,7 +497,10 @@ if __name__ == "__main__":
         parser = ArgumentParser()
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
+        parser.add_argument("--quick", default=False, action='store_true')
         args = parser.parse_args(myargs)
+        if args.quick:
+            Config.quick()
 
         clangs = getlangs(args.langs)
         cbenchmarks = getbenchmarks(args.benchmarks)
@@ -502,6 +511,12 @@ if __name__ == "__main__":
         doreport(cbenchmarks, clangs, sargs)
 
       case "benchmark-for-paper":
+        parser = ArgumentParser()
+        parser.add_argument("--quick", default=False, action='store_true')
+        args = parser.parse_args(myargs)
+        if args.quick:
+            Config.quick()
+
         clangs = set()
         cbenchmarks = set()
         for name, conf in paper_tables.items():
@@ -554,7 +569,7 @@ if __name__ == "__main__":
               if sargs is not None:
                   benchmark_name += "_" + "_".join(sargs)
               hargs = [x for lang, runcmd in runcmds[benchmark].items() if runcmd is not None for x in ["-n", f"{lang.name}:{benchmark_name}", mkcmd(runcmd, benchmark, sargs, param=param)]]
-              cmd = (["hyperfine", *hyperfine_opts, "-i", "--export-json", f"./.results/.{benchmark_name}-{param}-results.json", *hargs])
+              cmd = (["hyperfine", *Config.hyperfine_opts, "-i", "--export-json", f"./.results/.{benchmark_name}-{param}-results.json", *hargs])
               ecmd = [f"'{c}'" for c in cmd]
               print(f"cmd: {' '.join(ecmd)}")
               subprocess.run(cmd)
@@ -736,7 +751,7 @@ if __name__ == "__main__":
                     runargs = " ".join(sargs) # FIXME escape
                 if runcmd is None:
                     print(f"Was not compiled: {benchmark.name} for {lang.name}")
-                elif runcmd[0] != jit_path:
+                elif runcmd[0] != Config.jit_path:
                     print(f"Not a jit backend: {lang.name}")
                 else:
                     path = runcmd[1]

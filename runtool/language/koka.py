@@ -4,7 +4,8 @@ import os
 import uuid
 from runtool.language import Language
 from runtool.util import run, tee
-import runtool.config as cfg
+from runtool.config import Config
+import functools
 
 class KokaBackend(Language):
     def __init__(self, backend):
@@ -14,10 +15,16 @@ class KokaBackend(Language):
         self.main_uppercase = False
         self.backend = "vm" if backend == "jit" else backend
 
-    def compile(self, path: str, name: str, jit_path: str = cfg.jit_path) -> list[str] | None:
-        path = os.path.abspath(path)
-        proch = run(["stack", "build"], cwd="./koka")
+    def setup(self) -> None:
+        os.remove("./koka/kklib/CMakeCache.txt")
+        procm = run(["nix-shell", "--command", "cd koka/kklib; cmake . && make"], check=True)
+        outputm = tee(procm, "[blue]make[/blue]|")
+        proch = run(["nix-shell", "--command", "cd koka; stack build"], check=True)
         outputh = tee(proch, "[blue]ghc [/blue]| ")
+
+    @functools.cache
+    def compile(self, path: str, name: str, jit_path: str = Config.jit_path) -> list[str] | None:
+        path = os.path.abspath(path)
         proc = run(["stack", "exec", "koka", "--", f"--target={self.backend}", path], cwd="./koka")
         output = tee(proc, "[blue]comp[/blue]| ")
         c = output[-1]

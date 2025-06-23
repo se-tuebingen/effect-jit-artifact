@@ -1,5 +1,5 @@
 from runtool.language import Language
-import runtool.config as cfg
+from runtool.config import Config
 
 class AdjustedJitBackend(Language):
     def __init__(self, adjusted_backend: Language, adjustment: str):
@@ -11,9 +11,12 @@ class AdjustedJitBackend(Language):
         self.extension = self.inner.extension
         self.main_uppercase = self.inner.main_uppercase
 
-    def compile(self, path: str, name: str):
-        adjusted_jit_path = f"{cfg.jit_path}-{self.adjustment}"
-        return self.inner.compile(path, name, jit_path = adjusted_jit_path)
+    def compile(self, path: str, name: str, jit_path: str = Config.jit_path):
+        adjusted_jit_path = f"{jit_path}-{self.adjustment}"
+        cmd = self.inner.compile(path, name.replace(f"-{self.adjustment}", ""), jit_path = jit_path)
+        if cmd is None: return None
+        assert cmd[0] == jit_path
+        return [adjusted_jit_path, *cmd[1:]]
 
 adjustments = [
     "no-addcej",

@@ -29,7 +29,7 @@ class BenchmarkFile(BenchmarkSuite):
         return self.path
 
 def docompile(lang: Language, benchmark: Benchmark) -> list[str] | None:
-    print("COMPILING")
+    print(f"COMPILING {benchmark.name} for {lang.name}")
     path = get_benchmark_path(lang, benchmark)
     if not os.path.exists(path):
         log(benchmark.name, lang.name, "benchmark", "not found")
