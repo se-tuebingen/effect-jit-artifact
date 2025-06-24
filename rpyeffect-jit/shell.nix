@@ -119,7 +119,7 @@ mkShell {
   ] ++ lib.optionals (!stdenv.isDarwin) [
     myPypy
   ] ++ lib.optionals (stdenv.isDarwin) [
-    myPython2
+    myPython2  # using cpython to build on M1, since the pypy package didn't work
   ];
   # Hack to make pypy find packages
   shellHook = ''
