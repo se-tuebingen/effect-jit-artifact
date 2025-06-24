@@ -23,7 +23,7 @@ class Config: # is a class so it is by reference...
         Config.timeout = "6s"
         Config.hyperfine_opts = [
         # no warmup
-        "-m", "2"
-        "--min-benchmarking-time", "3"
-        "-N"
+        "-m", "2",
+        "--min-benchmarking-time", "2",
+        "-N",
         ]
