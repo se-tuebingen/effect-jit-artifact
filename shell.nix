@@ -16,6 +16,7 @@ pkgs.mkShell {
     # effekt, asm
     sbtWithJre myJre
     libuv
+    mlton
     # koka
     stack cmake
     # eff
@@ -23,7 +24,5 @@ pkgs.mkShell {
     myOcamlPackages.ocamlformat_0_25_1
     myOcamlPackages.menhir
     myOcamlPackages.dune_3
-  ] ++ (pkgs.lib.optionals (!pkgs.stdenv.isDarwin) [
-    mlton # needs to be manually installed on MacOS
-  ]);
+  ];
 }
