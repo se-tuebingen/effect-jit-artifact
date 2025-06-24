@@ -1,0 +1,162 @@
+# Introduction
+<!-- TODO briefly explain the purpose of the artifact and how it supports the paper. We recommend listing all claims in the paper and stating whether or not each is supported. For supported claims, say how the artifact provides support. For unsupported claims, explain why they are omitted. -->
+This artifact contains both the described JIT, the frontends for the different languages,
+alongside the middleend and the benchmarks. It also contains the other implementations of those languages
+used for benchmarking.
+
+It is provided to support our answers to the research questions posed in the paper:
+- For **RQ 1** ("How does tracing JIT compilation compare with existing ahead-of-time optimizing implementations of effect handlers?"),
+  it is supported by the given results of benchmarking (in `.results/.<benchmark>-results.json`) for
+  the `effect-handlers-bench` suite, alongside the implementations and benchmarks that can be used to reproduce similar results.
+  In particular, we are interested in the results within language groups.
+  - Benchmarks: `suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers`
+  - Implementations
+    - `eff-jit,eff-plain-ocaml,oldeff-plain-ocaml` corresponding to the Eff column of Figure 5,
+    - `effekt-jit,effekt-llvm,effekt-js,effekt-ml` corresponding to the Effekt column of Figure 5, and
+    - `koka-vm,koka-c,koka-js` corresponding to the Koka column of Figure 5.
+- For **RQ 2** ("What are classes of effectful programs that tracing JIT compilation can optimize well? What are the limitations of the approach?"),
+  it is supported by the benchmark programs, and the traces from JITting them (in `./.jitlogs/*.log`).
+  TODO
+- For **RQ 3** ("How can we optimize the performance of tracing JIT compilation for effect handlers?"),
+  it is supported by the ablation study. The results for this can be found in the same files as the
+  other results, via backends ending in `jit-...` (depending on the disabled optimization).
+  TODO
+- For **RQ 4** ("Are there differences in how well tracing JIT compilation performs for different variations of effect handlers?"),
+  it is supported by a combination of the trace logs (s. above) and benchmarking results, by comparing results
+  between the three variants.
+- For **RQ 5** ("Does JIT-compiling effect handlers impact the performance of programs that do not use effects?"),
+  it is supported by the benchmarking results for the "Are we fast yet?" suite.
+  - Benchmarks: `suite:are-we-fast-yet`
+  - Implementations: `effekt-jit,js-v8,python-cpython,python-pypy,lua-lua,lua-luajit`
+    For this external comparison, implementations will be installed by nix and are not
+    contained in the artifact directly.
+
+# Hardware Dependencies
+<!-- TODO describe the hardware required to evaluate the artifact. If the artifact requires specific hardware (e.g., many cores, disk space, GPUs, specific processors), please provide instructions on how to gain access to the hardware. Keep in mind that reviewers must remain anonymous. -->
+
+- Free disk space TODO GB (20? 30?)
+- One of the following:
+  - Linux running on x86_64
+  - macOS running on M1/M2/M3/M4.
+
+# Getting Started Guide
+<!-- TODO give instructions for setup and basic testing. List any software requirements and/or passwords needed to access the artifact. The instructions should take roughly 30 minutes to complete. Reviewers will follow the guide during an initial kick-the-tires phase and report issues as they arise.
+
+The Getting Started Guide should be as simple as possible, and yet it should stress the key elements of your artifact. Anyone who has followed the Getting Started Guide should have no technical difficulties with the rest of your artifact. -->
+
+## Install Nix
+If you haven't already, install the Nix package manager as described [here](https://nixos.org/download/)
+
+## Submodules
+Effekt and Koka rely on git submodules for parts of their implementation (kiama resp. mimalloc).
+To download them, please use `git submodule update --init` after downloading this repository.
+
+## Compile the individual tools
+In the root directory run
+```sh
+./run setup
+```
+to install all dependencies and compile all the language implementations, the JIT in all variants, and the middleend.
+This will some time (25min on a M1 MacBook), but can be left running in the background.
+
+## Run a minimal program for each implementation, once
+*If you haven't, enter an environment where all dependencies are available by running `nix-shell` in the root directory of the artifact.*
+
+Using `./run run all startup`, you can compile and run the `statup` benchmark --- which computes
+a constant 0 function --- for each of the language implementations, once (taking about 3min on an M1 MacBook).
+If this succeeds without any errors, everything should be setup correctly.
+Compilation should result in different output, starting with `COMPILING` and ending with `DONE.` each.
+More importantly, the output should end with multiple repetitions of output similar to the following (one per language implementation):
+
+```out
+RUNNING ['/Users/gaisseml/dev/effect-jit-artifact/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-2-context', '/Users/gaisseml/dev/effect-jit-artifact/.effekt-out/effekt-jit-2-context:startup_e80a2bff-3c68-4aaa-b0b5-38d9c90c59dc/main.rpyeffect', '50000000']
+RUNNING timeout 90s /Users/gaisseml/dev/effect-jit-artifact/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-2-context /Users/gaisseml/dev/effect-jit-artifact/.effekt-out/effekt-jit-2-context:startup_e80a2bff-3c68-4aaa-b0b5-38d9c90c59dc/main.rpyeffect 50000000
+run | 0
+DONE
+OK
+```
+
+There should be no `ERROR` output for the runs.
+
+# Step by Step Instructions
+<!-- TODO explain how to reproduce any experiments or other activities that support the conclusions in your paper. Write this for readers who have a deep interest in your work and are studying it to improve it or compare against it. If your artifact runs for more than a few minutes, point this out, note how long it is expected to run (roughly) and explain how to run it on smaller inputs. Reviewers may choose to run on smaller inputs or larger inputs depending on available resources.
+
+Be sure to explain the expected outputs produced by the Step by Step Instructions. State where to find the outputs and how to interpret them relative to the paper. If there are any expected warnings or error messages, explain those as well. Ideally, artifacts should include sample outputs and logs for comparison. -->
+
+## Running all benchmarks
+Note: Running all benchmarks in the same way as for the paper (with warmup runs, a 90s timeout, and 20 runs each)
+**takes a lot of time (~14h)**. If you want to do so regardless, you can use the following command:
+```sh
+./run benchmark-for-paper
+```
+
+Otherwise, you can run the benchmarks with a smaller timeout and decreased number of runs (TODO) using:
+```sh
+./run benchmark-for-paper --quick
+```
+**This still will take about TODO TIME.**
+As far as possible, run this on a quiet machine. The reduced number of runs will already result in relatively
+large noise in the results.
+
+TODO Running all benchmarks as was done for the paper (~14h)
+TODO For artifact: Run all once (or sth), small timeout, caveat: noisy.
+
+### Saving time: Decrease the number of runs
+In `./runtool/config.py`, you can change the parameters passed to `hyperfine`,
+in particular, you want to change the following lines to use fewer runs:
+```python
+hyperfine_opts = [
+    "-w", "2", # warmup runs
+    "-m", "20", # at least 20 runs (default is 10)
+    "--min-benchmarking-time", "6", # minimum benchmarking time in seconds (default is 3)
+```
+### Saving time: Decrease the timeout
+In `./runtool/config.py`, you can change the timeout after which benchmarks are stopped.
+Benchmarks that run longer than this on the test run will not be run using `hyperfine`
+during benchmarking.
+```python
+# Timeout after which to consider a program to fail (and not run multiple times)
+timeout = "90s"
+```
+
+### Saving time: Only run some benchmarks
+Of course, it is also possible to save time by running just a subset of the benchmarks.
+Most subcommands (in particular `run`, `benchmark`, `report`) take
+the set of implementations and benchmarks as command-line parameters, e.g.
+`./run run eff-jit,koka-vm triples,startup`
+will run the `triples` and `startup` benchmarks on `eff-jit` and `koka-vm` (the Koka JIT backend).
+
+## Reproducing Figure 5 (RQ 1)
+To try and reproduce the results shown in Figure 5, mostly used for RQ 1, use the following command:
+```sh
+./run benchmark
+```
+
+TODO TODO
+
+# Reusability Guide
+<!-- TODO explain which parts of your artifact constitute the core pieces which should be evaluated for reusability. Explain how to adapt the artifact to new inputs or new use cases. Provide instructions for how to find/generate/read documentation about the core artifact. Articulate any limitations to the artifact’s reusability. -->
+
+## The JIT implementation
+The main part of the artifact is the RPython-based JIT implementation, to be found in `./rpyeffect-jit`.
+To compile the JIT itself, a version of Python 2 and the (contained) PyPy-checkout,
+or a version of the `rpython` tool from there, are enough. The dependencies are there to simplify the
+usage of debug tooling etc.
+TODO Tests
+
+## The Middleend
+To simplify writing the language backends, a common middleend to transform a Lisp-like language
+to the JIT "byte"code was created. It can be found in `./rpyeffect-asm` and is a mostly standard
+micro-pass compiler written in Scala.
+TODO Tests
+
+## The language backends
+The three language implementations can be found in `./effekt`, `./koka` resp. `./eff`.
+All that was changed from the upstream version in each case was adding an additional backend,
+called `jit` (or `vm` in the koka case).
+
+## The benchmarking infrastructure
+To add a new implementation/language to benchmark against, add a new subclass of `Language` (defined in `./runtool/language/__init__.py`)
+as was done for the others and add it to the list in `./runtool/language/all.py`.
+The `compile` function is supposed to do any necessary compilation work and return a shell command (as a list) used to run the resulting program.
+You might also need to change some of the benchmark suites in `./runtool/suite/` to return the correct benchmark files for the new implementation/language.
