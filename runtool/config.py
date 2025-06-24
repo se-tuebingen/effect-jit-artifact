@@ -24,6 +24,6 @@ class Config: # is a class so it is by reference...
         Config.hyperfine_opts = [
         # no warmup
         "-m", "2",
-        "--min-benchmarking-time", "2",
+        "--min-benchmarking-time", "1",
         "-N",
         ]
