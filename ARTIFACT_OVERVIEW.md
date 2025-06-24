@@ -76,7 +76,7 @@ DONE
 OK
 ```
 
-There should be no `ERROR` output for the runs.
+There should be no `ERROR` output (instead of the "DONE") for the runs.
 
 # Step by Step Instructions
 <!-- TODO explain how to reproduce any experiments or other activities that support the conclusions in your paper. Write this for readers who have a deep interest in your work and are studying it to improve it or compare against it. If your artifact runs for more than a few minutes, point this out, note how long it is expected to run (roughly) and explain how to run it on smaller inputs. Reviewers may choose to run on smaller inputs or larger inputs depending on available resources.
@@ -94,7 +94,7 @@ Otherwise, you can run the benchmarks with a smaller timeout and decreased numbe
 ```sh
 ./run benchmark-for-paper --quick
 ```
-**This still will take about TODO TIME.**
+**This still will take about 1h** --- you can reduce this time further as described below.
 As far as possible, run this on a quiet machine. The reduced number of runs will already result in relatively
 large noise in the results.
 
@@ -103,13 +103,15 @@ TODO For artifact: Run all once (or sth), small timeout, caveat: noisy.
 
 ### Saving time: Decrease the number of runs
 In `./runtool/config.py`, you can change the parameters passed to `hyperfine`,
-in particular, you want to change the following lines to use fewer runs:
+in particular, you want to change the following lines to use fewer runs (without `--quick`):
 ```python
 hyperfine_opts = [
     "-w", "2", # warmup runs
     "-m", "20", # at least 20 runs (default is 10)
     "--min-benchmarking-time", "6", # minimum benchmarking time in seconds (default is 3)
 ```
+The respective options for `--quick` are defined inside the function definition `quick`.
+
 ### Saving time: Decrease the timeout
 In `./runtool/config.py`, you can change the timeout after which benchmarks are stopped.
 Benchmarks that run longer than this on the test run will not be run using `hyperfine`
@@ -118,6 +120,7 @@ during benchmarking.
 # Timeout after which to consider a program to fail (and not run multiple times)
 timeout = "90s"
 ```
+The respective options for `--quick` are defined inside the function definition `quick`.
 
 ### Saving time: Only run some benchmarks
 Of course, it is also possible to save time by running just a subset of the benchmarks.
@@ -126,11 +129,8 @@ the set of implementations and benchmarks as command-line parameters, e.g.
 `./run run eff-jit,koka-vm triples,startup`
 will run the `triples` and `startup` benchmarks on `eff-jit` and `koka-vm` (the Koka JIT backend).
 
-## Reproducing Figure 5 (RQ 1)
-To try and reproduce the results shown in Figure 5, mostly used for RQ 1, use the following command:
-```sh
-./run benchmark
-```
+Note that the results files are per-benchmark, over all languages, so all other results for the given
+benchmark will be overwritten.
 
 TODO TODO
 
@@ -154,9 +154,10 @@ TODO Tests
 The three language implementations can be found in `./effekt`, `./koka` resp. `./eff`.
 All that was changed from the upstream version in each case was adding an additional backend,
 called `jit` (or `vm` in the koka case).
+TODO Tests
 
 ## The benchmarking infrastructure
 To add a new implementation/language to benchmark against, add a new subclass of `Language` (defined in `./runtool/language/__init__.py`)
-as was done for the others and add it to the list in `./runtool/language/all.py`.
+as was done for the others and add an instance to the list in `./runtool/language/all.py`.
 The `compile` function is supposed to do any necessary compilation work and return a shell command (as a list) used to run the resulting program.
 You might also need to change some of the benchmark suites in `./runtool/suite/` to return the correct benchmark files for the new implementation/language.
