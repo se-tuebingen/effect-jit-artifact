@@ -16,6 +16,3 @@ case class Operation(name: Id, tparams: List[Id], cparams: List[Id], vparams: Li
 - handler operations get wrapped to:
   - shift to the relevant prompt and pass a closure that resumes it
     to the handler implementation as the resume parameter
-
-## Additional notes
-TODO

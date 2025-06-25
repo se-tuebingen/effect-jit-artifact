@@ -21,6 +21,3 @@ Handlers can be passed around and then installed.
 - If a handler handles multiple ops, there will be an additional stack
   segment:
   - fresh label closed over by all handlers to shift to
-
-## Additional notes
-TODO
