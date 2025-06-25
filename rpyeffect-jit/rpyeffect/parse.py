@@ -269,6 +269,7 @@ def json_keys(tokens):
             expect(COLON, tokens)
             yield token.value
         else:
+            print (list(tokens))
             raise ParseError("Expected ',' or key string, got '%s'" % token)
         token = tokens.next()
 

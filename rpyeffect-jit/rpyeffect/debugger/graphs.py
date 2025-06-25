@@ -1,5 +1,5 @@
 from rpyeffect.util.graph import Graph
-from rpyeffect.instructions import CONST_NUMBER, CONST_PTR
+from rpyeffect.instructions import CONST_PTR
 from rpython.rlib.rerased import Erased
 from rpyeffect.types import NUMBER, OPAQUE_PTR
 
@@ -65,8 +65,6 @@ class DfBuilder(Graph):
         ins = self._debugger.cur_ins()
         if isinstance(ins, CONST_PTR):
             self._available.append((ins.value, "const %s" % ins.value))
-        elif isinstance(ins, CONST_NUMBER):
-            self._available.append((ins.value, "const %d" % ins.value))
     def on_set_ptr(self, _1, _2, name, value):
         b,i,j = self.pc()
         self._last_set[("ptr", name)] = (b,i,j)

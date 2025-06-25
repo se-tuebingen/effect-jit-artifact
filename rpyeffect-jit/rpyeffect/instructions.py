@@ -79,17 +79,6 @@ class Clause:
                 % (self.tag.__repr__() if self.tag is not None else "null", self.target, self.args.__repr__()))
 ERROR_CLAUSE = Clause(None, 2**62, ([[]] * NUMBER_OF_TYPES))
 
-class CONST_NUMBER(Instr):
-    _immutable_fields_ = ['out', 'value']
-
-    def __init__(self, out, value):
-        self.out = out
-        self.value = value
-
-    def __repr__(self):
-        return ("{\"op\": \"Const\", \"type\": \"num\", \"out\": %d, \"value\": %s}"
-                % (self.out, self.value))
-
 class CONST_PTR(Instr):
     _immutable_fields_ = ['out', 'value_ptr', 'format']
 
