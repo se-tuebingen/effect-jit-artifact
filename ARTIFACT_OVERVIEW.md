@@ -6,30 +6,54 @@ used for benchmarking.
 
 It is provided to support our answers to the research questions posed in the paper:
 - For **RQ 1** ("How does tracing JIT compilation compare with existing ahead-of-time optimizing implementations of effect handlers?"),
-  it is supported by the given results of benchmarking (in `.results/.<benchmark>-results.json`) for
-  the `effect-handlers-bench` suite, alongside the implementations and benchmarks that can be used to reproduce similar results.
-  In particular, we are interested in the results within language groups.
-  - Benchmarks: `suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers`
-  - Implementations
-    - `eff-jit,eff-plain-ocaml,oldeff-plain-ocaml` corresponding to the Eff column of Figure 5,
-    - `effekt-jit,effekt-llvm,effekt-js,effekt-ml` corresponding to the Effekt column of Figure 5, and
-    - `koka-vm,koka-c,koka-js` corresponding to the Koka column of Figure 5.
+  we claim in the paper:
+  > Benchmark results comparing our implementation to AOT optimizing compilers show a competetive performance both over most existing
+  > implementations of effect handlers and state-of-the-art language implementations for programs with control effects
+
+  This is supported by the provided benchmark results for different implementations of Eff, Effekt, and Koka,
+  as well as the implementations and tooling needed to generate those results. TODO ref below
+
 - For **RQ 2** ("What are classes of effectful programs that tracing JIT compilation can optimize well? What are the limitations of the approach?"),
-  it is supported by the benchmark programs, and the traces from JITting them (in `./.jitlogs/*.log`).
-  TODO
+  we claim in the paper:
+  > Effect handlers that use the continuation in a one- shot and tail manner, or as exceptions, are optimized very well by the JIT
+
+  This is supported by the benchmark programs, and the traces from JITting them (in `./.jitlogs/*.log`),
+  alongside the implementations and tooling needed ot generate those results. TODO ref below
+
 - For **RQ 3** ("How can we optimize the performance of tracing JIT compilation for effect handlers?"),
-  it is supported by the ablation study. The results for this can be found in the same files as the
-  other results, via backends ending in `jit-...` (depending on the disabled optimization).
-  TODO
+  we claim in the paper:
+  > Standard optimizations for using the stack context to detect false loops (Section 4.1.4) and specializing certain dynamically sized data structures (Section 4.1.3) have a positive effect.
+
+  and:
+  > Additional optimizations for prompt search (Section 4.1.2) and loop start points (Section 4.1.1) have a minor effect and only help with specific benchmarks.
+
+  Those claims are supported by the results of the ablation study, alongside the implementations and tooling needed to generate those results.
+  The results of the ablation study are the results for the `-jit` (resp. `-vm` for koka) implementations and their modified variants (`-jit-` resp. `-vm-`).
+  TODO Ref below
+
 - For **RQ 4** ("Are there differences in how well tracing JIT compilation performs for different variations of effect handlers?"),
-  it is supported by a combination of the trace logs (s. above) and benchmarking results, by comparing results
-  between the three variants.
+  we claim in the paper:
+  > Most differences in the performance are minor in nature.
+
+  This is supported by the benchmarking results for the JIT for Eff, Effekt, and Koka. TODO ref below
+
+  We then list some differences:
+  > The adjustment of evidence vectors in Koka can lead to allocations when changing the handler context.
+  > [T]he tracking of handlers in evidence vectors in Koka can help to avoid traversing deep stacks in some cases.
+
+  > The prompt search in Eff tends to generate more guards, as it is harder for the JIT to reason about them
+
+  All of these are supported by the traces and benchmarking results for the respective JIT backends
+  (in relation to the others).
+
 - For **RQ 5** ("Does JIT-compiling effect handlers impact the performance of programs that do not use effects?"),
-  it is supported by the benchmarking results for the "Are we fast yet?" suite.
-  - Benchmarks: `suite:are-we-fast-yet`
-  - Implementations: `effekt-jit,js-v8,python-cpython,python-pypy,lua-lua,lua-luajit`
-    For this external comparison, implementations will be installed by nix and are not
-    contained in the artifact directly.
+  we claim that
+
+  > The implemented JIT is similar in performance to PyPy for our set of baseline benchmarks, but is outperformed by some state-of-the-art JIT compilers (V8, LuaJIT) by a factor of 2–3x. For control-effect-heavy benchmarks, though, we outperform even state-of-the-art language implementations like V8.
+
+  This is supported by the benchmarking results of those other language implementations in comparison with ours,
+  on the included subset of the "Are we fast yet?" benchmarks.
+  TODO ref below
 
 # Hardware Dependencies
 <!-- TODO describe the hardware required to evaluate the artifact. If the artifact requires specific hardware (e.g., many cores, disk space, GPUs, specific processors), please provide instructions on how to gain access to the hardware. Keep in mind that reviewers must remain anonymous. -->
@@ -60,7 +84,7 @@ to install all dependencies and compile all the language implementations, the JI
 This will some time (25min on a M1 MacBook), but can be left running in the background.
 
 ## Run a minimal program for each implementation, once
-*If you haven't, enter an environment where all dependencies are available by running `nix-shell` in the root directory of the artifact.*
+*If you haven't, enter an environment where all dependencies are available by running `nix-shell` (without arguments) in the root directory of the artifact.*
 
 Using `./run run all startup`, you can compile and run the `statup` benchmark --- which computes
 a constant 0 function --- for each of the language implementations, once (taking about 3min on an M1 MacBook).
