@@ -2,7 +2,6 @@ package rpyeffectasm.asm
 class TransformerTests extends munit.FunSuite {
 
   //region Helper functions
-  import rpyeffectasm.asm.TypingPrecision.ConcretelyTyped
   import rpyeffectasm.util
 
   private val asmParser = new AsmParser()
@@ -51,13 +50,13 @@ class TransformerTests extends munit.FunSuite {
       |""".stripMargin,
     """{"blocks":[
       |    {"label":"0()",
-      |     "frameDescriptor":{"regs_num":1,"regs_ptr":0},
+      |     "frameDescriptor":{"regs_any":1},
       |     "instructions":[
       |       {"op":"Jump","target":1}
       |     ]}
       | ],
       | "symbols": [],
-      | "frameSize":{"regs_num":1,"regs_ptr":0}}
+      | "frameSize":{"regs_any":1}}
       |""".stripMargin
   )
   // TODO

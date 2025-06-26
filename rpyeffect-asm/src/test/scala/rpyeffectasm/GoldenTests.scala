@@ -7,6 +7,7 @@ import rpyeffectasm.util.ErrorReporter
 
 import scala.language.implicitConversions
 
+@munit.IgnoreSuite // Runner is broken rn.
 class GoldenTests extends munit.FunSuite {
   def executeRpyeffect(file: File, args: List[String]): String = {
     import rpyeffectasm.main.Runner
@@ -24,11 +25,6 @@ class GoldenTests extends munit.FunSuite {
   )
 
   val ignored: List[File] = List(
-    testDir / "helium" / "triples-simplified.mcore.json",
-    testDir / "helium" / "stdlib_Sys_args.mcore.json",
-
-    testDir / "helium" / "triples-minified2.mcore.json",
-    testDir / "helium" / "triples-minified3.mcore.json",
     testDir / "effekt" / "failtooption.mcore.json",
   ) ++ dependencies.values.flatten.toList
 

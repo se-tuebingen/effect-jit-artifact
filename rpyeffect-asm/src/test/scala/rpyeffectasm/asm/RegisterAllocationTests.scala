@@ -1,6 +1,5 @@
 package rpyeffectasm.asm
-import rpyeffectasm.asm.TypingPrecision.ConcretelyTyped
-class RegisterAllocationTests extends AsmTestSuite[Nothing, Id, Id, Index, ConcretelyTyped]{
+class RegisterAllocationTests extends AsmTestSuite[Nothing, Id, Id, Index]{
   type Input = Program[Nothing, Id, Id, Id]
 
   override def runPhase(p: Input): Output = {
@@ -42,7 +41,7 @@ class RegisterAllocationTests extends AsmTestSuite[Nothing, Id, Id, Index, Concr
     """$foo($a:num,$b:ptr,$c:num,$d:int) {
       |}
       |""".stripMargin,
-    """$foo(#0%"Name(a)":num,#0%"Name(b)":ptr,#1%"Name(c)":num,#2%"Name(d)":int) {
+    """$foo(#0%"Name(a)":num,#1%"Name(b)":ptr,#2%"Name(c)":num,#3%"Name(d)":int) {
       |}
       |""".stripMargin
   )

@@ -3,14 +3,14 @@ import rpyeffectasm.util
 import org.scalacheck.{Arbitrary, Gen, Prop}
 import org.scalacheck.Prop.*
 
-trait AsmTestSuite[Flags <: AsmFlags, Tag <: Id, Label <: Id, V <: Id, P <: TypingPrecision] extends munit.FunSuite with munit.ScalaCheckSuite {
+trait AsmTestSuite[Flags <: AsmFlags, Tag <: Id, Label <: Id, V <: Id] extends munit.FunSuite with munit.ScalaCheckSuite {
   private val parser = new AsmParser()
 
-  type Input <: Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]
-  type Output = Program[Flags, Tag, Label, V, OperandType[P]]
+  type Input <: Program[AsmFlags, Id, Id, Id]
+  type Output = Program[Flags, Tag, Label, V]
   def runPhase(p: Input): Output
 
-  def parse(s: String): Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]] = {
+  def parse(s: String): Program[AsmFlags, Id, Id, Id] = {
     parser.parse(parser.program, s) match {
       case parser.Success(result, next) =>
         if(!next.atEnd){
@@ -32,7 +32,7 @@ trait AsmTestSuite[Flags <: AsmFlags, Tag <: Id, Label <: Id, V <: Id, P <: Typi
   def assertResult(input: String, output: String) = {
     val i = parse(input).asInstanceOf[Input] // TODO actually check
     val o = parse(output).asInstanceOf[Output] // TODO actually check
-    val renamer = new Renamer[Flags, Tag, Label, V, P, OperandType[P]]()
+    val renamer = new Renamer[Flags, Tag, Label, V]()
     val got = renamer(runPhase(i))
     val expected = renamer(o)
     assertNoDiff(AsmPrettyPrinter(got).mkString, AsmPrettyPrinter(expected).mkString)

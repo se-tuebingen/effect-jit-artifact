@@ -234,7 +234,7 @@ object Generators {
         vs <- Gen.listOfN(n, Gen.resize(s / (2 + n), arbInt.arbitrary))
         ts <- Gen.listOfN(n, Gen.resize(s / (2 + n), any))
         d <- Gen.resize(s / (2 + n), any)
-      } yield Switch(sc, vs zip ts, d)
+      } yield Switch(sc, (vs.map(Literal.Int(_))) zip ts, d)
     }
 
     def construct(using Ctx): Gen[Construct[O]] = Gen.sized { s => for {

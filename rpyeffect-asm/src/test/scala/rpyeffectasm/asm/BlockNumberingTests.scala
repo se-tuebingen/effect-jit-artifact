@@ -1,9 +1,9 @@
 package rpyeffectasm.asm
-class BlockNumberingTests extends AsmTestSuite[AsmFlags, Id, Index, Id, TypingPrecision] {
-  type Input = Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]
+class BlockNumberingTests extends AsmTestSuite[AsmFlags, Id, Index, Id] {
+  type Input = Program[AsmFlags, Id, Id, Id]
 
   def runPhase(p: Input): Output = {
-    val phase = new BlockNumbering[AsmFlags, Id, Id, OperandType[TypingPrecision]]()
+    val phase = new BlockNumbering[AsmFlags, Id, Id]()
     phase(p)
   }
 

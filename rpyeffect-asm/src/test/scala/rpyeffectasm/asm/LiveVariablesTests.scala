@@ -5,9 +5,9 @@ import scala.annotation.tailrec
 class LiveVariablesTests extends munit.FunSuite {
   private val parser = new AsmParser()
 
-  type Input = Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]]
+  type Input = Program[AsmFlags, Id, Id, Id]
 
-  def parse(s: String): Program[AsmFlags, Id, Id, Id, OperandType[TypingPrecision]] = {
+  def parse(s: String): Program[AsmFlags, Id, Id, Id] = {
     parser.parse(parser.program, s) match {
       case parser.Success(result, next) =>
         if (!next.atEnd) {
@@ -27,12 +27,12 @@ class LiveVariablesTests extends munit.FunSuite {
         val result = Interpreter(i).terminationCause
         val liveVariables = i.blocks.map { b =>
           b.label ->
-          LiveVariables[AsmFlags, Id, Id, Id, TypingPrecision, OperandType[TypingPrecision]].zipInstructionsWith(b.instructions)
+          LiveVariables[AsmFlags, Id, Id, Id].zipInstructionsWith(b.instructions)
         }.toMap
 
         def mutate(state: State, currentLive: List[Id]): State = {
           val menv = state.env.collect {
-            case b@((name, rtpe), value) if currentLive contains name => b
+            case b@(name, value) if currentLive contains name => b
           }
           state.copy(env = menv)
         }

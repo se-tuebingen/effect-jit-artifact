@@ -54,9 +54,9 @@ class LambdaLiftingAndClosureConversionTests extends MCoreTestSuite[ATerm] {
       |""".stripMargin,
     """(define $fn:(fun Effectful (top) top) (lambda ($a:top) $a:top))
       |(define $arg:(fun Effectful () int) (lambda () 12))
-      |(let ((define $gen0:(codata $gen1 ($apply () int))
+      |(let ((define $gen0:top
       |              (new $gen1 ($apply () ($arg:(fun Effectful () int))))))
-      |  ($fn:(fun Effectful (top) top) $gen0:(codata $gen1 ($apply () int)) ))
+      |  ($fn:(fun Effectful (top) top) $gen0:top ))
       |""".stripMargin
   )
   // TODO more tests, especially: closure conversion

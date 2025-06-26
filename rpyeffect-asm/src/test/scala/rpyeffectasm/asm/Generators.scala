@@ -8,7 +8,7 @@ import rpyeffectasm.mcore
 
 object Generators {
 
-  import rpyeffectasm.asm.TypingPrecision.ConcretelyTyped
+  type OTpe = Nothing
 
   object id {
     val name: Gen[Name] = for {
@@ -31,37 +31,35 @@ object Generators {
     val nice: Gen[Id] = Gen.oneOf(niceName, index, generated)
   }
 
-  trait InstructionGenerator[Flags <: AsmFlags, Tag <: Id, Label <: Id, V <: Id, P >: ConcretelyTyped <: TypingPrecision, OTpe >: OperandType[P] <: OperandType[P]] {
+  trait InstructionGenerator[Flags <: AsmFlags, Tag <: Id, Label <: Id, V <: Id] {
     def tag(using Ctx): Gen[Tag]
     def label(using Ctx): Gen[Label]
     def v(using Ctx): Gen[V]
-    def tpe(using Ctx): Gen[OTpe]
 
     type Ctx
     given initialCtx: Ctx
 
-    def lvariable(using Ctx): Gen[Var[V, OTpe]] = for {
+    def lvariable(using Ctx): Gen[Var[V]] = for {
       x <- v
-      t <- tpe
-    } yield Var(x, t)
-    def rvariable(using Ctx): Gen[Var[V, OTpe]] = lvariable
-    def lhs(using Ctx): Gen[LhsOperand[Flags, V, OTpe]] = lvariable // TODO Ref, Const
-    def rhs(using Ctx): Gen[RhsOperand[Flags, V, OTpe]] = rvariable // TODO Ref, Const
-    def lhss(using Ctx): Gen[LhsOpList[Flags, V, OTpe]] = Gen.sized { s =>
+    } yield Var(x)
+    def rvariable(using Ctx): Gen[Var[V]] = lvariable
+    def lhs(using Ctx): Gen[LhsOperand[Flags, V]] = lvariable // TODO Ref, Const
+    def rhs(using Ctx): Gen[RhsOperand[Flags, V]] = rvariable // TODO Ref, Const
+    def lhss(using Ctx): Gen[LhsOpList[Flags, V]] = Gen.sized { s =>
       for {
         n <- Gen.choose(0, s)
         params <- Gen.listOfN(n, Gen.resize(s/(n+1),lhs))
       } yield params
     }
-    def rhss(using Ctx): Gen[RhsOpList[Flags, V, OTpe]] = Gen.sized { s =>
+    def rhss(using Ctx): Gen[RhsOpList[Flags, V]] = Gen.sized { s =>
       for {
         n <- Gen.choose(0, s)
         args <- Gen.listOfN(n, Gen.resize(s/(n+1),rhs))
       } yield args
     }
-    def env(using Ctx): Gen[RhsOpList[Flags, V, OTpe]] = rhss
+    def env(using Ctx): Gen[RhsOpList[Flags, V]] = rhss
 
-    def clause(using Ctx): Gen[Clause[Flags, Label, V, OTpe]] = for {
+    def clause(using Ctx): Gen[Clause[Flags, Label, V]] = for {
       target <- label
       params <- lhss
       _env <- env
@@ -232,14 +230,14 @@ object Generators {
       args <- rhss
     } yield Invoke(rcv, it, ot, args)
 
-    def anyInstruction(using Ctx): Gen[Instruction[Flags, Tag, Label, V, OTpe]] = Gen.oneOf[Instruction[Flags, Tag, Label, V, OTpe]](
+    def anyInstruction(using Ctx): Gen[Instruction[Flags, Tag, Label, V]] = Gen.oneOf[Instruction[Flags, Tag, Label, V]](
       anyTerminator,
       anyNonTerminator,
     )
-    def anyTerminator(using Ctx): Gen[Instruction[Flags, Tag, Label, V, OTpe] & Terminator] = Gen.oneOf(
+    def anyTerminator(using Ctx): Gen[Instruction[Flags, Tag, Label, V] & Terminator] = Gen.oneOf(
       jump, switch, matchI, callib, loadlib,
     )
-    def anyNonTerminator(using Ctx): Gen[Instruction[Flags, Tag, Label, V, OTpe]] = Gen.oneOf(
+    def anyNonTerminator(using Ctx): Gen[Instruction[Flags, Tag, Label, V]] = Gen.oneOf(
       let, letConst,
       primitive,
       push, ret,
@@ -251,17 +249,16 @@ object Generators {
       newI, invoke,
     )
 
-    def block(using Ctx): Gen[Block[Flags, Tag, Label, V, OTpe]] = Gen.sized { s =>
+    def block(using Ctx): Gen[Block[Flags, Tag, Label, V]] = Gen.sized { s =>
       for {
         lbl <- label
         params <- Gen.listOf(lvariable)
-        ret <- tpe
         l <- Gen.choose(0, s)
         ins <- Gen.listOfN(l, Gen.resize(s / (l+1), anyNonTerminator))
         lins <- Gen.resize(s / (l+1), anyTerminator)
-      } yield Block(lbl, params, ret, ins :+ lins, Nil) // TODO exports
+      } yield Block(lbl, params, ins :+ lins, Nil) // TODO exports
     }
-    def program: Gen[Program[Flags, Tag, Label, V, OTpe]] = Gen.sized { s =>
+    def program: Gen[Program[Flags, Tag, Label, V]] = Gen.sized { s =>
       for {
         n <- Gen.choose(1, s+1)
         blocks <- listOfN(n, Gen.resize(s / n, block))
@@ -269,12 +266,11 @@ object Generators {
     }
   }
 
-  object simple extends InstructionGenerator[Nothing, Id, Id, Id, ConcretelyTyped] {
+  object simple extends InstructionGenerator[Nothing, Id, Id, Id] {
     import rpyeffectasm.asm.Generators.simple
     override def tag(using Ctx): Gen[Id] = id.any
     override def label(using Ctx): Gen[Id] = id.any
     override def v(using Ctx): Gen[Id] = id.any
-    override def tpe(using Ctx): Gen[OperandType[ConcretelyTyped]] = Gen.oneOf(TopPtr, TopNum) // TODO
 
     override type Ctx = Unit
     override def initialCtx: Ctx = ()

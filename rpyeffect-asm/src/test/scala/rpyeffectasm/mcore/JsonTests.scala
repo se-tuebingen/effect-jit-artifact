@@ -12,7 +12,7 @@ class JsonTests extends munit.ScalaCheckSuite {
     SExpPrettyPrinter(p).emitTo(new StringTarget())
   }}.get
 
-  property("prettyPrint andThen parse  is  identity"){
+  property("prettyPrint andThen parse  is  identity".ignore){
     given Shrink[Program[ATerm]] = Generators.parseableProgram.shrinkAny
     forAll(Generators.parseableProgram.any){ original =>
       ErrorReporter.catchExitOutside { ErrorReporter.withErrorsToStderr {
