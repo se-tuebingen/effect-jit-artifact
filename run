@@ -181,17 +181,17 @@ def numeric_results_with_timeout_str(benchmark: Benchmark, l: Language, sargs: l
     else:
         return np.nan, np.nan
 
-def results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language]) -> tuple[str, str]:
+def results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language], rootdir: str = ".") -> tuple[str, str]:
     benchmark_name = benchmark.name
     if sargs is not None:
         benchmark_name += "_" + "_".join(sargs)
 
     # Check run/compile result
     try:
-        if logdict is not None:
+        if logdict is not None and rootdir == ".":
             j = logdict.copy()
         else:
-            with open(f"./.runlog.json") as f:
+            with open(f"{rootdir}/.runlog.json") as f:
                 j = json.load(f)
     except Exception:
         return "[blue]?[/blue]", "[blue]?[/blue]"
@@ -217,7 +217,7 @@ def results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns:
         
     # Check actual benchmark times
     try:
-        with open(f"./.results/.{benchmark_name}-results.json") as jf:
+        with open(f"{rootdir}/.results/.{benchmark_name}-results.json") as jf:
             j = json.load(jf)
     except Exception:
         return "[blue]?[/blue]", "[blue]?[/blue]"
@@ -239,7 +239,7 @@ def results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns:
         return "[blue]?[/blue]", "[blue]?[/blue]"
         
 
-def doreport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None) -> None:
+def doreport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None, rootdir: str = ".") -> None:
     table_rel = rich.table.Table("Benchmark results (relative)", box=box.SIMPLE_HEAD)
     table_abs = rich.table.Table("Benchmark results (s)       ", box=box.SIMPLE_HEAD)
     columns = sorted(list(clangs), key=lambda x: x.name)
@@ -251,7 +251,7 @@ def doreport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[s
         benchmark_name = benchmark.name
         if sargs is not None:
             benchmark_name += "_" + "_".join(sargs)
-        results_abs, results_rel = list(zip(*[results(benchmark, l, sargs, columns) for l in columns]))
+        results_abs, results_rel = list(zip(*[results(benchmark, l, sargs, columns, rootdir=rootdir) for l in columns]))
         table_rel.add_row(benchmark_name, *(r for r in results_rel), style=style)
         table_abs.add_row(benchmark_name, *(r for r in results_abs), style=style)
     rich.console.Console().print(table_rel)
@@ -610,6 +610,7 @@ if __name__ == "__main__":
         
       case "report":
         parser = ArgumentParser()
+        parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
         args = parser.parse_args(myargs)
@@ -617,7 +618,7 @@ if __name__ == "__main__":
         clangs = getlangs(args.langs)
         cbenchmarks = getbenchmarks(args.benchmarks)
 
-        doreport(cbenchmarks, clangs, sargs)
+        doreport(cbenchmarks, clangs, sargs, rootdir=args.root)
         sys.exit(0)
 
       case "export-tables":
