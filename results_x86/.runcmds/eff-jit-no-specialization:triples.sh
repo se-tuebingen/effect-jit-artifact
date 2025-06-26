@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit-no-specialization' '/data/effect-jit-monorepo/.eff-out/eff-jit-no-specialization:triples_8ca1c315-cfe9-43ce-82a3-9a5f96275735/wrapper.rpyeffect' "$@"

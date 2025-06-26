@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit-no-addcej' '/data/effect-jit-monorepo/.effekt-out/effekt-jit-no-addcej:towers_7f40426e-8c5e-4543-b8d7-473e9d6c3246/towers.rpyeffect' "$@"

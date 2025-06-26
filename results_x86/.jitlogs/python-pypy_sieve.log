@@ -1,0 +1,720 @@
+[63c366d80264] {jit-log-opt-loop
+# Loop 1 (_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST) : loop with 92 ops
+[p0, p1]
++315: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++326: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++330: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++334: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++338: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++342: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++346: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++350: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++354: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++358: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++362: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++366: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++370: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
++374: p23 = getarrayitem_gc_r(p7, 7, descr=<ArrayP 8>)
++385: p25 = getarrayitem_gc_r(p7, 8, descr=<ArrayP 8>)
++396: p27 = getarrayitem_gc_r(p7, 9, descr=<ArrayP 8>)
++407: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, descr=TargetToken(140284968705952))
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++448: guard_value(i4, 6, descr=<Guard0x7f96a3b9c890>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++458: guard_isnull(p5, descr=<Guard0x7f96a3b7be50>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++467: guard_nonnull_class(p17, ConstClass(W_IntObject), descr=<Guard0x7f96a3b9c8e0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
++486: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x7f96a3b9c930>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
++505: i31 = getfield_gc_i(p17, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++509: i32 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++513: i33 = int_le(i31, i32)
++516: guard_true(i33, descr=<Guard0x7f96a3b7be88>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#58 LOAD_CONST')
++529: guard_value(p3, ConstPtr(ptr34), descr=<Guard0x7f96a3b7bec0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#60 LOAD_FAST')
++538: guard_nonnull_class(p9, ConstClass(W_ListObject), descr=<Guard0x7f96a3b9c980>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#62 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#64 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#66 BINARY_SUBTRACT')
++557: i37 = int_sub_ovf(i31, 1)
++564: guard_no_overflow(descr=<Guard0x7f96a3b7bef8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#68 STORE_SUBSCR')
++570: p38 = getfield_gc_r(p9, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++574: guard_class(p38, 140285036387520, descr=<Guard0x7f96a3b7bf30>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++586: p40 = getfield_gc_r(p9, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++590: i41 = getfield_gc_i(p40, descr=<FieldS list.length 8>)
++594: i42 = uint_ge(i37, i41)
++597: guard_false(i42, descr=<Guard0x7f96a3b7bf68>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++603: p43 = getfield_gc_r(p40, descr=<FieldP list.items 16>)
++624: setarrayitem_gc(p43, i37, ConstPtr(ptr44), descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#70 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#72 LOAD_FAST')
++629: guard_nonnull_class(p15, ConstClass(W_IntObject), descr=<Guard0x7f96a3b9c9d0>) [p0, p6, p9, p11, p13, p15, p17, p19, p1]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#74 INPLACE_ADD')
++649: i46 = getfield_gc_i(p15, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++653: i47 = int_add_ovf(i31, i46)
++656: guard_no_overflow(descr=<Guard0x7f96a3b7bfa0>) [p0, p6, p9, p11, p13, p15, p17, p19, p1]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#76 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#78 JUMP_ABSOLUTE')
++662: guard_not_invalidated(descr=<Guard0x7f96a3bb2020>) [p0, p6, p9, p11, p13, p15, p17, p19, p1]
++662: i49 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++675: i51 = int_lt(i49, 0)
++679: guard_false(i51, descr=<Guard0x7f96a3bb2058>) [p0, p6, p9, p11, p13, p15, p17, p19, p1]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++685: label(p0, p1, p6, p9, p11, p13, p15, i47, p19, i32, p40, i41, p43, i46, descr=TargetToken(140284968763424))
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
++720: i52 = int_le(i47, i32)
++723: guard_true(i52, descr=<Guard0x7f96a3b9ca20>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i32]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#58 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#60 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#62 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#64 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#66 BINARY_SUBTRACT')
++729: i54 = int_sub_ovf(i47, 1)
++736: guard_no_overflow(descr=<Guard0x7f96a3bb2090>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i32]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#68 STORE_SUBSCR')
++742: i55 = uint_ge(i54, i41)
++745: guard_false(i55, descr=<Guard0x7f96a3bb20c8>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i32]
++768: setarrayitem_gc(p43, i54, ConstPtr(ptr56), descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#70 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#72 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#74 INPLACE_ADD')
++773: i57 = int_add_ovf(i47, i46)
++779: guard_no_overflow(descr=<Guard0x7f96a3b9ca70>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i46]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#76 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#78 JUMP_ABSOLUTE')
++785: guard_not_invalidated(descr=<Guard0x7f96a3bb2100>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i46]
++785: i59 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++798: i61 = int_lt(i59, 0)
++802: guard_false(i61, descr=<Guard0x7f96a3bb2138>) [p0, p6, p9, p11, p13, p15, p19, p1, i47, i46]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++808: jump(p0, p1, p6, p9, p11, p13, p15, i57, p19, i32, p40, i41, p43, i46, descr=TargetToken(140284968763424))
++816: --end of the loop--
+[63c366df57be] jit-log-opt-loop}
+[63c366fab097] {jit-log-opt-loop
+# Loop 2 (_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER) : loop with 85 ops
+[p0, p1]
++315: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++326: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++330: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++334: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++338: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++342: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++346: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++350: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++354: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++358: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++362: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++366: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++370: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
++374: p23 = getarrayitem_gc_r(p7, 7, descr=<ArrayP 8>)
++385: p25 = getarrayitem_gc_r(p7, 8, descr=<ArrayP 8>)
++396: p27 = getarrayitem_gc_r(p7, 9, descr=<ArrayP 8>)
++407: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, descr=TargetToken(140284968764832))
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++464: guard_value(i4, 6, descr=<Guard0x7f96a3b9cac0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++474: guard_isnull(p5, descr=<Guard0x7f96a3bb26e8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++483: guard_class(p19, 140285036239040, descr=<Guard0x7f96a3bb2720>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++496: i30 = getfield_gc_i(p19, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++500: i31 = getfield_gc_i(p19, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeStepOneIterator.inst_stop 40 pure>)
++504: i32 = int_lt(i30, i31)
++507: guard_true(i32, descr=<Guard0x7f96a3bb2758>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++513: i34 = int_add(i30, 1)
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#20 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#22 LOAD_FAST')
++518: setfield_gc(p19, i34, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++522: guard_nonnull_class(p9, ConstClass(W_ListObject), descr=<Guard0x7f96a3b9cb10>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
++548: guard_value(p3, ConstPtr(ptr36), descr=<Guard0x7f96a3bb2790>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
++557: i38 = int_sub_ovf(i30, 1)
++564: guard_no_overflow(descr=<Guard0x7f96a3bb27c8>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++570: p39 = getfield_gc_r(p9, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++574: guard_class(p39, 140285036387520, descr=<Guard0x7f96a3bb2800>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++586: p41 = getfield_gc_r(p9, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++590: i42 = getfield_gc_i(p41, descr=<FieldS list.length 8>)
++594: i43 = uint_ge(i38, i42)
++597: guard_false(i43, descr=<Guard0x7f96a3bb2838>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++603: p44 = getfield_gc_r(p41, descr=<FieldP list.items 16>)
++607: p45 = getarrayitem_gc_r(p44, i38, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++612: guard_class(p45, ConstClass(W_BoolObject), descr=<Guard0x7f96a3bb2870>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++625: i47 = getfield_gc_i(p45, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++629: i48 = int_is_true(i47)
++632: guard_false(i48, descr=<Guard0x7f96a3bb28a8>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++638: guard_not_invalidated(descr=<Guard0x7f96a3bb28e0>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
++638: i50 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++651: i52 = int_lt(i50, 0)
++655: guard_false(i52, descr=<Guard0x7f96a3bb2918>) [p0, p3, p6, p9, p11, p13, p17, p19, p23, p25, p27, p1, i30]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++661: i53 = same_as_i(i34)
++664: label(p0, p1, p6, p9, p11, p13, i30, p17, p19, p27, i53, i31, p41, i42, p44, descr=TargetToken(140284968764896))
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++688: i54 = int_lt(i53, i31)
++691: guard_true(i54, descr=<Guard0x7f96a3b9cb60>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, i31, i30]
++697: i56 = int_add(i53, 1)
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#20 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#22 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
++701: setfield_gc(p19, i56, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++705: i58 = int_sub_ovf(i53, 1)
++712: guard_no_overflow(descr=<Guard0x7f96a3b9cbb0>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++718: i60 = uint_ge(i58, i42)
++721: guard_false(i60, descr=<Guard0x7f96a3bb2950>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
++727: p61 = getarrayitem_gc_r(p44, i58, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++732: guard_class(p61, ConstClass(W_BoolObject), descr=<Guard0x7f96a3bb2988>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
++746: i63 = getfield_gc_i(p61, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++751: i64 = int_is_true(i63)
++754: guard_false(i64, descr=<Guard0x7f96a3bb29c0>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
++760: guard_not_invalidated(descr=<Guard0x7f96a3bb29f8>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
++760: i66 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++773: i68 = int_lt(i66, 0)
++777: guard_false(i68, descr=<Guard0x7f96a3bb2a30>) [p0, p6, p9, p11, p13, p17, p19, p27, p1, i53, None]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++783: i69 = arraylen_gc(p44, descr=<ArrayP 8>)
++783: jump(p0, p1, p6, p9, p11, p13, i53, p17, p19, p27, i56, i31, p41, i42, p44, descr=TargetToken(140284968764896))
++800: --end of the loop--
+[63c366fdda3a] jit-log-opt-loop}
+[63c367057760] {jit-log-opt-bridge
+# bridge out of Guard 0x7f96a3b9ca20 with 11 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, i8, i9]
++46: i10 = int_le(i8, i9)
++49: guard_false(i10, descr=<Guard0x7f96a3b9cc00>) [p0, p1, p2, p3, p4, p5, p6, p7, i8, i9]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
++55: guard_not_invalidated(descr=<Guard0x7f96a3bb2b80>) [p0, p1, p2, p3, p4, p5, p6, p7, i8, i9]
++55: i12 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++68: i14 = int_lt(i12, 0)
++72: guard_false(i14, descr=<Guard0x7f96a3bb2bb8>) [p0, p1, p2, p3, p4, p5, p6, p7, i8, i9]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++78: p15 = new_with_vtable(descr=<SizeDescr 16>)
++116: setfield_gc(p15, i8, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++127: jump(p0, p7, 18, ConstPtr(ptr17), 6, ConstPtr(null), p1, p2, p3, p4, p5, p15, p6, ConstPtr(null), ConstPtr(null), ConstPtr(null), ConstPtr(null), descr=TargetToken(140284968764832))
++272: --end of the loop--
+[63c36706102f] jit-log-opt-bridge}
+[63c367281d9f] {jit-log-opt-bridge
+# bridge out of Guard 0x7f96a3bb29c0 with 38 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++94: i11 = int_sub_ovf(i9, 1)
++101: guard_no_overflow(descr=<Guard0x7f96a3b9d790>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++107: p12 = getfield_gc_r(p2, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++118: guard_class(p12, 140285036387520, descr=<Guard0x7f96a3bc4838>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++132: p14 = getfield_gc_r(p2, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++136: i15 = getfield_gc_i(p14, descr=<FieldS list.length 8>)
++140: i16 = uint_ge(i11, i15)
++143: guard_false(i16, descr=<Guard0x7f96a3bc4870>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++149: p17 = getfield_gc_r(p14, descr=<FieldP list.items 16>)
++153: p18 = getarrayitem_gc_r(p17, i11, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++158: guard_class(p18, ConstClass(W_BoolObject), descr=<Guard0x7f96a3bc48a8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++172: i20 = getfield_gc_i(p18, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++176: i21 = int_is_true(i20)
++179: guard_true(i21, descr=<Guard0x7f96a3bc48e0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#34 LOAD_FAST')
++185: guard_nonnull_class(p4, ConstClass(W_IntObject), descr=<Guard0x7f96a3b9d7e0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#36 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#38 INPLACE_ADD')
++210: i23 = getfield_gc_i(p4, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++214: i25 = int_add_ovf(i23, 1)
++218: guard_no_overflow(descr=<Guard0x7f96a3bc4918>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#40 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#42 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#44 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#46 BINARY_ADD')
++224: i26 = int_add_ovf(i9, i9)
++230: guard_no_overflow(descr=<Guard0x7f96a3bc4950>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#48 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++236: p27 = new_with_vtable(descr=<SizeDescr 16>)
++276: p28 = new_with_vtable(descr=<SizeDescr 16>)
++288: setfield_gc(p27, i25, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++292: p29 = new_with_vtable(descr=<SizeDescr 16>)
++304: setfield_gc(p28, i9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++309: setfield_gc(p29, i26, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++320: jump(p0, p8, 48, ConstPtr(ptr31), 6, ConstPtr(null), p1, p2, p3, p27, p28, p29, p6, ConstPtr(null), ConstPtr(null), ConstPtr(null), p7, descr=TargetToken(140284968705952))
++432: --end of the loop--
+[63c367296062] jit-log-opt-bridge}
+[63c36730d239] {jit-log-opt-bridge
+# bridge out of Guard 0x7f96a3b7be88 with 18 ops
+[p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++94: guard_value(i3, 6, descr=<Guard0x7f96a3b9d830>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++104: guard_isnull(p4, descr=<Guard0x7f96a3bc4b48>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++113: guard_nonnull_class(p10, ConstClass(W_IntObject), descr=<Guard0x7f96a3b9d880>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
++132: guard_nonnull_class(p7, ConstClass(W_IntObject), descr=<Guard0x7f96a3b9d8d0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
++151: i20 = getfield_gc_i(p10, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++155: i21 = getfield_gc_i(p7, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++159: i22 = int_le(i20, i21)
++162: guard_false(i22, descr=<Guard0x7f96a3bc4b80>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
++168: guard_not_invalidated(descr=<Guard0x7f96a3bc4bb8>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++168: i24 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++181: i26 = int_lt(i24, 0)
++185: guard_false(i26, descr=<Guard0x7f96a3bc4bf0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++198: guard_value(p2, ConstPtr(ptr27), descr=<Guard0x7f96a3bc4c28>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
++207: jump(p0, p16, 18, ConstPtr(ptr29), 6, ConstPtr(null), p5, p6, p7, p8, p9, p10, p11, ConstPtr(null), ConstPtr(null), p14, p15, descr=TargetToken(140284968764832))
++336: --end of the loop--
+[63c36731c371] jit-log-opt-bridge}
+[63c368c4425b] {jit-log-opt-bridge
+# bridge out of Guard 0x7f96a3bb28a8 with 43 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
++110: guard_nonnull_class(p3, ConstClass(W_ListObject), descr=<Guard0x7f96a3b9dc40>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
++136: guard_value(p1, ConstPtr(ptr14), descr=<Guard0x7f96a3bc5408>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
++145: i16 = int_sub_ovf(i12, 1)
++152: guard_no_overflow(descr=<Guard0x7f96a3bc5638>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++158: p17 = getfield_gc_r(p3, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++162: guard_class(p17, 140285036387520, descr=<Guard0x7f96a3bc5670>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
++176: p19 = getfield_gc_r(p3, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++180: i20 = getfield_gc_i(p19, descr=<FieldS list.length 8>)
++184: i21 = uint_ge(i16, i20)
++187: guard_false(i21, descr=<Guard0x7f96a3bc56a8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
++193: p22 = getfield_gc_r(p19, descr=<FieldP list.items 16>)
++197: p23 = getarrayitem_gc_r(p22, i16, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++202: guard_class(p23, ConstClass(W_BoolObject), descr=<Guard0x7f96a3bc56e0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
++216: i25 = getfield_gc_i(p23, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++220: i26 = int_is_true(i25)
++223: guard_true(i26, descr=<Guard0x7f96a3bc5718>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#34 LOAD_FAST')
++229: guard_nonnull_class(p5, ConstClass(W_IntObject), descr=<Guard0x7f96a3b9dc90>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#36 LOAD_CONST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#38 INPLACE_ADD')
++254: i28 = getfield_gc_i(p5, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++258: i30 = int_add_ovf(i28, 1)
++262: guard_no_overflow(descr=<Guard0x7f96a3bc5750>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#40 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#42 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#44 LOAD_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#46 BINARY_ADD')
++268: i31 = int_add_ovf(i12, i12)
++274: guard_no_overflow(descr=<Guard0x7f96a3bc5788>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, i12]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#48 STORE_FAST')
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++280: p32 = new_with_vtable(descr=<SizeDescr 16>)
++317: p33 = new_with_vtable(descr=<SizeDescr 16>)
++329: setfield_gc(p32, i30, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++333: p34 = new_with_vtable(descr=<SizeDescr 16>)
++344: setfield_gc(p33, i12, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++348: setfield_gc(p34, i31, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++352: jump(p0, p11, 48, ConstPtr(ptr36), 6, ConstPtr(null), p2, p3, p4, p32, p33, p34, p7, ConstPtr(null), ConstPtr(null), ConstPtr(null), p10, descr=TargetToken(140284968705952))
++464: --end of the loop--
+[63c368c64aba] jit-log-opt-bridge}
+[63c368cbcb18] {jit-log-opt-bridge
+# bridge out of Guard 0x7f96a3b9cb60 with 12 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11]
++62: i12 = int_lt(i9, i10)
++65: guard_false(i12, descr=<Guard0x7f96a3b9dce0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-42~#80 LOAD_FAST')
++71: guard_nonnull(p4, descr=<Guard0x7f96a3bc5910>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11]
+debug_merge_point(0, 0, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-42~#82 RETURN_VALUE')
++85: guard_isnull(p1, descr=<Guard0x7f96a3bc5948>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11]
++99: leave_portal_frame(25)
++99: p14 = force_token()
++102: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++124: setfield_gc(p0, p14, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++128: guard_not_forced_2(descr=<Guard0x7f96a3c4fa40>) [p0, p2, p3, p4, p5, p7, i11]
++139: finish(p4, descr=<DoneWithThisFrameDescrRef object at 0x7f96a83a63a0>)
++256: --end of the loop--
+[63c368cc5393] jit-log-opt-bridge}
+[63c36f58e91c] {jit-log-opt-loop
+# Loop 8 (<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER) : loop with 351 ops
+[p0, p1]
++619: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++630: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++634: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++638: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++642: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++646: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++650: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++654: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++658: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++662: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, descr=TargetToken(140284968898272))
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER')
++688: guard_value(i4, 1, descr=<Guard0x7f96a3be6d40>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++698: guard_nonnull(p5, descr=<Guard0x7f96a3bd5a28>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++707: p15 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_f_trace 32>)
++712: guard_isnull(p15, descr=<Guard0x7f96a3bd59f0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++721: guard_class(p9, 140285036238464, descr=<Guard0x7f96a3bd59b8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++734: i17 = getfield_gc_i(p9, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++738: i18 = getfield_gc_i(p9, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeOneArgIterator.inst_stop 40 pure>)
++742: i19 = int_lt(i17, i18)
++745: guard_true(i19, descr=<Guard0x7f96a3bd5980>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p1]
++751: i21 = int_add(i17, 1)
++755: i22 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.pyframe.FrameDebugData.inst_is_being_profiled 58>)
++761: setfield_gc(p9, i21, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++765: guard_value(i22, 0, descr=<Guard0x7f96a3be6ca0>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#44 STORE_NAME')
++782: guard_value(p3, ConstPtr(ptr24), descr=<Guard0x7f96a3bd5948>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
++791: p25 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_locals 48>)
++803: guard_value(p25, ConstPtr(ptr26), descr=<Guard0x7f96a3be6cf0>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
++812: guard_not_invalidated(descr=<Guard0x7f96a3bd5910>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
++812: p27 = getfield_gc_r(p25, descr=<FieldP pypy.objspace.std.dictmultiobject.W_ModuleDictObject.inst_mstrategy 16 pure>)
++823: guard_value(p27, ConstPtr(ptr28), descr=<Guard0x7f96a3be6c50>) [p0, p3, p5, p6, p9, p13, i22, p1, i17]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#46 LOAD_NAME')
++832: p29 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_globals 40>)
++844: setfield_gc(ConstPtr(ptr30), i17, descr=<FieldS pypy.objspace.std.typeobject.IntMutableCell.inst_intvalue 8>)
++853: i32 = instance_ptr_eq(ConstPtr(ptr31), p29)
+guard_true(i32, descr=<Guard0x7f96a3be6930>) [p0, p5, p6, p9, p13, p1, i32, None]
++874: guard_value(p29, ConstPtr(ptr34), descr=<Guard0x7f96a3be6b10>) [p0, p5, p6, p9, p13, p1, i32, None]
++883: p35 = getfield_gc_r(p29, descr=<FieldP pypy.objspace.std.dictmultiobject.W_ModuleDictObject.inst_mstrategy 16 pure>)
++887: guard_value(p35, ConstPtr(ptr36), descr=<Guard0x7f96a3be6a20>) [p0, p5, p6, p9, p13, p1, i32, None]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#48 LOAD_METHOD')
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#50 CALL_METHOD')
++896: guard_isnull(p13, descr=<Guard0x7f96a3bd58a0>) [p0, p5, p6, p9, p13, p1, i32, None]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#52 LOAD_METHOD')
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#54 CALL_METHOD')
++905: p39 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++917: p40 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++924: p41 = force_token()
++927: p42 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++934: guard_value(p42, ConstPtr(null), descr=<Guard0x7f96a3be6890>) [p0, p5, p6, p9, p1, p39, p42, p41, p40, None]
++944: i44 = getfield_gc_i(p39, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++952: i46 = int_eq(i44, 0)
++956: guard_true(i46, descr=<Guard0x7f96a3bd5868>) [p0, p5, p6, p9, p1, p39, p42, p41, p40, None]
++962: enter_portal_frame(25, 6736)
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#0 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#2 BUILD_LIST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#4 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#6 BINARY_MULTIPLY')
++969: p52 = call_r(ConstClass(_ll_alloc_and_set_nonnull_trampoline__v1275___simple_call__function_), 5000, ConstPtr(ptr51), descr=<Callr 8 ir EF=5>)
++1075: guard_no_exception(descr=<Guard0x7f96a3be6840>) [p0, p5, p6, p9, p1, p39, p52, p41, p40, None]
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#8 STORE_FAST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#10 LOAD_FAST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#12 LOAD_METHOD')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#14 LOAD_FAST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#16 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#18 CALL_METHOD')
++1089: p53 = force_token()
++1092: enter_portal_frame(25, 6740)
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-32~#0 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-32~#2 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#4 LOAD_GLOBAL')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#6 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#8 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#10 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#12 BINARY_ADD')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#14 CALL_FUNCTION')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#16 GET_ITER')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#20 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#22 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++1092: i56 = getfield_gc_i(p52, descr=<FieldS list.length 8>)
++1096: i58 = uint_ge(1, i56)
++1100: guard_false(i58, descr=<Guard0x7f96a3bd5830>) [p0, p5, p6, p9, p1, p39, p52, p41, p40, None]
++1106: p59 = getfield_gc_r(p52, descr=<FieldP list.items 16>)
++1110: p61 = getarrayitem_gc_r(p59, 1, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++1114: guard_class(p61, ConstClass(W_BoolObject), descr=<Guard0x7f96a3bd57f8>) [p0, p5, p6, p9, p1, p39, p52, p41, p40, None]
++1127: i63 = getfield_gc_i(p61, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1131: i64 = int_is_true(i63)
++1134: guard_true(i64, descr=<Guard0x7f96a3bd57c0>) [p0, p5, p6, p9, p1, p39, p52, p41, p40, None]
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#34 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#36 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#38 INPLACE_ADD')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#40 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#42 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#44 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#46 BINARY_ADD')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#48 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#58 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#60 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#62 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#64 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#66 BINARY_SUBTRACT')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#68 STORE_SUBSCR')
++1140: i66 = uint_ge(3, i56)
++1144: guard_false(i66, descr=<Guard0x7f96a3bd5788>) [p0, p5, p6, p9, p1, p39, p52, p41, p40, None]
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#70 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#72 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#74 INPLACE_ADD')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#76 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#78 JUMP_ABSOLUTE')
++1150: i68 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++1174: setarrayitem_gc(p59, 3, ConstPtr(ptr70), descr=<ArrayP 8>)
++1178: i72 = int_lt(i68, 0)
++1182: guard_false(i72, descr=<Guard0x7f96a3be67f0>) [p0, p5, p6, p9, p1, p39, i68, p53, p52, p41, p40, None]
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++1188: p73 = force_token()
++1191: p74 = new_with_vtable(descr=<SizeDescr 104>)
++1232: p75 = new_with_vtable(descr=<SizeDescr 24>)
++1243: setfield_gc(p75, p41, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1254: setfield_gc(p75, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1262: p78 = new_array_clear(10, descr=<ArrayP 8>)
++1295: p79 = new_with_vtable(descr=<SizeDescr 24>)
++1306: setfield_gc(p79, p52, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++1317: setfield_gc(p79, ConstPtr(ptr80), descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++1321: setarrayitem_gc(p78, 0, p79, descr=<ArrayP 8>)
++1332: setarrayitem_gc(p78, 1, ConstPtr(ptr83), descr=<ArrayP 8>)
++1336: p84 = new_with_vtable(descr=<SizeDescr 16>)
++1347: setfield_gc(p84, 1, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1355: setarrayitem_gc(p78, 2, p84, descr=<ArrayP 8>)
++1359: p87 = new_with_vtable(descr=<SizeDescr 16>)
++1370: setfield_gc(p87, 2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1378: setarrayitem_gc(p78, 3, p87, descr=<ArrayP 8>)
++1382: p90 = new_with_vtable(descr=<SizeDescr 16>)
++1393: setfield_gc(p90, 6, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1401: setarrayitem_gc(p78, 4, p90, descr=<ArrayP 8>)
++1405: p93 = new_with_vtable(descr=<SizeDescr 48>)
++1416: setfield_gc(p93, 3, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++1424: setfield_gc(p93, 2, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_start 24>)
++1432: setfield_gc(p93, 1, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_step 32>)
++1440: setfield_gc(p93, 5001, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeStepOneIterator.inst_stop 40 pure>)
++1448: setarrayitem_gc(p78, 5, p93, descr=<ArrayP 8>)
++1452: p99 = new_with_vtable(descr=<SizeDescr 24>)
++1463: setfield_gc(p99, p53, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1467: setfield_gc(p99, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1492: setfield_gc(p39, p99, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1518: setfield_gc(p0, p73, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1523: setfield_gc(p74, p75, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1534: setfield_gc(p74, ConstPtr(ptr100), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++1538: setfield_gc(p74, 50, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1546: setfield_gc(p74, p78, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1557: setfield_gc(p74, ConstPtr(ptr102), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1561: setfield_gc(p74, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1569: setfield_gc(p74, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1574: setfield_gc(p74, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1743: p106 = call_assembler_r(p74, p39, descr=<Loop1>)
++1944: guard_not_forced(descr=<Guard0x7f96a3c4fbf8>) [p0, p5, p6, p9, p75, p74, p99, p1, p39, p106, p79, None, None, None, p40, None]
++1955: keepalive(p74)
++1955: guard_no_exception(descr=<Guard0x7f96a3be67a0>) [p0, p5, p6, p9, p75, p74, p99, p1, p39, p106, p79, None, None, None, p40, None]
++1975: leave_portal_frame(25)
++1975: guard_not_invalidated(descr=<Guard0x7f96a3bd5750>) [p0, p5, p6, p9, p75, p74, p99, p1, p39, p106, p79, None, None, None, p40, None]
++1975: p108 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1989: p109 = getfield_gc_r(p74, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2000: i110 = getfield_gc_i(p74, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2016: setfield_gc(p39, p109, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2023: guard_false(i110, descr=<Guard0x7f96a3be6750>) [p0, p5, p6, p9, p75, p74, p99, p1, p39, p106, i110, p108, p79, None, None, None, p40, None]
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#20 RETURN_VALUE')
++2032: leave_portal_frame(25)
++2032: setfield_gc(p99, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++2047: i112 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.pyframe.FrameDebugData.inst_is_being_profiled 58>)
++2059: setfield_gc(p39, p40, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2073: setfield_gc(p75, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++2088: guard_value(i112, 0, descr=<Guard0x7f96a3be6700>) [p0, p5, p6, p9, p106, i112, p1, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#56 POP_TOP')
++2098: p114 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_f_trace 32>)
++2102: guard_isnull(p114, descr=<Guard0x7f96a3bd5718>) [p0, p5, p6, p9, p106, i112, p1, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#58 JUMP_ABSOLUTE')
++2111: i116 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++2118: i118 = int_lt(i116, 0)
++2122: guard_false(i118, descr=<Guard0x7f96a3bd56e0>) [p0, p5, p6, p9, p106, i112, p1, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER')
++2128: label(p0, p1, p5, p6, p9, i18, p39, p40, descr=TargetToken(140284968898400))
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER')
++2128: i119 = getfield_gc_i(p9, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++2140: i120 = int_lt(i119, i18)
++2147: guard_true(i120, descr=<Guard0x7f96a3be66b0>) [p0, p5, p6, p9, p1, i119, i18]
++2153: i122 = int_add(i119, 1)
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#44 STORE_NAME')
++2157: p123 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_locals 48>)
++2161: setfield_gc(p9, i122, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++2173: guard_value(p123, ConstPtr(ptr124), descr=<Guard0x7f96a3be6660>) [p0, p5, p6, p9, p1, p123, i119]
++2182: guard_not_invalidated(descr=<Guard0x7f96a3bd56a8>) [p0, p5, p6, p9, p1, p123, i119]
++2182: p125 = getfield_gc_r(p123, descr=<FieldP pypy.objspace.std.dictmultiobject.W_ModuleDictObject.inst_mstrategy 16 pure>)
++2193: guard_value(p125, ConstPtr(ptr126), descr=<Guard0x7f96a3be6570>) [p0, p5, p6, p9, p1, p123, i119]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#46 LOAD_NAME')
++2202: p127 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_globals 40>)
++2213: setfield_gc(ConstPtr(ptr128), i119, descr=<FieldS pypy.objspace.std.typeobject.IntMutableCell.inst_intvalue 8>)
++2222: i130 = instance_ptr_eq(ConstPtr(ptr129), p127)
+guard_true(i130, descr=<Guard0x7f96a3be6520>) [p0, p5, p6, p9, p1, i130, None]
++2243: guard_value(p127, ConstPtr(ptr131), descr=<Guard0x7f96a3be64d0>) [p0, p5, p6, p9, p1, i130, None]
++2252: p132 = getfield_gc_r(p127, descr=<FieldP pypy.objspace.std.dictmultiobject.W_ModuleDictObject.inst_mstrategy 16 pure>)
++2256: guard_value(p132, ConstPtr(ptr133), descr=<Guard0x7f96a3be6480>) [p0, p5, p6, p9, p1, i130, None]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#48 LOAD_METHOD')
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#50 CALL_METHOD')
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#52 LOAD_METHOD')
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#54 CALL_METHOD')
++2265: p134 = force_token()
++2268: enter_portal_frame(25, 6736)
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#0 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#2 BUILD_LIST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#4 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#6 BINARY_MULTIPLY')
++2275: p140 = call_r(ConstClass(_ll_alloc_and_set_nonnull_trampoline__v1275___simple_call__function_), 5000, ConstPtr(ptr139), descr=<Callr 8 ir EF=5>)
++2367: guard_no_exception(descr=<Guard0x7f96a3be6430>) [p0, p5, p6, p9, p1, p39, p140, p134, p40, None]
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-27~#8 STORE_FAST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#10 LOAD_FAST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#12 LOAD_METHOD')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#14 LOAD_FAST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#16 LOAD_CONST')
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#18 CALL_METHOD')
++2381: p141 = force_token()
++2384: enter_portal_frame(25, 6740)
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-32~#0 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-32~#2 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#4 LOAD_GLOBAL')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#6 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#8 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#10 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#12 BINARY_ADD')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#14 CALL_FUNCTION')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#16 GET_ITER')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#18 FOR_ITER')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-34~#20 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#22 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#24 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#26 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#28 BINARY_SUBTRACT')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#30 BINARY_SUBSCR')
++2384: i144 = getfield_gc_i(p140, descr=<FieldS list.length 8>)
++2388: i146 = uint_ge(1, i144)
++2392: guard_false(i146, descr=<Guard0x7f96a3bd5670>) [p0, p5, p6, p9, p1, p39, p140, p134, p40, None]
++2398: p147 = getfield_gc_r(p140, descr=<FieldP list.items 16>)
++2402: p149 = getarrayitem_gc_r(p147, 1, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-35~#32 POP_JUMP_IF_FALSE')
++2406: guard_class(p149, ConstClass(W_BoolObject), descr=<Guard0x7f96a3bd5638>) [p0, p5, p6, p9, p1, p39, p140, p134, p40, None]
++2419: i151 = getfield_gc_i(p149, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2423: i152 = int_is_true(i151)
++2426: guard_true(i152, descr=<Guard0x7f96a3bd5600>) [p0, p5, p6, p9, p1, p39, p140, p134, p40, None]
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#34 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#36 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#38 INPLACE_ADD')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-36~#40 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#42 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#44 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#46 BINARY_ADD')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-37~#48 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#52 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#54 COMPARE_OP')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#56 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#58 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#60 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#62 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#64 LOAD_CONST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#66 BINARY_SUBTRACT')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-39~#68 STORE_SUBSCR')
++2432: i154 = uint_ge(3, i144)
++2436: guard_false(i154, descr=<Guard0x7f96a3bd55c8>) [p0, p5, p6, p9, p1, p39, p140, p134, p40, None]
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#70 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#72 LOAD_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#74 INPLACE_ADD')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#76 STORE_FAST')
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-40~#78 JUMP_ABSOLUTE')
++2442: i156 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++2466: setarrayitem_gc(p147, 3, ConstPtr(ptr158), descr=<ArrayP 8>)
++2470: i160 = int_lt(i156, 0)
++2474: guard_false(i160, descr=<Guard0x7f96a3be63e0>) [p0, p5, p6, p9, p1, p39, i156, p141, p140, p134, p40, None]
+debug_merge_point(2, 2, '_sieve;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:30-38~#50 LOAD_FAST')
++2480: p161 = force_token()
++2483: p162 = new_with_vtable(descr=<SizeDescr 104>)
++2524: p163 = new_with_vtable(descr=<SizeDescr 24>)
++2535: setfield_gc(p163, p134, descr=<FieldP JitVirtualRef.virtual_token 8>)
++2546: setfield_gc(p163, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++2554: p165 = new_array_clear(10, descr=<ArrayP 8>)
++2587: p166 = new_with_vtable(descr=<SizeDescr 24>)
++2599: setfield_gc(p166, p140, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++2611: setfield_gc(p166, ConstPtr(ptr167), descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++2616: setarrayitem_gc(p165, 0, p166, descr=<ArrayP 8>)
++2627: setarrayitem_gc(p165, 1, ConstPtr(ptr170), descr=<ArrayP 8>)
++2631: p171 = new_with_vtable(descr=<SizeDescr 16>)
++2643: setfield_gc(p171, 1, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2651: setarrayitem_gc(p165, 2, p171, descr=<ArrayP 8>)
++2655: p174 = new_with_vtable(descr=<SizeDescr 16>)
++2666: setfield_gc(p174, 2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2674: setarrayitem_gc(p165, 3, p174, descr=<ArrayP 8>)
++2678: p177 = new_with_vtable(descr=<SizeDescr 16>)
++2689: setfield_gc(p177, 6, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2697: setarrayitem_gc(p165, 4, p177, descr=<ArrayP 8>)
++2701: p180 = new_with_vtable(descr=<SizeDescr 48>)
++2712: setfield_gc(p180, 3, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++2720: setfield_gc(p180, 2, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_start 24>)
++2728: setfield_gc(p180, 1, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_step 32>)
++2736: setfield_gc(p180, 5001, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeStepOneIterator.inst_stop 40 pure>)
++2744: setarrayitem_gc(p165, 5, p180, descr=<ArrayP 8>)
++2748: p186 = new_with_vtable(descr=<SizeDescr 24>)
++2759: setfield_gc(p186, p141, descr=<FieldP JitVirtualRef.virtual_token 8>)
++2763: setfield_gc(p186, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++2788: setfield_gc(p39, p186, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2812: setfield_gc(p0, p161, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++2816: setfield_gc(p162, p163, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2827: setfield_gc(p162, ConstPtr(ptr187), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++2831: setfield_gc(p162, 50, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2839: setfield_gc(p162, p165, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++2850: setfield_gc(p162, ConstPtr(ptr189), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++2854: setfield_gc(p162, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2862: setfield_gc(p162, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2867: setfield_gc(p162, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++3036: p193 = call_assembler_r(p162, p39, descr=<Loop1>)
++3230: guard_not_forced(descr=<Guard0x7f96a3c4faf0>) [p0, p5, p6, p9, p163, p162, p186, p1, p39, p193, p166, None, None, None, p40, None]
++3241: keepalive(p162)
++3241: guard_no_exception(descr=<Guard0x7f96a3be6390>) [p0, p5, p6, p9, p163, p162, p186, p1, p39, p193, p166, None, None, None, p40, None]
++3261: leave_portal_frame(25)
++3261: guard_not_invalidated(descr=<Guard0x7f96a3bd5590>) [p0, p5, p6, p9, p163, p162, p186, p1, p39, p193, p166, None, None, None, p40, None]
++3261: p195 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++3275: p196 = getfield_gc_r(p162, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3286: i197 = getfield_gc_i(p162, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++3302: setfield_gc(p39, p196, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++3309: guard_false(i197, descr=<Guard0x7f96a3be6340>) [p0, p5, p6, p9, p163, p162, p186, p1, p39, p193, i197, p195, p166, None, None, None, p40, None]
+debug_merge_point(1, 1, 'benchmark;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.py:26-28~#20 RETURN_VALUE')
++3318: leave_portal_frame(25)
++3318: setfield_gc(p186, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++3333: i199 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.pyframe.FrameDebugData.inst_is_being_profiled 58>)
++3345: setfield_gc(p39, p40, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++3359: setfield_gc(p163, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++3375: guard_value(i199, 0, descr=<Guard0x7f96a3be62f0>) [p0, p5, p6, p9, p193, i199, p1, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#56 POP_TOP')
++3385: p201 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.pyframe.FrameDebugData.inst_w_f_trace 32>)
++3389: guard_isnull(p201, descr=<Guard0x7f96a3bd5558>) [p0, p5, p6, p9, p193, i199, p1, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-7~#58 JUMP_ABSOLUTE')
++3398: i203 = getfield_raw_i(140285052554624, descr=<FieldS pypysig_long_struct.c_value 0>)
++3405: i205 = int_lt(i203, 0)
++3409: guard_false(i205, descr=<Guard0x7f96a3bd54e8>) [p0, p5, p6, p9, p193, i199, p1, None, None, None, None, None, None]
+debug_merge_point(0, 0, '<module>;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/sieve.run.py:1-6~#42 FOR_ITER')
++3415: jump(p0, p1, p5, p6, p9, i18, p39, p40, descr=TargetToken(140284968898400))
++3424: --end of the loop--
+[63c36f62294a] jit-log-opt-loop}
+[63c3abc82fdb] {jit-summary
+Tracing:      	8	0.004582
+Backend:      	8	0.001765
+TOTAL:      		0.582090
+ops:             	2214
+heapcached ops:  	1743
+recorded ops:    	600
+  calls:         	86
+guards:          	156
+opt ops:         	623
+opt guards:      	143
+opt guards shared:	89
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	124
+nvholes:         	52
+nvreused:        	26
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	3
+Total # of bridges:	5
+Freed # of loops:	0
+Freed # of bridges:	0
+[63c3abc8ed2f] jit-summary}

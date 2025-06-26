@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/koka/.koka/v3.1.2/koka-c:nqueens_73cb0450-99f6-4380-83a2-74b689d805ec_gcc-debug-27432e/data_effect_dash_jit_dash_monorepo_effect_dash_handlers_dash_bench_benchmarks_koka_nqueens_main__main' "$@"

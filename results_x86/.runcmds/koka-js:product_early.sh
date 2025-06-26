@@ -1,0 +1,2 @@
+#!/bin/sh
+'node' '/data/effect-jit-monorepo/koka/.koka/v3.1.2/koka-js:product_early_da4cc606-5012-455b-b216-59235e74eb08_js-debug-491b89/data_effect_dash_jit_dash_monorepo_effect_dash_handlers_dash_bench_benchmarks_koka_product__early_main__main.mjs' "$@"

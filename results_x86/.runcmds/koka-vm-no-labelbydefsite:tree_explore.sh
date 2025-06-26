@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit-no-labelbydefsite' '/data/effect-jit-monorepo/koka/.koka/v3.1.2/koka-vm-no-labelbydefsite:tree_explore_9ea73043-a753-415b-93fc-37890dc21a93_vm-debug-208a70/data_effect_dash_jit_dash_monorepo_effect_dash_handlers_dash_bench_benchmarks_koka_tree__explore_main__main.rpyeffect' "$@"

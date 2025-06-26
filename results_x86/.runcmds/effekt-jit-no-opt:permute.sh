@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit-no-opt' '/data/effect-jit-monorepo/.effekt-out/effekt-jit-no-opt:permute_6fbc5c0c-a5e1-4ef0-ac20-52ac50c7bdac/permute.rpyeffect' "$@"

@@ -1,0 +1,963 @@
+[3e6e790] {jit-log-opt-loop
+# Loop 1 (sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER) : loop with 282 ops
+[p0, p1]
++616: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++624: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++628: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++632: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++636: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++640: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++644: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++648: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++652: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++656: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++660: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++664: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++668: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
++672: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, descr=TargetToken(5107880096))
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER')
++700: guard_value(i4, 4, descr=<Guard0x13072c1d0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++712: guard_isnull(p5, descr=<Guard0x1307e1c40>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++720: guard_class(p15, ConstClass(GeneratorIterator), descr=<Guard0x1307e1c70>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++740: p24 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++748: guard_value(p24, ConstPtr(ptr25), descr=<Guard0x13072c218>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++756: p26 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++760: guard_nonnull(p26, descr=<Guard0x1307e1ca0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++768: i27 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++772: guard_false(i27, descr=<Guard0x1307e1cd0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++780: i28 = ptr_eq(p26, p0)
+guard_false(i28, descr=<Guard0x1307e1d00>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++788: p29 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++792: i31 = ptr_ne(p29, ConstPtr(null))
++804: cond_call(i31, 4393953284, p26, descr=<Callv 0 r EF=2 OS=121>)
++876: i33 = getfield_gc_i(p26, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++880: i35 = int_eq(i33, -1)
+guard_false(i35, descr=<Guard0x13072c260>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, i33]
++892: p38 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++900: p39 = getfield_gc_r(p38, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_sys_exc_operror 120>)
++904: p40 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++908: guard_isnull(p40, descr=<Guard0x13072c2a8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p38, p39, p40]
++916: p41 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++920: i42 = getfield_gc_i(p41, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++924: p43 = getfield_gc_r(p38, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++928: p44 = force_token()
++932: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++976: setfield_gc(p26, p43, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++980: guard_not_invalidated(descr=<Guard0x13072c2f0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p44]
++984: p46 = getfield_gc_r(p38, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++988: guard_value(p46, ConstPtr(null), descr=<Guard0x1307e1d30>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p44]
++1000: i48 = getfield_gc_i(p38, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++1004: i50 = int_eq(i48, 0)
+guard_true(i50, descr=<Guard0x1307e1d60>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p44]
++1012: p51 = getfield_gc_r(p26, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1016: guard_nonnull_class(p51, ConstClass(GeneratorIterator), descr=<Guard0x13072c338>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p44]
++1044: setfield_gc(p26, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1052: p54 = getfield_gc_r(p51, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++1060: guard_value(p54, ConstPtr(ptr55), descr=<Guard0x13072c380>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p54, p44]
++1068: p56 = getfield_gc_r(p51, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++1072: guard_nonnull(p56, descr=<Guard0x1307e1d90>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p54, p44]
++1080: i57 = getfield_gc_i(p51, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1084: guard_false(i57, descr=<Guard0x1307e1dc0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p54, p44]
++1092: i58 = ptr_eq(p56, p0)
+guard_false(i58, descr=<Guard0x1307e1df0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p54, p44]
++1104: p59 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1108: i61 = ptr_ne(p59, ConstPtr(null))
++1120: cond_call(i61, 4393953284, p56, descr=<Callv 0 r EF=2 OS=121>)
++1192: i63 = getfield_gc_i(p56, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1196: i65 = int_eq(i63, -1)
+guard_false(i65, descr=<Guard0x13072c3c8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p56, i63, p44]
++1208: p66 = getfield_gc_r(p51, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++1212: guard_isnull(p66, descr=<Guard0x1307e1e20>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p56, i63, p44]
++1220: p67 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1224: i68 = getfield_gc_i(p67, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++1232: p69 = force_token()
++1240: p70 = getfield_gc_r(p56, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1248: setfield_gc(p51, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1256: guard_isnull(p70, descr=<Guard0x13072c410>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p70, p69, p44]
++1264: guard_value(i63, 14, descr=<Guard0x1307e1e50>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p70, p69, p44]
++1276: i73 = getfield_gc_i(p56, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1280: p74 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1412: setarrayitem_gc(p74, i73, ConstPtr(ptr75), descr=<ArrayP 8>)
++1420: i77 = int_add(i73, 1)
++1424: p78 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++1428: setfield_gc(p56, i77, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1432: guard_isnull(p78, descr=<Guard0x13072c458>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p67, p78, p69, p44]
++1440: guard_value(p67, ConstPtr(ptr79), descr=<Guard0x1307e1e80>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p67, p78, p69, p44]
++1448: enter_portal_frame(23, 6724)
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
++1448: guard_value(i77, 3, descr=<Guard0x1307e1eb0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p67, p78, p69, p44]
++1460: p84 = getarrayitem_gc_r(p74, 2, descr=<ArrayP 8>)
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++1460: p86 = getarrayitem_gc_r(p74, 1, descr=<ArrayP 8>)
++1464: setfield_gc(p56, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1472: setfield_gc(p56, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1480: setarrayitem_gc(p74, 2, ConstPtr(null), descr=<ArrayP 8>)
++1488: guard_nonnull_class(p86, ConstClass(W_IntObject), descr=<Guard0x13072c4a0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p86, p69, p44]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++1512: setfield_gc(p56, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1520: setarrayitem_gc(p74, 3, ConstPtr(null), descr=<ArrayP 8>)
++1528: i95 = getfield_gc_i(p86, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1532: i97 = int_add_ovf(i95, 1)
+guard_no_overflow(descr=<Guard0x13072c4e8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, i95, p86, p69, p44]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++1540: i99 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++1556: setfield_gc(p56, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1564: i102 = int_lt(i99, 0)
+guard_false(i102, descr=<Guard0x13072c530>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, i99, i97, p74, p69, p44]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++1572: p104 = getarrayitem_gc_r(p74, 0, descr=<ArrayP 8>)
++1576: setfield_gc(p56, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1584: setfield_gc(p56, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1592: guard_nonnull_class(p104, ConstClass(W_IntObject), descr=<Guard0x13072c578>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p104, i97, p74, p69, p44]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++1616: setfield_gc(p56, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1624: setfield_gc(p56, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1632: i110 = getfield_gc_i(p104, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1636: i111 = int_le(i97, i110)
+guard_true(i111, descr=<Guard0x13072c5c0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p104, i97, i110, None, p74, p69, p44]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++1644: leave_portal_frame(23)
++1644: i114 = getfield_gc_i(p56, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1648: setfield_gc(p56, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1656: guard_false(i114, descr=<Guard0x13072c608>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, i114, i97, p74, p69, p44]
++1664: p116 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++1668: setfield_gc(p51, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1676: setfield_gc(p56, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1684: guard_isnull(p116, descr=<Guard0x13072c650>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p56, p116, i97, p74, None, p44]
++1692: i119 = getfield_gc_i(p56, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1696: guard_false(i119, descr=<Guard0x1307e1ee0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p56, p116, i97, p74, None, p44]
++1704: i120 = getfield_gc_i(p26, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1712: p121 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1716: p122 = new_with_vtable(descr=<SizeDescr 16>)
++1824: setfield_gc(p122, i97, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1944: setarrayitem_gc(p74, 1, p122, descr=<ArrayP 8>)
++2068: setarrayitem_gc(p121, i120, p122, descr=<ArrayP 8>)
++2076: i125 = int_add(i120, 1)
++2084: p126 = getarrayitem_gc_r(p121, i120, descr=<ArrayP 8>)
++2100: setarrayitem_gc(p121, i120, ConstPtr(null), descr=<ArrayP 8>)
++2112: p128 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2116: i129 = getfield_gc_i(p26, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2184: setfield_gc(p38, p128, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2252: setfield_gc(p26, p51, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2256: guard_false(i129, descr=<Guard0x13072c698>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p126, i129, None, None, None, p44]
++2264: p130 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++2268: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2276: setfield_gc(p26, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2284: guard_isnull(p130, descr=<Guard0x13072c6e0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
++2292: i133 = getfield_gc_i(p26, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++2296: guard_false(i133, descr=<Guard0x1307e1f10>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-23~#12 STORE_FAST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#14 LOAD_FAST')
++2304: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x13072c728>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#16 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#18 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#20 BINARY_MULTIPLY')
++2328: guard_class(p126, ConstClass(W_IntObject), descr=<Guard0x1307e1f40>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
++2344: i136 = getfield_gc_i(p126, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2348: i137 = int_mul_ovf(i136, i136)
+guard_no_overflow(descr=<Guard0x1307e1f70>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#22 BINARY_ADD')
++2364: i138 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2368: i139 = int_add_ovf(i138, i137)
+guard_no_overflow(descr=<Guard0x1307e1fa0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#24 LOAD_CONST')
++2380: guard_value(p3, ConstPtr(ptr140), descr=<Guard0x1307f71f0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#26 BINARY_MODULO')
++2388: i142 = int_eq(i139, -9223372036854775808)
++2388: i144 = int_rshift(i139, 63)
++2400: i145 = int_xor(i139, i144)
++2404: i147 = uint_mul_high(i145, -9086255505087856445)
++2428: i149 = uint_rshift(i147, 9)
++2436: i150 = int_xor(i149, i144)
++2440: i152 = int_mul(i150, 1009)
++2448: i153 = int_sub(i139, i152)
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#28 STORE_FAST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#30 JUMP_ABSOLUTE')
++2452: i155 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++2468: i157 = int_lt(i155, 0)
+guard_false(i157, descr=<Guard0x1307f71c0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER')
++2476: label(p0, p1, p6, p9, i153, p126, p15, p26, i31, p38, p41, p128, p39, i42, p51, p56, i61, p74, p121, descr=TargetToken(5107880160))
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER')
++2476: cond_call(i31, 4393953284, p26, descr=<Callv 0 r EF=2 OS=121>)
++2548: i159 = getfield_gc_i(p26, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2552: i161 = int_eq(i159, -1)
+guard_false(i161, descr=<Guard0x13072c9f8>) [p0, p6, p9, p126, p15, p1, p26, i159, i153]
++2564: p162 = force_token()
++2568: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2612: setfield_gc(p26, p128, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2620: guard_not_invalidated(descr=<Guard0x13072c9b0>) [p0, p6, p9, p126, p15, p26, p1, p38, p39, i42, p162, i153]
++2624: i164 = getfield_gc_i(p51, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2628: setfield_gc(p26, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2636: guard_false(i164, descr=<Guard0x13072c968>) [p0, p6, p9, p126, p15, p26, p1, p38, p39, i42, p51, p56, i164, p162, i153]
++2644: cond_call(i61, 4393953284, p56, descr=<Callv 0 r EF=2 OS=121>)
++2716: p167 = force_token()
++2720: p168 = getfield_gc_r(p56, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2724: setfield_gc(p51, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2732: guard_isnull(p168, descr=<Guard0x13072c920>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, p168, p167, p162, i153]
++2740: enter_portal_frame(23, 6724)
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++2740: p173 = getarrayitem_gc_r(p74, 1, descr=<ArrayP 8>)
++2744: setfield_gc(p56, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2752: setarrayitem_gc(p74, 2, ConstPtr(null), descr=<ArrayP 8>)
++2760: guard_nonnull_class(p173, ConstClass(W_IntObject), descr=<Guard0x13072c8d8>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, p173, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++2784: setfield_gc(p56, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2792: setarrayitem_gc(p74, 3, ConstPtr(null), descr=<ArrayP 8>)
++2800: i181 = getfield_gc_i(p173, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2804: i183 = int_add_ovf(i181, 1)
+guard_no_overflow(descr=<Guard0x13072c890>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, i181, p173, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++2812: i185 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++2828: setfield_gc(p56, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2836: i188 = int_lt(i185, 0)
+guard_false(i188, descr=<Guard0x13072c848>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, i185, i183, p74, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++2844: p190 = getarrayitem_gc_r(p74, 0, descr=<ArrayP 8>)
++2848: setfield_gc(p56, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2856: setfield_gc(p56, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2864: guard_nonnull_class(p190, ConstClass(W_IntObject), descr=<Guard0x13072c800>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, p190, i183, p74, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++2888: setfield_gc(p56, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2896: setfield_gc(p56, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2904: i196 = getfield_gc_i(p190, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2908: i197 = int_le(i183, i196)
+guard_true(i197, descr=<Guard0x13072c7b8>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, p190, i183, i196, None, p74, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++2916: leave_portal_frame(23)
++2916: i199 = getfield_gc_i(p26, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2924: p200 = new_with_vtable(descr=<SizeDescr 16>)
++3036: setfield_gc(p200, i183, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3156: setarrayitem_gc(p74, 1, p200, descr=<ArrayP 8>)
++3280: setarrayitem_gc(p121, i199, p200, descr=<ArrayP 8>)
++3288: i203 = int_add(i199, 1)
++3296: p204 = getarrayitem_gc_r(p121, i199, descr=<ArrayP 8>)
++3312: setarrayitem_gc(p121, i199, ConstPtr(null), descr=<ArrayP 8>)
++3324: setfield_gc(p56, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3336: p207 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3340: setfield_gc(p51, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-23~#12 STORE_FAST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#14 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#16 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#18 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#20 BINARY_MULTIPLY')
++3412: setfield_gc(p26, p51, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++3480: setfield_gc(p38, p207, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++3484: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++3492: setfield_gc(p56, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++3500: setfield_gc(p26, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3508: guard_class(p204, ConstClass(W_IntObject), descr=<Guard0x13072c770>) [p0, p6, p9, p204, p15, p1, None, None, None, None, i153]
++3524: i213 = getfield_gc_i(p204, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3528: i214 = int_mul_ovf(i213, i213)
+guard_no_overflow(descr=<Guard0x1307f6800>) [p0, p6, p9, p204, p15, p1, None, None, None, None, i153]
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#22 BINARY_ADD')
++3544: i215 = int_add_ovf(i153, i214)
+guard_no_overflow(descr=<Guard0x1307f67d0>) [p0, p6, p9, p204, p15, p1, None, None, None, None, i153]
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#24 LOAD_CONST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#26 BINARY_MODULO')
++3556: i217 = int_eq(i215, -9223372036854775808)
++3556: i219 = int_rshift(i215, 63)
++3564: i220 = int_xor(i215, i219)
++3568: i222 = uint_mul_high(i220, -9086255505087856445)
++3588: i224 = uint_rshift(i222, 9)
++3596: i225 = int_xor(i224, i219)
++3600: i227 = int_mul(i225, 1009)
++3608: i228 = int_sub(i215, i227)
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#28 STORE_FAST')
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-24~#30 JUMP_ABSOLUTE')
++3612: i230 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++3628: i232 = int_lt(i230, 0)
+guard_false(i232, descr=<Guard0x1307f67a0>) [p0, p6, p9, p204, p15, p1, None, None, None, None, i153]
+debug_merge_point(0, 0, 'sq_summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER')
++3636: i233 = arraylen_gc(p74, descr=<ArrayP 8>)
++3636: i234 = arraylen_gc(p121, descr=<ArrayP 8>)
++3636: jump(p0, p1, p6, p9, i228, p204, p15, p26, i31, p38, p41, p207, p39, i42, p51, p56, i61, p74, p121, descr=TargetToken(5107880160))
++3668: --end of the loop--
+[3f2b99b] jit-log-opt-loop}
+[19f04b0a] {jit-log-opt-loop
+# Loop 2 (generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST) : entry bridge with 38 ops
+[p0, p1]
++216: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++224: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++228: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++232: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++236: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++240: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++244: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++248: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++252: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++256: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
++260: guard_value(i4, 2, descr=<Guard0x13072cad0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++272: guard_isnull(p5, descr=<Guard0x13072f520>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++280: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x13072cb18>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++304: guard_nonnull_class(p9, ConstClass(W_IntObject), descr=<Guard0x13072cb60>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++328: i19 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++332: i20 = getfield_gc_i(p9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++336: i21 = int_le(i19, i20)
+guard_true(i21, descr=<Guard0x13072f550>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++348: guard_value(p3, ConstPtr(ptr22), descr=<Guard0x13072f580>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++356: p23 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++360: leave_portal_frame(23)
++360: setfield_gc(p0, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++404: setfield_gc(p0, ConstPtr(ptr26), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++408: setfield_gc(p0, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++416: setfield_gc(p0, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++424: setfield_gc(p0, p6, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++428: setfield_gc(p0, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++552: setarrayitem_gc(p23, 0, p9, descr=<ArrayP 8>)
++672: setarrayitem_gc(p23, 1, p11, descr=<ArrayP 8>)
++676: setarrayitem_gc(p23, 2, ConstPtr(null), descr=<ArrayP 8>)
++684: setarrayitem_gc(p23, 3, ConstPtr(null), descr=<ArrayP 8>)
++692: finish(p11, descr=<DoneWithThisFrameDescrRef object at 0x106d03108>)
++772: --end of the loop--
+[19f0cd92] jit-log-opt-loop}
+[19f5c879] {jit-log-opt-loop
+# Loop 3 (generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP) : entry bridge with 52 ops
+[p0, p1]
++248: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++256: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++260: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++264: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++268: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++272: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++276: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++280: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++284: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++288: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
++292: guard_value(i4, 3, descr=<Guard0x13072cbf0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++304: guard_isnull(p5, descr=<Guard0x1100383e0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++312: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x13072cc80>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
++340: guard_value(p3, ConstPtr(ptr18), descr=<Guard0x1100383b0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++348: i19 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++352: i21 = int_add_ovf(i19, 1)
+guard_no_overflow(descr=<Guard0x110038380>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++360: guard_not_invalidated(descr=<Guard0x110038350>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++364: i23 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++380: i25 = int_lt(i23, 0)
+guard_false(i25, descr=<Guard0x1100382f0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++388: guard_nonnull_class(p9, ConstClass(W_IntObject), descr=<Guard0x13072cc38>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++412: i27 = getfield_gc_i(p9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++416: i28 = int_le(i21, i27)
+guard_true(i28, descr=<Guard0x1100381a0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(0, 0, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++424: p29 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++428: leave_portal_frame(23)
++428: setfield_gc(p0, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++472: setfield_gc(p0, ConstPtr(ptr32), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++476: setfield_gc(p0, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++484: setfield_gc(p0, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++492: setfield_gc(p0, p6, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++496: setfield_gc(p0, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++620: setarrayitem_gc(p29, 0, p9, descr=<ArrayP 8>)
++624: p37 = new_with_vtable(descr=<SizeDescr 16>)
++728: setfield_gc(p37, i21, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++848: setarrayitem_gc(p29, 1, p37, descr=<ArrayP 8>)
++852: setarrayitem_gc(p29, 2, ConstPtr(null), descr=<ArrayP 8>)
++860: setarrayitem_gc(p29, 3, ConstPtr(null), descr=<ArrayP 8>)
++868: finish(p37, descr=<DoneWithThisFrameDescrRef object at 0x106d03108>)
++948: --end of the loop--
+[19f7c831] jit-log-opt-loop}
+[1a07cee5] {jit-log-opt-loop
+# Loop 4 (summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER) : loop with 273 ops
+[p0, p1]
++600: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++608: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++612: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++616: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++620: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++624: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++628: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++632: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++636: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++640: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++644: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++648: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++652: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, descr=TargetToken(4563683936))
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER')
++676: guard_value(i4, 4, descr=<Guard0x13072ccc8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++688: guard_isnull(p5, descr=<Guard0x11008b940>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++696: guard_class(p15, ConstClass(GeneratorIterator), descr=<Guard0x11008b970>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++716: p22 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++724: guard_value(p22, ConstPtr(ptr23), descr=<Guard0x13072cd10>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++732: p24 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++736: guard_nonnull(p24, descr=<Guard0x11008b9a0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++744: i25 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++748: guard_false(i25, descr=<Guard0x11008b9d0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++756: i26 = ptr_eq(p24, p0)
+guard_false(i26, descr=<Guard0x11008ba00>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++764: p27 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++768: i29 = ptr_ne(p27, ConstPtr(null))
++780: cond_call(i29, 4393953284, p24, descr=<Callv 0 r EF=2 OS=121>)
++852: i31 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++856: i33 = int_eq(i31, -1)
+guard_false(i33, descr=<Guard0x13072cd58>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, i31]
++868: p36 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++876: p37 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_sys_exc_operror 120>)
++880: p38 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++884: guard_isnull(p38, descr=<Guard0x13072cda0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p36, p37, p38]
++892: p39 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++896: i40 = getfield_gc_i(p39, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++900: p41 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++904: p42 = force_token()
++908: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++952: setfield_gc(p24, p41, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++956: guard_not_invalidated(descr=<Guard0x13072cde8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++960: p44 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++964: guard_value(p44, ConstPtr(null), descr=<Guard0x11008ba30>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++976: i46 = getfield_gc_i(p36, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++980: i48 = int_eq(i46, 0)
+guard_true(i48, descr=<Guard0x11008ba60>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++988: p49 = getfield_gc_r(p24, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++992: guard_nonnull_class(p49, ConstClass(GeneratorIterator), descr=<Guard0x13072ce30>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++1020: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1028: p52 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++1036: guard_value(p52, ConstPtr(ptr53), descr=<Guard0x13072ce78>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1044: p54 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++1048: guard_nonnull(p54, descr=<Guard0x11008ba90>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1056: i55 = getfield_gc_i(p49, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1060: guard_false(i55, descr=<Guard0x11008bac0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1068: i56 = ptr_eq(p54, p0)
+guard_false(i56, descr=<Guard0x11008baf0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1080: p57 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1084: i59 = ptr_ne(p57, ConstPtr(null))
++1096: cond_call(i59, 4393953284, p54, descr=<Callv 0 r EF=2 OS=121>)
++1168: i61 = getfield_gc_i(p54, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1172: i63 = int_eq(i61, -1)
+guard_false(i63, descr=<Guard0x13072cec0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, i61, p42]
++1184: p64 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++1188: guard_isnull(p64, descr=<Guard0x11008bb20>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, i61, p42]
++1196: p65 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1200: i66 = getfield_gc_i(p65, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++1208: p67 = force_token()
++1216: p68 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1224: setfield_gc(p49, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1232: guard_isnull(p68, descr=<Guard0x13072cf08>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p68, p67, p42]
++1240: guard_value(i61, 14, descr=<Guard0x11008bb50>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p68, p67, p42]
++1252: i71 = getfield_gc_i(p54, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1256: p72 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1388: setarrayitem_gc(p72, i71, ConstPtr(ptr73), descr=<ArrayP 8>)
++1396: i75 = int_add(i71, 1)
++1400: p76 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++1404: setfield_gc(p54, i75, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1408: guard_isnull(p76, descr=<Guard0x13072cf50>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1416: guard_value(p65, ConstPtr(ptr77), descr=<Guard0x11008bb80>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1424: enter_portal_frame(23, 6724)
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
++1424: guard_value(i75, 3, descr=<Guard0x11008bbb0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1436: p82 = getarrayitem_gc_r(p72, 2, descr=<ArrayP 8>)
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++1436: p84 = getarrayitem_gc_r(p72, 1, descr=<ArrayP 8>)
++1440: setfield_gc(p54, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1448: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1456: setarrayitem_gc(p72, 2, ConstPtr(null), descr=<ArrayP 8>)
++1464: guard_nonnull_class(p84, ConstClass(W_IntObject), descr=<Guard0x13072cf98>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p84, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++1488: setfield_gc(p54, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1496: setarrayitem_gc(p72, 3, ConstPtr(null), descr=<ArrayP 8>)
++1504: i93 = getfield_gc_i(p84, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1508: i95 = int_add_ovf(i93, 1)
+guard_no_overflow(descr=<Guard0x13072cfe0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i93, p84, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++1516: i97 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++1532: setfield_gc(p54, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1540: i100 = int_lt(i97, 0)
+guard_false(i100, descr=<Guard0x13072d028>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i97, i95, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++1548: p102 = getarrayitem_gc_r(p72, 0, descr=<ArrayP 8>)
++1552: setfield_gc(p54, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1560: setfield_gc(p54, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1568: guard_nonnull_class(p102, ConstClass(W_IntObject), descr=<Guard0x13072d070>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p102, i95, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++1592: setfield_gc(p54, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1600: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1608: i108 = getfield_gc_i(p102, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1612: i109 = int_le(i95, i108)
+guard_true(i109, descr=<Guard0x13072d0b8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p102, i95, i108, None, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++1620: leave_portal_frame(23)
++1620: i112 = getfield_gc_i(p54, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1624: setfield_gc(p54, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1632: guard_false(i112, descr=<Guard0x13072d100>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i112, i95, p72, p67, p42]
++1640: p114 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++1644: setfield_gc(p49, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1652: setfield_gc(p54, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1660: guard_isnull(p114, descr=<Guard0x13072d148>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, p114, i95, p72, None, p42]
++1668: i117 = getfield_gc_i(p54, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1672: guard_false(i117, descr=<Guard0x11008bbe0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, p114, i95, p72, None, p42]
++1680: i118 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1688: p119 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1692: p120 = new_with_vtable(descr=<SizeDescr 16>)
++1804: setfield_gc(p120, i95, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1924: setarrayitem_gc(p72, 1, p120, descr=<ArrayP 8>)
++2048: setarrayitem_gc(p119, i118, p120, descr=<ArrayP 8>)
++2056: i123 = int_add(i118, 1)
++2064: p124 = getarrayitem_gc_r(p119, i118, descr=<ArrayP 8>)
++2080: setarrayitem_gc(p119, i118, ConstPtr(null), descr=<ArrayP 8>)
++2092: p126 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2096: i127 = getfield_gc_i(p24, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2164: setfield_gc(p36, p126, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2232: setfield_gc(p24, p49, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2236: guard_false(i127, descr=<Guard0x13072d190>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p124, i127, None, None, None, p42]
++2244: p128 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++2248: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2256: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2264: guard_isnull(p128, descr=<Guard0x13072d1d8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
++2272: i131 = getfield_gc_i(p24, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++2276: guard_false(i131, descr=<Guard0x11008bc10>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-11~#12 STORE_FAST')
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#14 LOAD_FAST')
++2284: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x13072d220>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#16 LOAD_FAST')
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#18 BINARY_ADD')
++2308: guard_class(p124, ConstClass(W_IntObject), descr=<Guard0x11008bc40>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
++2324: i134 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2328: i135 = getfield_gc_i(p124, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2332: i136 = int_add_ovf(i134, i135)
+guard_no_overflow(descr=<Guard0x11008bc70>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#20 LOAD_CONST')
++2344: guard_value(p3, ConstPtr(ptr137), descr=<Guard0x11008bca0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#22 BINARY_MODULO')
++2352: i139 = int_eq(i136, -9223372036854775808)
++2352: i141 = int_rshift(i136, 63)
++2360: i142 = int_xor(i136, i141)
++2364: i144 = uint_mul_high(i142, -9086255505087856445)
++2388: i146 = uint_rshift(i144, 9)
++2396: i147 = int_xor(i146, i141)
++2400: i149 = int_mul(i147, 1009)
++2408: i150 = int_sub(i136, i149)
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#24 STORE_FAST')
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#26 JUMP_ABSOLUTE')
++2412: i152 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++2428: i154 = int_lt(i152, 0)
+guard_false(i154, descr=<Guard0x11008bcd0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER')
++2436: label(p0, p1, p6, p9, i150, p124, p15, p24, i29, p36, p39, p126, p37, i40, p49, p54, i59, p72, p119, descr=TargetToken(4563684000))
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER')
++2436: cond_call(i29, 4393953284, p24, descr=<Callv 0 r EF=2 OS=121>)
++2508: i156 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2512: i158 = int_eq(i156, -1)
+guard_false(i158, descr=<Guard0x13072d268>) [p0, p6, p9, p124, p15, p1, p24, i156, i150]
++2524: p159 = force_token()
++2528: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2572: setfield_gc(p24, p126, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2580: guard_not_invalidated(descr=<Guard0x13072d2b0>) [p0, p6, p9, p124, p15, p24, p1, p36, p37, i40, p159, i150]
++2584: i161 = getfield_gc_i(p49, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2588: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2596: guard_false(i161, descr=<Guard0x13072d2f8>) [p0, p6, p9, p124, p15, p24, p1, p36, p37, i40, p49, p54, i161, p159, i150]
++2604: cond_call(i59, 4393953284, p54, descr=<Callv 0 r EF=2 OS=121>)
++2676: p164 = force_token()
++2680: p165 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2684: setfield_gc(p49, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2692: guard_isnull(p165, descr=<Guard0x13072d340>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p165, p164, p159, i150]
++2700: enter_portal_frame(23, 6724)
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++2700: p170 = getarrayitem_gc_r(p72, 1, descr=<ArrayP 8>)
++2704: setfield_gc(p54, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2712: setarrayitem_gc(p72, 2, ConstPtr(null), descr=<ArrayP 8>)
++2720: guard_nonnull_class(p170, ConstClass(W_IntObject), descr=<Guard0x13072d388>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p170, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++2744: setfield_gc(p54, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2752: setarrayitem_gc(p72, 3, ConstPtr(null), descr=<ArrayP 8>)
++2760: i178 = getfield_gc_i(p170, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2764: i180 = int_add_ovf(i178, 1)
+guard_no_overflow(descr=<Guard0x13072d3d0>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, i178, p170, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++2772: i182 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++2788: setfield_gc(p54, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2796: i185 = int_lt(i182, 0)
+guard_false(i185, descr=<Guard0x13072d418>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, i182, i180, p72, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++2804: p187 = getarrayitem_gc_r(p72, 0, descr=<ArrayP 8>)
++2808: setfield_gc(p54, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2816: setfield_gc(p54, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2824: guard_nonnull_class(p187, ConstClass(W_IntObject), descr=<Guard0x13072d460>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p187, i180, p72, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++2848: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2856: setfield_gc(p54, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2864: i193 = getfield_gc_i(p187, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2868: i194 = int_le(i180, i193)
+guard_true(i194, descr=<Guard0x13072d4a8>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p187, i180, i193, None, p72, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++2876: leave_portal_frame(23)
++2876: i196 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2884: p197 = new_with_vtable(descr=<SizeDescr 16>)
++2988: setfield_gc(p197, i180, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3108: setarrayitem_gc(p72, 1, p197, descr=<ArrayP 8>)
++3232: setarrayitem_gc(p119, i196, p197, descr=<ArrayP 8>)
++3240: i200 = int_add(i196, 1)
++3248: p201 = getarrayitem_gc_r(p119, i196, descr=<ArrayP 8>)
++3264: setarrayitem_gc(p119, i196, ConstPtr(null), descr=<ArrayP 8>)
++3276: setfield_gc(p54, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3288: p204 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3292: setfield_gc(p49, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-11~#12 STORE_FAST')
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#14 LOAD_FAST')
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#16 LOAD_FAST')
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#18 BINARY_ADD')
++3364: setfield_gc(p24, p49, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++3432: setfield_gc(p36, p204, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++3436: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++3444: setfield_gc(p54, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++3452: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3460: guard_class(p201, ConstClass(W_IntObject), descr=<Guard0x13072d4f0>) [p0, p6, p9, p201, p15, p1, None, None, None, None, i150]
++3476: i210 = getfield_gc_i(p201, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3480: i211 = int_add_ovf(i150, i210)
+guard_no_overflow(descr=<Guard0x11008bd00>) [p0, p6, p9, p201, p15, p1, None, None, None, None, i150]
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#20 LOAD_CONST')
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#22 BINARY_MODULO')
++3488: i213 = int_eq(i211, -9223372036854775808)
++3488: i215 = int_rshift(i211, 63)
++3496: i216 = int_xor(i211, i215)
++3500: i218 = uint_mul_high(i216, -9086255505087856445)
++3520: i220 = uint_rshift(i218, 9)
++3528: i221 = int_xor(i220, i215)
++3532: i223 = int_mul(i221, 1009)
++3540: i224 = int_sub(i211, i223)
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#24 STORE_FAST')
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-12~#26 JUMP_ABSOLUTE')
++3544: i226 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++3560: i228 = int_lt(i226, 0)
+guard_false(i228, descr=<Guard0x11008bd30>) [p0, p6, p9, p201, p15, p1, None, None, None, None, i150]
+debug_merge_point(0, 0, 'summing;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER')
++3568: i229 = arraylen_gc(p72, descr=<ArrayP 8>)
++3568: i230 = arraylen_gc(p119, descr=<ArrayP 8>)
++3568: jump(p0, p1, p6, p9, i224, p201, p15, p24, i29, p36, p39, p204, p37, i40, p49, p54, i59, p72, p119, descr=TargetToken(4563684000))
++3588: --end of the loop--
+[1a0b495b] jit-log-opt-loop}
+[2ee31a1b] {jit-log-opt-loop
+# Loop 5 (counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER) : loop with 263 ops
+[p0, p1]
++584: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++592: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++596: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++600: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++604: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++608: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++612: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++616: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++620: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++624: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++628: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++632: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++636: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, descr=TargetToken(4563685408))
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER')
++660: guard_value(i4, 4, descr=<Guard0x13072ddf0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++672: guard_isnull(p5, descr=<Guard0x1101ee620>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++680: guard_class(p15, ConstClass(GeneratorIterator), descr=<Guard0x1101ee5f0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++700: p22 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++708: guard_value(p22, ConstPtr(ptr23), descr=<Guard0x13072de38>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++716: p24 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++720: guard_nonnull(p24, descr=<Guard0x1101ee5c0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++728: i25 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++732: guard_false(i25, descr=<Guard0x1101ee590>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++740: i26 = ptr_eq(p24, p0)
+guard_false(i26, descr=<Guard0x1101ee500>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++748: p27 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++752: i29 = ptr_ne(p27, ConstPtr(null))
++764: cond_call(i29, 4393953284, p24, descr=<Callv 0 r EF=2 OS=121>)
++836: i31 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++840: i33 = int_eq(i31, -1)
+guard_false(i33, descr=<Guard0x13072dda8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, i31]
++852: p36 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++860: p37 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_sys_exc_operror 120>)
++864: p38 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++868: guard_isnull(p38, descr=<Guard0x13072dd60>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p36, p37, p38]
++876: p39 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++880: i40 = getfield_gc_i(p39, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++884: p41 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++888: p42 = force_token()
++892: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++936: setfield_gc(p24, p41, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++940: guard_not_invalidated(descr=<Guard0x13072dd18>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++944: p44 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++948: guard_value(p44, ConstPtr(null), descr=<Guard0x1101ee3e0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++960: i46 = getfield_gc_i(p36, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++964: i48 = int_eq(i46, 0)
+guard_true(i48, descr=<Guard0x1101ee3b0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++972: p49 = getfield_gc_r(p24, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++976: guard_nonnull_class(p49, ConstClass(GeneratorIterator), descr=<Guard0x13072dcd0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++1004: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1012: p52 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++1020: guard_value(p52, ConstPtr(ptr53), descr=<Guard0x13072dc88>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1028: p54 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++1032: guard_nonnull(p54, descr=<Guard0x1101ee2f0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1040: i55 = getfield_gc_i(p49, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1044: guard_false(i55, descr=<Guard0x1101ee2c0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1052: i56 = ptr_eq(p54, p0)
+guard_false(i56, descr=<Guard0x1101ee290>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1064: p57 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1068: i59 = ptr_ne(p57, ConstPtr(null))
++1080: cond_call(i59, 4393953284, p54, descr=<Callv 0 r EF=2 OS=121>)
++1152: i61 = getfield_gc_i(p54, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1156: i63 = int_eq(i61, -1)
+guard_false(i63, descr=<Guard0x13072dbf8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, i61, p42]
++1168: p64 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++1172: guard_isnull(p64, descr=<Guard0x1101ee260>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, i61, p42]
++1180: p65 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1184: i66 = getfield_gc_i(p65, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++1192: p67 = force_token()
++1200: p68 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1208: setfield_gc(p49, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1216: guard_isnull(p68, descr=<Guard0x13072dbb0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p68, p67, p42]
++1224: guard_value(i61, 14, descr=<Guard0x1101ee1a0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p68, p67, p42]
++1236: i71 = getfield_gc_i(p54, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1240: p72 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1372: setarrayitem_gc(p72, i71, ConstPtr(ptr73), descr=<ArrayP 8>)
++1380: i75 = int_add(i71, 1)
++1384: p76 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++1388: setfield_gc(p54, i75, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1392: guard_isnull(p76, descr=<Guard0x13072db68>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1400: guard_value(p65, ConstPtr(ptr77), descr=<Guard0x1101ee110>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1408: enter_portal_frame(23, 6724)
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
++1408: guard_value(i75, 3, descr=<Guard0x1101ee0b0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1420: p82 = getarrayitem_gc_r(p72, 2, descr=<ArrayP 8>)
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++1420: p84 = getarrayitem_gc_r(p72, 1, descr=<ArrayP 8>)
++1424: setfield_gc(p54, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1432: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1440: setarrayitem_gc(p72, 2, ConstPtr(null), descr=<ArrayP 8>)
++1448: guard_nonnull_class(p84, ConstClass(W_IntObject), descr=<Guard0x13072db20>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p84, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++1472: setfield_gc(p54, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1480: setarrayitem_gc(p72, 3, ConstPtr(null), descr=<ArrayP 8>)
++1488: i93 = getfield_gc_i(p84, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1492: i95 = int_add_ovf(i93, 1)
+guard_no_overflow(descr=<Guard0x13072dad8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i93, p84, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++1500: i97 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++1516: setfield_gc(p54, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1524: i100 = int_lt(i97, 0)
+guard_false(i100, descr=<Guard0x13072da90>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i97, i95, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++1532: p102 = getarrayitem_gc_r(p72, 0, descr=<ArrayP 8>)
++1536: setfield_gc(p54, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1544: setfield_gc(p54, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1552: guard_nonnull_class(p102, ConstClass(W_IntObject), descr=<Guard0x13072da48>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p102, i95, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++1576: setfield_gc(p54, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1584: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1592: i108 = getfield_gc_i(p102, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1596: i109 = int_le(i95, i108)
+guard_true(i109, descr=<Guard0x13072da00>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p102, i95, i108, None, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++1604: leave_portal_frame(23)
++1604: i112 = getfield_gc_i(p54, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1608: setfield_gc(p54, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1616: guard_false(i112, descr=<Guard0x13072d9b8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i112, i95, p72, p67, p42]
++1624: p114 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++1628: setfield_gc(p49, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1636: setfield_gc(p54, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1644: guard_isnull(p114, descr=<Guard0x13072d970>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, p114, i95, p72, None, p42]
++1652: i117 = getfield_gc_i(p54, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1656: guard_false(i117, descr=<Guard0x1101c5a90>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, p114, i95, p72, None, p42]
++1664: i118 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1672: p119 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1676: p120 = new_with_vtable(descr=<SizeDescr 16>)
++1788: setfield_gc(p120, i95, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1908: setarrayitem_gc(p72, 1, p120, descr=<ArrayP 8>)
++2032: setarrayitem_gc(p119, i118, p120, descr=<ArrayP 8>)
++2040: i123 = int_add(i118, 1)
++2048: p124 = getarrayitem_gc_r(p119, i118, descr=<ArrayP 8>)
++2064: setarrayitem_gc(p119, i118, ConstPtr(null), descr=<ArrayP 8>)
++2076: p126 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2080: i127 = getfield_gc_i(p24, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2148: setfield_gc(p36, p126, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2216: setfield_gc(p24, p49, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2220: guard_false(i127, descr=<Guard0x13072d928>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p124, i127, None, None, None, p42]
++2228: p128 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++2232: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2240: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2248: guard_isnull(p128, descr=<Guard0x13072d898>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
++2256: i131 = getfield_gc_i(p24, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++2260: guard_false(i131, descr=<Guard0x1101c5820>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-17~#12 STORE_FAST')
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#14 LOAD_FAST')
++2268: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x13072d8e0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#16 LOAD_CONST')
++2296: guard_value(p3, ConstPtr(ptr133), descr=<Guard0x1101c57f0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#18 BINARY_ADD')
++2304: i134 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2308: i136 = int_add_ovf(i134, 1)
+guard_no_overflow(descr=<Guard0x1101c57c0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#20 LOAD_CONST')
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#22 BINARY_MODULO')
++2316: i138 = int_rshift(i136, 63)
++2324: i139 = int_xor(i136, i138)
++2328: i141 = uint_mul_high(i139, -9086255505087856445)
++2352: i143 = uint_rshift(i141, 9)
++2360: i144 = int_xor(i143, i138)
++2364: i146 = int_mul(i144, 1009)
++2372: i147 = int_sub(i136, i146)
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#24 STORE_FAST')
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#26 JUMP_ABSOLUTE')
++2376: i149 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++2392: i151 = int_lt(i149, 0)
+guard_false(i151, descr=<Guard0x1101c5790>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER')
++2400: label(p0, p1, p6, p9, i147, p124, p15, p24, i29, p36, p39, p126, p37, i40, p49, p54, i59, p72, p119, descr=TargetToken(4563685472))
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER')
++2400: cond_call(i29, 4393953284, p24, descr=<Callv 0 r EF=2 OS=121>)
++2472: i153 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2476: i155 = int_eq(i153, -1)
+guard_false(i155, descr=<Guard0x13072d850>) [p0, p6, p9, p124, p15, p1, p24, i153, i147]
++2488: p156 = force_token()
++2492: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2536: setfield_gc(p24, p126, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2544: guard_not_invalidated(descr=<Guard0x13072d808>) [p0, p6, p9, p124, p15, p24, p1, p36, p37, i40, p156, i147]
++2548: i158 = getfield_gc_i(p49, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2552: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2560: guard_false(i158, descr=<Guard0x13072d7c0>) [p0, p6, p9, p124, p15, p24, p1, p36, p37, i40, p49, p54, i158, p156, i147]
++2568: cond_call(i59, 4393953284, p54, descr=<Callv 0 r EF=2 OS=121>)
++2640: p161 = force_token()
++2644: p162 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2648: setfield_gc(p49, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2656: guard_isnull(p162, descr=<Guard0x13072d778>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p162, p161, p156, i147]
++2664: enter_portal_frame(23, 6724)
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++2664: p167 = getarrayitem_gc_r(p72, 1, descr=<ArrayP 8>)
++2668: setfield_gc(p54, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2676: setarrayitem_gc(p72, 2, ConstPtr(null), descr=<ArrayP 8>)
++2684: guard_nonnull_class(p167, ConstClass(W_IntObject), descr=<Guard0x13072d730>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p167, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++2708: setfield_gc(p54, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2716: setarrayitem_gc(p72, 3, ConstPtr(null), descr=<ArrayP 8>)
++2724: i175 = getfield_gc_i(p167, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2728: i177 = int_add_ovf(i175, 1)
+guard_no_overflow(descr=<Guard0x13072d6e8>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, i175, p167, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++2736: i179 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++2752: setfield_gc(p54, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2760: i182 = int_lt(i179, 0)
+guard_false(i182, descr=<Guard0x13072d6a0>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, i179, i177, p72, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++2768: p184 = getarrayitem_gc_r(p72, 0, descr=<ArrayP 8>)
++2772: setfield_gc(p54, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2780: setfield_gc(p54, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2788: guard_nonnull_class(p184, ConstClass(W_IntObject), descr=<Guard0x13072d658>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p184, i177, p72, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++2812: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2820: setfield_gc(p54, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2828: i190 = getfield_gc_i(p184, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2832: i191 = int_le(i177, i190)
+guard_true(i191, descr=<Guard0x13072d610>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p184, i177, i190, None, p72, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++2840: leave_portal_frame(23)
++2840: i193 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2848: p194 = new_with_vtable(descr=<SizeDescr 16>)
++2952: setfield_gc(p194, i177, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3072: setarrayitem_gc(p72, 1, p194, descr=<ArrayP 8>)
++3196: setarrayitem_gc(p119, i193, p194, descr=<ArrayP 8>)
++3204: i197 = int_add(i193, 1)
++3212: p198 = getarrayitem_gc_r(p119, i193, descr=<ArrayP 8>)
++3228: setarrayitem_gc(p119, i193, ConstPtr(null), descr=<ArrayP 8>)
++3240: setfield_gc(p54, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3252: p201 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3256: setfield_gc(p49, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-17~#12 STORE_FAST')
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#14 LOAD_FAST')
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#16 LOAD_CONST')
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#18 BINARY_ADD')
++3264: i204 = int_add(i147, 1)
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#20 LOAD_CONST')
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#22 BINARY_MODULO')
++3268: i206 = uint_mul_high(i204, -9086255505087856445)
++3288: i208 = uint_rshift(i206, 9)
++3296: i210 = int_mul(i208, 1009)
++3304: i211 = int_sub(i204, i210)
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#24 STORE_FAST')
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-18~#26 JUMP_ABSOLUTE')
++3308: i213 = getfield_raw_i(4415485760, descr=<FieldS pypysig_long_struct.c_value 0>)
++3388: setfield_gc(p24, p49, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++3456: setfield_gc(p36, p201, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++3460: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++3468: setfield_gc(p54, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++3476: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3484: i218 = int_lt(i213, 0)
+guard_false(i218, descr=<Guard0x13072d5c8>) [p0, p6, p9, p198, p15, p1, i213, i211, None, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/Users/gaisseml/dev/effect-jit/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER')
++3492: i219 = arraylen_gc(p72, descr=<ArrayP 8>)
++3492: i220 = arraylen_gc(p119, descr=<ArrayP 8>)
++3492: jump(p0, p1, p6, p9, i211, p198, p15, p24, i29, p36, p39, p201, p37, i40, p49, p54, i59, p72, p119, descr=TargetToken(4563685472))
++3512: --end of the loop--
+[2ee9f1bc] jit-log-opt-loop}
+[4277c2ab] {jit-summary
+Tracing:      	5	0.004866
+Backend:      	5	0.001458
+TOTAL:      		1.052508
+ops:             	1166
+heapcached ops:  	1035
+recorded ops:    	498
+  calls:         	30
+guards:          	188
+opt ops:         	873
+opt guards:      	198
+opt guards shared:	87
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	177
+nvholes:         	18
+nvreused:        	128
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	5
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[4277fdc0] jit-summary}

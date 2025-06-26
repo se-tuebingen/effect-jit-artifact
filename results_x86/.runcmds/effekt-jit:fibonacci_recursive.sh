@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit' '/data/effect-jit-monorepo/.effekt-out/effekt-jit:fibonacci_recursive_8cd37401-c3b8-4a2e-89ea-635d558863c3/main.rpyeffect' "$@"

@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit-2-context' '/data/effect-jit-monorepo/.effekt-out/effekt-jit-2-context:generator_fd7d7f68-b908-47c4-9dd8-c99c65460519/main.rpyeffect' "$@"

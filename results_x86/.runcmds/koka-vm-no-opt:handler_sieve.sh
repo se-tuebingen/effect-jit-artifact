@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit-no-opt' '/data/effect-jit-monorepo/koka/.koka/v3.1.2/koka-vm-no-opt:handler_sieve_fb14a4ae-8f91-4068-ba67-fdbc065c207b_vm-debug-208a70/data_effect_dash_jit_dash_monorepo_effect_dash_handlers_dash_bench_benchmarks_koka_handler__sieve_main__main.rpyeffect' "$@"

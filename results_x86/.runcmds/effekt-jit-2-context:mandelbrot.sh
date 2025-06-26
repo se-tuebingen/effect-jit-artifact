@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit-2-context' '/data/effect-jit-monorepo/.effekt-out/effekt-jit-2-context:mandelbrot_2409618b-c272-48ef-8828-1d135989eb94/mandelbrot.rpyeffect' "$@"

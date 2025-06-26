@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/koka/.koka/v3.1.2/koka-c:iterator_975d1388-702f-414a-89d0-515f3b00aa47_gcc-debug-27432e/data_effect_dash_jit_dash_monorepo_effect_dash_handlers_dash_bench_benchmarks_koka_iterator_main__main' "$@"

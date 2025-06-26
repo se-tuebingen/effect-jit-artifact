@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit-no-opt' '/data/effect-jit-monorepo/koka/.koka/v3.1.2/koka-vm-no-opt:fibonacci_recursive_6e6b3d82-4cc0-4688-8ca0-430a8b288b66_vm-debug-208a70/data_effect_dash_jit_dash_monorepo_effect_dash_handlers_dash_bench_benchmarks_koka_fibonacci__recursive_main__main.rpyeffect' "$@"

@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit' '/data/effect-jit-monorepo/.eff-out/eff-jit:unused_handlers_a95c8964-0f3d-47f1-b440-2b361b83c5db/wrapper.rpyeffect' "$@"

@@ -1,0 +1,1168 @@
+[63873329b8b4] {jit-log-opt-loop
+# Loop 1 (_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#0 LOAD_FAST) : entry bridge with 80 ops
+[p0, p1]
++331: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++342: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++346: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++350: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++354: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++358: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++362: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++366: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++370: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++374: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++378: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++382: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++386: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#0 LOAD_FAST')
++397: guard_value(i4, 4, descr=<Guard0x7fc550520840>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++407: guard_isnull(p5, descr=<Guard0x7fc5504ffc90>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++416: guard_nonnull_class(p9, 140485500690984, descr=<Guard0x7fc550520d90>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#2 LOAD_ATTR')
++442: guard_value(p3, ConstPtr(ptr24), descr=<Guard0x7fc55053b558>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++451: p25 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++469: guard_value(p25, ConstPtr(ptr26), descr=<Guard0x7fc55053b520>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++478: guard_not_invalidated(descr=<Guard0x7fc55053b4e8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++478: p27 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++482: guard_nonnull_class(p27, ConstClass(W_ListObject), descr=<Guard0x7fc550520d40>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#4 LOAD_FAST')
++500: guard_nonnull_class(p13, ConstClass(W_IntObject), descr=<Guard0x7fc550520cf0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#6 BINARY_SUBSCR')
++520: i30 = getfield_gc_i(p13, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++525: p31 = getfield_gc_r(p27, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++536: guard_class(p31, 140485501050048, descr=<Guard0x7fc55053b4b0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++549: p33 = getfield_gc_r(p27, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++553: i34 = getfield_gc_i(p33, descr=<FieldS list.length 8>)
++557: i35 = uint_ge(i30, i34)
++560: guard_false(i35, descr=<Guard0x7fc55053b478>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++566: p36 = getfield_gc_r(p33, descr=<FieldP list.items 16>)
++570: p37 = getarrayitem_gc_r(p36, i30, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#8 STORE_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#10 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#12 LOAD_CONST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#14 IS_OP')
++589: i39 = instance_ptr_eq(ConstPtr(ptr38), p37)
++592: guard_false(i39, descr=<Guard0x7fc55053b408>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#18 LOAD_FAST')
++598: guard_nonnull_class(p11, 140485500690984, descr=<Guard0x7fc550520ca0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#20 LOAD_ATTR')
++617: p41 = getfield_gc_r(p11, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++642: guard_value(p41, ConstPtr(ptr42), descr=<Guard0x7fc55053b3d0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++651: p43 = getfield_gc_r(p11, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++655: i45 = getarrayitem_gc_i(p43, 0, descr=<ArrayS 8>)
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#22 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#24 LOAD_ATTR')
++666: guard_class(p37, 140485500690984, descr=<Guard0x7fc55053b398>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++679: p47 = getfield_gc_r(p37, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++683: guard_value(p47, ConstPtr(ptr48), descr=<Guard0x7fc55053b360>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++692: p49 = getfield_gc_r(p37, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++696: i51 = getarrayitem_gc_i(p49, 0, descr=<ArrayS 8>)
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#26 COMPARE_OP')
++700: i52 = int_ge(i45, i51)
++703: guard_false(i52, descr=<Guard0x7fc55053b328>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#28 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#38 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#40 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#42 STORE_ATTR')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#44 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#46 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#48 LOAD_ATTR')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#50 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#52 STORE_SUBSCR')
++719: setarrayitem_gc(p36, i30, p11, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#54 LOAD_CONST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#56 RETURN_VALUE')
++735: setfield_gc(p11, p37, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++739: guard_isnull(p6, descr=<Guard0x7fc550520c00>) [p0, p6, p9, p11, p13, p37, p1]
++748: leave_portal_frame(25)
++748: p54 = force_token()
++751: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++766: setfield_gc(p0, p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++770: guard_not_forced_2(descr=<Guard0x7fc5505d1410>) [p0, p9, p11, p13, p37]
++802: finish(ConstPtr(ptr56), descr=<DoneWithThisFrameDescrRef object at 0x7fc554da63a0>)
++928: --end of the loop--
+[63873344e2cd] jit-log-opt-loop}
+[6387336a267b] {jit-log-opt-loop
+# Loop 2 (_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-63~#0 LOAD_FAST) : entry bridge with 169 ops
+[p0, p1]
++395: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++406: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++410: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++414: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++418: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++422: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++426: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++430: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++434: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++438: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++442: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++446: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++450: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
++461: p23 = getarrayitem_gc_r(p7, 7, descr=<ArrayP 8>)
++472: p25 = getarrayitem_gc_r(p7, 8, descr=<ArrayP 8>)
++483: p27 = getarrayitem_gc_r(p7, 9, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-63~#0 LOAD_FAST')
++494: guard_value(i4, 5, descr=<Guard0x7fc5505216f0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++504: guard_isnull(p5, descr=<Guard0x7fc55054edb0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++513: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x7fc550521740>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-63~#2 LOAD_CONST')
++539: guard_value(p3, ConstPtr(ptr30), descr=<Guard0x7fc55054ede8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-63~#4 COMPARE_OP')
++548: i31 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++552: i33 = int_eq(i31, 1)
++556: guard_true(i33, descr=<Guard0x7fc55054ee20>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-63~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#8 LOAD_FAST')
++562: guard_nonnull_class(p9, 140485500690984, descr=<Guard0x7fc550521790>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#10 LOAD_METHOD')
++581: p35 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++599: guard_value(p35, ConstPtr(ptr36), descr=<Guard0x7fc55054ee58>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
++608: guard_not_invalidated(descr=<Guard0x7fc55054ee90>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#12 LOAD_FAST')
++608: guard_nonnull_class(p13, ConstClass(W_IntObject), descr=<Guard0x7fc5505217e0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#14 LOAD_FAST')
++628: guard_nonnull_class(p15, ConstClass(W_IntObject), descr=<Guard0x7fc550521830>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p1]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#16 CALL_METHOD')
++648: p41 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++660: p42 = getfield_gc_r(p41, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++667: p43 = force_token()
++670: p44 = getfield_gc_r(p41, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++677: guard_value(p44, ConstPtr(null), descr=<Guard0x7fc550521880>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, p44, p43, p42]
++687: i46 = getfield_gc_i(p41, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++695: i48 = int_eq(i46, 0)
++699: guard_true(i48, descr=<Guard0x7fc55054eec8>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, p44, p43, p42]
++705: enter_portal_frame(25, 6756)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#0 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#2 LOAD_METHOD')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#4 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#6 LOAD_METHOD')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#8 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#10 CALL_METHOD')
++705: p51 = force_token()
++705: enter_portal_frame(25, 6752)
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#0 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#2 LOAD_ATTR')
++705: p54 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++709: guard_nonnull_class(p54, ConstClass(W_ListObject), descr=<Guard0x7fc5505218d0>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, p44, p43, p42]
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#4 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#6 BINARY_SUBSCR')
++727: i56 = getfield_gc_i(p13, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++732: p57 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++736: guard_class(p57, 140485501050048, descr=<Guard0x7fc55054ef00>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, p44, p43, p42]
++749: p59 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++753: i60 = getfield_gc_i(p59, descr=<FieldS list.length 8>)
++757: i61 = uint_ge(i56, i60)
++760: guard_false(i61, descr=<Guard0x7fc55054ef38>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, p44, p43, p42]
++766: p62 = getfield_gc_r(p59, descr=<FieldP list.items 16>)
++777: p63 = getarrayitem_gc_r(p62, i56, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#8 STORE_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#10 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#12 LOAD_CONST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#14 IS_OP')
++803: i65 = instance_ptr_eq(ConstPtr(ptr64), p63)
++806: guard_false(i65, descr=<Guard0x7fc55054ef70>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, p44, p43, p42]
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#26 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#28 LOAD_ATTR')
++812: guard_class(p63, 140485500690984, descr=<Guard0x7fc55054efa8>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, p44, p43, p42]
++825: p67 = getfield_gc_r(p63, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++850: guard_value(p67, ConstPtr(ptr68), descr=<Guard0x7fc55054efe0>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, p44, p43, p42]
++859: p69 = getfield_gc_r(p63, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++863: guard_nonnull(p69, descr=<Guard0x7fc55054f018>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, p44, p43, p42]
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#30 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#32 LOAD_ATTR')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#34 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#36 STORE_SUBSCR')
++884: setarrayitem_gc(p62, i56, p69, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-51~#38 LOAD_CONST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-51~#40 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-51~#42 STORE_ATTR')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-52~#44 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-52~#46 RETURN_VALUE')
++889: leave_portal_frame(25)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#12 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#14 CALL_METHOD')
++889: p71 = force_token()
++892: enter_portal_frame(25, 6748)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#0 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#2 LOAD_ATTR')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#4 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#6 BINARY_SUBSCR')
++903: setfield_gc(p63, ConstPtr(ptr74), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++907: i75 = getfield_gc_i(p15, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++916: i76 = uint_ge(i75, i60)
+guard_false(i76, descr=<Guard0x7fc550521920>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, i75, i76, i60, p59, p71, p63, p43, p42]
++945: p77 = getarrayitem_gc_r(p62, i75, descr=<ArrayP 8>)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#8 STORE_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#10 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#12 LOAD_CONST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#14 IS_OP')
++950: i79 = instance_ptr_eq(ConstPtr(ptr78), p77)
++953: guard_false(i79, descr=<Guard0x7fc55054f088>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, i75, i76, i60, p59, p71, p63, p43, p42]
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#18 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#20 LOAD_ATTR')
++959: p80 = getfield_gc_r(p63, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++970: i82 = getarrayitem_gc_i(p80, 0, descr=<ArrayS 8>)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#22 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#24 LOAD_ATTR')
++981: guard_class(p77, 140485500690984, descr=<Guard0x7fc55054f0c0>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, i75, i76, i60, p59, p71, p63, p43, p42]
++993: p84 = getfield_gc_r(p77, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++997: guard_value(p84, ConstPtr(ptr85), descr=<Guard0x7fc55054f0f8>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, i75, i76, i60, p59, p71, p63, p43, p42]
++1006: p86 = getfield_gc_r(p77, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++1010: i88 = getarrayitem_gc_i(p86, 0, descr=<ArrayS 8>)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#26 COMPARE_OP')
++1014: i89 = int_ge(i82, i88)
++1017: guard_false(i89, descr=<Guard0x7fc55054f130>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, i75, i76, i60, p59, p71, p63, p43, p42]
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#28 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#38 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#40 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#42 STORE_ATTR')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#44 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#46 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#48 LOAD_ATTR')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#50 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#52 STORE_SUBSCR')
++1035: setarrayitem_gc(p62, i75, p63, descr=<ArrayP 8>)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#54 LOAD_CONST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#56 RETURN_VALUE')
++1040: leave_portal_frame(25)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#16 POP_TOP')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#18 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#20 DUP_TOP')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#22 LOAD_ATTR')
++1040: setfield_gc(p63, p77, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++1044: p91 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++1048: i93 = getarrayitem_gc_i(p91, 0, descr=<ArrayS 8>)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#24 LOAD_CONST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#26 INPLACE_ADD')
++1052: i95 = int_add_ovf(i93, 1)
++1059: guard_no_overflow(descr=<Guard0x7fc550521970>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, p41, i93, None, None, p43, p42]
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#28 ROT_TWO')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#30 STORE_ATTR')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#32 LOAD_CONST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#34 RETURN_VALUE')
++1065: leave_portal_frame(25)
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#18 POP_TOP')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#20 LOAD_CONST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#22 RETURN_VALUE')
++1065: setarrayitem_gc(p91, 0, i95, descr=<ArrayS 8>)
++1069: guard_isnull(p6, descr=<Guard0x7fc5505219c0>) [p0, p6, p9, p11, p13, p15, p17, p27, p1, None, None, None, None]
++1078: leave_portal_frame(25)
++1078: p100 = force_token()
++1081: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1096: setfield_gc(p0, p100, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1100: guard_not_forced_2(descr=<Guard0x7fc5505d1bf8>) [p0, p9, p11, p13, p15, p17, p27, None, None, None, None]
++1125: finish(ConstPtr(ptr102), descr=<DoneWithThisFrameDescrRef object at 0x7fc554da63a0>)
++1248: --end of the loop--
+[6387337033af] jit-log-opt-loop}
+[6387338e6ccb] {jit-log-opt-loop
+# Loop 3 (_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#0 LOAD_FAST) : entry bridge with 148 ops
+[p0, p1]
++379: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++390: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++394: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++398: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++402: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++406: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++410: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++414: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++418: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++422: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++426: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++430: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++434: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
++445: p23 = getarrayitem_gc_r(p7, 7, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#0 LOAD_FAST')
++456: guard_value(i4, 3, descr=<Guard0x7fc550521a10>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p1]
++466: guard_isnull(p5, descr=<Guard0x7fc55054f6e0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p1]
++475: guard_nonnull_class(p9, 140485500690984, descr=<Guard0x7fc550521a60>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p1]
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#2 LOAD_METHOD')
++501: guard_value(p3, ConstPtr(ptr26), descr=<Guard0x7fc55054f718>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p1]
++510: p27 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++528: guard_value(p27, ConstPtr(ptr28), descr=<Guard0x7fc55054f750>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p1]
++537: guard_not_invalidated(descr=<Guard0x7fc55054f788>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p1]
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#4 LOAD_FAST')
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#6 LOAD_METHOD')
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#8 LOAD_FAST')
++537: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x7fc550521ab0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p1]
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#10 CALL_METHOD')
++556: p32 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++568: p33 = getfield_gc_r(p32, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++575: p34 = force_token()
++578: p35 = getfield_gc_r(p32, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++585: guard_value(p35, ConstPtr(null), descr=<Guard0x7fc550521b00>) [p0, p6, p9, p11, p13, p1, p32, p35, p34, p33]
++595: i37 = getfield_gc_i(p32, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++603: i39 = int_eq(i37, 0)
++607: guard_true(i39, descr=<Guard0x7fc55054f7c0>) [p0, p6, p9, p11, p13, p1, p32, p35, p34, p33]
++613: enter_portal_frame(25, 6752)
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#0 LOAD_FAST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#2 LOAD_ATTR')
++613: p42 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++617: guard_nonnull_class(p42, ConstClass(W_ListObject), descr=<Guard0x7fc550521b50>) [p0, p6, p9, p11, p13, p1, p32, p35, p34, p33]
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#4 LOAD_FAST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#6 BINARY_SUBSCR')
++635: i44 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++639: p45 = getfield_gc_r(p42, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++643: guard_class(p45, 140485501050048, descr=<Guard0x7fc55054f7f8>) [p0, p6, p9, p11, p13, p1, p32, p35, p34, p33]
++655: p47 = getfield_gc_r(p42, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++659: i48 = getfield_gc_i(p47, descr=<FieldS list.length 8>)
++663: i49 = uint_ge(i44, i48)
++666: guard_false(i49, descr=<Guard0x7fc55054f830>) [p0, p6, p9, p11, p13, p1, p32, p35, p34, p33]
++672: p50 = getfield_gc_r(p47, descr=<FieldP list.items 16>)
++676: p51 = getarrayitem_gc_r(p50, i44, descr=<ArrayP 8>)
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#8 STORE_FAST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#10 LOAD_FAST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#12 LOAD_CONST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#14 IS_OP')
++695: i53 = instance_ptr_eq(ConstPtr(ptr52), p51)
++698: guard_false(i53, descr=<Guard0x7fc55054f868>) [p0, p6, p9, p11, p13, p1, p32, p35, p34, p33]
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#26 LOAD_FAST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#28 LOAD_ATTR')
++704: guard_class(p51, 140485500690984, descr=<Guard0x7fc55054f8a0>) [p0, p6, p9, p11, p13, p1, p32, p35, p34, p33]
++716: p55 = getfield_gc_r(p51, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++741: guard_value(p55, ConstPtr(ptr56), descr=<Guard0x7fc55054f8d8>) [p0, p6, p9, p11, p13, p1, p32, p35, p34, p33]
++750: p57 = getfield_gc_r(p51, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++754: guard_nonnull(p57, descr=<Guard0x7fc55054f910>) [p0, p6, p9, p11, p13, p1, p32, p35, p34, p33]
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#30 LOAD_FAST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#32 LOAD_ATTR')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#34 LOAD_FAST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#36 STORE_SUBSCR')
++774: setarrayitem_gc(p50, i44, p57, descr=<ArrayP 8>)
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-51~#38 LOAD_CONST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-51~#40 LOAD_FAST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-51~#42 STORE_ATTR')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-52~#44 LOAD_FAST')
+debug_merge_point(1, 1, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-52~#46 RETURN_VALUE')
++779: leave_portal_frame(25)
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#12 LOAD_FAST')
++789: setfield_gc(p51, ConstPtr(ptr59), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++793: guard_nonnull_class(p13, ConstClass(W_IntObject), descr=<Guard0x7fc550521ba0>) [p0, p6, p9, p11, p13, p51, p1, None, None]
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#14 CALL_METHOD')
++813: p62 = force_token()
++813: enter_portal_frame(25, 6748)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#0 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#2 LOAD_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#4 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#6 BINARY_SUBSCR')
++813: i65 = getfield_gc_i(p13, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++818: i66 = uint_ge(i65, i48)
++821: guard_false(i66, descr=<Guard0x7fc55054f948>) [p0, p6, p9, p11, p13, p51, p1, None, None]
++827: p67 = getarrayitem_gc_r(p50, i65, descr=<ArrayP 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#8 STORE_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#10 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#12 LOAD_CONST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#14 IS_OP')
++832: i69 = instance_ptr_eq(ConstPtr(ptr68), p67)
++835: guard_false(i69, descr=<Guard0x7fc55054f980>) [p0, p6, p9, p11, p13, p51, p1, None, None]
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#18 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#20 LOAD_ATTR')
++841: p70 = getfield_gc_r(p51, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++845: i72 = getarrayitem_gc_i(p70, 0, descr=<ArrayS 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#22 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#24 LOAD_ATTR')
++849: guard_class(p67, 140485500690984, descr=<Guard0x7fc55054f9b8>) [p0, p6, p9, p11, p13, p51, p1, None, None]
++861: p74 = getfield_gc_r(p67, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++865: guard_value(p74, ConstPtr(ptr75), descr=<Guard0x7fc55054f9f0>) [p0, p6, p9, p11, p13, p51, p1, None, None]
++874: p76 = getfield_gc_r(p67, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++878: i78 = getarrayitem_gc_i(p76, 0, descr=<ArrayS 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#26 COMPARE_OP')
++882: i79 = int_ge(i72, i78)
++885: guard_false(i79, descr=<Guard0x7fc55054fa28>) [p0, p6, p9, p11, p13, p51, p1, None, None]
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#28 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#38 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#40 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#42 STORE_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#44 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#46 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#48 LOAD_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#50 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#52 STORE_SUBSCR')
++902: setarrayitem_gc(p50, i65, p51, descr=<ArrayP 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#54 LOAD_CONST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#56 RETURN_VALUE')
++907: leave_portal_frame(25)
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#16 POP_TOP')
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#18 LOAD_FAST')
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#20 DUP_TOP')
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#22 LOAD_ATTR')
++907: setfield_gc(p51, p67, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++911: p81 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++915: i83 = getarrayitem_gc_i(p81, 0, descr=<ArrayS 8>)
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#24 LOAD_CONST')
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#26 INPLACE_ADD')
++919: i85 = int_add_ovf(i83, 1)
++926: guard_no_overflow(descr=<Guard0x7fc550521bf0>) [p0, p6, p9, p11, p13, p1, i83, None, None]
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#28 ROT_TWO')
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#30 STORE_ATTR')
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#32 LOAD_CONST')
+debug_merge_point(0, 0, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#34 RETURN_VALUE')
++932: setarrayitem_gc(p81, 0, i85, descr=<ArrayS 8>)
++936: guard_isnull(p6, descr=<Guard0x7fc550521c40>) [p0, p6, p9, p11, p13, p1, None, None]
++945: leave_portal_frame(25)
++945: p88 = force_token()
++948: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++963: setfield_gc(p0, p88, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++967: guard_not_forced_2(descr=<Guard0x7fc5505d1ca8>) [p0, p9, p11, p13, None, None]
++999: finish(ConstPtr(ptr90), descr=<DoneWithThisFrameDescrRef object at 0x7fc554da63a0>)
++1120: --end of the loop--
+[63873392df79] jit-log-opt-loop}
+[63873450f0dd] {jit-log-opt-bridge
+# bridge out of Guard 0x7fc55054ee20 with 254 ops
+[p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++382: guard_value(i3, 5, descr=<Guard0x7fc550564e80>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++392: guard_isnull(p4, descr=<Guard0x7fc55038e9c0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++401: guard_nonnull_class(p7, ConstClass(W_IntObject), descr=<Guard0x7fc550564ed0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-63~#2 LOAD_CONST')
++427: guard_value(p2, ConstPtr(ptr19), descr=<Guard0x7fc55038e9f8>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-63~#4 COMPARE_OP')
++436: i20 = getfield_gc_i(p7, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++447: i22 = int_eq(i20, 1)
++451: guard_false(i22, descr=<Guard0x7fc55038ea30>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-63~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-66~#24 LOAD_CONST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-66~#26 LOAD_FAST')
++457: guard_nonnull_class(p8, ConstClass(W_IntObject), descr=<Guard0x7fc550564f20>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-66~#28 BINARY_SUBTRACT')
++477: i24 = getfield_gc_i(p8, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++489: i26 = int_sub_ovf(3, i24)
++504: guard_no_overflow(descr=<Guard0x7fc55038ea68>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-66~#30 LOAD_FAST')
++510: guard_nonnull_class(p9, ConstClass(W_IntObject), descr=<Guard0x7fc550564f70>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-66~#32 BINARY_SUBTRACT')
++530: i28 = getfield_gc_i(p9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++541: i29 = int_sub_ovf(i26, i28)
++544: guard_no_overflow(descr=<Guard0x7fc55038eaa0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-66~#34 STORE_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-67~#36 LOAD_FAST')
++550: guard_nonnull_class(p6, 140485500690984, descr=<Guard0x7fc550564fc0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-67~#38 LOAD_METHOD')
++569: p31 = getfield_gc_r(p6, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++594: guard_value(p31, ConstPtr(ptr32), descr=<Guard0x7fc55038ead8>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
++603: guard_not_invalidated(descr=<Guard0x7fc55038eb10>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-67~#40 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-67~#42 LOAD_CONST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-67~#44 BINARY_SUBTRACT')
++603: i34 = int_sub_ovf(i20, 1)
++607: guard_no_overflow(descr=<Guard0x7fc55038eb48>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-67~#46 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-67~#48 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-67~#50 CALL_METHOD')
++613: p37 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++625: p38 = getfield_gc_r(p37, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++632: p39 = force_token()
++642: p40 = getfield_gc_r(p37, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++656: guard_value(p40, ConstPtr(null), descr=<Guard0x7fc550565010>) [p0, p5, p6, p7, p8, p9, p16, p37, p40, p39, p38, i34, i29]
++666: i42 = getfield_gc_i(p37, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++681: i44 = int_eq(i42, 0)
++685: guard_true(i44, descr=<Guard0x7fc55038eb80>) [p0, p5, p6, p7, p8, p9, p16, p37, p40, p39, p38, i34, i29]
++691: p45 = force_token()
++694: p46 = new_with_vtable(descr=<SizeDescr 104>)
++748: p48 = new_array_clear(10, descr=<ArrayP 8>)
++786: setarrayitem_gc(p48, 0, p6, descr=<ArrayP 8>)
++790: p50 = new_with_vtable(descr=<SizeDescr 16>)
++808: setfield_gc(p50, i34, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++812: setarrayitem_gc(p48, 1, p50, descr=<ArrayP 8>)
++816: setarrayitem_gc(p48, 2, p8, descr=<ArrayP 8>)
++820: p53 = new_with_vtable(descr=<SizeDescr 16>)
++839: setfield_gc(p53, i29, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++844: setarrayitem_gc(p48, 3, p53, descr=<ArrayP 8>)
++848: p55 = new_with_vtable(descr=<SizeDescr 24>)
++860: setfield_gc(p55, p39, descr=<FieldP JitVirtualRef.virtual_token 8>)
++864: setfield_gc(p55, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++883: setfield_gc(p37, p55, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++907: setfield_gc(p0, p45, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++911: setfield_gc(p46, p38, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++922: setfield_gc(p46, ConstPtr(ptr57), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++926: setfield_gc(p46, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++934: setfield_gc(p46, p48, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++938: setfield_gc(p46, ConstPtr(ptr59), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++942: setfield_gc(p46, 5, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++950: setfield_gc(p46, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++955: setfield_gc(p46, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1124: p63 = call_assembler_r(p46, p37, descr=<Loop2>)
++1353: guard_not_forced(descr=<Guard0x7fc5505d1d00>) [p0, p5, p6, p7, p8, p9, p53, p50, p46, p55, p16, p37, p63, None, None, None, None]
++1364: keepalive(p46)
++1364: guard_no_exception(descr=<Guard0x7fc550565060>) [p0, p5, p6, p7, p8, p9, p53, p50, p46, p55, p16, p37, p63, None, None, None, None]
++1384: guard_not_invalidated(descr=<Guard0x7fc55038ebb8>) [p0, p5, p6, p7, p8, p9, p53, p50, p46, p55, p16, p37, p63, None, None, None, None]
++1384: p65 = getfield_gc_r(p37, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1398: p66 = getfield_gc_r(p46, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1409: i67 = getfield_gc_i(p46, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1425: setfield_gc(p37, p66, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1432: guard_false(i67, descr=<Guard0x7fc5505650b0>) [p0, p5, p6, p7, p8, p9, p53, p50, p46, p55, p16, p63, i67, p65, None, None, None, None]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-67~#52 POP_TOP')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-68~#54 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-68~#56 LOAD_METHOD')
++1441: p68 = getfield_gc_r(p6, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++1452: setfield_gc(p55, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++1467: guard_value(p68, ConstPtr(ptr69), descr=<Guard0x7fc550565100>) [p0, p5, p6, p7, p8, p9, p53, p16, p68, None, None, None, None]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-68~#58 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-68~#60 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-68~#62 CALL_METHOD')
++1480: p70 = force_token()
++1483: enter_portal_frame(25, 6756)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#0 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#2 LOAD_METHOD')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#4 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#6 LOAD_METHOD')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#8 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#10 CALL_METHOD')
++1483: p73 = force_token()
++1483: enter_portal_frame(25, 6752)
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#0 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#2 LOAD_ATTR')
++1483: p76 = getfield_gc_r(p6, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++1487: guard_nonnull_class(p76, ConstClass(W_ListObject), descr=<Guard0x7fc550565150>) [p0, p5, p6, p7, p8, p9, p53, p16, p68, None, None, None, None]
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#4 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#6 BINARY_SUBSCR')
++1505: p78 = getfield_gc_r(p76, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++1509: guard_class(p78, 140485501050048, descr=<Guard0x7fc55038ebf0>) [p0, p5, p6, p7, p8, p9, p53, p16, p68, None, None, None, None]
++1522: p80 = getfield_gc_r(p76, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++1526: i81 = getfield_gc_i(p80, descr=<FieldS list.length 8>)
++1530: i82 = uint_ge(i24, i81)
++1537: guard_false(i82, descr=<Guard0x7fc55038ec28>) [p0, p5, p6, p7, p8, p9, p53, p16, p68, None, None, None, None]
++1543: p83 = getfield_gc_r(p80, descr=<FieldP list.items 16>)
++1547: p84 = getarrayitem_gc_r(p83, i24, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-46~#8 STORE_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#10 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#12 LOAD_CONST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#14 IS_OP')
++1566: i86 = instance_ptr_eq(ConstPtr(ptr85), p84)
++1569: guard_false(i86, descr=<Guard0x7fc55038ec60>) [p0, p5, p6, p7, p8, p9, p53, p16, p68, None, None, None, None]
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-47~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#26 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#28 LOAD_ATTR')
++1575: guard_class(p84, 140485500690984, descr=<Guard0x7fc55038ec98>) [p0, p5, p6, p7, p8, p9, p53, p16, p68, None, None, None, None]
++1589: p88 = getfield_gc_r(p84, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++1601: guard_value(p88, ConstPtr(ptr89), descr=<Guard0x7fc55038ecd0>) [p0, p5, p6, p7, p8, p9, p53, p16, p68, None, None, None, None]
++1610: p90 = getfield_gc_r(p84, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++1615: guard_nonnull(p90, descr=<Guard0x7fc55038ed08>) [p0, p5, p6, p7, p8, p9, p53, p16, p68, None, None, None, None]
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#30 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#32 LOAD_ATTR')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#34 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-50~#36 STORE_SUBSCR')
++1635: setarrayitem_gc(p83, i24, p90, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-51~#38 LOAD_CONST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-51~#40 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-51~#42 STORE_ATTR')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-52~#44 LOAD_FAST')
+debug_merge_point(2, 2, '_pop_disk_from;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:45-52~#46 RETURN_VALUE')
++1640: leave_portal_frame(25)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#12 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#14 CALL_METHOD')
++1640: p92 = force_token()
++1643: enter_portal_frame(25, 6748)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#0 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#2 LOAD_ATTR')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#4 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#6 BINARY_SUBSCR')
++1655: setfield_gc(p84, ConstPtr(ptr95), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++1665: i96 = uint_ge(i28, i81)
+guard_false(i96, descr=<Guard0x7fc5505651a0>) [p0, p5, p6, p7, p8, p9, p53, p16, p37, i28, i96, i81, p80, p92, p70, p84, p66, None, None, None, None]
++1690: p97 = getarrayitem_gc_r(p83, i28, descr=<ArrayP 8>)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#8 STORE_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#10 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#12 LOAD_CONST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#14 IS_OP')
++1709: i99 = instance_ptr_eq(ConstPtr(ptr98), p97)
++1712: guard_false(i99, descr=<Guard0x7fc55038ed40>) [p0, p5, p6, p7, p8, p9, p53, p16, p37, i28, i96, i81, p80, p92, p70, p84, p66, None, None, None, None]
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#18 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#20 LOAD_ATTR')
++1718: p100 = getfield_gc_r(p84, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++1730: i102 = getarrayitem_gc_i(p100, 0, descr=<ArrayS 8>)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#22 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#24 LOAD_ATTR')
++1741: guard_class(p97, 140485500690984, descr=<Guard0x7fc55038ed78>) [p0, p5, p6, p7, p8, p9, p53, p16, p37, i28, i96, i81, p80, p92, p70, p84, p66, None, None, None, None]
++1753: p104 = getfield_gc_r(p97, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++1757: guard_value(p104, ConstPtr(ptr105), descr=<Guard0x7fc55038edb0>) [p0, p5, p6, p7, p8, p9, p53, p16, p37, i28, i96, i81, p80, p92, p70, p84, p66, None, None, None, None]
++1766: p106 = getfield_gc_r(p97, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++1770: i108 = getarrayitem_gc_i(p106, 0, descr=<ArrayS 8>)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#26 COMPARE_OP')
++1774: i109 = int_ge(i102, i108)
++1777: guard_false(i109, descr=<Guard0x7fc55038ede8>) [p0, p5, p6, p7, p8, p9, p53, p16, p37, i28, i96, i81, p80, p92, p70, p84, p66, None, None, None, None]
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#28 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#38 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#40 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#42 STORE_ATTR')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#44 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#46 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#48 LOAD_ATTR')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#50 LOAD_FAST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#52 STORE_SUBSCR')
++1794: setarrayitem_gc(p83, i28, p84, descr=<ArrayP 8>)
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#54 LOAD_CONST')
+debug_merge_point(2, 3, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#56 RETURN_VALUE')
++1799: leave_portal_frame(25)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#16 POP_TOP')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#18 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#20 DUP_TOP')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#22 LOAD_ATTR')
++1799: setfield_gc(p84, p97, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++1804: p111 = getfield_gc_r(p6, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++1808: i113 = getarrayitem_gc_i(p111, 0, descr=<ArrayS 8>)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#24 LOAD_CONST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#26 INPLACE_ADD')
++1813: i115 = int_add_ovf(i113, 1)
++1820: guard_no_overflow(descr=<Guard0x7fc5505651f0>) [p0, p5, p6, p7, p8, p9, p53, p16, p37, i113, None, p70, None, p66, None, None, None, None]
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#28 ROT_TWO')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#30 STORE_ATTR')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#32 LOAD_CONST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#34 RETURN_VALUE')
++1826: leave_portal_frame(25)
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-68~#64 POP_TOP')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#66 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#68 LOAD_METHOD')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#70 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#72 LOAD_CONST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#74 BINARY_SUBTRACT')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#76 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#78 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#80 CALL_METHOD')
++1826: p117 = force_token()
++1829: p118 = force_token()
++1832: p119 = new_with_vtable(descr=<SizeDescr 104>)
++1872: p121 = new_array_clear(10, descr=<ArrayP 8>)
++1910: setarrayitem_gc(p121, 0, p6, descr=<ArrayP 8>)
++1914: p123 = new_with_vtable(descr=<SizeDescr 16>)
++1925: setfield_gc(p123, i34, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1936: setarrayitem_gc(p121, 1, p123, descr=<ArrayP 8>)
++1940: setarrayitem_gc(p121, 2, p53, descr=<ArrayP 8>)
++1951: setarrayitem_gc(p121, 3, p9, descr=<ArrayP 8>)
++1962: p127 = new_with_vtable(descr=<SizeDescr 24>)
++1973: setfield_gc(p127, p117, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1977: setfield_gc(p127, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1996: setfield_gc(p37, p127, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2021: setfield_gc(p0, p118, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++2025: setfield_gc(p119, p66, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2029: setfield_gc(p119, ConstPtr(ptr128), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++2040: setfield_gc(p119, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2048: setfield_gc(p119, p121, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++2052: setfield_gc(p119, ConstPtr(ptr130), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++2063: setfield_gc(p119, 5, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2071: setfield_gc(p119, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2076: setfield_gc(p119, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++2081: setarrayitem_gc(p111, 0, i115, descr=<ArrayS 8>)
++2239: p135 = call_assembler_r(p119, p37, descr=<Loop2>)
++2433: guard_not_forced(descr=<Guard0x7fc5505d1d58>) [p0, p5, p6, p7, p8, p9, p53, p123, p119, p127, p16, p37, p135, None, None, None, None, None, None, None, None]
++2444: keepalive(p119)
++2444: guard_no_exception(descr=<Guard0x7fc550565240>) [p0, p5, p6, p7, p8, p9, p53, p123, p119, p127, p16, p37, p135, None, None, None, None, None, None, None, None]
++2464: guard_not_invalidated(descr=<Guard0x7fc55038ee20>) [p0, p5, p6, p7, p8, p9, p53, p123, p119, p127, p16, p37, p135, None, None, None, None, None, None, None, None]
++2464: p136 = getfield_gc_r(p37, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2478: p137 = getfield_gc_r(p119, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2490: i138 = getfield_gc_i(p119, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2507: setfield_gc(p37, p137, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2514: guard_false(i138, descr=<Guard0x7fc550565290>) [p0, p5, p6, p7, p8, p9, p53, p123, p119, p127, p16, p135, i138, p136, None, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#82 POP_TOP')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#84 LOAD_CONST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#86 RETURN_VALUE')
++2523: setfield_gc(p127, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++2538: guard_isnull(p5, descr=<Guard0x7fc5505652e0>) [p0, p5, p6, p7, p8, p9, p53, p16, None, None, None, None, None, None, None, None]
++2552: leave_portal_frame(25)
++2552: p140 = force_token()
++2573: setfield_gc(p0, p140, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++2577: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++2582: guard_not_forced_2(descr=<Guard0x7fc5505d1db0>) [p0, p6, p7, p8, p9, p53, None, None, None, None, None, None, None, None]
++2593: finish(ConstPtr(ptr142), descr=<DoneWithThisFrameDescrRef object at 0x7fc554da63a0>)
++2720: --end of the loop--
+[63873458d336] jit-log-opt-bridge}
+[638734c9684a] {jit-log-opt-bridge
+# bridge out of Guard 0x7fc55038ed40 with 108 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11, p12, p13, p14, p15, p16]
++174: guard_false(i10, descr=<Guard0x7fc550565e70>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11, p12, p13, p14, p15, p16]
++183: p17 = getfield_gc_r(p12, descr=<FieldP list.items 16>)
++187: p18 = getarrayitem_gc_r(p17, i9, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#8 STORE_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#10 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#12 LOAD_CONST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#14 IS_OP')
++199: i20 = instance_ptr_eq(ConstPtr(ptr19), p18)
++202: guard_true(i20, descr=<Guard0x7fc5503ac8e0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11, p12, p13, p14, p15, p16]
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#38 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#40 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#42 STORE_ATTR')
++208: p21 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++220: guard_value(p21, ConstPtr(ptr22), descr=<Guard0x7fc5503ac918>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11, p12, p13, p14, p15, p16]
++229: guard_not_invalidated(descr=<Guard0x7fc5503ac950>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9, i10, i11, p12, p13, p14, p15, p16]
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#44 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#46 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#48 LOAD_ATTR')
++229: p23 = getfield_gc_r(p2, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++245: setfield_gc(p15, p18, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++250: guard_nonnull_class(p23, ConstClass(W_ListObject), descr=<Guard0x7fc550565ec0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p23, p18, p13, p14, p15, p16]
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#50 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#52 STORE_SUBSCR')
++268: p25 = getfield_gc_r(p23, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++272: guard_class(p25, 140485501050048, descr=<Guard0x7fc5503ac988>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p23, p18, p13, p14, p15, p16]
++285: p27 = getfield_gc_r(p23, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++289: i28 = getfield_gc_i(p27, descr=<FieldS list.length 8>)
++293: i29 = uint_ge(i9, i28)
++296: guard_false(i29, descr=<Guard0x7fc5503ac9c0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p23, p18, p13, p14, p15, p16]
++302: p30 = getfield_gc_r(p27, descr=<FieldP list.items 16>)
++316: setarrayitem_gc(p30, i9, p15, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#54 LOAD_CONST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#56 RETURN_VALUE')
++321: leave_portal_frame(25)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#16 POP_TOP')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#18 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#20 DUP_TOP')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#22 LOAD_ATTR')
++321: p32 = getfield_gc_r(p2, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++325: i34 = getarrayitem_gc_i(p32, 0, descr=<ArrayS 8>)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#24 LOAD_CONST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#26 INPLACE_ADD')
++329: i36 = int_add_ovf(i34, 1)
++336: guard_no_overflow(descr=<Guard0x7fc550565f10>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i34, None, None, p14, None, p16]
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#28 ROT_TWO')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#30 STORE_ATTR')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#32 LOAD_CONST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#34 RETURN_VALUE')
++342: leave_portal_frame(25)
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-68~#64 POP_TOP')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#66 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#68 LOAD_METHOD')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#70 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#72 LOAD_CONST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#74 BINARY_SUBTRACT')
++342: i39 = getfield_gc_i(p3, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++364: setfield_gc(p8, p16, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++371: setarrayitem_gc(p32, 0, i36, descr=<ArrayS 8>)
++375: i42 = int_sub_ovf(i39, 1)
++382: guard_no_overflow(descr=<Guard0x7fc550565f60>) [p0, p1, p2, p3, p4, p5, p6, p7, i39, None, None, None, None, None]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#76 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#78 LOAD_FAST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#80 CALL_METHOD')
++388: p43 = force_token()
++391: p44 = force_token()
++394: p45 = new_with_vtable(descr=<SizeDescr 104>)
++434: p47 = new_array_clear(10, descr=<ArrayP 8>)
++472: setarrayitem_gc(p47, 0, p2, descr=<ArrayP 8>)
++476: p49 = new_with_vtable(descr=<SizeDescr 16>)
++487: setfield_gc(p49, i42, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++491: setarrayitem_gc(p47, 1, p49, descr=<ArrayP 8>)
++495: setarrayitem_gc(p47, 2, p6, descr=<ArrayP 8>)
++506: setarrayitem_gc(p47, 3, p5, descr=<ArrayP 8>)
++517: p53 = new_with_vtable(descr=<SizeDescr 24>)
++528: setfield_gc(p53, p43, descr=<FieldP JitVirtualRef.virtual_token 8>)
++532: setfield_gc(p53, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++551: setfield_gc(p8, p53, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++576: setfield_gc(p0, p44, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++580: setfield_gc(p45, p16, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++591: setfield_gc(p45, ConstPtr(ptr55), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++595: setfield_gc(p45, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++603: setfield_gc(p45, p47, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++614: setfield_gc(p45, ConstPtr(ptr57), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++618: setfield_gc(p45, 5, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++626: setfield_gc(p45, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++631: setfield_gc(p45, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++789: p61 = call_assembler_r(p45, p8, descr=<Loop2>)
++997: guard_not_forced(descr=<Guard0x7fc55039e128>) [p0, p1, p2, p3, p4, p5, p6, p49, p45, p53, p7, p8, p61, None, None, None, None, None]
++1008: keepalive(p45)
++1008: guard_no_exception(descr=<Guard0x7fc550565fb0>) [p0, p1, p2, p3, p4, p5, p6, p49, p45, p53, p7, p8, p61, None, None, None, None, None]
++1028: guard_not_invalidated(descr=<Guard0x7fc5503ac9f8>) [p0, p1, p2, p3, p4, p5, p6, p49, p45, p53, p7, p8, p61, None, None, None, None, None]
++1028: p62 = getfield_gc_r(p8, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1042: p63 = getfield_gc_r(p45, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1053: i64 = getfield_gc_i(p45, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1069: setfield_gc(p8, p63, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1076: guard_false(i64, descr=<Guard0x7fc5503b2020>) [p0, p1, p2, p3, p4, p5, p6, p49, p45, p53, p7, p61, i64, p62, None, None, None, None, None]
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#82 POP_TOP')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#84 LOAD_CONST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-69~#86 RETURN_VALUE')
++1085: setfield_gc(p53, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++1100: guard_isnull(p1, descr=<Guard0x7fc5503b2070>) [p0, p1, p2, p3, p4, p5, p6, p7, None, None, None, None, None]
++1114: leave_portal_frame(25)
++1114: p66 = force_token()
++1135: setfield_gc(p0, p66, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1139: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1144: guard_not_forced_2(descr=<Guard0x7fc55039e180>) [p0, p2, p3, p4, p5, p6, None, None, None, None, None]
++1155: finish(ConstPtr(ptr68), descr=<DoneWithThisFrameDescrRef object at 0x7fc554da63a0>)
++1280: --end of the loop--
+[638734cd401c] jit-log-opt-bridge}
+[638735354810] {jit-log-opt-bridge
+# bridge out of Guard 0x7fc55054f088 with 62 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, i10, i11, i12, p13, p14, p15, p16, p17]
++126: guard_false(i11, descr=<Guard0x7fc5503b22a0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, i10, i11, i12, p13, p14, p16, p15, p17]
++135: p18 = getfield_gc_r(p13, descr=<FieldP list.items 16>)
++139: p19 = getarrayitem_gc_r(p18, i10, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#8 STORE_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#10 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#12 LOAD_CONST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#14 IS_OP')
++151: i21 = instance_ptr_eq(ConstPtr(ptr20), p19)
++154: guard_true(i21, descr=<Guard0x7fc5503ada98>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, i10, i11, i12, p13, p14, p16, p15, p17]
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#38 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#40 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#42 STORE_ATTR')
++160: p22 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++171: guard_value(p22, ConstPtr(ptr23), descr=<Guard0x7fc5503adad0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, i10, i11, i12, p13, p14, p16, p15, p17]
++180: guard_not_invalidated(descr=<Guard0x7fc5503adb08>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, i10, i11, i12, p13, p14, p16, p15, p17]
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#44 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#46 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#48 LOAD_ATTR')
++180: p24 = getfield_gc_r(p2, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++195: setfield_gc(p15, p19, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++199: guard_nonnull_class(p24, ConstClass(W_ListObject), descr=<Guard0x7fc5503b22f0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p24, p19, p14, p16, p15, p17]
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#50 LOAD_FAST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#52 STORE_SUBSCR')
++218: p26 = getfield_gc_r(p24, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++222: guard_class(p26, 140485501050048, descr=<Guard0x7fc5503adb40>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p24, p19, p14, p16, p15, p17]
++234: p28 = getfield_gc_r(p24, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++238: i29 = getfield_gc_i(p28, descr=<FieldS list.length 8>)
++242: i30 = uint_ge(i10, i29)
++245: guard_false(i30, descr=<Guard0x7fc5503adb78>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p24, p19, p14, p16, p15, p17]
++251: p31 = getfield_gc_r(p28, descr=<FieldP list.items 16>)
++265: setarrayitem_gc(p31, i10, p15, descr=<ArrayP 8>)
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#54 LOAD_CONST')
+debug_merge_point(2, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#56 RETURN_VALUE')
++270: leave_portal_frame(25)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-55~#16 POP_TOP')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#18 LOAD_FAST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#20 DUP_TOP')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#22 LOAD_ATTR')
++270: p33 = getfield_gc_r(p2, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++274: i35 = getarrayitem_gc_i(p33, 0, descr=<ArrayS 8>)
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#24 LOAD_CONST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#26 INPLACE_ADD')
++278: i37 = int_add_ovf(i35, 1)
++285: guard_no_overflow(descr=<Guard0x7fc5503b2340>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, i35, None, None, p16, None, p17]
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#28 ROT_TWO')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#30 STORE_ATTR')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#32 LOAD_CONST')
+debug_merge_point(1, 1, '_move_top_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:54-56~#34 RETURN_VALUE')
++291: leave_portal_frame(25)
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#18 POP_TOP')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#20 LOAD_CONST')
+debug_merge_point(0, 0, '_move_disks;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:62-64~#22 RETURN_VALUE')
++309: setfield_gc(p9, p17, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++323: setarrayitem_gc(p33, 0, i37, descr=<ArrayS 8>)
++327: guard_isnull(p1, descr=<Guard0x7fc5503b2390>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, None, None, None, None, None]
++336: leave_portal_frame(25)
++336: p42 = force_token()
++339: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++354: setfield_gc(p0, p42, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++358: guard_not_forced_2(descr=<Guard0x7fc55039e230>) [p0, p2, p3, p4, p5, p6, p7, None, None, None, None, None]
++390: finish(ConstPtr(ptr44), descr=<DoneWithThisFrameDescrRef object at 0x7fc554da63a0>)
++512: --end of the loop--
+[638735379dc0] jit-log-opt-bridge}
+[638739e013d6] {jit-log-opt-loop
+# Loop 7 (_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-59~#12 FOR_ITER) : loop with 210 ops
+[p0, p1]
++379: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++390: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++394: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++398: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++402: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++406: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++410: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++414: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++418: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++422: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++426: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++430: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++434: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
++438: p23 = getarrayitem_gc_r(p7, 7, descr=<ArrayP 8>)
++449: p25 = getarrayitem_gc_r(p7, 8, descr=<ArrayP 8>)
++460: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, descr=TargetToken(140485430644384))
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-59~#12 FOR_ITER')
++512: guard_value(i4, 5, descr=<Guard0x7fc5503b2520>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p1]
++522: guard_isnull(p5, descr=<Guard0x7fc55031af70>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p1]
++531: guard_class(p17, 140485500900416, descr=<Guard0x7fc55031afa8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p1]
++544: i28 = getfield_gc_i(p17, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_remaining 16>)
++548: i30 = int_gt(i28, 0)
++552: guard_true(i30, descr=<Guard0x7fc55031afe0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p23, p25, p1]
++558: i31 = getfield_gc_i(p17, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++562: i32 = getfield_gc_i(p17, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_step 32>)
++566: i33 = int_add(i31, i32)
++572: i35 = int_sub(i28, 1)
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-59~#14 STORE_FAST')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#16 LOAD_FAST')
++576: setfield_gc(p17, i35, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_remaining 16>)
++580: setfield_gc(p17, i33, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++584: guard_nonnull_class(p9, 140485500690984, descr=<Guard0x7fc5503b2570>) [p0, p3, p6, p9, p11, p13, p17, p21, p23, p25, p1, i31]
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#18 LOAD_METHOD')
++610: guard_value(p3, ConstPtr(ptr37), descr=<Guard0x7fc55031b018>) [p0, p3, p6, p9, p11, p13, p17, p21, p23, p25, p1, i31]
++619: p38 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++630: guard_value(p38, ConstPtr(ptr39), descr=<Guard0x7fc55031b050>) [p0, p3, p6, p9, p11, p13, p17, p21, p23, p25, p1, i31]
++639: guard_not_invalidated(descr=<Guard0x7fc55031b088>) [p0, p3, p6, p9, p11, p13, p17, p21, p23, p25, p1, i31]
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#20 LOAD_GLOBAL')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#22 LOAD_FAST')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#24 CALL_FUNCTION')
++639: p42 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++651: p43 = getfield_gc_r(p42, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++658: p44 = force_token()
++661: p45 = getfield_gc_r(p42, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++668: guard_value(p45, ConstPtr(null), descr=<Guard0x7fc5503b25c0>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
++678: i47 = getfield_gc_i(p42, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++686: i49 = int_eq(i47, 0)
++690: guard_true(i49, descr=<Guard0x7fc55031b0c0>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
++696: enter_portal_frame(25, 6736)
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-27~#0 LOAD_FAST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-27~#2 LOAD_FAST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-27~#4 STORE_ATTR')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#6 LOAD_CONST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#8 LOAD_FAST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#10 STORE_ATTR')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#12 LOAD_CONST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#14 RETURN_VALUE')
++696: leave_portal_frame(25)
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#26 LOAD_FAST')
++696: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x7fc5503b2610>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#28 CALL_METHOD')
++715: p54 = force_token()
++715: enter_portal_frame(25, 6748)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#0 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#2 LOAD_ATTR')
++715: p57 = getfield_gc_r(p9, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++719: guard_nonnull_class(p57, ConstClass(W_ListObject), descr=<Guard0x7fc5503b2660>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#4 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#6 BINARY_SUBSCR')
++739: i59 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++743: p60 = getfield_gc_r(p57, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++754: guard_class(p60, 140485501050048, descr=<Guard0x7fc55031b0f8>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
++767: p62 = getfield_gc_r(p57, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++771: i63 = getfield_gc_i(p62, descr=<FieldS list.length 8>)
++782: i64 = uint_ge(i59, i63)
++785: guard_false(i64, descr=<Guard0x7fc55031b130>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
++791: p65 = getfield_gc_r(p62, descr=<FieldP list.items 16>)
++795: p66 = getarrayitem_gc_r(p65, i59, descr=<ArrayP 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#8 STORE_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#10 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#12 LOAD_CONST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#14 IS_OP')
++821: i68 = instance_ptr_eq(ConstPtr(ptr67), p66)
++824: guard_false(i68, descr=<Guard0x7fc55031b168>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#18 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#20 LOAD_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#22 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#24 LOAD_ATTR')
++830: guard_class(p66, 140485500690984, descr=<Guard0x7fc55031b1a0>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
++842: p70 = getfield_gc_r(p66, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++860: guard_value(p70, ConstPtr(ptr71), descr=<Guard0x7fc55031b1d8>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
++869: p72 = getfield_gc_r(p66, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++873: i74 = getarrayitem_gc_i(p72, 0, descr=<ArrayS 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#26 COMPARE_OP')
++884: i75 = int_ge(i31, i74)
++887: guard_false(i75, descr=<Guard0x7fc55031b210>) [p0, p6, p9, p11, p13, p17, p1, p42, p45, p44, p43, i31]
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#28 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#38 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#40 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#42 STORE_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#44 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#46 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#48 LOAD_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#50 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#52 STORE_SUBSCR')
++893: p76 = new_with_vtable(descr=<SizeDescr 56>)
++930: p78 = new_array(1, descr=<ArrayS 8>)
++949: setarrayitem_gc(p78, 0, i31, descr=<ArrayS 8>)
++953: setfield_gc(p76, p78, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++957: setfield_gc(p76, p66, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++961: setfield_gc(p76, ConstPtr(null), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value2 24>)
++969: setfield_gc(p76, ConstPtr(null), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value3 32>)
++977: setfield_gc(p76, ConstPtr(null), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value4 40>)
++985: setfield_gc(p76, ConstPtr(ptr83), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++1000: setarrayitem_gc(p65, i59, p76, descr=<ArrayP 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#54 LOAD_CONST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#56 RETURN_VALUE')
++1005: leave_portal_frame(25)
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#30 POP_TOP')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#32 JUMP_ABSOLUTE')
++1005: i86 = getfield_raw_i(140485517217152, descr=<FieldS pypysig_long_struct.c_value 0>)
++1012: i88 = int_lt(i86, 0)
++1016: guard_false(i88, descr=<Guard0x7fc5503b26b0>) [p0, p6, p9, p11, p13, p17, p1, i86, None, None, i31]
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-59~#12 FOR_ITER')
++1022: i90 = same_as_i(i33)
++1025: label(p0, p1, p6, p9, p11, p13, i31, p17, i35, i90, i32, p42, p57, p62, p65, i59, descr=TargetToken(140485430644448))
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-59~#12 FOR_ITER')
++1040: i92 = int_gt(i35, 0)
++1044: guard_true(i92, descr=<Guard0x7fc5503b2700>) [p0, p6, p9, p11, p13, p17, p1, i35, i31]
++1050: i93 = int_add(i90, i32)
++1056: i95 = int_sub(i35, 1)
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-59~#14 STORE_FAST')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#16 LOAD_FAST')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#18 LOAD_METHOD')
++1060: setfield_gc(p17, i93, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_current 8>)
++1064: setfield_gc(p17, i95, descr=<FieldS pypy.module.__builtin__.functional.W_IntRangeIterator.inst_remaining 16>)
++1068: guard_not_invalidated(descr=<Guard0x7fc5503b2750>) [p0, p6, p9, p11, p13, p17, p1, i90, None]
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#20 LOAD_GLOBAL')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#22 LOAD_FAST')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#24 CALL_FUNCTION')
++1068: p96 = force_token()
++1068: enter_portal_frame(25, 6736)
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-27~#0 LOAD_FAST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-27~#2 LOAD_FAST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-27~#4 STORE_ATTR')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#6 LOAD_CONST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#8 LOAD_FAST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#10 STORE_ATTR')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#12 LOAD_CONST')
+debug_merge_point(1, 1, '__init__;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:26-28~#14 RETURN_VALUE')
++1068: leave_portal_frame(25)
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#26 LOAD_FAST')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#28 CALL_METHOD')
++1068: p100 = force_token()
++1068: enter_portal_frame(25, 6748)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#0 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#2 LOAD_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#4 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#6 BINARY_SUBSCR')
++1068: p103 = getarrayitem_gc_r(p65, i59, descr=<ArrayP 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#8 STORE_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#10 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#12 LOAD_CONST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#14 IS_OP')
++1080: i105 = instance_ptr_eq(ConstPtr(ptr104), p103)
++1083: guard_false(i105, descr=<Guard0x7fc55031b248>) [p0, p6, p9, p11, p13, p17, p1, i90, None]
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#18 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#20 LOAD_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#22 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#24 LOAD_ATTR')
++1089: guard_class(p103, 140485500690984, descr=<Guard0x7fc55031b280>) [p0, p6, p9, p11, p13, p17, p1, i90, None]
++1103: p107 = getfield_gc_r(p103, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++1115: guard_value(p107, ConstPtr(ptr108), descr=<Guard0x7fc55031b2b8>) [p0, p6, p9, p11, p13, p17, p1, i90, None]
++1124: p109 = getfield_gc_r(p103, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++1129: i111 = getarrayitem_gc_i(p109, 0, descr=<ArrayS 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#26 COMPARE_OP')
++1133: i112 = int_ge(i90, i111)
++1136: guard_false(i112, descr=<Guard0x7fc55031b2f0>) [p0, p6, p9, p11, p13, p17, p1, i90, None]
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#28 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#38 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#40 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#42 STORE_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#44 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#46 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#48 LOAD_ATTR')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#50 LOAD_FAST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#52 STORE_SUBSCR')
++1142: p113 = new_with_vtable(descr=<SizeDescr 56>)
++1179: p115 = new_array(1, descr=<ArrayS 8>)
++1198: setarrayitem_gc(p115, 0, i90, descr=<ArrayS 8>)
++1202: setfield_gc(p113, p115, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++1206: setfield_gc(p113, p103, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++1210: setfield_gc(p113, ConstPtr(null), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value2 24>)
++1218: setfield_gc(p113, ConstPtr(null), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value3 32>)
++1226: setfield_gc(p113, ConstPtr(null), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value4 40>)
++1234: setfield_gc(p113, ConstPtr(ptr120), descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++1249: setarrayitem_gc(p65, i59, p113, descr=<ArrayP 8>)
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#54 LOAD_CONST')
+debug_merge_point(1, 2, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#56 RETURN_VALUE')
++1254: leave_portal_frame(25)
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#30 POP_TOP')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-60~#32 JUMP_ABSOLUTE')
++1254: i123 = getfield_raw_i(140485517217152, descr=<FieldS pypysig_long_struct.c_value 0>)
++1261: i125 = int_lt(i123, 0)
++1265: guard_false(i125, descr=<Guard0x7fc5503b27a0>) [p0, p6, p9, p11, p13, p17, p1, i123, i90, None]
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-59~#12 FOR_ITER')
++1271: i126 = arraylen_gc(p65, descr=<ArrayP 8>)
++1271: jump(p0, p1, p6, p9, p11, p13, i90, p17, i95, i93, i32, p42, p57, p62, p65, i59, descr=TargetToken(140485430644448))
++1296: --end of the loop--
+[638739e6bff8] jit-log-opt-loop}
+[638743fce234] {jit-log-opt-bridge
+# bridge out of Guard 0x7fc55053b408 with 51 ops
+[p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++174: guard_value(i3, 4, descr=<Guard0x7fc5503b2930>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++184: guard_isnull(p4, descr=<Guard0x7fc5501f4608>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++193: guard_nonnull_class(p6, 140485500690984, descr=<Guard0x7fc5503b2980>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#2 LOAD_ATTR')
++227: guard_value(p2, ConstPtr(ptr16), descr=<Guard0x7fc5501f4640>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++243: p17 = getfield_gc_r(p6, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++255: guard_value(p17, ConstPtr(ptr18), descr=<Guard0x7fc5501f4678>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++264: guard_not_invalidated(descr=<Guard0x7fc5501f46b0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++264: p19 = getfield_gc_r(p6, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value0 8>)
++269: guard_nonnull_class(p19, ConstClass(W_ListObject), descr=<Guard0x7fc5503b29d0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#4 LOAD_FAST')
++287: guard_nonnull_class(p8, ConstClass(W_IntObject), descr=<Guard0x7fc5503b2a20>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#6 BINARY_SUBSCR')
++313: i22 = getfield_gc_i(p8, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++317: p23 = getfield_gc_r(p19, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_strategy 16>)
++321: guard_class(p23, 140485501050048, descr=<Guard0x7fc5501f46e8>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++334: p25 = getfield_gc_r(p19, descr=<FieldP pypy.objspace.std.listobject.W_ListObject.inst_lstorage 8>)
++338: i26 = getfield_gc_i(p25, descr=<FieldS list.length 8>)
++342: i27 = uint_ge(i22, i26)
++345: guard_false(i27, descr=<Guard0x7fc5501f4720>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
++351: p28 = getfield_gc_r(p25, descr=<FieldP list.items 16>)
++355: p29 = getarrayitem_gc_r(p28, i22, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-37~#8 STORE_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#10 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#12 LOAD_CONST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#14 IS_OP')
++374: i31 = instance_ptr_eq(ConstPtr(ptr30), p29)
++377: guard_true(i31, descr=<Guard0x7fc5501f4758>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-39~#16 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#38 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#40 LOAD_FAST')
++383: guard_nonnull_class(p7, 140485500690984, descr=<Guard0x7fc5503b2a70>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-42~#42 STORE_ATTR')
++402: p33 = getfield_gc_r(p7, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst_map 48>)
++427: guard_value(p33, ConstPtr(ptr34), descr=<Guard0x7fc5501f4790>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13]
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#44 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#46 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#48 LOAD_ATTR')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#50 LOAD_FAST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#52 STORE_SUBSCR')
++446: setarrayitem_gc(p28, i22, p7, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#54 LOAD_CONST')
+debug_merge_point(0, 0, '_push_disk;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:36-43~#56 RETURN_VALUE')
++462: setfield_gc(p7, p29, descr=<FieldP pypy.interpreter.typedef.W_ObjectObjectUserDictWeakrefable.inst__value1 16>)
++466: guard_isnull(p5, descr=<Guard0x7fc5503b2ac0>) [p0, p5, p6, p7, p8, p29, p13]
++475: leave_portal_frame(25)
++475: p36 = force_token()
++478: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++493: setfield_gc(p0, p36, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++497: guard_not_forced_2(descr=<Guard0x7fc55039e390>) [p0, p6, p7, p8, p29]
++536: finish(ConstPtr(ptr38), descr=<DoneWithThisFrameDescrRef object at 0x7fc554da63a0>)
++656: --end of the loop--
+[638744000ac8] jit-log-opt-bridge}
+[6387491e321d] {jit-log-opt-bridge
+# bridge out of Guard 0x7fc5503b2700 with 11 ops
+[p0, p1, p2, p3, p4, p5, p6, i7, i8]
++62: i10 = int_gt(i7, 0)
++66: guard_false(i10, descr=<Guard0x7fc5503b2bb0>) [p0, p1, p2, p3, p4, p5, p6, i7, i8]
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-59~#34 LOAD_CONST')
+debug_merge_point(0, 0, '_build_tower_at;/data/effect-jit-monorepo/smarr_are_we_fast_yet/benchmarks/Python/towers.py:58-59~#36 RETURN_VALUE')
++72: guard_isnull(p1, descr=<Guard0x7fc55025d4b0>) [p0, p1, p2, p3, p4, p5, p6, i7, i8]
++86: leave_portal_frame(25)
++86: p12 = force_token()
++89: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++112: setfield_gc(p0, p12, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++116: guard_not_forced_2(descr=<Guard0x7fc55039e3e8>) [p0, p2, p3, p4, i8]
++134: finish(ConstPtr(ptr14), descr=<DoneWithThisFrameDescrRef object at 0x7fc554da63a0>)
++256: --end of the loop--
+[6387491ed0ff] jit-log-opt-bridge}
+[63899ac9e676] {jit-summary
+Tracing:      	10	0.012346
+Backend:      	9	0.002191
+TOTAL:      		5.186464
+ops:             	21865
+heapcached ops:  	29117
+recorded ops:    	6978
+  calls:         	629
+guards:          	919
+opt ops:         	1051
+opt guards:      	197
+opt guards shared:	124
+forcings:        	0
+abort: trace too long:	1
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	87
+nvholes:         	9
+nvreused:        	18
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	4
+Total # of bridges:	5
+Freed # of loops:	0
+Freed # of bridges:	0
+[63899acab50c] jit-summary}

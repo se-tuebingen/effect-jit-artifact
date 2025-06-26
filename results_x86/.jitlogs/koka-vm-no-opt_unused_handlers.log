@@ -1,0 +1,416 @@
+[626b2c931317] {jit-log-opt-loop
+# Loop 2 (301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+0: {"op": "Const", "type": "ptr", "out": 0, "format": "string", "value": "current-evv"}) : loop with 101 ops
+[p0, p1, p2, p3, p4]
++349: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 16>)
++360: p7 = getarrayitem_gc_r(p5, 0, descr=<ArrayP 8>)
++364: p9 = getarrayitem_gc_r(p5, 1, descr=<ArrayP 8>)
++368: p11 = getarrayitem_gc_r(p5, 2, descr=<ArrayP 8>)
++372: p13 = getarrayitem_gc_r(p5, 3, descr=<ArrayP 8>)
++376: p15 = getarrayitem_gc_r(p5, 4, descr=<ArrayP 8>)
++380: p17 = getarrayitem_gc_r(p5, 5, descr=<ArrayP 8>)
++384: p19 = getarrayitem_gc_r(p5, 6, descr=<ArrayP 8>)
++388: p21 = getarrayitem_gc_r(p5, 7, descr=<ArrayP 8>)
++392: p23 = getarrayitem_gc_r(p5, 8, descr=<ArrayP 8>)
++396: p25 = getarrayitem_gc_r(p5, 9, descr=<ArrayP 8>)
++400: p27 = getarrayitem_gc_r(p5, 10, descr=<ArrayP 8>)
++404: p29 = getarrayitem_gc_r(p5, 11, descr=<ArrayP 8>)
++408: p31 = getarrayitem_gc_r(p5, 12, descr=<ArrayP 8>)
++419: p33 = getarrayitem_gc_r(p5, 13, descr=<ArrayP 8>)
++430: p35 = getarrayitem_gc_r(p5, 14, descr=<ArrayP 8>)
++444: p37 = getarrayitem_gc_r(p5, 15, descr=<ArrayP 8>)
++458: label(p0, p1, p2, p3, p4, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, descr=TargetToken(311493344))
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "current-evv"}')
++544: guard_not_invalidated(descr=<Guard0x1276ba90>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+2: {"op": "PrimOp". "name": "getRef(Ref[Ptr]): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
++551: p39 = getfield_gc_r(ConstPtr(ptr38), descr=<FieldP rpyeffect.region.Ref.inst_value 16>)
++562: guard_value(p39, ConstPtr(ptr40), descr=<Guard0x1276bad8>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+3: {"op": "Return". "args": {"any": [0]}}')
++571: guard_nonnull(p1, descr=<Guard0x127d5a60>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++585: i41 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++596: guard_value(i41, 4423, descr=<Guard0x127d5a90>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++609: p43 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_values_ptr 24 pure>)
++613: i44 = arraylen_gc(p43, descr=<ArrayP 8>)
++618: guard_value(i44, 1, descr=<Guard0x127d5ac0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++628: p47 = getarrayitem_gc_pure_r(p43, 0, descr=<ArrayP 8>)
++633: p48 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '4423<main.rpyeffect:90([k@[mcore:[#217]#167]#173])>+0: {"op": "PrimOp". "name": "promote_ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
++637: i50 = instance_ptr_eq(ConstPtr(ptr49), p39)
++640: guard_true(i50, descr=<Guard0x127d5af0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4423<main.rpyeffect:90([k@[mcore:[#217]#167]#173])>+1: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4423<main.rpyeffect:90([k@[mcore:[#217]#167]#173])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '4423<main.rpyeffect:90([k@[mcore:[#217]#167]#173])>+3: {"op": "Push". "target": 4422. "args": {"any": []}}')
+debug_merge_point(0, 0, '4423<main.rpyeffect:90([k@[mcore:[#217]#167]#173])>+4: {"op": "Jump". "target": 4391}')
+debug_merge_point(0, 0, '4391<main.rpyeffect:58([mcore:[#192]#147])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4391<main.rpyeffect:58([mcore:[#192]#147])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '4391<main.rpyeffect:58([mcore:[#192]#147])>+2: {"op": "CallLib". "lib": "2". "symbol": "elt"}')
+debug_merge_point(0, 0, '341<std_core_hnd.rpyeffect:40(Name(elt))>+0: {"op": "Switch". "scrutinee": 1. "values": [<IntValue object at 0x7fb7ffbd5e80>]. "targets": [339]. "default": 340}')
++646: guard_nonnull_class(p47, ConstClass(IntValue), descr=<Guard0x1276bb20>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++665: i52 = getfield_gc_i(p47, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
++669: i54 = int_eq(i52, 0)
++673: guard_true(i54, descr=<Guard0x127d5b20>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '339<std_core_hnd.rpyeffect:38([switch case for Int(0)#100])>+0: {"op": "Proj". "out": 0. "type": Interned(evv). "scrutinee": 0. "tag": Interned(cons). "field": 0. "field_type": "any"}')
++679: p56 = getfield_gc_r(ConstPtr(ptr55), descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++690: guard_value(p56, ConstPtr(ptr57), descr=<Guard0x127d5b50>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '339<std_core_hnd.rpyeffect:38([switch case for Int(0)#100])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '4422<main.rpyeffect:89([k@[k@[mcore:[#217]#167]#173]#181])>+0: {"op": "Push". "target": 4412. "args": {"any": []}}')
+debug_merge_point(0, 0, '4422<main.rpyeffect:89([k@[k@[mcore:[#217]#167]#173]#181])>+1: {"op": "Match". "type": Interned(std/core/hnd/ev). "scrutinee": 0. "clauses": [{"tag": Interned(std/core/hnd/Ev). "target": 4421. "args": {"any": [1. 2. 3. 4]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#982]). "target": 4413. "args": {"any": []}}}')
++706: p59 = getfield_gc_r(ConstPtr(ptr58), descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++717: guard_value(p59, ConstPtr(ptr60), descr=<Guard0x127d5b80>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4421<main.rpyeffect:88([#234])>+0: {"op": "Copy". "type": "any". "from": 0. "to". 1}')
+debug_merge_point(0, 0, '4421<main.rpyeffect:88([#234])>+1: {"op": "Copy". "type": "any". "from": 2. "to". 0}')
+debug_merge_point(0, 0, '4421<main.rpyeffect:88([#234])>+2: {"op": "Match". "type": Interned(main/state). "scrutinee": 3. "clauses": [{"tag": Interned(main/@Hnd-state). "target": 4420. "args": {"any": [2. 3. 4]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#981]). "target": 4415. "args": {"any": []}}}')
++733: p62 = getfield_gc_r(ConstPtr(ptr61), descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++744: guard_value(p62, ConstPtr(ptr63), descr=<Guard0x127d5bb0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4420<main.rpyeffect:87([match_main/@Hnd-state@[#234]#239])>+0: {"op": "Match". "type": Interned(std/core/hnd/clause0). "scrutinee": 3. "clauses": [{"tag": Interned(std/core/hnd/Clause0). "target": 4419. "args": {"any": [2]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#980]). "target": 4417. "args": {"any": []}}}')
++760: p65 = getfield_gc_r(ConstPtr(ptr64), descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++771: guard_value(p65, ConstPtr(ptr66), descr=<Guard0x127d5be0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4419<main.rpyeffect:86([#244])>+0: {"op": "Invoke". "receiver": 2. "tag": Interned(apply). "args" : {"any": [0. 1]}}')
+debug_merge_point(0, 0, '4484<main.rpyeffect:151([method_apply@[mcore:[#321]#526]#532])>+0: {"op": "Jump". "target": 4479}')
+debug_merge_point(0, 0, '4479<main.rpyeffect:146([mcore:[#303]#511])>+0: {"op": "PrimOp". "name": "getRef(Ref[Ptr]): Ptr". "out": {"any": [0]}. "in": {"any": [2]}}')
++787: p68 = getfield_gc_r(ConstPtr(ptr67), descr=<FieldP rpyeffect.region.Ref.inst_value 16>)
++791: i69 = getfield_gc_i(p68, descr=<FieldS rpyeffect.value.UnboxedIntValueRef.inst_value 8>)
+debug_merge_point(0, 0, '4479<main.rpyeffect:146([mcore:[#303]#511])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '4412<main.rpyeffect:79([k@[k@[k@[mcore:[#217]#167]#173]#181]#183])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1244afb0>"}')
+debug_merge_point(0, 0, '4412<main.rpyeffect:79([k@[k@[k@[mcore:[#217]#167]#173]#181]#183])>+1: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"any": [1]}. "in": {"any": [0. 1]}}')
++795: i71 = int_eq(i69, 0)
+debug_merge_point(0, 0, '4412<main.rpyeffect:79([k@[k@[k@[mcore:[#217]#167]#173]#181]#183])>+2: {"op": "Switch". "scrutinee": 1. "values": [<BoolValue object at 0x1244af80>]. "targets": [4395]. "default": 4411}')
++799: guard_false(i71, descr=<Guard0x127d5c10>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '4411<main.rpyeffect:78([switch default case#188])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1244aff0>"}')
+debug_merge_point(0, 0, '4411<main.rpyeffect:78([switch default case#188])>+1: {"op": "PrimOp". "name": "infixEq(Int. Int): Boolean". "out": {"any": [1]}. "in": {"any": [0. 1]}}')
+debug_merge_point(0, 0, '4411<main.rpyeffect:78([switch default case#188])>+2: {"op": "Switch". "scrutinee": 1. "values": [<BoolValue object at 0x1244afc0>]. "targets": [4409]. "default": 4410}')
+debug_merge_point(0, 0, '4409<main.rpyeffect:76([switch case for Bool(false)#192])>+0: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1244b0d0>"}')
+debug_merge_point(0, 0, '4409<main.rpyeffect:76([switch case for Bool(false)#192])>+1: {"op": "PrimOp". "name": "infixSub(Int. Int): Int". "out": {"any": [0]}. "in": {"any": [0. 1]}}')
++805: i73 = int_sub(i69, 1)
+debug_merge_point(0, 0, '4409<main.rpyeffect:76([switch case for Bool(false)#192])>+2: {"op": "Const". "type": "ptr". "out": 1. "format": "int". "value": "<IntValue object at 0x1244b0a0>"}')
+debug_merge_point(0, 0, '4409<main.rpyeffect:76([switch case for Bool(false)#192])>+3: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4409<main.rpyeffect:76([switch case for Bool(false)#192])>+4: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '4409<main.rpyeffect:76([switch case for Bool(false)#192])>+5: {"op": "Push". "target": 4408. "args": {"any": [1. 0]}}')
+debug_merge_point(0, 0, '4409<main.rpyeffect:76([switch case for Bool(false)#192])>+6: {"op": "Copy". "type": "any". "from": 2. "to". 0}')
+debug_merge_point(0, 0, '4409<main.rpyeffect:76([switch case for Bool(false)#192])>+7: {"op": "Jump". "target": 4394}')
+debug_merge_point(0, 0, '4394<main.rpyeffect:61([mcore:[#207]#163])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4394<main.rpyeffect:61([mcore:[#207]#163])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '4394<main.rpyeffect:61([mcore:[#207]#163])>+2: {"op": "CallLib". "lib": "0". "symbol": "getCurrentEvv"}')
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "current-evv"}')
++809: p74 = new_with_vtable(descr=<SizeDescr 32>)
++850: p76 = new_array_clear(2, descr=<ArrayP 8>)
++876: setarrayitem_gc(p76, 0, ConstPtr(ptr78), descr=<ArrayP 8>)
++880: p79 = new_with_vtable(descr=<SizeDescr 16>)
++891: setfield_gc(p79, i73, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
++895: setarrayitem_gc(p76, 1, p79, descr=<ArrayP 8>)
++899: setfield_gc(p74, 4408, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++907: setfield_gc(p74, p76, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_values_ptr 24 pure>)
++911: setfield_gc(p74, p48, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
++929: jump(p0, p74, p2, p3, p4, ConstPtr(ptr82), ConstPtr(ptr83), ConstPtr(ptr84), ConstPtr(ptr64), ConstPtr(ptr85), p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, descr=TargetToken(311493344))
++976: --end of the loop--
+[626b2c9852ee] jit-log-opt-loop}
+[626b2cb19154] {jit-log-opt-loop
+# Loop 3 (339<std_core_hnd.rpyeffect:38([switch case for Int(0)#100])>+0: {"op": "Proj", "out": 0, "type": Interned(evv), "scrutinee": 0, "tag": Interned(cons), "field": 0, "field_type": "any"}) : entry bridge with 92 ops
+[p0, p1, p2, p3, p4]
++301: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 16>)
++312: p7 = getarrayitem_gc_r(p5, 0, descr=<ArrayP 8>)
++316: p9 = getarrayitem_gc_r(p5, 1, descr=<ArrayP 8>)
++320: p11 = getarrayitem_gc_r(p5, 2, descr=<ArrayP 8>)
++324: p13 = getarrayitem_gc_r(p5, 3, descr=<ArrayP 8>)
++328: p15 = getarrayitem_gc_r(p5, 4, descr=<ArrayP 8>)
++332: p17 = getarrayitem_gc_r(p5, 5, descr=<ArrayP 8>)
++336: p19 = getarrayitem_gc_r(p5, 6, descr=<ArrayP 8>)
++340: p21 = getarrayitem_gc_r(p5, 7, descr=<ArrayP 8>)
++344: p23 = getarrayitem_gc_r(p5, 8, descr=<ArrayP 8>)
++348: p25 = getarrayitem_gc_r(p5, 9, descr=<ArrayP 8>)
++352: p27 = getarrayitem_gc_r(p5, 10, descr=<ArrayP 8>)
++356: p29 = getarrayitem_gc_r(p5, 11, descr=<ArrayP 8>)
++360: p31 = getarrayitem_gc_r(p5, 12, descr=<ArrayP 8>)
++371: p33 = getarrayitem_gc_r(p5, 13, descr=<ArrayP 8>)
++382: p35 = getarrayitem_gc_r(p5, 14, descr=<ArrayP 8>)
++396: p37 = getarrayitem_gc_r(p5, 15, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '339<std_core_hnd.rpyeffect:38([switch case for Int(0)#100])>+0: {"op": "Proj". "out": 0. "type": Interned(evv). "scrutinee": 0. "tag": Interned(cons). "field": 0. "field_type": "any"}')
++410: guard_not_invalidated(descr=<Guard0x1276bb68>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++410: p38 = getfield_gc_r(p7, descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++428: guard_value(p38, ConstPtr(ptr39), descr=<Guard0x127d5d00>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++437: p40 = getfield_gc_r(p7, descr=<FieldP rpyeffect.stored_environment.Data__arb.inst_values_ptr 16 pure>)
++441: p42 = getarrayitem_gc_pure_r(p40, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '339<std_core_hnd.rpyeffect:38([switch case for Int(0)#100])>+1: {"op": "Return". "args": {"any": [0]}}')
++445: guard_nonnull(p1, descr=<Guard0x127d5d30>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++459: i43 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++477: guard_value(i43, 4407, descr=<Guard0x127d5d60>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++490: p45 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_values_ptr 24 pure>)
++494: i46 = arraylen_gc(p45, descr=<ArrayP 8>)
++505: guard_value(i46, 1, descr=<Guard0x127d5d90>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++515: p49 = getarrayitem_gc_pure_r(p45, 0, descr=<ArrayP 8>)
++519: p50 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '4407<main.rpyeffect:74([#208])>+0: {"op": "Push". "target": 4397. "args": {"any": []}}')
+debug_merge_point(0, 0, '4407<main.rpyeffect:74([#208])>+1: {"op": "Match". "type": Interned(std/core/hnd/ev). "scrutinee": 0. "clauses": [{"tag": Interned(std/core/hnd/Ev). "target": 4406. "args": {"any": [2. 3. 4. 5]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#979]). "target": 4398. "args": {"any": []}}}')
++523: p51 = getfield_gc_r(p42, descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++548: guard_value(p51, ConstPtr(ptr52), descr=<Guard0x127d5dc0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++557: p53 = getfield_gc_r(p42, descr=<FieldP rpyeffect.stored_environment.Data__arb.inst_values_ptr 16 pure>)
++561: p55 = getarrayitem_gc_pure_r(p53, 0, descr=<ArrayP 8>)
++561: p57 = getarrayitem_gc_pure_r(p53, 1, descr=<ArrayP 8>)
++561: p59 = getarrayitem_gc_pure_r(p53, 2, descr=<ArrayP 8>)
++565: p61 = getarrayitem_gc_pure_r(p53, 3, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+0: {"op": "Copy". "type": "any". "from": 1. "to". 2}')
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+1: {"op": "Copy". "type": "any". "from": 0. "to". 1}')
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+2: {"op": "Copy". "type": "any". "from": 3. "to". 0}')
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+3: {"op": "Match". "type": Interned(main/state). "scrutinee": 4. "clauses": [{"tag": Interned(main/@Hnd-state). "target": 4405. "args": {"any": [3. 4. 5]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#978]). "target": 4400. "args": {"any": []}}}')
++565: p62 = getfield_gc_r(p59, descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++576: guard_value(p62, ConstPtr(ptr63), descr=<Guard0x127d5df0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++585: p64 = getfield_gc_r(p59, descr=<FieldP rpyeffect.stored_environment.Data__arb.inst_values_ptr 16 pure>)
++589: p66 = getarrayitem_gc_pure_r(p64, 0, descr=<ArrayP 8>)
++589: p68 = getarrayitem_gc_pure_r(p64, 1, descr=<ArrayP 8>)
++594: p70 = getarrayitem_gc_pure_r(p64, 2, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4405<main.rpyeffect:72([#223])>+0: {"op": "Match". "type": Interned(std/core/hnd/clause1). "scrutinee": 5. "clauses": [{"tag": Interned(std/core/hnd/Clause1). "target": 4404. "args": {"any": [3]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#977]). "target": 4402. "args": {"any": []}}}')
++599: p71 = getfield_gc_r(p70, descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++617: guard_value(p71, ConstPtr(ptr72), descr=<Guard0x127d5e20>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++626: p73 = getfield_gc_r(p70, descr=<FieldP rpyeffect.stored_environment.Data__arb.inst_values_ptr 16 pure>)
++630: p75 = getarrayitem_gc_pure_r(p73, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4404<main.rpyeffect:71([match_std/core/hnd/Clause1@[#223]#228])>+0: {"op": "Invoke". "receiver": 3. "tag": Interned(apply). "args" : {"any": [0. 1. 2]}}')
++634: p76 = getfield_gc_r(p75, descr=<FieldP rpyeffect.codata.CoData.inst_vtable 8 pure>)
++653: guard_value(p76, ConstPtr(ptr77), descr=<Guard0x127d5e50>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++662: p78 = getfield_gc_r(p75, descr=<FieldP rpyeffect.stored_environment.CoData__arb.inst_values_ptr 16 pure>)
++667: i79 = arraylen_gc(p78, descr=<ArrayP 8>)
++671: guard_value(i79, 1, descr=<Guard0x127d5e80>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++681: p82 = getarrayitem_gc_pure_r(p78, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4485<main.rpyeffect:152([method_apply@[k@[mcore:[#321]#526]#539]#545])>+0: {"op": "Jump". "target": 4481}')
+debug_merge_point(0, 0, '4481<main.rpyeffect:148([mcore:[#310]#517])>+0: {"op": "PrimOp". "name": "setRef(Ref[Ptr]. Ptr): Unit". "out": {"any": [0]}. "in": {"any": [3. 2]}}')
++685: p83 = getfield_gc_r(p82, descr=<FieldP rpyeffect.region.Ref.inst_allocation_site 8 pure>)
++697: guard_value(p83, ConstPtr(ptr84), descr=<Guard0x127d5eb0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++706: p85 = getfield_gc_r(p82, descr=<FieldP rpyeffect.region.Ref.inst_value 16>)
++711: guard_nonnull_class(p49, ConstClass(IntValue), descr=<Guard0x1276bbb0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++730: i87 = getfield_gc_i(p49, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
+debug_merge_point(0, 0, '4481<main.rpyeffect:148([mcore:[#310]#517])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '4397<main.rpyeffect:64([k@[#208]#210])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4397<main.rpyeffect:64([k@[#208]#210])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '4397<main.rpyeffect:64([k@[#208]#210])>+2: {"op": "Jump". "target": 4424}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "int". "value": "<IntValue object at 0x1244b4a0>"}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+3: {"op": "Push". "target": 4423. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+4: {"op": "Copy". "type": "any". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+5: {"op": "Jump". "target": 4392}')
+debug_merge_point(0, 0, '4392<main.rpyeffect:59([mcore:[#193]#153])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4392<main.rpyeffect:59([mcore:[#193]#153])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '4392<main.rpyeffect:59([mcore:[#193]#153])>+2: {"op": "CallLib". "lib": "0". "symbol": "getCurrentEvv"}')
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "current-evv"}')
++734: p88 = new_with_vtable(descr=<SizeDescr 32>)
++775: p90 = new_array_clear(1, descr=<ArrayP 8>)
++801: setarrayitem_gc(p90, 0, ConstPtr(ptr92), descr=<ArrayP 8>)
++805: setfield_gc(p88, 4423, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++813: setfield_gc(p88, p90, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_values_ptr 24 pure>)
++817: setfield_gc(p88, p50, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
++821: setfield_gc(p85, i87, descr=<FieldS rpyeffect.value.UnboxedIntValueRef.inst_value 8>)
++832: jump(p0, p88, p2, p3, p4, ConstPtr(ptr94), ConstPtr(ptr95), p49, p82, p68, p70, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, descr=TargetToken(311493344))
++1056: --end of the loop--
+[626b2cb500f5] jit-log-opt-loop}
+[626b2ccd61f0] {jit-log-opt-loop
+# Loop 4 (341<std_core_hnd.rpyeffect:40(Name(elt))>+0: {"op": "Switch", "scrutinee": 1, "values": [<IntValue object at 0x7fb7ffbd5e80>], "targets": [339], "default": 340}) : entry bridge with 97 ops
+[p0, p1, p2, p3, p4]
++317: p5 = getfield_gc_r(p2, descr=<FieldP rpyeffect.environment.Environment.inst_values_ptr 16>)
++328: p7 = getarrayitem_gc_r(p5, 0, descr=<ArrayP 8>)
++332: p9 = getarrayitem_gc_r(p5, 1, descr=<ArrayP 8>)
++336: p11 = getarrayitem_gc_r(p5, 2, descr=<ArrayP 8>)
++340: p13 = getarrayitem_gc_r(p5, 3, descr=<ArrayP 8>)
++344: p15 = getarrayitem_gc_r(p5, 4, descr=<ArrayP 8>)
++348: p17 = getarrayitem_gc_r(p5, 5, descr=<ArrayP 8>)
++352: p19 = getarrayitem_gc_r(p5, 6, descr=<ArrayP 8>)
++356: p21 = getarrayitem_gc_r(p5, 7, descr=<ArrayP 8>)
++360: p23 = getarrayitem_gc_r(p5, 8, descr=<ArrayP 8>)
++364: p25 = getarrayitem_gc_r(p5, 9, descr=<ArrayP 8>)
++368: p27 = getarrayitem_gc_r(p5, 10, descr=<ArrayP 8>)
++372: p29 = getarrayitem_gc_r(p5, 11, descr=<ArrayP 8>)
++376: p31 = getarrayitem_gc_r(p5, 12, descr=<ArrayP 8>)
++387: p33 = getarrayitem_gc_r(p5, 13, descr=<ArrayP 8>)
++398: p35 = getarrayitem_gc_r(p5, 14, descr=<ArrayP 8>)
++412: p37 = getarrayitem_gc_r(p5, 15, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '341<std_core_hnd.rpyeffect:40(Name(elt))>+0: {"op": "Switch". "scrutinee": 1. "values": [<IntValue object at 0x7fb7ffbd5e80>]. "targets": [339]. "default": 340}')
++426: guard_not_invalidated(descr=<Guard0x1276bbf8>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++426: guard_nonnull_class(p9, ConstClass(IntValue), descr=<Guard0x1276bc40>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++444: i39 = getfield_gc_i(p9, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
++448: i41 = int_eq(i39, 0)
++452: guard_true(i41, descr=<Guard0x12924050>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
+debug_merge_point(0, 0, '339<std_core_hnd.rpyeffect:38([switch case for Int(0)#100])>+0: {"op": "Proj". "out": 0. "type": Interned(evv). "scrutinee": 0. "tag": Interned(cons). "field": 0. "field_type": "any"}')
++458: p42 = getfield_gc_r(p7, descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++476: guard_value(p42, ConstPtr(ptr43), descr=<Guard0x12924080>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++485: p44 = getfield_gc_r(p7, descr=<FieldP rpyeffect.stored_environment.Data__arb.inst_values_ptr 16 pure>)
++489: p46 = getarrayitem_gc_pure_r(p44, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '339<std_core_hnd.rpyeffect:38([switch case for Int(0)#100])>+1: {"op": "Return". "args": {"any": [0]}}')
++493: guard_nonnull(p1, descr=<Guard0x129240b0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++507: i47 = getfield_gc_i(p1, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++525: guard_value(i47, 4407, descr=<Guard0x129240e0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++538: p49 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_values_ptr 24 pure>)
++542: i50 = arraylen_gc(p49, descr=<ArrayP 8>)
++553: guard_value(i50, 1, descr=<Guard0x12924110>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++563: p53 = getarrayitem_gc_pure_r(p49, 0, descr=<ArrayP 8>)
++567: p54 = getfield_gc_r(p1, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '4407<main.rpyeffect:74([#208])>+0: {"op": "Push". "target": 4397. "args": {"any": []}}')
+debug_merge_point(0, 0, '4407<main.rpyeffect:74([#208])>+1: {"op": "Match". "type": Interned(std/core/hnd/ev). "scrutinee": 0. "clauses": [{"tag": Interned(std/core/hnd/Ev). "target": 4406. "args": {"any": [2. 3. 4. 5]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#979]). "target": 4398. "args": {"any": []}}}')
++571: p55 = getfield_gc_r(p46, descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++596: guard_value(p55, ConstPtr(ptr56), descr=<Guard0x12924140>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++605: p57 = getfield_gc_r(p46, descr=<FieldP rpyeffect.stored_environment.Data__arb.inst_values_ptr 16 pure>)
++609: p59 = getarrayitem_gc_pure_r(p57, 0, descr=<ArrayP 8>)
++609: p61 = getarrayitem_gc_pure_r(p57, 1, descr=<ArrayP 8>)
++609: p63 = getarrayitem_gc_pure_r(p57, 2, descr=<ArrayP 8>)
++613: p65 = getarrayitem_gc_pure_r(p57, 3, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+0: {"op": "Copy". "type": "any". "from": 1. "to". 2}')
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+1: {"op": "Copy". "type": "any". "from": 0. "to". 1}')
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+2: {"op": "Copy". "type": "any". "from": 3. "to". 0}')
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+3: {"op": "Match". "type": Interned(main/state). "scrutinee": 4. "clauses": [{"tag": Interned(main/@Hnd-state). "target": 4405. "args": {"any": [3. 4. 5]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#978]). "target": 4400. "args": {"any": []}}}')
++613: p66 = getfield_gc_r(p63, descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++624: guard_value(p66, ConstPtr(ptr67), descr=<Guard0x12924170>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++633: p68 = getfield_gc_r(p63, descr=<FieldP rpyeffect.stored_environment.Data__arb.inst_values_ptr 16 pure>)
++637: p70 = getarrayitem_gc_pure_r(p68, 0, descr=<ArrayP 8>)
++637: p72 = getarrayitem_gc_pure_r(p68, 1, descr=<ArrayP 8>)
++642: p74 = getarrayitem_gc_pure_r(p68, 2, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4405<main.rpyeffect:72([#223])>+0: {"op": "Match". "type": Interned(std/core/hnd/clause1). "scrutinee": 5. "clauses": [{"tag": Interned(std/core/hnd/Clause1). "target": 4404. "args": {"any": [3]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#977]). "target": 4402. "args": {"any": []}}}')
++647: p75 = getfield_gc_r(p74, descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++665: guard_value(p75, ConstPtr(ptr76), descr=<Guard0x129241a0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++674: p77 = getfield_gc_r(p74, descr=<FieldP rpyeffect.stored_environment.Data__arb.inst_values_ptr 16 pure>)
++678: p79 = getarrayitem_gc_pure_r(p77, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4404<main.rpyeffect:71([match_std/core/hnd/Clause1@[#223]#228])>+0: {"op": "Invoke". "receiver": 3. "tag": Interned(apply). "args" : {"any": [0. 1. 2]}}')
++682: p80 = getfield_gc_r(p79, descr=<FieldP rpyeffect.codata.CoData.inst_vtable 8 pure>)
++701: guard_value(p80, ConstPtr(ptr81), descr=<Guard0x129241d0>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++710: p82 = getfield_gc_r(p79, descr=<FieldP rpyeffect.stored_environment.CoData__arb.inst_values_ptr 16 pure>)
++715: i83 = arraylen_gc(p82, descr=<ArrayP 8>)
++719: guard_value(i83, 1, descr=<Guard0x12924200>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++729: p86 = getarrayitem_gc_pure_r(p82, 0, descr=<ArrayP 8>)
+debug_merge_point(0, 0, '4485<main.rpyeffect:152([method_apply@[k@[mcore:[#321]#526]#539]#545])>+0: {"op": "Jump". "target": 4481}')
+debug_merge_point(0, 0, '4481<main.rpyeffect:148([mcore:[#310]#517])>+0: {"op": "PrimOp". "name": "setRef(Ref[Ptr]. Ptr): Unit". "out": {"any": [0]}. "in": {"any": [3. 2]}}')
++733: p87 = getfield_gc_r(p86, descr=<FieldP rpyeffect.region.Ref.inst_allocation_site 8 pure>)
++745: guard_value(p87, ConstPtr(ptr88), descr=<Guard0x12924230>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++754: p89 = getfield_gc_r(p86, descr=<FieldP rpyeffect.region.Ref.inst_value 16>)
++759: guard_nonnull_class(p53, ConstClass(IntValue), descr=<Guard0x1276bc88>) [p2, p7, p9, p11, p13, p15, p17, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, p0, p1, p3, p4]
++778: i91 = getfield_gc_i(p53, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
+debug_merge_point(0, 0, '4481<main.rpyeffect:148([mcore:[#310]#517])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '4397<main.rpyeffect:64([k@[#208]#210])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4397<main.rpyeffect:64([k@[#208]#210])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '4397<main.rpyeffect:64([k@[#208]#210])>+2: {"op": "Jump". "target": 4424}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "int". "value": "<IntValue object at 0x1244b4a0>"}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+3: {"op": "Push". "target": 4423. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+4: {"op": "Copy". "type": "any". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+5: {"op": "Jump". "target": 4392}')
+debug_merge_point(0, 0, '4392<main.rpyeffect:59([mcore:[#193]#153])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4392<main.rpyeffect:59([mcore:[#193]#153])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '4392<main.rpyeffect:59([mcore:[#193]#153])>+2: {"op": "CallLib". "lib": "0". "symbol": "getCurrentEvv"}')
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "current-evv"}')
++782: p92 = new_with_vtable(descr=<SizeDescr 32>)
++823: p94 = new_array_clear(1, descr=<ArrayP 8>)
++849: setarrayitem_gc(p94, 0, ConstPtr(ptr96), descr=<ArrayP 8>)
++853: setfield_gc(p92, 4423, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++861: setfield_gc(p92, p94, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_values_ptr 24 pure>)
++865: setfield_gc(p92, p54, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
++869: setfield_gc(p89, i91, descr=<FieldS rpyeffect.value.UnboxedIntValueRef.inst_value 8>)
++880: jump(p0, p92, p2, p3, p4, ConstPtr(ptr98), ConstPtr(ptr99), p53, p86, p72, p74, p19, p21, p23, p25, p27, p29, p31, p33, p35, p37, descr=TargetToken(311493344))
++1104: --end of the loop--
+[626b2cd0bf41] jit-log-opt-loop}
+[626b2cf4783b] {jit-log-opt-bridge
+# bridge out of Guard 0x127d5a90 with 76 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
++222: guard_not_invalidated(descr=<Guard0x1276bcd0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+2: {"op": "PrimOp". "name": "getRef(Ref[Ptr]): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
++229: p22 = getfield_gc_r(ConstPtr(ptr21), descr=<FieldP rpyeffect.region.Ref.inst_value 16>)
++240: guard_value(p22, ConstPtr(ptr23), descr=<Guard0x1276bd18>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+3: {"op": "Return". "args": {"any": [0]}}')
++249: guard_nonnull(p18, descr=<Guard0x12924440>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
++258: i24 = getfield_gc_i(p18, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++262: guard_value(i24, 4408, descr=<Guard0x12924470>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
++275: p26 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_values_ptr 24 pure>)
++279: i27 = arraylen_gc(p26, descr=<ArrayP 8>)
++283: guard_value(i27, 2, descr=<Guard0x129244a0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
++293: p30 = getarrayitem_gc_pure_r(p26, 0, descr=<ArrayP 8>)
++297: p32 = getarrayitem_gc_pure_r(p26, 1, descr=<ArrayP 8>)
++301: p33 = getfield_gc_r(p18, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
+debug_merge_point(0, 0, '4408<main.rpyeffect:75([k@[switch case for Bool(false)#192]#200])>+0: {"op": "PrimOp". "name": "promote_ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
++305: i35 = instance_ptr_eq(ConstPtr(ptr34), p22)
++308: guard_true(i35, descr=<Guard0x129244d0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
+debug_merge_point(0, 0, '4408<main.rpyeffect:75([k@[switch case for Bool(false)#192]#200])>+1: {"op": "Const". "type": "ptr". "out": 3. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4408<main.rpyeffect:75([k@[switch case for Bool(false)#192]#200])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [3]}. "in": {"any": [3]}}')
+debug_merge_point(0, 0, '4408<main.rpyeffect:75([k@[switch case for Bool(false)#192]#200])>+3: {"op": "Push". "target": 4407. "args": {"any": [2]}}')
+debug_merge_point(0, 0, '4408<main.rpyeffect:75([k@[switch case for Bool(false)#192]#200])>+4: {"op": "Copy". "type": "any". "from": 3. "to". 2}')
+debug_merge_point(0, 0, '4408<main.rpyeffect:75([k@[switch case for Bool(false)#192]#200])>+5: {"op": "Jump". "target": 4393}')
+debug_merge_point(0, 0, '4393<main.rpyeffect:60([mcore:[#206]#157])>+0: {"op": "Const". "type": "ptr". "out": 2. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4393<main.rpyeffect:60([mcore:[#206]#157])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [2]}. "in": {"any": [2]}}')
+debug_merge_point(0, 0, '4393<main.rpyeffect:60([mcore:[#206]#157])>+2: {"op": "CallLib". "lib": "2". "symbol": "elt"}')
+debug_merge_point(0, 0, '341<std_core_hnd.rpyeffect:40(Name(elt))>+0: {"op": "Switch". "scrutinee": 1. "values": [<IntValue object at 0x7fb7ffbd5e80>]. "targets": [339]. "default": 340}')
++314: guard_nonnull_class(p30, ConstClass(IntValue), descr=<Guard0x1276bd60>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
++333: i37 = getfield_gc_i(p30, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
++337: i39 = int_eq(i37, 0)
++341: guard_true(i39, descr=<Guard0x12924500>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
+debug_merge_point(0, 0, '339<std_core_hnd.rpyeffect:38([switch case for Int(0)#100])>+0: {"op": "Proj". "out": 0. "type": Interned(evv). "scrutinee": 0. "tag": Interned(cons). "field": 0. "field_type": "any"}')
++347: p41 = getfield_gc_r(ConstPtr(ptr40), descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++358: guard_value(p41, ConstPtr(ptr42), descr=<Guard0x12924530>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
+debug_merge_point(0, 0, '339<std_core_hnd.rpyeffect:38([switch case for Int(0)#100])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '4407<main.rpyeffect:74([#208])>+0: {"op": "Push". "target": 4397. "args": {"any": []}}')
+debug_merge_point(0, 0, '4407<main.rpyeffect:74([#208])>+1: {"op": "Match". "type": Interned(std/core/hnd/ev). "scrutinee": 0. "clauses": [{"tag": Interned(std/core/hnd/Ev). "target": 4406. "args": {"any": [2. 3. 4. 5]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#979]). "target": 4398. "args": {"any": []}}}')
++374: p44 = getfield_gc_r(ConstPtr(ptr43), descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++385: guard_value(p44, ConstPtr(ptr45), descr=<Guard0x12924560>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+0: {"op": "Copy". "type": "any". "from": 1. "to". 2}')
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+1: {"op": "Copy". "type": "any". "from": 0. "to". 1}')
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+2: {"op": "Copy". "type": "any". "from": 3. "to". 0}')
+debug_merge_point(0, 0, '4406<main.rpyeffect:73([match_std/core/hnd/Ev@[#208]#218])>+3: {"op": "Match". "type": Interned(main/state). "scrutinee": 4. "clauses": [{"tag": Interned(main/@Hnd-state). "target": 4405. "args": {"any": [3. 4. 5]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#978]). "target": 4400. "args": {"any": []}}}')
++401: p47 = getfield_gc_r(ConstPtr(ptr46), descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++412: guard_value(p47, ConstPtr(ptr48), descr=<Guard0x12924590>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
+debug_merge_point(0, 0, '4405<main.rpyeffect:72([#223])>+0: {"op": "Match". "type": Interned(std/core/hnd/clause1). "scrutinee": 5. "clauses": [{"tag": Interned(std/core/hnd/Clause1). "target": 4404. "args": {"any": [3]}}]. "default": {"tag": Interned(6ad9c087-26c9-42f4-8182-b30230624485#[Missing Tag#977]). "target": 4402. "args": {"any": []}}}')
++428: p50 = getfield_gc_r(ConstPtr(ptr49), descr=<FieldP rpyeffect.data.Data.inst_tag 8>)
++439: guard_value(p50, ConstPtr(ptr51), descr=<Guard0x129245c0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
+debug_merge_point(0, 0, '4404<main.rpyeffect:71([match_std/core/hnd/Clause1@[#223]#228])>+0: {"op": "Invoke". "receiver": 3. "tag": Interned(apply). "args" : {"any": [0. 1. 2]}}')
+debug_merge_point(0, 0, '4485<main.rpyeffect:152([method_apply@[k@[mcore:[#321]#526]#539]#545])>+0: {"op": "Jump". "target": 4481}')
+debug_merge_point(0, 0, '4481<main.rpyeffect:148([mcore:[#310]#517])>+0: {"op": "PrimOp". "name": "setRef(Ref[Ptr]. Ptr): Unit". "out": {"any": [0]}. "in": {"any": [3. 2]}}')
++455: p53 = getfield_gc_r(ConstPtr(ptr52), descr=<FieldP rpyeffect.region.Ref.inst_value 16>)
++459: guard_nonnull_class(p32, ConstClass(IntValue), descr=<Guard0x1276bda8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20]
++479: i55 = getfield_gc_i(p32, descr=<FieldS rpyeffect.value.IntValue.inst_value 8 pure>)
+debug_merge_point(0, 0, '4481<main.rpyeffect:148([mcore:[#310]#517])>+1: {"op": "Return". "args": {"any": [0]}}')
+debug_merge_point(0, 0, '4397<main.rpyeffect:64([k@[#208]#210])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4397<main.rpyeffect:64([k@[#208]#210])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '4397<main.rpyeffect:64([k@[#208]#210])>+2: {"op": "Jump". "target": 4424}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "int". "value": "<IntValue object at 0x1244b4a0>"}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+1: {"op": "Const". "type": "ptr". "out": 1. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+2: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [1]}. "in": {"any": [1]}}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+3: {"op": "Push". "target": 4423. "args": {"any": [0]}}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+4: {"op": "Copy". "type": "any". "from": 1. "to". 0}')
+debug_merge_point(0, 0, '4424<main.rpyeffect:91([mcore:[#217]#167])>+5: {"op": "Jump". "target": 4392}')
+debug_merge_point(0, 0, '4392<main.rpyeffect:59([mcore:[#193]#153])>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "Name(import$std/core/hnd)"}')
+debug_merge_point(0, 0, '4392<main.rpyeffect:59([mcore:[#193]#153])>+1: {"op": "PrimOp". "name": "getGlobal(String): Ptr". "out": {"any": [0]}. "in": {"any": [0]}}')
+debug_merge_point(0, 0, '4392<main.rpyeffect:59([mcore:[#193]#153])>+2: {"op": "CallLib". "lib": "0". "symbol": "getCurrentEvv"}')
+debug_merge_point(0, 0, '301<std_core_hnd.rpyeffect:0(Name(getCurrentEvv))>+0: {"op": "Const". "type": "ptr". "out": 0. "format": "string". "value": "current-evv"}')
++484: p56 = new_with_vtable(descr=<SizeDescr 32>)
++525: p58 = new_array_clear(1, descr=<ArrayP 8>)
++551: setarrayitem_gc(p58, 0, ConstPtr(ptr60), descr=<ArrayP 8>)
++555: setfield_gc(p56, 4423, descr=<FieldS rpyeffect.stored_environment.Stack__arb.inst_target 16 pure>)
++563: setfield_gc(p56, p58, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_values_ptr 24 pure>)
++567: setfield_gc(p56, p33, descr=<FieldP rpyeffect.stored_environment.Stack__arb.inst_tail 8 pure>)
++571: setfield_gc(p53, i55, descr=<FieldS rpyeffect.value.UnboxedIntValueRef.inst_value 8>)
++589: jump(p17, p56, p0, p19, p20, ConstPtr(ptr62), ConstPtr(ptr63), p32, ConstPtr(ptr52), ConstPtr(ptr64), ConstPtr(ptr49), p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, descr=TargetToken(311493344))
++656: --end of the loop--
+[626b2cf75701] jit-log-opt-bridge}
+[626cdb00868b] {jit-summary
+Tracing:      	4	0.003344
+Backend:      	4	0.000971
+TOTAL:      		3.626678
+ops:             	7025
+heapcached ops:  	798
+recorded ops:    	3932
+  calls:         	3307
+guards:          	189
+opt ops:         	405
+opt guards:      	79
+opt guards shared:	60
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	0
+nvholes:         	0
+nvreused:        	0
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	3
+Total # of bridges:	1
+Freed # of loops:	0
+Freed # of bridges:	0
+[626cdb00ec04] jit-summary}

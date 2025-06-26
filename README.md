@@ -113,8 +113,12 @@ There are multiple ways to access the results
 ├── .eff-out, .oldeff-out, .effekt-out  - compiled versions of the benchmarks in Eff/Effekt
 ├── koka/.koka/<version>                - compiled versions of the benchmarks in Koka
 ├── .outputs      - outputs of running the benchmark programs
-├── .results      - results of running hyperfine (files named `.<benchmark>-results.json`)
-└── .runcmds      - Commands used to run the benchmarks, as shell scripts
+├── .runcmds      - Commands used to run the benchmarks, as shell scripts
+├── .results      - Measurement data of the benchmarks, as json files `.<benchmark>-results.json`
+│
+│ ## Results from the paper (structured exactly like results)
+├── results_x86   - Raw data from the benchmarking results of the paper (on x86)
+└── results_m1    - Raw data from the benchmarking results of the paper (on M1, only in appendix)
 ```
 
 

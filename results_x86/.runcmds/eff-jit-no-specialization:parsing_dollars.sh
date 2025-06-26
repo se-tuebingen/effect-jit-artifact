@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/rpyeffect-jit/out/bin/x86_64-Linux/rpyeffect-jit-no-specialization' '/data/effect-jit-monorepo/.eff-out/eff-jit-no-specialization:parsing_dollars_4406e30b-c74b-4d5a-a5ec-a2c9819fe291/wrapper.rpyeffect' "$@"

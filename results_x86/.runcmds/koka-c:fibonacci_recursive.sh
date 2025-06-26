@@ -1,0 +1,2 @@
+#!/bin/sh
+'/data/effect-jit-monorepo/koka/.koka/v3.1.2/koka-c:fibonacci_recursive_37b1eea8-3bbe-4caf-a6b1-0a3d948b34b1_gcc-debug-27432e/data_effect_dash_jit_dash_monorepo_effect_dash_handlers_dash_bench_benchmarks_koka_fibonacci__recursive_main__main' "$@"

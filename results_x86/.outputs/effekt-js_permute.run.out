@@ -1,0 +1,21 @@
+
+<--- Last few GCs --->
+
+[100419:0xedf5000]    67419 ms: Mark-Compact 4055.7 (4138.3) -> 4042.5 (4140.8) MB, pooled: 0 MB, 4263.43 / 0.00 ms  (average mu = 0.052, current mu = 0.008) allocation failure; scavenge might not succeed
+[100419:0xedf5000]    72464 ms: Mark-Compact 4058.2 (4140.8) -> 4044.9 (4143.3) MB, pooled: 0 MB, 5019.70 / 0.00 ms  (average mu = 0.027, current mu = 0.005) allocation failure; scavenge might not succeed
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0xd0e38f node::OOMErrorHandler(char const*, v8::OOMDetails const&) [node]
+ 2: 0x1158760 v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
+ 3: 0x1158b4b v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [node]
+ 4: 0x13a5797  [node]
+ 5: 0x13a57d8 v8::internal::Heap::ReportIneffectiveMarkCompactIfNeeded() [node]
+ 6: 0x13bd62e  [node]
+ 7: 0x13c0068  [node]
+ 8: 0x1c9cf53  [node]
+timeout: the monitored command dumped core

@@ -1,0 +1,1422 @@
+[63926b212eb3] {jit-log-opt-loop
+# Loop 1 (fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST) : entry bridge with 85 ops
+[p0, p1]
++267: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++278: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++282: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++286: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++290: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++294: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++298: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++302: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++306: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++310: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++314: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
++318: guard_value(i4, 1, descr=<Guard0x7f3fc4b22840>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p1]
++328: guard_isnull(p5, descr=<Guard0x7f3fc4afdcc8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p1]
++337: guard_nonnull_class(p9, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b22890>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p1]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
++363: guard_value(p3, ConstPtr(ptr20), descr=<Guard0x7f3fc4afdd00>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p1]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++372: i21 = getfield_gc_i(p9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++376: i23 = int_eq(i21, 0)
++380: guard_false(i23, descr=<Guard0x7f3fc4afdd38>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p1]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++386: i25 = int_eq(i21, 1)
++390: guard_false(i25, descr=<Guard0x7f3fc4afdd70>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p1]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
++396: guard_not_invalidated(descr=<Guard0x7f3fc4afdda8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p1]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++396: i27 = int_sub_ovf(i21, 1)
++400: guard_no_overflow(descr=<Guard0x7f3fc4afdde0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p1]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++406: p30 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++418: p31 = getfield_gc_r(p30, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++425: p32 = force_token()
++428: p33 = getfield_gc_r(p30, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++435: guard_value(p33, ConstPtr(null), descr=<Guard0x7f3fc4b228e0>) [p0, p6, p9, p17, p1, p30, p33, p32, p31, i27]
++445: i35 = getfield_gc_i(p30, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++453: i37 = int_eq(i35, 0)
++457: guard_true(i37, descr=<Guard0x7f3fc4afde18>) [p0, p6, p9, p17, p1, p30, p33, p32, p31, i27]
++463: enter_portal_frame(25, 6732)
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++463: i41 = int_eq(i27, 0)
++467: guard_false(i41, descr=<Guard0x7f3fc4afde50>) [p0, p6, p9, p17, p1, p30, p33, p32, p31, i27]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++473: i43 = int_eq(i27, 1)
++477: guard_true(i43, descr=<Guard0x7f3fc4afde88>) [p0, p6, p9, p17, p1, p30, p33, p32, p31, i27]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#22 RETURN_VALUE')
++483: leave_portal_frame(25)
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++483: p45 = force_token()
++483: enter_portal_frame(25, 6732)
+debug_merge_point(1, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(1, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(1, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
+debug_merge_point(1, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-5~#8 LOAD_CONST')
+debug_merge_point(1, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-5~#10 RETURN_VALUE')
++483: leave_portal_frame(25)
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++483: guard_isnull(p6, descr=<Guard0x7f3fc4afdec0>) [p0, p6, p9, p17, p1, p30, p33, p32, p31, i27]
++492: leave_portal_frame(25)
++492: p50 = force_token()
++495: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++510: setfield_gc(p0, p50, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++514: p52 = new_with_vtable(descr=<SizeDescr 16>)
++551: setfield_gc(p52, 1, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++559: guard_not_forced_2(descr=<Guard0x7f3fc4bd11a8>) [p0, p9, None, None, None]
++584: finish(p52, descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++704: --end of the loop--
+[63926b27db6f] jit-log-opt-loop}
+[63926b531616] {jit-log-opt-bridge
+# bridge out of Guard 0x7f3fc4afde88 with 176 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++174: guard_value(p6, ConstPtr(null), descr=<Guard0x7f3fc4b22930>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++184: guard_not_invalidated(descr=<Guard0x7f3fc4b34480>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++184: i11 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++192: i13 = int_eq(i11, 0)
++196: guard_true(i13, descr=<Guard0x7f3fc4b344b8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++202: enter_portal_frame(25, 6732)
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++202: i17 = int_eq(i9, 0)
++206: guard_false(i17, descr=<Guard0x7f3fc4b344f0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++212: i19 = int_eq(i9, 1)
++216: guard_false(i19, descr=<Guard0x7f3fc4b34528>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++222: i21 = int_sub_ovf(i9, 1)
++229: guard_no_overflow(descr=<Guard0x7f3fc4b34560>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++235: p22 = force_token()
++235: enter_portal_frame(25, 6732)
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++235: i26 = int_eq(i21, 0)
++239: guard_false(i26, descr=<Guard0x7f3fc4b4ce90>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++245: i28 = int_eq(i21, 1)
++249: guard_false(i28, descr=<Guard0x7f3fc4b4ce58>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++255: i30 = int_sub_ovf(i21, 1)
++259: guard_no_overflow(descr=<Guard0x7f3fc4b4ce20>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++265: p31 = force_token()
++265: enter_portal_frame(25, 6732)
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++265: i35 = int_eq(i30, 0)
++269: guard_false(i35, descr=<Guard0x7f3fc4b4cde8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++275: i37 = int_eq(i30, 1)
++279: guard_true(i37, descr=<Guard0x7f3fc4b4cdb0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#22 RETURN_VALUE')
++285: leave_portal_frame(25)
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++285: p39 = force_token()
++285: enter_portal_frame(25, 6732)
+debug_merge_point(3, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(3, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(3, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
+debug_merge_point(3, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(3, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-5~#8 LOAD_CONST')
+debug_merge_point(3, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-5~#10 RETURN_VALUE')
++285: leave_portal_frame(25)
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++285: leave_portal_frame(25)
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++285: p44 = force_token()
++285: enter_portal_frame(25, 6732)
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(2, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#22 RETURN_VALUE')
++285: leave_portal_frame(25)
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++285: leave_portal_frame(25)
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++285: i49 = getfield_gc_i(p2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++299: setfield_gc(p5, p8, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++306: i51 = int_sub_ovf(i49, 2)
++313: guard_no_overflow(descr=<Guard0x7f3fc4b23a60>) [p0, p1, p2, p4, i49, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++319: p53 = force_token()
++319: enter_portal_frame(25, 6732)
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++319: i57 = int_eq(i51, 0)
++323: guard_false(i57, descr=<Guard0x7f3fc4b4cd78>) [p0, p1, p2, p4, i49, None, None, None]
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++329: i59 = int_eq(i51, 1)
++333: guard_false(i59, descr=<Guard0x7f3fc4b4cd40>) [p0, p1, p2, p4, i49, None, None, None]
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++339: i61 = int_sub_ovf(i51, 1)
++343: guard_no_overflow(descr=<Guard0x7f3fc4b4cd08>) [p0, p1, p2, p4, i49, None, None, None]
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++349: p62 = force_token()
++349: enter_portal_frame(25, 6732)
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++349: i66 = int_eq(i61, 0)
++353: guard_false(i66, descr=<Guard0x7f3fc4b4ccd0>) [p0, p1, p2, p4, i49, None, None, None]
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++359: i68 = int_eq(i61, 1)
++363: guard_true(i68, descr=<Guard0x7f3fc4b4cc98>) [p0, p1, p2, p4, i49, None, None, None]
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(2, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#22 RETURN_VALUE')
++369: leave_portal_frame(25)
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++369: p70 = force_token()
++369: enter_portal_frame(25, 6732)
+debug_merge_point(2, 8, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(2, 8, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(2, 8, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
+debug_merge_point(2, 8, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 8, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-5~#8 LOAD_CONST')
+debug_merge_point(2, 8, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-5~#10 RETURN_VALUE')
++369: leave_portal_frame(25)
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
+debug_merge_point(1, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++369: leave_portal_frame(25)
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++369: guard_isnull(p1, descr=<Guard0x7f3fc4b4cc60>) [p0, p1, p2, p4, i49, None, None, None]
++378: leave_portal_frame(25)
++378: p76 = force_token()
++381: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++396: setfield_gc(p0, p76, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++400: p78 = new_with_vtable(descr=<SizeDescr 16>)
++437: setfield_gc(p78, 3, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++445: guard_not_forced_2(descr=<Guard0x7f3fc4bd12b0>) [p0, p2, None, None, None]
++477: finish(p78, descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++608: --end of the loop--
+[63926b6da982] jit-log-opt-bridge}
+[63926bfa942d] {jit-log-opt-bridge
+# bridge out of Guard 0x7f3fc4b4cdb0 with 582 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++734: guard_value(p6, ConstPtr(null), descr=<Guard0x7f3fc4b58660>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++744: guard_not_invalidated(descr=<Guard0x7f3fc4b60d08>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++744: i11 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++752: i13 = int_eq(i11, 0)
++756: guard_true(i13, descr=<Guard0x7f3fc4b60d40>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++762: enter_portal_frame(25, 6732)
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++762: i17 = int_eq(i9, 0)
++766: guard_false(i17, descr=<Guard0x7f3fc4b60d78>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++772: i19 = int_eq(i9, 1)
++776: guard_false(i19, descr=<Guard0x7f3fc4b60db0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++782: i21 = int_sub_ovf(i9, 1)
++789: guard_no_overflow(descr=<Guard0x7f3fc4b60de8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++795: p22 = force_token()
++798: enter_portal_frame(25, 6732)
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++798: i26 = int_eq(i21, 0)
++802: guard_false(i26, descr=<Guard0x7f3fc4b60e20>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++808: i28 = int_eq(i21, 1)
++812: guard_false(i28, descr=<Guard0x7f3fc4b60e58>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++818: i30 = int_sub_ovf(i21, 1)
++825: guard_no_overflow(descr=<Guard0x7f3fc4b60e90>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++831: p31 = force_token()
++834: enter_portal_frame(25, 6732)
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++834: i35 = int_eq(i30, 0)
++838: guard_false(i35, descr=<Guard0x7f3fc4b60ec8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++844: i37 = int_eq(i30, 1)
++848: guard_false(i37, descr=<Guard0x7f3fc4b60f00>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++854: i39 = int_sub_ovf(i30, 1)
++865: guard_no_overflow(descr=<Guard0x7f3fc4b60f38>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++871: p40 = force_token()
++881: enter_portal_frame(25, 6732)
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++881: i44 = int_eq(i39, 0)
++885: guard_false(i44, descr=<Guard0x7f3fc4b60f70>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++891: i46 = int_eq(i39, 1)
++895: guard_false(i46, descr=<Guard0x7f3fc4b60fa8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++901: i48 = int_sub_ovf(i39, 1)
++912: guard_no_overflow(descr=<Guard0x7f3fc4b60fe0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++918: p49 = force_token()
++928: enter_portal_frame(25, 6732)
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++928: i53 = int_eq(i48, 0)
++932: guard_false(i53, descr=<Guard0x7f3fc4b61018>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++938: i55 = int_eq(i48, 1)
++942: guard_false(i55, descr=<Guard0x7f3fc4b61050>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++948: i57 = int_sub_ovf(i48, 1)
++959: guard_no_overflow(descr=<Guard0x7f3fc4b61088>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++965: p58 = force_token()
++975: enter_portal_frame(25, 6732)
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++975: i62 = int_eq(i57, 0)
++979: guard_false(i62, descr=<Guard0x7f3fc4b610c0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++985: i64 = int_eq(i57, 1)
++989: guard_false(i64, descr=<Guard0x7f3fc4b610f8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++995: i66 = int_sub_ovf(i57, 1)
++1006: guard_no_overflow(descr=<Guard0x7f3fc4b61130>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++1012: p67 = force_token()
++1022: enter_portal_frame(25, 6732)
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#0 LOAD_FAST')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++1022: i71 = int_eq(i66, 0)
++1026: guard_false(i71, descr=<Guard0x7f3fc4b61168>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++1032: i73 = int_eq(i66, 1)
++1036: guard_false(i73, descr=<Guard0x7f3fc4b611a0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#24 LOAD_GLOBAL')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#26 LOAD_FAST')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#28 LOAD_CONST')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#30 BINARY_SUBTRACT')
++1042: i75 = int_sub_ovf(i66, 1)
++1053: guard_no_overflow(descr=<Guard0x7f3fc4b611d8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#32 CALL_FUNCTION')
++1059: p76 = force_token()
++1069: p77 = force_token()
++1079: p78 = new_with_vtable(descr=<SizeDescr 104>)
++1133: p79 = new_with_vtable(descr=<SizeDescr 24>)
++1144: setfield_gc(p79, p67, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1162: setfield_gc(p79, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1170: p82 = new_array_clear(5, descr=<ArrayP 8>)
++1203: p83 = new_with_vtable(descr=<SizeDescr 16>)
++1221: setfield_gc(p83, i75, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1225: setarrayitem_gc(p82, 0, p83, descr=<ArrayP 8>)
++1229: p85 = new_with_vtable(descr=<SizeDescr 24>)
++1240: setfield_gc(p85, p76, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1244: setfield_gc(p85, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1270: setfield_gc(p5, p85, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1287: setfield_gc(p0, p77, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1291: setfield_gc(p78, p79, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1302: setfield_gc(p78, ConstPtr(ptr86), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++1306: setfield_gc(p78, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1314: setfield_gc(p78, p82, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1325: setfield_gc(p78, ConstPtr(ptr88), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1329: setfield_gc(p78, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1337: setfield_gc(p78, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1342: setfield_gc(p78, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1525: p92 = call_assembler_r(p78, p5, descr=<Loop1>)
++1754: guard_not_forced(descr=<Guard0x7f3fc4bd1a40>) [p0, p1, p2, p3, p79, p78, p85, p4, p5, p92, p83, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++1765: keepalive(p78)
++1765: guard_no_exception(descr=<Guard0x7f3fc4b586b0>) [p0, p1, p2, p3, p79, p78, p85, p4, p5, p92, p83, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++1785: guard_not_invalidated(descr=<Guard0x7f3fc4b61210>) [p0, p1, p2, p3, p79, p78, p85, p4, p5, p92, p83, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++1785: p93 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1799: p94 = getfield_gc_r(p78, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1810: i95 = getfield_gc_i(p78, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1826: setfield_gc(p5, p94, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1833: guard_false(i95, descr=<Guard0x7f3fc4b58700>) [p0, p1, p2, p3, p79, p78, p85, p4, p5, p92, i95, p93, p83, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++1842: setfield_gc(p85, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++1857: i97 = int_sub_ovf(i66, 2)
++1868: guard_no_overflow(descr=<Guard0x7f3fc4b58750>) [p0, p1, p2, p3, p79, p4, p5, i66, p92, None, p58, None, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++1874: p99 = force_token()
++1877: p100 = force_token()
++1880: p101 = new_with_vtable(descr=<SizeDescr 104>)
++1921: p103 = new_array_clear(5, descr=<ArrayP 8>)
++1954: p104 = new_with_vtable(descr=<SizeDescr 16>)
++1965: setfield_gc(p104, i97, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1969: setarrayitem_gc(p103, 0, p104, descr=<ArrayP 8>)
++1973: p106 = new_with_vtable(descr=<SizeDescr 24>)
++1984: setfield_gc(p106, p99, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1988: setfield_gc(p106, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++2007: setfield_gc(p5, p106, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2033: setfield_gc(p0, p100, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++2038: setfield_gc(p101, p94, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2042: setfield_gc(p101, ConstPtr(ptr107), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++2053: setfield_gc(p101, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2061: setfield_gc(p101, p103, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++2065: setfield_gc(p101, ConstPtr(ptr109), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++2076: setfield_gc(p101, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2084: setfield_gc(p101, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2089: setfield_gc(p101, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++2258: p113 = call_assembler_r(p101, p5, descr=<Loop1>)
++2452: guard_not_forced(descr=<Guard0x7f3fc4bd1a98>) [p0, p1, p2, p3, p79, p101, p106, p4, p5, p113, p104, p92, None, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++2463: keepalive(p101)
++2463: guard_no_exception(descr=<Guard0x7f3fc4b587a0>) [p0, p1, p2, p3, p79, p101, p106, p4, p5, p113, p104, p92, None, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++2483: guard_not_invalidated(descr=<Guard0x7f3fc4b61248>) [p0, p1, p2, p3, p79, p101, p106, p4, p5, p113, p104, p92, None, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++2483: p114 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2497: p115 = getfield_gc_r(p101, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2508: i116 = getfield_gc_i(p101, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2524: setfield_gc(p5, p115, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2531: guard_false(i116, descr=<Guard0x7f3fc4b587f0>) [p0, p1, p2, p3, p79, p101, p106, p4, p5, p113, i116, p114, p104, p92, None, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++2540: setfield_gc(p106, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++2555: guard_class(p92, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b58840>) [p0, p1, p2, p3, p79, p4, p5, p92, p113, None, None, None, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++2574: guard_class(p113, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b61280>) [p0, p1, p2, p3, p79, p4, p5, p92, p113, None, None, None, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++2586: i119 = getfield_gc_i(p92, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2590: i120 = getfield_gc_i(p113, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2594: i121 = int_add_ovf(i119, i120)
++2597: guard_no_overflow(descr=<Guard0x7f3fc4b612b8>) [p0, p1, p2, p3, p79, p4, p5, p92, p113, None, None, None, p58, i66, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(7, 7, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++2603: leave_portal_frame(25)
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++2603: setfield_gc(p79, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++2618: i124 = int_sub_ovf(i57, 2)
++2629: guard_no_overflow(descr=<Guard0x7f3fc4b58890>) [p0, p1, p2, p3, p4, p5, i57, i121, None, None, None, p58, None, p49, None, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++2635: p125 = force_token()
++2638: p126 = force_token()
++2641: p127 = new_with_vtable(descr=<SizeDescr 104>)
++2682: p128 = new_with_vtable(descr=<SizeDescr 24>)
++2694: setfield_gc(p128, p58, descr=<FieldP JitVirtualRef.virtual_token 8>)
++2706: setfield_gc(p128, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++2715: p130 = new_array_clear(5, descr=<ArrayP 8>)
++2749: p131 = new_with_vtable(descr=<SizeDescr 16>)
++2760: setfield_gc(p131, i124, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2764: setarrayitem_gc(p130, 0, p131, descr=<ArrayP 8>)
++2768: p133 = new_with_vtable(descr=<SizeDescr 24>)
++2779: setfield_gc(p133, p125, descr=<FieldP JitVirtualRef.virtual_token 8>)
++2783: setfield_gc(p133, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++2802: setfield_gc(p5, p133, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2827: setfield_gc(p0, p126, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++2831: setfield_gc(p127, p128, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2835: setfield_gc(p127, ConstPtr(ptr134), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++2846: setfield_gc(p127, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2854: setfield_gc(p127, p130, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++2858: setfield_gc(p127, ConstPtr(ptr136), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++2869: setfield_gc(p127, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2877: setfield_gc(p127, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++2882: setfield_gc(p127, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++3062: p140 = call_assembler_r(p127, p5, descr=<Loop1>)
++3256: guard_not_forced(descr=<Guard0x7f3fc4bd1af0>) [p0, p1, p2, p3, p128, p127, p133, p4, p5, p140, p131, i121, None, None, None, None, None, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++3267: keepalive(p127)
++3267: guard_no_exception(descr=<Guard0x7f3fc4b588e0>) [p0, p1, p2, p3, p128, p127, p133, p4, p5, p140, p131, i121, None, None, None, None, None, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++3287: guard_not_invalidated(descr=<Guard0x7f3fc4b612f0>) [p0, p1, p2, p3, p128, p127, p133, p4, p5, p140, p131, i121, None, None, None, None, None, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++3287: p141 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++3301: p142 = getfield_gc_r(p127, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3312: i143 = getfield_gc_i(p127, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++3328: setfield_gc(p5, p142, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++3335: guard_false(i143, descr=<Guard0x7f3fc4b58930>) [p0, p1, p2, p3, p128, p127, p133, p4, p5, p140, i143, p141, p131, i121, None, None, None, None, None, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++3344: setfield_gc(p133, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++3359: guard_class(p140, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b58980>) [p0, p1, p2, p3, p128, p4, p5, p140, None, i121, None, None, None, None, None, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++3371: i145 = getfield_gc_i(p140, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3375: i146 = int_add_ovf(i121, i145)
++3382: guard_no_overflow(descr=<Guard0x7f3fc4b61328>) [p0, p1, p2, p3, p128, p4, p5, p140, None, i121, None, None, None, None, None, p49, i57, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(6, 6, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++3388: leave_portal_frame(25)
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++3388: setfield_gc(p128, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++3403: i149 = int_sub_ovf(i48, 2)
++3414: guard_no_overflow(descr=<Guard0x7f3fc4b589d0>) [p0, p1, p2, p3, p4, p5, i48, i146, None, None, None, None, None, None, None, p49, None, p40, None, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++3420: p150 = force_token()
++3423: p151 = force_token()
++3426: p152 = new_with_vtable(descr=<SizeDescr 104>)
++3467: p153 = new_with_vtable(descr=<SizeDescr 24>)
++3479: setfield_gc(p153, p49, descr=<FieldP JitVirtualRef.virtual_token 8>)
++3490: setfield_gc(p153, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++3498: p155 = new_array_clear(5, descr=<ArrayP 8>)
++3531: p156 = new_with_vtable(descr=<SizeDescr 16>)
++3542: setfield_gc(p156, i149, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++3546: setarrayitem_gc(p155, 0, p156, descr=<ArrayP 8>)
++3550: p158 = new_with_vtable(descr=<SizeDescr 24>)
++3561: setfield_gc(p158, p150, descr=<FieldP JitVirtualRef.virtual_token 8>)
++3565: setfield_gc(p158, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++3584: setfield_gc(p5, p158, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++3608: setfield_gc(p0, p151, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++3612: setfield_gc(p152, p153, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++3616: setfield_gc(p152, ConstPtr(ptr159), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++3627: setfield_gc(p152, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++3635: setfield_gc(p152, p155, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++3639: setfield_gc(p152, ConstPtr(ptr161), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++3650: setfield_gc(p152, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++3658: setfield_gc(p152, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++3663: setfield_gc(p152, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++3843: p165 = call_assembler_r(p152, p5, descr=<Loop1>)
++4037: guard_not_forced(descr=<Guard0x7f3fc4bd1b48>) [p0, p1, p2, p3, p153, p152, p158, p4, p5, p165, p156, i146, None, None, None, None, None, None, None, None, None, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++4048: keepalive(p152)
++4048: guard_no_exception(descr=<Guard0x7f3fc4b58a20>) [p0, p1, p2, p3, p153, p152, p158, p4, p5, p165, p156, i146, None, None, None, None, None, None, None, None, None, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++4068: guard_not_invalidated(descr=<Guard0x7f3fc4b61360>) [p0, p1, p2, p3, p153, p152, p158, p4, p5, p165, p156, i146, None, None, None, None, None, None, None, None, None, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++4068: p166 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++4082: p167 = getfield_gc_r(p152, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++4093: i168 = getfield_gc_i(p152, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++4109: setfield_gc(p5, p167, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++4116: guard_false(i168, descr=<Guard0x7f3fc4b58a70>) [p0, p1, p2, p3, p153, p152, p158, p4, p5, p165, i168, p166, p156, i146, None, None, None, None, None, None, None, None, None, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++4125: setfield_gc(p158, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++4140: guard_class(p165, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b58ac0>) [p0, p1, p2, p3, p153, p4, p5, p165, None, i146, None, None, None, None, None, None, None, None, None, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
++4152: i170 = getfield_gc_i(p165, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++4156: i171 = int_add_ovf(i146, i170)
++4163: guard_no_overflow(descr=<Guard0x7f3fc4b61398>) [p0, p1, p2, p3, p153, p4, p5, p165, None, i146, None, None, None, None, None, None, None, None, None, p40, i48, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(5, 5, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++4169: leave_portal_frame(25)
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++4169: setfield_gc(p153, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++4184: i174 = int_sub_ovf(i39, 2)
++4195: guard_no_overflow(descr=<Guard0x7f3fc4b58b10>) [p0, p1, p2, p3, p4, p5, i39, i171, None, None, None, None, None, None, None, None, None, None, None, p40, None, p31, None, p22, i30, i21, p7, p8, i9]
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++4201: p175 = force_token()
++4204: p176 = force_token()
++4207: p177 = new_with_vtable(descr=<SizeDescr 104>)
++4248: p178 = new_with_vtable(descr=<SizeDescr 24>)
++4259: setfield_gc(p178, p40, descr=<FieldP JitVirtualRef.virtual_token 8>)
++4270: setfield_gc(p178, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++4278: p180 = new_array_clear(5, descr=<ArrayP 8>)
++4311: p181 = new_with_vtable(descr=<SizeDescr 16>)
++4322: setfield_gc(p181, i174, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++4326: setarrayitem_gc(p180, 0, p181, descr=<ArrayP 8>)
++4330: p183 = new_with_vtable(descr=<SizeDescr 24>)
++4341: setfield_gc(p183, p175, descr=<FieldP JitVirtualRef.virtual_token 8>)
++4345: setfield_gc(p183, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++4364: setfield_gc(p5, p183, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++4390: setfield_gc(p0, p176, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++4395: setfield_gc(p177, p178, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++4399: setfield_gc(p177, ConstPtr(ptr184), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++4410: setfield_gc(p177, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++4418: setfield_gc(p177, p180, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++4422: setfield_gc(p177, ConstPtr(ptr186), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++4433: setfield_gc(p177, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++4441: setfield_gc(p177, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++4446: setfield_gc(p177, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++4626: p190 = call_assembler_r(p177, p5, descr=<Loop1>)
++4820: guard_not_forced(descr=<Guard0x7f3fc4bd1ba0>) [p0, p1, p2, p3, p178, p177, p183, p4, p5, p190, p181, i171, None, None, None, None, None, None, None, None, None, None, None, None, None, p31, i39, p22, i30, i21, p7, p8, i9]
++4831: keepalive(p177)
++4831: guard_no_exception(descr=<Guard0x7f3fc4b58b60>) [p0, p1, p2, p3, p178, p177, p183, p4, p5, p190, p181, i171, None, None, None, None, None, None, None, None, None, None, None, None, None, p31, i39, p22, i30, i21, p7, p8, i9]
++4851: guard_not_invalidated(descr=<Guard0x7f3fc4b613d0>) [p0, p1, p2, p3, p178, p177, p183, p4, p5, p190, p181, i171, None, None, None, None, None, None, None, None, None, None, None, None, None, p31, i39, p22, i30, i21, p7, p8, i9]
++4851: p191 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++4865: p192 = getfield_gc_r(p177, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++4876: i193 = getfield_gc_i(p177, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++4892: setfield_gc(p5, p192, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++4899: guard_false(i193, descr=<Guard0x7f3fc4b58bb0>) [p0, p1, p2, p3, p178, p177, p183, p4, p5, p190, i193, p191, p181, i171, None, None, None, None, None, None, None, None, None, None, None, None, None, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++4908: setfield_gc(p183, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++4923: guard_class(p190, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b58c00>) [p0, p1, p2, p3, p178, p4, p5, p190, None, i171, None, None, None, None, None, None, None, None, None, None, None, None, None, p31, i39, p22, i30, i21, p7, p8, i9]
++4935: i195 = getfield_gc_i(p190, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++4939: i196 = int_add_ovf(i171, i195)
++4946: guard_no_overflow(descr=<Guard0x7f3fc4b61408>) [p0, p1, p2, p3, p178, p4, p5, p190, None, i171, None, None, None, None, None, None, None, None, None, None, None, None, None, p31, i39, p22, i30, i21, p7, p8, i9]
+debug_merge_point(4, 4, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++4952: leave_portal_frame(25)
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++4952: setfield_gc(p178, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++4967: i199 = int_sub_ovf(i30, 2)
++4978: guard_no_overflow(descr=<Guard0x7f3fc4b58c50>) [p0, p1, p2, p3, p4, p5, i30, i196, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p31, None, p22, None, i21, p7, p8, i9]
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++4984: p200 = force_token()
++4987: p201 = force_token()
++4990: p202 = new_with_vtable(descr=<SizeDescr 104>)
++5031: p203 = new_with_vtable(descr=<SizeDescr 24>)
++5043: setfield_gc(p203, p31, descr=<FieldP JitVirtualRef.virtual_token 8>)
++5055: setfield_gc(p203, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++5064: p205 = new_array_clear(5, descr=<ArrayP 8>)
++5098: p206 = new_with_vtable(descr=<SizeDescr 16>)
++5109: setfield_gc(p206, i199, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++5113: setarrayitem_gc(p205, 0, p206, descr=<ArrayP 8>)
++5117: p208 = new_with_vtable(descr=<SizeDescr 24>)
++5128: setfield_gc(p208, p200, descr=<FieldP JitVirtualRef.virtual_token 8>)
++5132: setfield_gc(p208, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++5151: setfield_gc(p5, p208, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++5176: setfield_gc(p0, p201, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++5180: setfield_gc(p202, p203, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++5184: setfield_gc(p202, ConstPtr(ptr209), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++5195: setfield_gc(p202, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++5203: setfield_gc(p202, p205, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++5207: setfield_gc(p202, ConstPtr(ptr211), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++5218: setfield_gc(p202, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++5226: setfield_gc(p202, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++5231: setfield_gc(p202, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++5411: p215 = call_assembler_r(p202, p5, descr=<Loop1>)
++5605: guard_not_forced(descr=<Guard0x7f3fc4bd1bf8>) [p0, p1, p2, p3, p203, p202, p208, p4, p5, p215, p206, i196, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p22, i30, i21, p7, p8, i9]
++5616: keepalive(p202)
++5616: guard_no_exception(descr=<Guard0x7f3fc4b58ca0>) [p0, p1, p2, p3, p203, p202, p208, p4, p5, p215, p206, i196, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p22, i30, i21, p7, p8, i9]
++5636: guard_not_invalidated(descr=<Guard0x7f3fc4b61440>) [p0, p1, p2, p3, p203, p202, p208, p4, p5, p215, p206, i196, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p22, i30, i21, p7, p8, i9]
++5636: p216 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++5650: p217 = getfield_gc_r(p202, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++5661: i218 = getfield_gc_i(p202, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++5677: setfield_gc(p5, p217, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++5684: guard_false(i218, descr=<Guard0x7f3fc4b58cf0>) [p0, p1, p2, p3, p203, p202, p208, p4, p5, p215, i218, p216, p206, i196, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p22, i30, i21, p7, p8, i9]
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++5693: setfield_gc(p208, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++5708: guard_class(p215, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b58d40>) [p0, p1, p2, p3, p203, p4, p5, p215, None, i196, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p22, i30, i21, p7, p8, i9]
++5720: i220 = getfield_gc_i(p215, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++5724: i221 = int_add_ovf(i196, i220)
++5731: guard_no_overflow(descr=<Guard0x7f3fc4b61478>) [p0, p1, p2, p3, p203, p4, p5, p215, None, i196, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p22, i30, i21, p7, p8, i9]
+debug_merge_point(3, 3, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++5737: leave_portal_frame(25)
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++5737: setfield_gc(p203, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++5752: i224 = int_sub_ovf(i21, 2)
++5763: guard_no_overflow(descr=<Guard0x7f3fc4b58d90>) [p0, p1, p2, p3, p4, p5, i21, i221, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p22, None, None, p7, p8, i9]
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++5769: p225 = force_token()
++5772: p226 = force_token()
++5775: p227 = new_with_vtable(descr=<SizeDescr 104>)
++5816: p228 = new_with_vtable(descr=<SizeDescr 24>)
++5828: setfield_gc(p228, p22, descr=<FieldP JitVirtualRef.virtual_token 8>)
++5839: setfield_gc(p228, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++5847: p230 = new_array_clear(5, descr=<ArrayP 8>)
++5880: p231 = new_with_vtable(descr=<SizeDescr 16>)
++5891: setfield_gc(p231, i224, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++5895: setarrayitem_gc(p230, 0, p231, descr=<ArrayP 8>)
++5899: p233 = new_with_vtable(descr=<SizeDescr 24>)
++5910: setfield_gc(p233, p225, descr=<FieldP JitVirtualRef.virtual_token 8>)
++5914: setfield_gc(p233, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++5933: setfield_gc(p5, p233, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++5957: setfield_gc(p0, p226, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++5961: setfield_gc(p227, p228, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++5965: setfield_gc(p227, ConstPtr(ptr234), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++5976: setfield_gc(p227, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++5984: setfield_gc(p227, p230, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++5988: setfield_gc(p227, ConstPtr(ptr236), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++5999: setfield_gc(p227, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++6007: setfield_gc(p227, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++6012: setfield_gc(p227, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++6192: p240 = call_assembler_r(p227, p5, descr=<Loop1>)
++6386: guard_not_forced(descr=<Guard0x7f3fc4bd1c50>) [p0, p1, p2, p3, p228, p227, p233, p4, p5, p240, p231, i221, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, i21, p7, p8, i9]
++6397: keepalive(p227)
++6397: guard_no_exception(descr=<Guard0x7f3fc4b58de0>) [p0, p1, p2, p3, p228, p227, p233, p4, p5, p240, p231, i221, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, i21, p7, p8, i9]
++6417: guard_not_invalidated(descr=<Guard0x7f3fc4b614b0>) [p0, p1, p2, p3, p228, p227, p233, p4, p5, p240, p231, i221, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, i21, p7, p8, i9]
++6417: p241 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++6431: p242 = getfield_gc_r(p227, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++6442: i243 = getfield_gc_i(p227, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++6458: setfield_gc(p5, p242, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++6465: guard_false(i243, descr=<Guard0x7f3fc4b58e30>) [p0, p1, p2, p3, p228, p227, p233, p4, p5, p240, i243, p241, p231, i221, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, i21, p7, p8, i9]
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++6474: setfield_gc(p233, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++6489: guard_class(p240, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b58e80>) [p0, p1, p2, p3, p228, p4, p5, p240, None, i221, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, i21, p7, p8, i9]
++6501: i245 = getfield_gc_i(p240, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++6505: i246 = int_add_ovf(i221, i245)
++6512: guard_no_overflow(descr=<Guard0x7f3fc4b614e8>) [p0, p1, p2, p3, p228, p4, p5, p240, None, i221, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, i21, p7, p8, i9]
+debug_merge_point(2, 2, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++6518: leave_portal_frame(25)
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++6518: setfield_gc(p228, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++6533: i249 = int_sub_ovf(i9, 2)
++6544: guard_no_overflow(descr=<Guard0x7f3fc4b58ed0>) [p0, p1, p2, p3, p4, p5, i9, i246, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p7, p8, None]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++6550: p250 = force_token()
++6553: p251 = force_token()
++6556: p252 = new_with_vtable(descr=<SizeDescr 104>)
++6597: p253 = new_with_vtable(descr=<SizeDescr 24>)
++6608: setfield_gc(p253, p7, descr=<FieldP JitVirtualRef.virtual_token 8>)
++6619: setfield_gc(p253, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++6627: p256 = new_array_clear(5, descr=<ArrayP 8>)
++6660: p257 = new_with_vtable(descr=<SizeDescr 16>)
++6671: setfield_gc(p257, i249, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++6675: setarrayitem_gc(p256, 0, p257, descr=<ArrayP 8>)
++6679: p259 = new_with_vtable(descr=<SizeDescr 24>)
++6690: setfield_gc(p259, p250, descr=<FieldP JitVirtualRef.virtual_token 8>)
++6694: setfield_gc(p259, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++6713: setfield_gc(p5, p259, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++6739: setfield_gc(p0, p251, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++6744: setfield_gc(p252, p253, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++6748: setfield_gc(p252, ConstPtr(ptr260), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++6759: setfield_gc(p252, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++6767: setfield_gc(p252, p256, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++6771: setfield_gc(p252, ConstPtr(ptr262), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++6782: setfield_gc(p252, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++6790: setfield_gc(p252, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++6795: setfield_gc(p252, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++6975: p266 = call_assembler_r(p252, p5, descr=<Loop1>)
++7169: guard_not_forced(descr=<Guard0x7f3fc4bd1ca8>) [p0, p1, p2, p3, p253, p252, p259, p4, p5, p266, p257, i246, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p8, i9]
++7180: keepalive(p252)
++7180: guard_no_exception(descr=<Guard0x7f3fc4b58f20>) [p0, p1, p2, p3, p253, p252, p259, p4, p5, p266, p257, i246, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p8, i9]
++7200: guard_not_invalidated(descr=<Guard0x7f3fc4b61520>) [p0, p1, p2, p3, p253, p252, p259, p4, p5, p266, p257, i246, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p8, i9]
++7200: p267 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++7214: p268 = getfield_gc_r(p252, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++7225: i269 = getfield_gc_i(p252, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++7241: setfield_gc(p5, p268, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++7248: guard_false(i269, descr=<Guard0x7f3fc4b59650>) [p0, p1, p2, p3, p253, p252, p259, p4, p5, p266, i269, p267, p257, i246, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p8, i9]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++7257: setfield_gc(p259, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++7272: guard_class(p266, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b59600>) [p0, p1, p2, p3, p253, p4, p5, p266, None, i246, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p8, i9]
++7284: i271 = getfield_gc_i(p266, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++7288: i272 = int_add_ovf(i246, i271)
++7295: guard_no_overflow(descr=<Guard0x7f3fc4b61e50>) [p0, p1, p2, p3, p253, p4, p5, p266, None, i246, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, p8, i9]
+debug_merge_point(1, 1, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++7301: leave_portal_frame(25)
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++7301: i274 = getfield_gc_i(p2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++7312: setfield_gc(p5, p8, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++7326: setfield_gc(p253, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++7341: i276 = int_sub_ovf(i274, 2)
++7348: guard_no_overflow(descr=<Guard0x7f3fc4b59560>) [p0, p1, p2, p4, i274, i272, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++7354: p277 = force_token()
++7357: p278 = force_token()
++7360: p279 = new_with_vtable(descr=<SizeDescr 104>)
++7401: p281 = new_array_clear(5, descr=<ArrayP 8>)
++7434: p282 = new_with_vtable(descr=<SizeDescr 16>)
++7445: setfield_gc(p282, i276, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++7449: setarrayitem_gc(p281, 0, p282, descr=<ArrayP 8>)
++7453: p284 = new_with_vtable(descr=<SizeDescr 24>)
++7464: setfield_gc(p284, p277, descr=<FieldP JitVirtualRef.virtual_token 8>)
++7468: setfield_gc(p284, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++7487: setfield_gc(p5, p284, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++7513: setfield_gc(p0, p278, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++7518: setfield_gc(p279, p8, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++7522: setfield_gc(p279, ConstPtr(ptr285), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++7533: setfield_gc(p279, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++7541: setfield_gc(p279, p281, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++7545: setfield_gc(p279, ConstPtr(ptr287), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++7556: setfield_gc(p279, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++7564: setfield_gc(p279, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++7569: setfield_gc(p279, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++7738: p291 = call_assembler_r(p279, p5, descr=<Loop1>)
++7932: guard_not_forced(descr=<Guard0x7f3fc4bd1db0>) [p0, p1, p2, p282, p279, p284, p4, p5, p291, i272, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
++7943: keepalive(p279)
++7943: guard_no_exception(descr=<Guard0x7f3fc4b59510>) [p0, p1, p2, p282, p279, p284, p4, p5, p291, i272, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
++7963: guard_not_invalidated(descr=<Guard0x7f3fc4b61e18>) [p0, p1, p2, p282, p279, p284, p4, p5, p291, i272, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
++7963: p292 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++7977: p293 = getfield_gc_r(p279, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++7988: i294 = getfield_gc_i(p279, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++8003: setfield_gc(p5, p293, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++8010: guard_false(i294, descr=<Guard0x7f3fc4b594c0>) [p0, p1, p2, p282, p279, p284, p4, p291, i294, p292, i272, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++8019: setfield_gc(p284, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++8034: guard_class(p291, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b59470>) [p0, p1, p2, p4, p291, i272, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
++8046: i296 = getfield_gc_i(p291, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++8050: i297 = int_add_ovf(i272, i296)
++8057: guard_no_overflow(descr=<Guard0x7f3fc4b61de0>) [p0, p1, p2, p4, p291, i272, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++8063: guard_isnull(p1, descr=<Guard0x7f3fc4b61da8>) [p0, p1, p2, p4, p291, i272, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
++8077: leave_portal_frame(25)
++8077: p299 = force_token()
++8097: setfield_gc(p0, p299, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++8101: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++8106: p301 = new_with_vtable(descr=<SizeDescr 16>)
++8144: setfield_gc(p301, i297, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++8148: guard_not_forced_2(descr=<Guard0x7f3fc4bd1d00>) [p0, p2, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None, None]
++8166: finish(p301, descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++8288: --end of the loop--
+[63926c178146] jit-log-opt-bridge}
+[63926c22f86f] {jit-log-opt-bridge
+# bridge out of Guard 0x7f3fc4afdd70 with 25 ops
+[p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
++110: guard_value(i3, 1, descr=<Guard0x7f3fc4b59970>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
++120: guard_isnull(p4, descr=<Guard0x7f3fc49a82c0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
++129: guard_nonnull_class(p6, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b599c0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
++155: guard_value(p2, ConstPtr(ptr14), descr=<Guard0x7f3fc49a82f8>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++164: i15 = getfield_gc_i(p6, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++168: i17 = int_eq(i15, 0)
++172: guard_false(i17, descr=<Guard0x7f3fc49a8330>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#14 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#16 COMPARE_OP')
++178: i19 = int_eq(i15, 1)
++182: guard_true(i19, descr=<Guard0x7f3fc49a8368>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-6~#18 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-7~#22 RETURN_VALUE')
++188: guard_isnull(p5, descr=<Guard0x7f3fc49a83a0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
++197: leave_portal_frame(25)
++197: p21 = force_token()
++200: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++215: setfield_gc(p0, p21, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++219: guard_not_forced_2(descr=<Guard0x7f3fc498a180>) [p0, p6, p9, p10]
++265: finish(ConstPtr(ptr23), descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++384: --end of the loop--
+[63926c23da83] jit-log-opt-bridge}
+[63926c4240aa] {jit-log-opt-bridge
+# bridge out of Guard 0x7f3fc4b4ce58 with 91 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++174: guard_value(p6, ConstPtr(null), descr=<Guard0x7f3fc4b59a10>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++184: guard_not_invalidated(descr=<Guard0x7f3fc49a8608>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++184: i11 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++192: i13 = int_eq(i11, 0)
++196: guard_true(i13, descr=<Guard0x7f3fc49a8640>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++202: p14 = force_token()
++205: p15 = new_with_vtable(descr=<SizeDescr 104>)
++251: p17 = new_array_clear(5, descr=<ArrayP 8>)
++284: p18 = new_with_vtable(descr=<SizeDescr 16>)
++295: setfield_gc(p18, i9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++299: setarrayitem_gc(p17, 0, p18, descr=<ArrayP 8>)
++303: p20 = new_with_vtable(descr=<SizeDescr 24>)
++314: setfield_gc(p20, p7, descr=<FieldP JitVirtualRef.virtual_token 8>)
++318: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++337: setfield_gc(p5, p20, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++354: setfield_gc(p0, p14, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++358: setfield_gc(p15, p8, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++369: setfield_gc(p15, ConstPtr(ptr22), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++373: setfield_gc(p15, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++381: setfield_gc(p15, p17, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++392: setfield_gc(p15, ConstPtr(ptr24), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++396: setfield_gc(p15, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++404: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++409: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++578: p28 = call_assembler_r(p15, p5, descr=<Loop1>)
++807: guard_not_forced(descr=<Guard0x7f3fc498a1d8>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++818: keepalive(p15)
++818: guard_no_exception(descr=<Guard0x7f3fc4b59a60>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++838: guard_not_invalidated(descr=<Guard0x7f3fc49a8678>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++838: p30 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++852: p31 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++863: i32 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++878: setfield_gc(p5, p31, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++885: guard_false(i32, descr=<Guard0x7f3fc4b59ab0>) [p0, p1, p2, p18, p3, p15, p20, p4, p28, i32, p30, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++894: i33 = getfield_gc_i(p2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++905: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++920: i36 = int_sub_ovf(i33, 2)
++927: guard_no_overflow(descr=<Guard0x7f3fc4b59b00>) [p0, p1, p2, p28, p4, i33, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++933: p37 = force_token()
++936: p38 = force_token()
++939: p39 = new_with_vtable(descr=<SizeDescr 104>)
++980: p41 = new_array_clear(5, descr=<ArrayP 8>)
++1013: p42 = new_with_vtable(descr=<SizeDescr 16>)
++1024: setfield_gc(p42, i36, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1028: setarrayitem_gc(p41, 0, p42, descr=<ArrayP 8>)
++1032: p44 = new_with_vtable(descr=<SizeDescr 24>)
++1043: setfield_gc(p44, p37, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1047: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1065: setfield_gc(p5, p44, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1090: setfield_gc(p0, p38, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1094: setfield_gc(p39, p31, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1098: setfield_gc(p39, ConstPtr(ptr45), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++1109: setfield_gc(p39, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1117: setfield_gc(p39, p41, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1121: setfield_gc(p39, ConstPtr(ptr47), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1132: setfield_gc(p39, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1140: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1145: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1314: p51 = call_assembler_r(p39, p5, descr=<Loop1>)
++1508: guard_not_forced(descr=<Guard0x7f3fc498a230>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1519: keepalive(p39)
++1519: guard_no_exception(descr=<Guard0x7f3fc4b59b50>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1539: guard_not_invalidated(descr=<Guard0x7f3fc49a86b0>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1539: p52 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1553: p53 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1564: i54 = getfield_gc_i(p39, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1579: setfield_gc(p5, p53, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1586: guard_false(i54, descr=<Guard0x7f3fc4b59ba0>) [p0, p1, p2, p28, p42, p39, p44, p4, p51, i54, p52, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++1595: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++1610: guard_class(p28, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b59bf0>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1629: guard_class(p51, ConstClass(W_IntObject), descr=<Guard0x7f3fc49a86e8>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1641: i57 = getfield_gc_i(p28, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1645: i58 = getfield_gc_i(p51, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1649: i59 = int_add_ovf(i57, i58)
++1652: guard_no_overflow(descr=<Guard0x7f3fc49a8720>) [p0, p1, p2, p4, p28, p51, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++1658: guard_isnull(p1, descr=<Guard0x7f3fc49a8758>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1672: leave_portal_frame(25)
++1672: p61 = force_token()
++1692: setfield_gc(p0, p61, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1696: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1701: p63 = new_with_vtable(descr=<SizeDescr 16>)
++1739: setfield_gc(p63, i59, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1743: guard_not_forced_2(descr=<Guard0x7f3fc498a288>) [p0, p2, None, None, None]
++1761: finish(p63, descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++1888: --end of the loop--
+[63926c45384f] jit-log-opt-bridge}
+[63926c62d6bb] {jit-log-opt-bridge
+# bridge out of Guard 0x7f3fc4b60fa8 with 91 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++174: guard_value(p6, ConstPtr(null), descr=<Guard0x7f3fc4b59c40>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++184: guard_not_invalidated(descr=<Guard0x7f3fc49a89c0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++184: i11 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++192: i13 = int_eq(i11, 0)
++196: guard_true(i13, descr=<Guard0x7f3fc49a89f8>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++202: p14 = force_token()
++205: p15 = new_with_vtable(descr=<SizeDescr 104>)
++251: p17 = new_array_clear(5, descr=<ArrayP 8>)
++284: p18 = new_with_vtable(descr=<SizeDescr 16>)
++295: setfield_gc(p18, i9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++299: setarrayitem_gc(p17, 0, p18, descr=<ArrayP 8>)
++303: p20 = new_with_vtable(descr=<SizeDescr 24>)
++314: setfield_gc(p20, p7, descr=<FieldP JitVirtualRef.virtual_token 8>)
++318: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++337: setfield_gc(p5, p20, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++354: setfield_gc(p0, p14, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++358: setfield_gc(p15, p8, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++369: setfield_gc(p15, ConstPtr(ptr22), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++373: setfield_gc(p15, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++381: setfield_gc(p15, p17, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++392: setfield_gc(p15, ConstPtr(ptr24), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++396: setfield_gc(p15, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++404: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++409: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++567: p28 = call_assembler_r(p15, p5, descr=<Loop1>)
++796: guard_not_forced(descr=<Guard0x7f3fc498a2e0>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++807: keepalive(p15)
++807: guard_no_exception(descr=<Guard0x7f3fc4b59c90>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++827: guard_not_invalidated(descr=<Guard0x7f3fc49a8a30>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++827: p30 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++841: p31 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++852: i32 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++867: setfield_gc(p5, p31, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++874: guard_false(i32, descr=<Guard0x7f3fc4b59ce0>) [p0, p1, p2, p18, p3, p15, p20, p4, p28, i32, p30, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++883: i33 = getfield_gc_i(p2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++894: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++909: i36 = int_sub_ovf(i33, 2)
++916: guard_no_overflow(descr=<Guard0x7f3fc4b59d30>) [p0, p1, p2, p28, p4, i33, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++922: p37 = force_token()
++925: p38 = force_token()
++928: p39 = new_with_vtable(descr=<SizeDescr 104>)
++969: p41 = new_array_clear(5, descr=<ArrayP 8>)
++1002: p42 = new_with_vtable(descr=<SizeDescr 16>)
++1013: setfield_gc(p42, i36, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1017: setarrayitem_gc(p41, 0, p42, descr=<ArrayP 8>)
++1021: p44 = new_with_vtable(descr=<SizeDescr 24>)
++1032: setfield_gc(p44, p37, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1036: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1054: setfield_gc(p5, p44, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1079: setfield_gc(p0, p38, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1083: setfield_gc(p39, p31, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1087: setfield_gc(p39, ConstPtr(ptr45), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++1098: setfield_gc(p39, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1106: setfield_gc(p39, p41, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1110: setfield_gc(p39, ConstPtr(ptr47), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1121: setfield_gc(p39, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1129: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1134: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1303: p51 = call_assembler_r(p39, p5, descr=<Loop1>)
++1497: guard_not_forced(descr=<Guard0x7f3fc498a338>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1508: keepalive(p39)
++1508: guard_no_exception(descr=<Guard0x7f3fc4b59d80>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1528: guard_not_invalidated(descr=<Guard0x7f3fc49a8a68>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1528: p52 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1542: p53 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1553: i54 = getfield_gc_i(p39, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1568: setfield_gc(p5, p53, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1575: guard_false(i54, descr=<Guard0x7f3fc4b59dd0>) [p0, p1, p2, p28, p42, p39, p44, p4, p51, i54, p52, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++1584: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++1599: guard_class(p28, ConstClass(W_IntObject), descr=<Guard0x7f3fc4b59e20>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1618: guard_class(p51, ConstClass(W_IntObject), descr=<Guard0x7f3fc49a8aa0>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1630: i57 = getfield_gc_i(p28, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1634: i58 = getfield_gc_i(p51, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1638: i59 = int_add_ovf(i57, i58)
++1641: guard_no_overflow(descr=<Guard0x7f3fc49a8ad8>) [p0, p1, p2, p4, p28, p51, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++1647: guard_isnull(p1, descr=<Guard0x7f3fc49a8b10>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1661: leave_portal_frame(25)
++1661: p61 = force_token()
++1681: setfield_gc(p0, p61, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1685: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1690: p63 = new_with_vtable(descr=<SizeDescr 16>)
++1728: setfield_gc(p63, i59, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1732: guard_not_forced_2(descr=<Guard0x7f3fc498a390>) [p0, p2, None, None, None]
++1750: finish(p63, descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++1872: --end of the loop--
+[63926c65b252] jit-log-opt-bridge}
+[63926c82484f] {jit-log-opt-bridge
+# bridge out of Guard 0x7f3fc4b61050 with 91 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++174: guard_value(p6, ConstPtr(null), descr=<Guard0x7f3fc4b59e70>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++191: guard_not_invalidated(descr=<Guard0x7f3fc49a8d78>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++191: i11 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++199: i13 = int_eq(i11, 0)
++203: guard_true(i13, descr=<Guard0x7f3fc49a8db0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++209: p14 = force_token()
++212: p15 = new_with_vtable(descr=<SizeDescr 104>)
++258: p17 = new_array_clear(5, descr=<ArrayP 8>)
++291: p18 = new_with_vtable(descr=<SizeDescr 16>)
++302: setfield_gc(p18, i9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++306: setarrayitem_gc(p17, 0, p18, descr=<ArrayP 8>)
++310: p20 = new_with_vtable(descr=<SizeDescr 24>)
++321: setfield_gc(p20, p7, descr=<FieldP JitVirtualRef.virtual_token 8>)
++325: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++344: setfield_gc(p5, p20, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++361: setfield_gc(p0, p14, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++365: setfield_gc(p15, p8, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++376: setfield_gc(p15, ConstPtr(ptr22), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++380: setfield_gc(p15, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++388: setfield_gc(p15, p17, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++399: setfield_gc(p15, ConstPtr(ptr24), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++403: setfield_gc(p15, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++411: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++416: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++574: p28 = call_assembler_r(p15, p5, descr=<Loop1>)
++803: guard_not_forced(descr=<Guard0x7f3fc498a3e8>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++814: keepalive(p15)
++814: guard_no_exception(descr=<Guard0x7f3fc4b59ec0>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++834: guard_not_invalidated(descr=<Guard0x7f3fc49a8de8>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++834: p30 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++848: p31 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++859: i32 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++874: setfield_gc(p5, p31, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++881: guard_false(i32, descr=<Guard0x7f3fc4b59f10>) [p0, p1, p2, p18, p3, p15, p20, p4, p28, i32, p30, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++890: i33 = getfield_gc_i(p2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++901: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++916: i36 = int_sub_ovf(i33, 2)
++923: guard_no_overflow(descr=<Guard0x7f3fc4b59f60>) [p0, p1, p2, p28, p4, i33, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++929: p37 = force_token()
++932: p38 = force_token()
++935: p39 = new_with_vtable(descr=<SizeDescr 104>)
++976: p41 = new_array_clear(5, descr=<ArrayP 8>)
++1009: p42 = new_with_vtable(descr=<SizeDescr 16>)
++1021: setfield_gc(p42, i36, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1026: setarrayitem_gc(p41, 0, p42, descr=<ArrayP 8>)
++1030: p44 = new_with_vtable(descr=<SizeDescr 24>)
++1042: setfield_gc(p44, p37, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1046: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1064: setfield_gc(p5, p44, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1089: setfield_gc(p0, p38, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1093: setfield_gc(p39, p31, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1097: setfield_gc(p39, ConstPtr(ptr45), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++1108: setfield_gc(p39, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1116: setfield_gc(p39, p41, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1120: setfield_gc(p39, ConstPtr(ptr47), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1131: setfield_gc(p39, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1139: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1144: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1313: p51 = call_assembler_r(p39, p5, descr=<Loop1>)
++1507: guard_not_forced(descr=<Guard0x7f3fc498a6a8>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1518: keepalive(p39)
++1518: guard_no_exception(descr=<Guard0x7f3fc49b4340>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1538: guard_not_invalidated(descr=<Guard0x7f3fc49a97f8>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1538: p52 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1552: p53 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1563: i54 = getfield_gc_i(p39, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1578: setfield_gc(p5, p53, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1585: guard_false(i54, descr=<Guard0x7f3fc49b42f0>) [p0, p1, p2, p28, p42, p39, p44, p4, p51, i54, p52, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++1594: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++1609: guard_class(p28, ConstClass(W_IntObject), descr=<Guard0x7f3fc49b42a0>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1628: guard_class(p51, ConstClass(W_IntObject), descr=<Guard0x7f3fc49a97c0>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1640: i57 = getfield_gc_i(p28, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1644: i58 = getfield_gc_i(p51, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1648: i59 = int_add_ovf(i57, i58)
++1651: guard_no_overflow(descr=<Guard0x7f3fc49a9788>) [p0, p1, p2, p4, p28, p51, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++1657: guard_isnull(p1, descr=<Guard0x7f3fc49a9750>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1671: leave_portal_frame(25)
++1671: p61 = force_token()
++1691: setfield_gc(p0, p61, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1695: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1700: p63 = new_with_vtable(descr=<SizeDescr 16>)
++1738: setfield_gc(p63, i59, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1742: guard_not_forced_2(descr=<Guard0x7f3fc498a498>) [p0, p2, None, None, None]
++1760: finish(p63, descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++1888: --end of the loop--
+[63926c88af48] jit-log-opt-bridge}
+[63926ca7ec9f] {jit-log-opt-bridge
+# bridge out of Guard 0x7f3fc4b610f8 with 91 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++174: guard_value(p6, ConstPtr(null), descr=<Guard0x7f3fc49b47a0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++191: guard_not_invalidated(descr=<Guard0x7f3fc49a9ad0>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++191: i11 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++199: i13 = int_eq(i11, 0)
++203: guard_true(i13, descr=<Guard0x7f3fc49a9b08>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++209: p14 = force_token()
++212: p15 = new_with_vtable(descr=<SizeDescr 104>)
++258: p17 = new_array_clear(5, descr=<ArrayP 8>)
++291: p18 = new_with_vtable(descr=<SizeDescr 16>)
++302: setfield_gc(p18, i9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++306: setarrayitem_gc(p17, 0, p18, descr=<ArrayP 8>)
++310: p20 = new_with_vtable(descr=<SizeDescr 24>)
++321: setfield_gc(p20, p7, descr=<FieldP JitVirtualRef.virtual_token 8>)
++325: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++344: setfield_gc(p5, p20, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++361: setfield_gc(p0, p14, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++365: setfield_gc(p15, p8, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++376: setfield_gc(p15, ConstPtr(ptr22), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++380: setfield_gc(p15, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++388: setfield_gc(p15, p17, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++399: setfield_gc(p15, ConstPtr(ptr24), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++403: setfield_gc(p15, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++411: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++416: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++574: p28 = call_assembler_r(p15, p5, descr=<Loop1>)
++796: guard_not_forced(descr=<Guard0x7f3fc498a7b0>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++807: keepalive(p15)
++807: guard_no_exception(descr=<Guard0x7f3fc49b47f0>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++827: guard_not_invalidated(descr=<Guard0x7f3fc49a9b40>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++827: p30 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++841: p31 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++852: i32 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++868: setfield_gc(p5, p31, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++875: guard_false(i32, descr=<Guard0x7f3fc49b4840>) [p0, p1, p2, p18, p3, p15, p20, p4, p28, i32, p30, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++884: i33 = getfield_gc_i(p2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++895: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++910: i36 = int_sub_ovf(i33, 2)
++917: guard_no_overflow(descr=<Guard0x7f3fc49b4890>) [p0, p1, p2, p28, p4, i33, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++923: p37 = force_token()
++926: p38 = force_token()
++929: p39 = new_with_vtable(descr=<SizeDescr 104>)
++970: p41 = new_array_clear(5, descr=<ArrayP 8>)
++1003: p42 = new_with_vtable(descr=<SizeDescr 16>)
++1014: setfield_gc(p42, i36, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1018: setarrayitem_gc(p41, 0, p42, descr=<ArrayP 8>)
++1022: p44 = new_with_vtable(descr=<SizeDescr 24>)
++1033: setfield_gc(p44, p37, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1037: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1056: setfield_gc(p5, p44, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1081: setfield_gc(p0, p38, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1085: setfield_gc(p39, p31, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1089: setfield_gc(p39, ConstPtr(ptr45), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++1100: setfield_gc(p39, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1108: setfield_gc(p39, p41, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1112: setfield_gc(p39, ConstPtr(ptr47), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1123: setfield_gc(p39, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1131: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1136: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1305: p51 = call_assembler_r(p39, p5, descr=<Loop1>)
++1499: guard_not_forced(descr=<Guard0x7f3fc498a808>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1510: keepalive(p39)
++1510: guard_no_exception(descr=<Guard0x7f3fc49b48e0>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1530: guard_not_invalidated(descr=<Guard0x7f3fc49a9b78>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1530: p52 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1544: p53 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1555: i54 = getfield_gc_i(p39, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1570: setfield_gc(p5, p53, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1577: guard_false(i54, descr=<Guard0x7f3fc49b4930>) [p0, p1, p2, p28, p42, p39, p44, p4, p51, i54, p52, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++1586: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++1601: guard_class(p28, ConstClass(W_IntObject), descr=<Guard0x7f3fc49b4980>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1620: guard_class(p51, ConstClass(W_IntObject), descr=<Guard0x7f3fc49a9bb0>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1632: i57 = getfield_gc_i(p28, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1636: i58 = getfield_gc_i(p51, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1640: i59 = int_add_ovf(i57, i58)
++1643: guard_no_overflow(descr=<Guard0x7f3fc49a9be8>) [p0, p1, p2, p4, p28, p51, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++1649: guard_isnull(p1, descr=<Guard0x7f3fc49a9c20>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1663: leave_portal_frame(25)
++1663: p61 = force_token()
++1683: setfield_gc(p0, p61, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1687: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1692: p63 = new_with_vtable(descr=<SizeDescr 16>)
++1730: setfield_gc(p63, i59, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1734: guard_not_forced_2(descr=<Guard0x7f3fc498a860>) [p0, p2, None, None, None]
++1752: finish(p63, descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++1872: --end of the loop--
+[63926caac5e0] jit-log-opt-bridge}
+[63926cd64ac2] {jit-log-opt-bridge
+# bridge out of Guard 0x7f3fc4b611a0 with 91 ops
+[p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++174: guard_value(p6, ConstPtr(null), descr=<Guard0x7f3fc49b4a70>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++191: guard_not_invalidated(descr=<Guard0x7f3fc49c4138>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++191: i11 = getfield_gc_i(p5, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++199: i13 = int_eq(i11, 0)
++203: guard_true(i13, descr=<Guard0x7f3fc49c4170>) [p0, p1, p2, p3, p4, p5, p6, p7, p8, i9]
++209: p14 = force_token()
++212: p15 = new_with_vtable(descr=<SizeDescr 104>)
++255: p17 = new_array_clear(5, descr=<ArrayP 8>)
++288: p18 = new_with_vtable(descr=<SizeDescr 16>)
++300: setfield_gc(p18, i9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++305: setarrayitem_gc(p17, 0, p18, descr=<ArrayP 8>)
++309: p20 = new_with_vtable(descr=<SizeDescr 24>)
++321: setfield_gc(p20, p7, descr=<FieldP JitVirtualRef.virtual_token 8>)
++325: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++344: setfield_gc(p5, p20, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++361: setfield_gc(p0, p14, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++365: setfield_gc(p15, p8, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++383: setfield_gc(p15, ConstPtr(ptr22), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++387: setfield_gc(p15, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++395: setfield_gc(p15, p17, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++406: setfield_gc(p15, ConstPtr(ptr24), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++410: setfield_gc(p15, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++418: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++423: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++581: p28 = call_assembler_r(p15, p5, descr=<Loop1>)
++803: guard_not_forced(descr=<Guard0x7f3fc498a8b8>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++814: keepalive(p15)
++814: guard_no_exception(descr=<Guard0x7f3fc49b4ac0>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++834: guard_not_invalidated(descr=<Guard0x7f3fc49c41a8>) [p0, p1, p2, p18, p3, p15, p20, p4, p5, p28, None, None, None]
++834: p30 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++848: p31 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++859: i32 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++875: setfield_gc(p5, p31, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++882: guard_false(i32, descr=<Guard0x7f3fc49b4b10>) [p0, p1, p2, p18, p3, p15, p20, p4, p28, i32, p30, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#34 LOAD_GLOBAL')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#36 LOAD_FAST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#38 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#40 BINARY_SUBTRACT')
++891: i33 = getfield_gc_i(p2, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++902: setfield_gc(p20, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++917: i36 = int_sub_ovf(i33, 2)
++924: guard_no_overflow(descr=<Guard0x7f3fc49b4b60>) [p0, p1, p2, p28, p4, i33, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#42 CALL_FUNCTION')
++930: p37 = force_token()
++933: p38 = force_token()
++936: p39 = new_with_vtable(descr=<SizeDescr 104>)
++977: p41 = new_array_clear(5, descr=<ArrayP 8>)
++1010: p42 = new_with_vtable(descr=<SizeDescr 16>)
++1022: setfield_gc(p42, i36, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1026: setarrayitem_gc(p41, 0, p42, descr=<ArrayP 8>)
++1030: p44 = new_with_vtable(descr=<SizeDescr 24>)
++1042: setfield_gc(p44, p37, descr=<FieldP JitVirtualRef.virtual_token 8>)
++1047: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.forced 16>)
++1067: setfield_gc(p5, p44, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1092: setfield_gc(p0, p38, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1096: setfield_gc(p39, p31, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1100: setfield_gc(p39, ConstPtr(ptr45), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_generator_wref 32>)
++1111: setfield_gc(p39, -1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1119: setfield_gc(p39, p41, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1123: setfield_gc(p39, ConstPtr(ptr47), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1134: setfield_gc(p39, 1, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1142: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1147: setfield_gc(p39, 0, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1316: p51 = call_assembler_r(p39, p5, descr=<Loop1>)
++1510: guard_not_forced(descr=<Guard0x7f3fc498a910>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1521: keepalive(p39)
++1521: guard_no_exception(descr=<Guard0x7f3fc49b4bb0>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1541: guard_not_invalidated(descr=<Guard0x7f3fc49c41e0>) [p0, p1, p2, p28, p42, p39, p44, p4, p5, p51, None, None, None]
++1541: p52 = getfield_gc_r(p5, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1555: p53 = getfield_gc_r(p39, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1566: i54 = getfield_gc_i(p39, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1581: setfield_gc(p5, p53, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1588: guard_false(i54, descr=<Guard0x7f3fc49b4c00>) [p0, p1, p2, p28, p42, p39, p44, p4, p51, i54, p52, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#44 BINARY_ADD')
++1597: setfield_gc(p44, ConstPtr(null), descr=<FieldP JitVirtualRef.virtual_token 8>)
++1612: guard_class(p28, ConstClass(W_IntObject), descr=<Guard0x7f3fc49b4c50>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1631: guard_class(p51, ConstClass(W_IntObject), descr=<Guard0x7f3fc49c4218>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1643: i57 = getfield_gc_i(p28, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1647: i58 = getfield_gc_i(p51, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1651: i59 = int_add_ovf(i57, i58)
++1654: guard_no_overflow(descr=<Guard0x7f3fc49c4250>) [p0, p1, p2, p4, p28, p51, None, None, None]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-9~#46 RETURN_VALUE')
++1660: guard_isnull(p1, descr=<Guard0x7f3fc49c4288>) [p0, p1, p2, p4, p28, p51, None, None, None]
++1674: leave_portal_frame(25)
++1674: p61 = force_token()
++1694: setfield_gc(p0, p61, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1698: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1703: p63 = new_with_vtable(descr=<SizeDescr 16>)
++1741: setfield_gc(p63, i59, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1745: guard_not_forced_2(descr=<Guard0x7f3fc498a968>) [p0, p2, None, None, None]
++1763: finish(p63, descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++1888: --end of the loop--
+[63926cd92d62] jit-log-opt-bridge}
+[63926cee30a0] {jit-log-opt-bridge
+# bridge out of Guard 0x7f3fc4afdd38 with 19 ops
+[p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
++94: guard_value(i3, 1, descr=<Guard0x7f3fc49b4d40>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
++104: guard_isnull(p4, descr=<Guard0x7f3fc49c45d0>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
++113: guard_nonnull_class(p6, ConstClass(W_IntObject), descr=<Guard0x7f3fc49b4d90>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#2 LOAD_CONST')
++139: guard_value(p2, ConstPtr(ptr14), descr=<Guard0x7f3fc49c4608>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#4 COMPARE_OP')
++148: i15 = getfield_gc_i(p6, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++152: i17 = int_eq(i15, 0)
++156: guard_true(i17, descr=<Guard0x7f3fc49c4640>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-4~#6 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-5~#8 LOAD_CONST')
+debug_merge_point(0, 0, 'fibonacci;/data/effect-jit-monorepo/effect-handlers-bench/benchmarks/python/fibonacci_recursive/main.py:3-5~#10 RETURN_VALUE')
++162: guard_isnull(p5, descr=<Guard0x7f3fc49c4678>) [p0, i1, p2, i3, p4, p5, p6, p7, p8, p9, p10, p11]
++171: leave_portal_frame(25)
++171: p19 = force_token()
++174: setfield_gc(p0, 1, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++189: setfield_gc(p0, p19, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++193: guard_not_forced_2(descr=<Guard0x7f3fc498a9c0>) [p0, p6, p9, p10]
++239: finish(ConstPtr(ptr21), descr=<DoneWithThisFrameDescrRef object at 0x7f3fc93a63a0>)
++352: --end of the loop--
+[63926ceef34a] jit-log-opt-bridge}
+[63982c612b42] {jit-summary
+Tracing:      	10	0.009089
+Backend:      	10	0.003073
+TOTAL:      		12.409671
+ops:             	6895
+heapcached ops:  	7377
+recorded ops:    	2501
+  calls:         	51
+guards:          	521
+opt ops:         	1324
+opt guards:      	213
+opt guards shared:	115
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	1073
+nvholes:         	393
+nvreused:        	547
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	1
+Total # of bridges:	9
+Freed # of loops:	0
+Freed # of bridges:	0
+[63982c61eabb] jit-summary}

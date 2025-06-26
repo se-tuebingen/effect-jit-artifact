@@ -1,0 +1,45 @@
+
+<--- Last few GCs --->
+
+[54793:0x128008000]    15239 ms: Mark-Compact (reduce) 4072.5 (4143.3) -> 4071.7 (4143.5) MB, 1919.58 / 0.00 ms  (average mu = 0.341, current mu = 0.309) allocation failure; scavenge might not succeed
+[54793:0x128008000]    19501 ms: Mark-Compact (reduce) 4072.7 (4143.8) -> 4072.2 (4144.0) MB, 4261.88 / 0.00 ms  (average mu = 0.114, current mu = 0.000) allocation failure; GC in old space requested
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+----- Native stack trace -----
+
+ 1: 0x1045956dc node::OOMErrorHandler(char const*, v8::OOMDetails const&) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+ 2: 0x104744eb8 v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, v8::OOMDetails const&) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+ 3: 0x104962d54 v8::internal::Heap::GarbageCollectionReasonToString(v8::internal::GarbageCollectionReason) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+ 4: 0x104961654 v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+ 5: 0x104956998 v8::internal::HeapAllocator::AllocateRawWithLightRetrySlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+ 6: 0x104957234 v8::internal::HeapAllocator::AllocateRawWithRetryOrFailSlowPath(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+ 7: 0x1049399cc v8::internal::Factory::NewFillerObject(int, v8::internal::AllocationAlignment, v8::internal::AllocationType, v8::internal::AllocationOrigin) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+ 8: 0x104d83cf8 v8::internal::Runtime_AllocateInOldGeneration(int, unsigned long*, v8::internal::Isolate*) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+ 9: 0x1050f0c44 Builtins_CEntry_Return1_ArgvOnStack_NoBuiltinExit [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+10: 0x10c11a310 
+11: 0x10c112b3c 
+12: 0x1050683e4 Builtins_InterpreterEntryTrampoline [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+13: 0x1050683e4 Builtins_InterpreterEntryTrampoline [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+14: 0x1050683e4 Builtins_InterpreterEntryTrampoline [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+15: 0x1050683e4 Builtins_InterpreterEntryTrampoline [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+16: 0x1050683e4 Builtins_InterpreterEntryTrampoline [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+17: 0x1050683e4 Builtins_InterpreterEntryTrampoline [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+18: 0x1050683e4 Builtins_InterpreterEntryTrampoline [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+19: 0x1050683e4 Builtins_InterpreterEntryTrampoline [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+20: 0x10506650c Builtins_JSEntryTrampoline [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+21: 0x1050661f4 Builtins_JSEntry [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+22: 0x1048c8ab4 v8::internal::(anonymous namespace)::Invoke(v8::internal::Isolate*, v8::internal::(anonymous namespace)::InvokeParams const&) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+23: 0x1048c830c v8::internal::Execution::Call(v8::internal::Isolate*, v8::internal::Handle<v8::internal::Object>, v8::internal::Handle<v8::internal::Object>, int, v8::internal::Handle<v8::internal::Object>*) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+24: 0x104764b60 v8::Function::Call(v8::Local<v8::Context>, v8::Local<v8::Value>, int, v8::Local<v8::Value>*) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+25: 0x104573004 node::builtins::BuiltinLoader::CompileAndCall(v8::Local<v8::Context>, char const*, node::Realm*) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+26: 0x104616f10 node::Realm::ExecuteBootstrapper(char const*) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+27: 0x104551dbc node::StartExecution(node::Environment*, char const*) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+28: 0x104551cb0 node::StartExecution(node::Environment*, std::__1::function<v8::MaybeLocal<v8::Value> (node::StartExecutionCallbackInfo const&)>) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+29: 0x1044b9e98 node::LoadEnvironment(node::Environment*, std::__1::function<v8::MaybeLocal<v8::Value> (node::StartExecutionCallbackInfo const&)>, std::__1::function<void (node::Environment*, v8::Local<v8::Value>, v8::Local<v8::Value>)>) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+30: 0x1045ddec8 node::NodeMainInstance::Run(node::ExitCode*, node::Environment*) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+31: 0x1045ddba0 node::NodeMainInstance::Run() [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+32: 0x104555348 node::Start(int, char**) [/nix/store/f0lm95g31vpknr8jj9xw53cx2rqly2nm-nodejs-20.18.1/bin/node]
+33: 0x18f3750e0 start [/usr/lib/dyld]

@@ -1,0 +1,963 @@
+[638fec8a7141] {jit-log-opt-loop
+# Loop 1 (sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER) : loop with 282 ops
+[p0, p1]
++603: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++614: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++618: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++622: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++626: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++630: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++634: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++638: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++642: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++646: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++650: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++654: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++658: p21 = getarrayitem_gc_r(p7, 6, descr=<ArrayP 8>)
++669: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, descr=TargetToken(140350682008608))
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER')
++720: guard_value(i4, 4, descr=<Guard0x7fa5f089e840>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++730: guard_isnull(p5, descr=<Guard0x7fa5f08b2d78>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++739: guard_class(p15, ConstClass(GeneratorIterator), descr=<Guard0x7fa5f08b2db0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++753: p24 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++764: guard_value(p24, ConstPtr(ptr25), descr=<Guard0x7fa5f089e890>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++773: p26 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++777: guard_nonnull(p26, descr=<Guard0x7fa5f08b2de8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++786: i27 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++791: guard_false(i27, descr=<Guard0x7fa5f08b2e20>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++800: i28 = ptr_eq(p26, p0)
++803: guard_false(i28, descr=<Guard0x7fa5f08b2e58>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p21, p1]
++809: p29 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++813: i31 = ptr_ne(p29, ConstPtr(null))
++827: cond_call(i31, 140350740345840, p26, descr=<Callv 0 r EF=2 OS=121>)
++836: i33 = getfield_gc_i(p26, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++840: i35 = int_eq(i33, -1)
++844: guard_false(i35, descr=<Guard0x7fa5f089e8e0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, i33]
++850: p38 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++862: p39 = getfield_gc_r(p38, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_sys_exc_operror 120>)
++866: p40 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++870: guard_isnull(p40, descr=<Guard0x7fa5f089e930>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p38, p39, p40]
++879: p41 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++883: i42 = getfield_gc_i(p41, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++887: p43 = getfield_gc_r(p38, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++894: p44 = force_token()
++897: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++912: setfield_gc(p26, p43, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++916: guard_not_invalidated(descr=<Guard0x7fa5f089e980>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p44]
++916: p46 = getfield_gc_r(p38, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++923: guard_value(p46, ConstPtr(null), descr=<Guard0x7fa5f08b2e90>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p44]
++933: i48 = getfield_gc_i(p38, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++941: i50 = int_eq(i48, 0)
++945: guard_true(i50, descr=<Guard0x7fa5f08b2ec8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p44]
++951: p51 = getfield_gc_r(p26, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++955: guard_nonnull_class(p51, ConstClass(GeneratorIterator), descr=<Guard0x7fa5f089e9d0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p44]
++973: setfield_gc(p26, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++981: p54 = getfield_gc_r(p51, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++999: guard_value(p54, ConstPtr(ptr55), descr=<Guard0x7fa5f089ea20>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p54, p44]
++1008: p56 = getfield_gc_r(p51, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++1019: guard_nonnull(p56, descr=<Guard0x7fa5f08b2f00>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p54, p44]
++1028: i57 = getfield_gc_i(p51, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1040: guard_false(i57, descr=<Guard0x7fa5f08b2f38>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p54, p44]
++1049: i58 = ptr_eq(p56, p0)
++1052: guard_false(i58, descr=<Guard0x7fa5f08b2f70>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p54, p44]
++1058: p59 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1062: i61 = ptr_ne(p59, ConstPtr(null))
++1076: cond_call(i61, 140350740345840, p56, descr=<Callv 0 r EF=2 OS=121>)
++1085: i63 = getfield_gc_i(p56, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1089: i65 = int_eq(i63, -1)
++1093: guard_false(i65, descr=<Guard0x7fa5f089ea70>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p56, i63, p44]
++1099: p66 = getfield_gc_r(p51, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++1110: guard_isnull(p66, descr=<Guard0x7fa5f08b2fa8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p56, i63, p44]
++1119: p67 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1123: i68 = getfield_gc_i(p67, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++1134: p69 = force_token()
++1144: p70 = getfield_gc_r(p56, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1155: setfield_gc(p51, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1160: guard_isnull(p70, descr=<Guard0x7fa5f089eac0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p70, p69, p44]
++1169: guard_value(i63, 14, descr=<Guard0x7fa5f08b2fe0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p70, p69, p44]
++1179: i73 = getfield_gc_i(p56, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1183: p74 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1211: setarrayitem_gc(p74, i73, ConstPtr(ptr75), descr=<ArrayP 8>)
++1216: i77 = int_add(i73, 1)
++1220: p78 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++1224: setfield_gc(p56, i77, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1228: guard_isnull(p78, descr=<Guard0x7fa5f089eb10>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p67, p78, p69, p44]
++1237: guard_value(p67, ConstPtr(ptr79), descr=<Guard0x7fa5f08b3018>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p67, p78, p69, p44]
++1246: enter_portal_frame(25, 6732)
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
++1246: guard_value(i77, 3, descr=<Guard0x7fa5f08b3050>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p67, p78, p69, p44]
++1256: p84 = getarrayitem_gc_r(p74, 2, descr=<ArrayP 8>)
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++1256: p86 = getarrayitem_gc_r(p74, 1, descr=<ArrayP 8>)
++1260: setfield_gc(p56, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1268: setfield_gc(p56, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1276: setarrayitem_gc(p74, 2, ConstPtr(null), descr=<ArrayP 8>)
++1284: guard_nonnull_class(p86, ConstClass(W_IntObject), descr=<Guard0x7fa5f089eb60>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p86, p69, p44]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++1302: setfield_gc(p56, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1310: setarrayitem_gc(p74, 3, ConstPtr(null), descr=<ArrayP 8>)
++1318: i95 = getfield_gc_i(p86, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1322: i97 = int_add_ovf(i95, 1)
++1329: guard_no_overflow(descr=<Guard0x7fa5f089ebb0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, i95, p86, p69, p44]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++1335: i99 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++1348: setfield_gc(p56, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1356: i102 = int_lt(i99, 0)
++1360: guard_false(i102, descr=<Guard0x7fa5f089ec00>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, i99, i97, p74, p69, p44]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++1366: p104 = getarrayitem_gc_r(p74, 0, descr=<ArrayP 8>)
++1370: setfield_gc(p56, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1378: setfield_gc(p56, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1386: guard_nonnull_class(p104, ConstClass(W_IntObject), descr=<Guard0x7fa5f089ec50>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p104, i97, p74, p69, p44]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++1404: setfield_gc(p56, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1412: setfield_gc(p56, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1420: i110 = getfield_gc_i(p104, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1424: i111 = int_le(i97, i110)
++1427: guard_true(i111, descr=<Guard0x7fa5f089eca0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, p104, i97, i110, None, p74, p69, p44]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++1433: leave_portal_frame(25)
++1433: i114 = getfield_gc_i(p56, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1438: setfield_gc(p56, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1446: guard_false(i114, descr=<Guard0x7fa5f089ecf0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p56, p1, p38, p39, i42, p51, i68, i114, i97, p74, p69, p44]
++1455: p116 = getfield_gc_r(p56, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++1459: setfield_gc(p51, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1464: setfield_gc(p56, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1472: guard_isnull(p116, descr=<Guard0x7fa5f089ed40>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p56, p116, i97, p74, None, p44]
++1481: i119 = getfield_gc_i(p56, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1486: guard_false(i119, descr=<Guard0x7fa5f08b3088>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p51, p56, p116, i97, p74, None, p44]
++1495: i120 = getfield_gc_i(p26, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1499: p121 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1503: p122 = new_with_vtable(descr=<SizeDescr 16>)
++1547: setfield_gc(p122, i97, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1561: setarrayitem_gc(p74, 1, p122, descr=<ArrayP 8>)
++1577: setarrayitem_gc(p121, i120, p122, descr=<ArrayP 8>)
++1582: i125 = int_add(i120, 1)
++1582: p126 = getarrayitem_gc_r(p121, i120, descr=<ArrayP 8>)
++1587: setarrayitem_gc(p121, i120, ConstPtr(null), descr=<ArrayP 8>)
++1596: p128 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1600: i129 = getfield_gc_i(p26, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1616: setfield_gc(p38, p128, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1633: setfield_gc(p26, p51, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1644: guard_false(i129, descr=<Guard0x7fa5f089ed90>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p26, p1, p38, p39, i42, p126, i129, None, None, None, p44]
++1653: p130 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++1657: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1662: setfield_gc(p26, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1670: guard_isnull(p130, descr=<Guard0x7fa5f089ede0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
++1679: i133 = getfield_gc_i(p26, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1691: guard_false(i133, descr=<Guard0x7fa5f08b30c0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-23~#12 STORE_FAST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#14 LOAD_FAST')
++1700: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x7fa5f089ee30>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#16 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#18 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#20 BINARY_MULTIPLY')
++1719: guard_class(p126, ConstClass(W_IntObject), descr=<Guard0x7fa5f08b30f8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
++1731: i136 = getfield_gc_i(p126, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1735: i137 = int_mul_ovf(i136, i136)
++1739: guard_no_overflow(descr=<Guard0x7fa5f08b3130>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#22 BINARY_ADD')
++1745: i138 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1756: i139 = int_add_ovf(i138, i137)
++1759: guard_no_overflow(descr=<Guard0x7fa5f08b3168>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#24 LOAD_CONST')
++1772: guard_value(p3, ConstPtr(ptr140), descr=<Guard0x7fa5f08b31a0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#26 BINARY_MODULO')
++1781: i142 = int_eq(i139, -9223372036854775808)
++1781: i144 = int_rshift(i139, 63)
++1788: i145 = int_xor(i139, i144)
++1798: i147 = uint_mul_high(i145, -9086255505087856445)
++1825: i149 = uint_rshift(i147, 9)
++1829: i150 = int_xor(i149, i144)
++1836: i152 = int_mul(i150, 1009)
++1843: i153 = int_sub(i139, i152)
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#28 STORE_FAST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#30 JUMP_ABSOLUTE')
++1853: i155 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++1866: i157 = int_lt(i155, 0)
++1870: guard_false(i157, descr=<Guard0x7fa5f08b31d8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p21, p1, p26, p130, p38, p39, p126, None, None, None, None]
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER')
++1876: label(p0, p1, p6, p9, i153, p126, p15, p26, i31, p38, p41, p128, p39, i42, p51, p56, i61, p74, p121, descr=TargetToken(140350682008672))
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER')
++1888: cond_call(i31, 140350740345840, p26, descr=<Callv 0 r EF=2 OS=121>)
++1897: i159 = getfield_gc_i(p26, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1901: i161 = int_eq(i159, -1)
++1905: guard_false(i161, descr=<Guard0x7fa5f089ee80>) [p0, p6, p9, p126, p15, p1, p26, i159, i153]
++1911: p162 = force_token()
++1914: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1929: setfield_gc(p26, p128, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1933: guard_not_invalidated(descr=<Guard0x7fa5f089eed0>) [p0, p6, p9, p126, p15, p26, p1, p38, p39, i42, p162, i153]
++1933: i164 = getfield_gc_i(p51, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1938: setfield_gc(p26, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1946: guard_false(i164, descr=<Guard0x7fa5f089ef20>) [p0, p6, p9, p126, p15, p26, p1, p38, p39, i42, p51, p56, i164, p162, i153]
++1955: cond_call(i61, 140350740345840, p56, descr=<Callv 0 r EF=2 OS=121>)
++1969: p167 = force_token()
++1972: p168 = getfield_gc_r(p56, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1976: setfield_gc(p51, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1981: guard_isnull(p168, descr=<Guard0x7fa5f089ef70>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, p168, p167, p162, i153]
++1990: enter_portal_frame(25, 6732)
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++1990: p173 = getarrayitem_gc_r(p74, 1, descr=<ArrayP 8>)
++2001: setfield_gc(p56, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2009: setarrayitem_gc(p74, 2, ConstPtr(null), descr=<ArrayP 8>)
++2017: guard_nonnull_class(p173, ConstClass(W_IntObject), descr=<Guard0x7fa5f089efc0>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, p173, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++2036: setfield_gc(p56, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2044: setarrayitem_gc(p74, 3, ConstPtr(null), descr=<ArrayP 8>)
++2052: i181 = getfield_gc_i(p173, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2056: i183 = int_add_ovf(i181, 1)
++2067: guard_no_overflow(descr=<Guard0x7fa5f089f010>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, i181, p173, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++2073: i185 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++2086: setfield_gc(p56, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2094: i188 = int_lt(i185, 0)
++2098: guard_false(i188, descr=<Guard0x7fa5f089f060>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, i185, i183, p74, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++2104: p190 = getarrayitem_gc_r(p74, 0, descr=<ArrayP 8>)
++2108: setfield_gc(p56, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2116: setfield_gc(p56, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2124: guard_nonnull_class(p190, ConstClass(W_IntObject), descr=<Guard0x7fa5f089f0b0>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, p190, i183, p74, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++2143: setfield_gc(p56, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2151: setfield_gc(p56, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2159: i196 = getfield_gc_i(p190, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2170: i197 = int_le(i183, i196)
++2173: guard_true(i197, descr=<Guard0x7fa5f089f100>) [p0, p6, p9, p126, p15, p26, p56, p1, p38, p39, i42, p51, p190, i183, i196, None, p74, p167, p162, i153]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++2179: leave_portal_frame(25)
++2179: i199 = getfield_gc_i(p26, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2183: p200 = new_with_vtable(descr=<SizeDescr 16>)
++2220: setfield_gc(p200, i183, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2235: setarrayitem_gc(p74, 1, p200, descr=<ArrayP 8>)
++2251: setarrayitem_gc(p121, i199, p200, descr=<ArrayP 8>)
++2256: i203 = int_add(i199, 1)
++2256: p204 = getarrayitem_gc_r(p121, i199, descr=<ArrayP 8>)
++2261: setarrayitem_gc(p121, i199, ConstPtr(null), descr=<ArrayP 8>)
++2270: setfield_gc(p56, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2278: p207 = getfield_gc_r(p26, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2282: setfield_gc(p51, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-23~#12 STORE_FAST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#14 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#16 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#18 LOAD_FAST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#20 BINARY_MULTIPLY')
++2297: setfield_gc(p26, p51, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2312: setfield_gc(p38, p207, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2319: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2324: setfield_gc(p56, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2332: setfield_gc(p26, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2340: guard_class(p204, ConstClass(W_IntObject), descr=<Guard0x7fa5f089f150>) [p0, p6, p9, p204, p15, p1, None, None, None, None, i153]
++2352: i213 = getfield_gc_i(p204, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2356: i214 = int_mul_ovf(i213, i213)
++2360: guard_no_overflow(descr=<Guard0x7fa5f08b3210>) [p0, p6, p9, p204, p15, p1, None, None, None, None, i153]
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#22 BINARY_ADD')
++2366: i215 = int_add_ovf(i153, i214)
++2372: guard_no_overflow(descr=<Guard0x7fa5f08b3248>) [p0, p6, p9, p204, p15, p1, None, None, None, None, i153]
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#24 LOAD_CONST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#26 BINARY_MODULO')
++2378: i217 = int_eq(i215, -9223372036854775808)
++2378: i219 = int_rshift(i215, 63)
++2385: i220 = int_xor(i215, i219)
++2391: i222 = uint_mul_high(i220, -9086255505087856445)
++2418: i224 = uint_rshift(i222, 9)
++2422: i225 = int_xor(i224, i219)
++2425: i227 = int_mul(i225, 1009)
++2432: i228 = int_sub(i215, i227)
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#28 STORE_FAST')
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-24~#30 JUMP_ABSOLUTE')
++2435: i230 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++2442: i232 = int_lt(i230, 0)
++2446: guard_false(i232, descr=<Guard0x7fa5f08b3280>) [p0, p6, p9, p204, p15, p1, None, None, None, None, i153]
+debug_merge_point(0, 0, 'sq_summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:21-23~#10 FOR_ITER')
++2452: i233 = arraylen_gc(p74, descr=<ArrayP 8>)
++2452: i234 = arraylen_gc(p121, descr=<ArrayP 8>)
++2452: jump(p0, p1, p6, p9, i228, p204, p15, p26, i31, p38, p41, p207, p39, i42, p51, p56, i61, p74, p121, descr=TargetToken(140350682008672))
++2496: --end of the loop--
+[638fec984416] jit-log-opt-loop}
+[639036cb868a] {jit-log-opt-loop
+# Loop 2 (generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST) : entry bridge with 38 ops
+[p0, p1]
++203: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++214: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++218: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++222: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++226: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++230: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++234: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++238: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++242: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++246: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
++250: guard_value(i4, 2, descr=<Guard0x7fa5f089fc40>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++260: guard_isnull(p5, descr=<Guard0x7fa5f08c8aa0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++269: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x7fa5f089fc90>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++288: guard_nonnull_class(p9, ConstClass(W_IntObject), descr=<Guard0x7fa5f089fce0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++307: i19 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++311: i20 = getfield_gc_i(p9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++315: i21 = int_le(i19, i20)
++318: guard_true(i21, descr=<Guard0x7fa5f08c8ad8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++331: guard_value(p3, ConstPtr(ptr22), descr=<Guard0x7fa5f08c8b10>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++340: p23 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++344: leave_portal_frame(25)
++344: setfield_gc(p0, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++362: setfield_gc(p0, ConstPtr(ptr26), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++366: setfield_gc(p0, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++374: setfield_gc(p0, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++382: setfield_gc(p0, p6, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++386: setfield_gc(p0, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++405: setarrayitem_gc(p23, 0, p9, descr=<ArrayP 8>)
++420: setarrayitem_gc(p23, 1, p11, descr=<ArrayP 8>)
++424: setarrayitem_gc(p23, 2, ConstPtr(null), descr=<ArrayP 8>)
++432: setarrayitem_gc(p23, 3, ConstPtr(null), descr=<ArrayP 8>)
++440: finish(p11, descr=<DoneWithThisFrameDescrRef object at 0x7fa5f51a63a0>)
++544: --end of the loop--
+[639036cce40e] jit-log-opt-loop}
+[639036dd0ba4] {jit-log-opt-loop
+# Loop 3 (generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP) : entry bridge with 52 ops
+[p0, p1]
++235: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++246: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++250: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++254: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++258: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++262: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++266: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++270: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++274: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++278: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
++282: guard_value(i4, 3, descr=<Guard0x7fa5f089fd30>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++292: guard_isnull(p5, descr=<Guard0x7fa5f08c8de8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++301: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x7fa5f089fd80>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
++327: guard_value(p3, ConstPtr(ptr18), descr=<Guard0x7fa5f08c8e20>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++336: i19 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++340: i21 = int_add_ovf(i19, 1)
++344: guard_no_overflow(descr=<Guard0x7fa5f08c8e58>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++350: guard_not_invalidated(descr=<Guard0x7fa5f08c8e90>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
++350: i23 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++363: i25 = int_lt(i23, 0)
++367: guard_false(i25, descr=<Guard0x7fa5f08c8ec8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++373: guard_nonnull_class(p9, ConstClass(W_IntObject), descr=<Guard0x7fa5f089fdd0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++392: i27 = getfield_gc_i(p9, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++396: i28 = int_le(i21, i27)
++399: guard_true(i28, descr=<Guard0x7fa5f08c8f00>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p1]
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(0, 0, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++405: p29 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++409: leave_portal_frame(25)
++409: setfield_gc(p0, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++427: setfield_gc(p0, ConstPtr(ptr32), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++431: setfield_gc(p0, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++439: setfield_gc(p0, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++447: setfield_gc(p0, p6, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++451: setfield_gc(p0, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++470: setarrayitem_gc(p29, 0, p9, descr=<ArrayP 8>)
++474: p37 = new_with_vtable(descr=<SizeDescr 16>)
++511: setfield_gc(p37, i21, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++526: setarrayitem_gc(p29, 1, p37, descr=<ArrayP 8>)
++530: setarrayitem_gc(p29, 2, ConstPtr(null), descr=<ArrayP 8>)
++538: setarrayitem_gc(p29, 3, ConstPtr(null), descr=<ArrayP 8>)
++546: finish(p37, descr=<DoneWithThisFrameDescrRef object at 0x7fa5f51a63a0>)
++656: --end of the loop--
+[639036def599] jit-log-opt-loop}
+[6390371c4ac4] {jit-log-opt-loop
+# Loop 4 (summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER) : loop with 273 ops
+[p0, p1]
++587: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++598: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++602: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++606: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++610: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++614: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++618: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++622: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++626: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++630: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++634: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++638: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++642: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, descr=TargetToken(140350682149792))
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER')
++688: guard_value(i4, 4, descr=<Guard0x7fa5f08d6750>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++698: guard_isnull(p5, descr=<Guard0x7fa5f08e0250>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++707: guard_class(p15, ConstClass(GeneratorIterator), descr=<Guard0x7fa5f08e0218>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++721: p22 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++732: guard_value(p22, ConstPtr(ptr23), descr=<Guard0x7fa5f08d67a0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++741: p24 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++745: guard_nonnull(p24, descr=<Guard0x7fa5f08e01e0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++754: i25 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++759: guard_false(i25, descr=<Guard0x7fa5f08e01a8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++768: i26 = ptr_eq(p24, p0)
++771: guard_false(i26, descr=<Guard0x7fa5f08e0170>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++777: p27 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++781: i29 = ptr_ne(p27, ConstPtr(null))
++795: cond_call(i29, 140350740345840, p24, descr=<Callv 0 r EF=2 OS=121>)
++804: i31 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++808: i33 = int_eq(i31, -1)
++812: guard_false(i33, descr=<Guard0x7fa5f08d6700>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, i31]
++818: p36 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++831: p37 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_sys_exc_operror 120>)
++836: p38 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++840: guard_isnull(p38, descr=<Guard0x7fa5f08d66b0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p36, p37, p38]
++849: p39 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++853: i40 = getfield_gc_i(p39, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++857: p41 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++865: p42 = force_token()
++868: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++884: setfield_gc(p24, p41, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++888: guard_not_invalidated(descr=<Guard0x7fa5f08d6660>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++888: p44 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++896: guard_value(p44, ConstPtr(null), descr=<Guard0x7fa5f08e0138>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++906: i46 = getfield_gc_i(p36, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++915: i48 = int_eq(i46, 0)
++919: guard_true(i48, descr=<Guard0x7fa5f08e0100>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++925: p49 = getfield_gc_r(p24, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++929: guard_nonnull_class(p49, ConstClass(GeneratorIterator), descr=<Guard0x7fa5f08d6610>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++947: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++955: p52 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++973: guard_value(p52, ConstPtr(ptr53), descr=<Guard0x7fa5f08d65c0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++982: p54 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++993: guard_nonnull(p54, descr=<Guard0x7fa5f08e00c8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1002: i55 = getfield_gc_i(p49, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1014: guard_false(i55, descr=<Guard0x7fa5f08e0090>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1023: i56 = ptr_eq(p54, p0)
++1026: guard_false(i56, descr=<Guard0x7fa5f08e0058>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1032: p57 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1036: i59 = ptr_ne(p57, ConstPtr(null))
++1050: cond_call(i59, 140350740345840, p54, descr=<Callv 0 r EF=2 OS=121>)
++1059: i61 = getfield_gc_i(p54, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1063: i63 = int_eq(i61, -1)
++1067: guard_false(i63, descr=<Guard0x7fa5f08d6520>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, i61, p42]
++1073: p64 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++1084: guard_isnull(p64, descr=<Guard0x7fa5f08e0020>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, i61, p42]
++1093: p65 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1097: i66 = getfield_gc_i(p65, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++1108: p67 = force_token()
++1118: p68 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1129: setfield_gc(p49, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1134: guard_isnull(p68, descr=<Guard0x7fa5f08d64d0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p68, p67, p42]
++1143: guard_value(i61, 14, descr=<Guard0x7fa5f08c9fa0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p68, p67, p42]
++1153: i71 = getfield_gc_i(p54, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1157: p72 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1185: setarrayitem_gc(p72, i71, ConstPtr(ptr73), descr=<ArrayP 8>)
++1190: i75 = int_add(i71, 1)
++1194: p76 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++1198: setfield_gc(p54, i75, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1202: guard_isnull(p76, descr=<Guard0x7fa5f08d6480>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1211: guard_value(p65, ConstPtr(ptr77), descr=<Guard0x7fa5f08c9f68>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1220: enter_portal_frame(25, 6732)
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
++1220: guard_value(i75, 3, descr=<Guard0x7fa5f08c9f30>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1230: p82 = getarrayitem_gc_r(p72, 2, descr=<ArrayP 8>)
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++1230: p84 = getarrayitem_gc_r(p72, 1, descr=<ArrayP 8>)
++1234: setfield_gc(p54, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1242: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1250: setarrayitem_gc(p72, 2, ConstPtr(null), descr=<ArrayP 8>)
++1258: guard_nonnull_class(p84, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d6430>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p84, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++1276: setfield_gc(p54, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1284: setarrayitem_gc(p72, 3, ConstPtr(null), descr=<ArrayP 8>)
++1292: i93 = getfield_gc_i(p84, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1296: i95 = int_add_ovf(i93, 1)
++1303: guard_no_overflow(descr=<Guard0x7fa5f08d63e0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i93, p84, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++1309: i97 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++1322: setfield_gc(p54, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1330: i100 = int_lt(i97, 0)
++1334: guard_false(i100, descr=<Guard0x7fa5f08d6390>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i97, i95, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++1340: p102 = getarrayitem_gc_r(p72, 0, descr=<ArrayP 8>)
++1344: setfield_gc(p54, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1352: setfield_gc(p54, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1360: guard_nonnull_class(p102, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d62f0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p102, i95, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++1378: setfield_gc(p54, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1386: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1394: i108 = getfield_gc_i(p102, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1398: i109 = int_le(i95, i108)
++1401: guard_true(i109, descr=<Guard0x7fa5f08d62a0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p102, i95, i108, None, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++1407: leave_portal_frame(25)
++1407: i112 = getfield_gc_i(p54, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1412: setfield_gc(p54, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1420: guard_false(i112, descr=<Guard0x7fa5f08d6250>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i112, i95, p72, p67, p42]
++1429: p114 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++1433: setfield_gc(p49, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1438: setfield_gc(p54, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1446: guard_isnull(p114, descr=<Guard0x7fa5f08d6200>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, p114, i95, p72, None, p42]
++1455: i117 = getfield_gc_i(p54, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1460: guard_false(i117, descr=<Guard0x7fa5f08c9ef8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, p114, i95, p72, None, p42]
++1469: i118 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1473: p119 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1477: p120 = new_with_vtable(descr=<SizeDescr 16>)
++1521: setfield_gc(p120, i95, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1535: setarrayitem_gc(p72, 1, p120, descr=<ArrayP 8>)
++1550: setarrayitem_gc(p119, i118, p120, descr=<ArrayP 8>)
++1555: i123 = int_add(i118, 1)
++1555: p124 = getarrayitem_gc_r(p119, i118, descr=<ArrayP 8>)
++1560: setarrayitem_gc(p119, i118, ConstPtr(null), descr=<ArrayP 8>)
++1569: p126 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1573: i127 = getfield_gc_i(p24, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1590: setfield_gc(p36, p126, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1609: setfield_gc(p24, p49, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1620: guard_false(i127, descr=<Guard0x7fa5f08d61b0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p124, i127, None, None, None, p42]
++1629: p128 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++1633: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1638: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1646: guard_isnull(p128, descr=<Guard0x7fa5f089fe20>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
++1655: i131 = getfield_gc_i(p24, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1667: guard_false(i131, descr=<Guard0x7fa5f08e12f0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-11~#12 STORE_FAST')
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#14 LOAD_FAST')
++1676: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d6b10>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#16 LOAD_FAST')
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#18 BINARY_ADD')
++1695: guard_class(p124, ConstClass(W_IntObject), descr=<Guard0x7fa5f08e1328>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
++1707: i134 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1711: i135 = getfield_gc_i(p124, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1722: i136 = int_add_ovf(i134, i135)
++1725: guard_no_overflow(descr=<Guard0x7fa5f08e1360>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#20 LOAD_CONST')
++1738: guard_value(p3, ConstPtr(ptr137), descr=<Guard0x7fa5f08e1398>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#22 BINARY_MODULO')
++1747: i139 = int_eq(i136, -9223372036854775808)
++1747: i141 = int_rshift(i136, 63)
++1754: i142 = int_xor(i136, i141)
++1764: i144 = uint_mul_high(i142, -9086255505087856445)
++1791: i146 = uint_rshift(i144, 9)
++1795: i147 = int_xor(i146, i141)
++1798: i149 = int_mul(i147, 1009)
++1805: i150 = int_sub(i136, i149)
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#24 STORE_FAST')
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#26 JUMP_ABSOLUTE')
++1815: i152 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++1828: i154 = int_lt(i152, 0)
++1832: guard_false(i154, descr=<Guard0x7fa5f08e13d0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER')
++1838: label(p0, p1, p6, p9, i150, p124, p15, p24, i29, p36, p39, p126, p37, i40, p49, p54, i59, p72, p119, descr=TargetToken(140350682149856))
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER')
++1840: cond_call(i29, 140350740345840, p24, descr=<Callv 0 r EF=2 OS=121>)
++1849: i156 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1853: i158 = int_eq(i156, -1)
++1857: guard_false(i158, descr=<Guard0x7fa5f08d6b60>) [p0, p6, p9, p124, p15, p1, p24, i156, i150]
++1863: p159 = force_token()
++1866: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1882: setfield_gc(p24, p126, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1886: guard_not_invalidated(descr=<Guard0x7fa5f08d6bb0>) [p0, p6, p9, p124, p15, p24, p1, p36, p37, i40, p159, i150]
++1886: i161 = getfield_gc_i(p49, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1891: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1899: guard_false(i161, descr=<Guard0x7fa5f08d6c00>) [p0, p6, p9, p124, p15, p24, p1, p36, p37, i40, p49, p54, i161, p159, i150]
++1908: cond_call(i59, 140350740345840, p54, descr=<Callv 0 r EF=2 OS=121>)
++1922: p164 = force_token()
++1925: p165 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1929: setfield_gc(p49, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1934: guard_isnull(p165, descr=<Guard0x7fa5f08d6c50>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p165, p164, p159, i150]
++1943: enter_portal_frame(25, 6732)
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++1943: p170 = getarrayitem_gc_r(p72, 1, descr=<ArrayP 8>)
++1954: setfield_gc(p54, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1962: setarrayitem_gc(p72, 2, ConstPtr(null), descr=<ArrayP 8>)
++1970: guard_nonnull_class(p170, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d6ca0>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p170, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++1989: setfield_gc(p54, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1997: setarrayitem_gc(p72, 3, ConstPtr(null), descr=<ArrayP 8>)
++2005: i178 = getfield_gc_i(p170, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2009: i180 = int_add_ovf(i178, 1)
++2020: guard_no_overflow(descr=<Guard0x7fa5f08d6cf0>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, i178, p170, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++2026: i182 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++2039: setfield_gc(p54, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2047: i185 = int_lt(i182, 0)
++2051: guard_false(i185, descr=<Guard0x7fa5f08d6d40>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, i182, i180, p72, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++2057: p187 = getarrayitem_gc_r(p72, 0, descr=<ArrayP 8>)
++2061: setfield_gc(p54, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2069: setfield_gc(p54, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2077: guard_nonnull_class(p187, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d6d90>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p187, i180, p72, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++2096: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2104: setfield_gc(p54, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2112: i193 = getfield_gc_i(p187, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2123: i194 = int_le(i180, i193)
++2126: guard_true(i194, descr=<Guard0x7fa5f08d6de0>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p187, i180, i193, None, p72, p164, p159, i150]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++2132: leave_portal_frame(25)
++2132: i196 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2136: p197 = new_with_vtable(descr=<SizeDescr 16>)
++2173: setfield_gc(p197, i180, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2188: setarrayitem_gc(p72, 1, p197, descr=<ArrayP 8>)
++2203: setarrayitem_gc(p119, i196, p197, descr=<ArrayP 8>)
++2208: i200 = int_add(i196, 1)
++2208: p201 = getarrayitem_gc_r(p119, i196, descr=<ArrayP 8>)
++2213: setarrayitem_gc(p119, i196, ConstPtr(null), descr=<ArrayP 8>)
++2222: setfield_gc(p54, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2230: p204 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2234: setfield_gc(p49, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-11~#12 STORE_FAST')
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#14 LOAD_FAST')
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#16 LOAD_FAST')
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#18 BINARY_ADD')
++2250: setfield_gc(p24, p49, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2266: setfield_gc(p36, p204, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2274: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2279: setfield_gc(p54, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2287: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2295: guard_class(p201, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d6e30>) [p0, p6, p9, p201, p15, p1, None, None, None, None, i150]
++2307: i210 = getfield_gc_i(p201, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2311: i211 = int_add_ovf(i150, i210)
++2317: guard_no_overflow(descr=<Guard0x7fa5f08e1408>) [p0, p6, p9, p201, p15, p1, None, None, None, None, i150]
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#20 LOAD_CONST')
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#22 BINARY_MODULO')
++2323: i213 = int_eq(i211, -9223372036854775808)
++2323: i215 = int_rshift(i211, 63)
++2330: i216 = int_xor(i211, i215)
++2336: i218 = uint_mul_high(i216, -9086255505087856445)
++2363: i220 = uint_rshift(i218, 9)
++2367: i221 = int_xor(i220, i215)
++2370: i223 = int_mul(i221, 1009)
++2377: i224 = int_sub(i211, i223)
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#24 STORE_FAST')
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-12~#26 JUMP_ABSOLUTE')
++2380: i226 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++2387: i228 = int_lt(i226, 0)
++2391: guard_false(i228, descr=<Guard0x7fa5f08e1440>) [p0, p6, p9, p201, p15, p1, None, None, None, None, i150]
+debug_merge_point(0, 0, 'summing;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:9-11~#10 FOR_ITER')
++2397: i229 = arraylen_gc(p72, descr=<ArrayP 8>)
++2397: i230 = arraylen_gc(p119, descr=<ArrayP 8>)
++2397: jump(p0, p1, p6, p9, i224, p201, p15, p24, i29, p36, p39, p204, p37, i40, p49, p54, i59, p72, p119, descr=TargetToken(140350682149856))
++2432: --end of the loop--
+[639037257989] jit-log-opt-loop}
+[63907f4e4c93] {jit-log-opt-loop
+# Loop 5 (counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER) : loop with 263 ops
+[p0, p1]
++571: i2 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++582: p3 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++586: i4 = getfield_gc_i(p0, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++590: p5 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++594: p6 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++598: p7 = getfield_gc_r(p0, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++602: p9 = getarrayitem_gc_r(p7, 0, descr=<ArrayP 8>)
++606: p11 = getarrayitem_gc_r(p7, 1, descr=<ArrayP 8>)
++610: p13 = getarrayitem_gc_r(p7, 2, descr=<ArrayP 8>)
++614: p15 = getarrayitem_gc_r(p7, 3, descr=<ArrayP 8>)
++618: p17 = getarrayitem_gc_r(p7, 4, descr=<ArrayP 8>)
++622: p19 = getarrayitem_gc_r(p7, 5, descr=<ArrayP 8>)
++626: label(p0, p1, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, descr=TargetToken(140350680190944))
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER')
++672: guard_value(i4, 4, descr=<Guard0x7fa5f08d7010>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++682: guard_isnull(p5, descr=<Guard0x7fa5f06fb440>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++691: guard_class(p15, ConstClass(GeneratorIterator), descr=<Guard0x7fa5f06fb478>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++705: p22 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++716: guard_value(p22, ConstPtr(ptr23), descr=<Guard0x7fa5f08d7060>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++725: p24 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++729: guard_nonnull(p24, descr=<Guard0x7fa5f06fb4b0>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++738: i25 = getfield_gc_i(p15, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++743: guard_false(i25, descr=<Guard0x7fa5f06fb4e8>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++752: i26 = ptr_eq(p24, p0)
++755: guard_false(i26, descr=<Guard0x7fa5f06fb520>) [p0, i2, p3, i4, p5, p6, p9, p11, p13, p15, p17, p19, p1]
++761: p27 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++765: i29 = ptr_ne(p27, ConstPtr(null))
++779: cond_call(i29, 140350740345840, p24, descr=<Callv 0 r EF=2 OS=121>)
++788: i31 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++792: i33 = int_eq(i31, -1)
++796: guard_false(i33, descr=<Guard0x7fa5f08d70b0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, i31]
++802: p36 = call_r(ConstClass(_ll_1_threadlocalref_get__Ptr_GcStruct_objectLlT_Signed), 64, descr=<Callr 8 i EF=1 OS=5>)
++815: p37 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_sys_exc_operror 120>)
++820: p38 = getfield_gc_r(p15, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++824: guard_isnull(p38, descr=<Guard0x7fa5f08d7100>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p36, p37, p38]
++833: p39 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++837: i40 = getfield_gc_i(p39, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++841: p41 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++849: p42 = force_token()
++852: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++868: setfield_gc(p24, p41, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++872: guard_not_invalidated(descr=<Guard0x7fa5f08d7150>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++872: p44 = getfield_gc_r(p36, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_w_tracefunc 168 pure>)
++880: guard_value(p44, ConstPtr(null), descr=<Guard0x7fa5f06fb558>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++890: i46 = getfield_gc_i(p36, descr=<FieldU pypy.interpreter.executioncontext.ExecutionContext.inst_profilefunc 178 pure>)
++899: i48 = int_eq(i46, 0)
++903: guard_true(i48, descr=<Guard0x7fa5f06fb590>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++909: p49 = getfield_gc_r(p24, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++913: guard_nonnull_class(p49, ConstClass(GeneratorIterator), descr=<Guard0x7fa5f08d71a0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p42]
++931: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++939: p52 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_pycode 32 pure>)
++957: guard_value(p52, ConstPtr(ptr53), descr=<Guard0x7fa5f08d71f0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++966: p54 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_frame 24>)
++977: guard_nonnull(p54, descr=<Guard0x7fa5f06fb5c8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++986: i55 = getfield_gc_i(p49, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++998: guard_false(i55, descr=<Guard0x7fa5f06fb600>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1007: i56 = ptr_eq(p54, p0)
++1010: guard_false(i56, descr=<Guard0x7fa5f06fb638>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p52, p42]
++1016: p57 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.vable_token 8>)
++1020: i59 = ptr_ne(p57, ConstPtr(null))
++1034: cond_call(i59, 140350740345840, p54, descr=<Callv 0 r EF=2 OS=121>)
++1043: i61 = getfield_gc_i(p54, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1047: i63 = int_eq(i61, -1)
++1051: guard_false(i63, descr=<Guard0x7fa5f08d7240>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, i61, p42]
++1057: p64 = getfield_gc_r(p49, descr=<FieldP pypy.interpreter.generator.GeneratorOrCoroutine.inst_saved_operr 40>)
++1068: guard_isnull(p64, descr=<Guard0x7fa5f06fb670>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, i61, p42]
++1077: p65 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_pycode 64>)
++1081: i66 = getfield_gc_i(p65, descr=<FieldS pypy.interpreter.pycode.PyCode.inst__vmprof_unique_id 80 pure>)
++1092: p67 = force_token()
++1102: p68 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1113: setfield_gc(p49, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1118: guard_isnull(p68, descr=<Guard0x7fa5f08d7290>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p68, p67, p42]
++1127: guard_value(i61, 14, descr=<Guard0x7fa5f06fb6a8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p68, p67, p42]
++1137: i71 = getfield_gc_i(p54, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1141: p72 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1169: setarrayitem_gc(p72, i71, ConstPtr(ptr73), descr=<ArrayP 8>)
++1174: i75 = int_add(i71, 1)
++1178: p76 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_debugdata 16>)
++1182: setfield_gc(p54, i75, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1186: guard_isnull(p76, descr=<Guard0x7fa5f08d72e0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1195: guard_value(p65, ConstPtr(ptr77), descr=<Guard0x7fa5f06fb6e0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1204: enter_portal_frame(25, 6732)
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
++1204: guard_value(i75, 3, descr=<Guard0x7fa5f06fb718>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p65, p76, p67, p42]
++1214: p82 = getarrayitem_gc_r(p72, 2, descr=<ArrayP 8>)
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++1214: p84 = getarrayitem_gc_r(p72, 1, descr=<ArrayP 8>)
++1218: setfield_gc(p54, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1226: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1234: setarrayitem_gc(p72, 2, ConstPtr(null), descr=<ArrayP 8>)
++1242: guard_nonnull_class(p84, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d7330>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p84, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++1260: setfield_gc(p54, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1268: setarrayitem_gc(p72, 3, ConstPtr(null), descr=<ArrayP 8>)
++1276: i93 = getfield_gc_i(p84, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1280: i95 = int_add_ovf(i93, 1)
++1287: guard_no_overflow(descr=<Guard0x7fa5f08d7380>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i93, p84, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++1293: i97 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++1306: setfield_gc(p54, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1314: i100 = int_lt(i97, 0)
++1318: guard_false(i100, descr=<Guard0x7fa5f08d73d0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i97, i95, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++1324: p102 = getarrayitem_gc_r(p72, 0, descr=<ArrayP 8>)
++1328: setfield_gc(p54, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1336: setfield_gc(p54, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1344: guard_nonnull_class(p102, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d7420>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p102, i95, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++1362: setfield_gc(p54, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1370: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1378: i108 = getfield_gc_i(p102, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1382: i109 = int_le(i95, i108)
++1385: guard_true(i109, descr=<Guard0x7fa5f08d7470>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, p102, i95, i108, None, p72, p67, p42]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++1391: leave_portal_frame(25)
++1391: i112 = getfield_gc_i(p54, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1396: setfield_gc(p54, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1404: guard_false(i112, descr=<Guard0x7fa5f08d74c0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p54, p1, p36, p37, i40, p49, i66, i112, i95, p72, p67, p42]
++1413: p114 = getfield_gc_r(p54, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++1417: setfield_gc(p49, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1422: setfield_gc(p54, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1430: guard_isnull(p114, descr=<Guard0x7fa5f08d7510>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, p114, i95, p72, None, p42]
++1439: i117 = getfield_gc_i(p54, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1444: guard_false(i117, descr=<Guard0x7fa5f06fb750>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p49, p54, p114, i95, p72, None, p42]
++1453: i118 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++1457: p119 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_locals_cells_stack_w 56>)
++1461: p120 = new_with_vtable(descr=<SizeDescr 16>)
++1505: setfield_gc(p120, i95, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1519: setarrayitem_gc(p72, 1, p120, descr=<ArrayP 8>)
++1534: setarrayitem_gc(p119, i118, p120, descr=<ArrayP 8>)
++1539: i123 = int_add(i118, 1)
++1539: p124 = getarrayitem_gc_r(p119, i118, descr=<ArrayP 8>)
++1544: setarrayitem_gc(p119, i118, ConstPtr(null), descr=<ArrayP 8>)
++1553: p126 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1557: i127 = getfield_gc_i(p24, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_escaped 80>)
++1574: setfield_gc(p36, p126, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++1593: setfield_gc(p24, p49, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1604: guard_false(i127, descr=<Guard0x7fa5f08d7560>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p24, p1, p36, p37, i40, p124, i127, None, None, None, p42]
++1613: p128 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_lastblock 48>)
++1617: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1622: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1630: guard_isnull(p128, descr=<Guard0x7fa5f08d75b0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
++1639: i131 = getfield_gc_i(p24, descr=<FieldU pypy.interpreter.pyframe.PyFrame.inst_frame_finished_execution 81>)
++1651: guard_false(i131, descr=<Guard0x7fa5f06fb788>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-17~#12 STORE_FAST')
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#14 LOAD_FAST')
++1660: guard_nonnull_class(p11, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d7600>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#16 LOAD_CONST')
++1686: guard_value(p3, ConstPtr(ptr133), descr=<Guard0x7fa5f06fb7c0>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#18 BINARY_ADD')
++1695: i134 = getfield_gc_i(p11, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1699: i136 = int_add_ovf(i134, 1)
++1703: guard_no_overflow(descr=<Guard0x7fa5f06fb7f8>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#20 LOAD_CONST')
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#22 BINARY_MODULO')
++1709: i138 = int_rshift(i136, 63)
++1720: i139 = int_xor(i136, i138)
++1737: i141 = uint_mul_high(i139, -9086255505087856445)
++1764: i143 = uint_rshift(i141, 9)
++1768: i144 = int_xor(i143, i138)
++1771: i146 = int_mul(i144, 1009)
++1778: i147 = int_sub(i136, i146)
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#24 STORE_FAST')
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#26 JUMP_ABSOLUTE')
++1788: i149 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++1801: i151 = int_lt(i149, 0)
++1805: guard_false(i151, descr=<Guard0x7fa5f06fb830>) [p0, p3, p6, p9, p11, p13, p15, p17, p19, p1, p24, p128, p36, p37, p124, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER')
++1811: label(p0, p1, p6, p9, i147, p124, p15, p24, i29, p36, p39, p126, p37, i40, p49, p54, i59, p72, p119, descr=TargetToken(140350680191008))
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER')
++1824: cond_call(i29, 140350740345840, p24, descr=<Callv 0 r EF=2 OS=121>)
++1833: i153 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1837: i155 = int_eq(i153, -1)
++1841: guard_false(i155, descr=<Guard0x7fa5f08d7650>) [p0, p6, p9, p124, p15, p1, p24, i153, i147]
++1847: p156 = force_token()
++1850: setfield_gc(p15, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1866: setfield_gc(p24, p126, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++1870: guard_not_invalidated(descr=<Guard0x7fa5f08d76a0>) [p0, p6, p9, p124, p15, p24, p1, p36, p37, i40, p156, i147]
++1870: i158 = getfield_gc_i(p49, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1875: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1883: guard_false(i158, descr=<Guard0x7fa5f08d76f0>) [p0, p6, p9, p124, p15, p24, p1, p36, p37, i40, p49, p54, i158, p156, i147]
++1892: cond_call(i59, 140350740345840, p54, descr=<Callv 0 r EF=2 OS=121>)
++1906: p161 = force_token()
++1909: p162 = getfield_gc_r(p54, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++1913: setfield_gc(p49, 1, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++1918: guard_isnull(p162, descr=<Guard0x7fa5f08d7740>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p162, p161, p156, i147]
++1927: enter_portal_frame(25, 6732)
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#16 POP_TOP')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#18 LOAD_FAST')
++1927: p167 = getarrayitem_gc_r(p72, 1, descr=<ArrayP 8>)
++1938: setfield_gc(p54, 18, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1946: setarrayitem_gc(p72, 2, ConstPtr(null), descr=<ArrayP 8>)
++1954: guard_nonnull_class(p167, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d7790>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p167, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#20 LOAD_CONST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#22 BINARY_ADD')
++1973: setfield_gc(p54, 22, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++1981: setarrayitem_gc(p72, 3, ConstPtr(null), descr=<ArrayP 8>)
++1989: i175 = getfield_gc_i(p167, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++1993: i177 = int_add_ovf(i175, 1)
++2004: guard_no_overflow(descr=<Guard0x7fa5f08d77e0>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, i175, p167, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#24 STORE_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-7~#26 JUMP_ABSOLUTE')
++2010: i179 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++2023: setfield_gc(p54, 4, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2031: i182 = int_lt(i179, 0)
++2035: guard_false(i182, descr=<Guard0x7fa5f08d7830>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, i179, i177, p72, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#4 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#6 LOAD_FAST')
++2041: p184 = getarrayitem_gc_r(p72, 0, descr=<ArrayP 8>)
++2045: setfield_gc(p54, 3, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2053: setfield_gc(p54, 6, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2061: guard_nonnull_class(p184, ConstClass(W_IntObject), descr=<Guard0x7fa5f08d7880>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p184, i177, p72, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#8 COMPARE_OP')
++2080: setfield_gc(p54, 2, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2088: setfield_gc(p54, 8, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2096: i190 = getfield_gc_i(p184, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2107: i191 = int_le(i177, i190)
++2110: guard_true(i191, descr=<Guard0x7fa5f08d78d0>) [p0, p6, p9, p124, p15, p24, p54, p1, p36, p37, i40, p49, p184, i177, i190, None, p72, p161, p156, i147]
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-5~#10 POP_JUMP_IF_FALSE')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#12 LOAD_FAST')
+debug_merge_point(1, 1, 'generator;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:3-6~#14 YIELD_VALUE')
++2116: leave_portal_frame(25)
++2116: i193 = getfield_gc_i(p24, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_valuestackdepth 72>)
++2120: p194 = new_with_vtable(descr=<SizeDescr 16>)
++2157: setfield_gc(p194, i177, descr=<FieldS pypy.objspace.std.intobject.W_IntObject.inst_intval 8 pure>)
++2172: setarrayitem_gc(p72, 1, p194, descr=<ArrayP 8>)
++2187: setarrayitem_gc(p119, i193, p194, descr=<ArrayP 8>)
++2192: i197 = int_add(i193, 1)
++2192: p198 = getarrayitem_gc_r(p119, i193, descr=<ArrayP 8>)
++2197: setarrayitem_gc(p119, i193, ConstPtr(null), descr=<ArrayP 8>)
++2206: setfield_gc(p54, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2214: p201 = getfield_gc_r(p24, descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2218: setfield_gc(p49, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-17~#12 STORE_FAST')
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#14 LOAD_FAST')
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#16 LOAD_CONST')
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#18 BINARY_ADD')
++2223: i204 = int_add(i147, 1)
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#20 LOAD_CONST')
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#22 BINARY_MODULO')
++2227: i206 = uint_mul_high(i204, -9086255505087856445)
++2251: i208 = uint_rshift(i206, 9)
++2255: i210 = int_mul(i208, 1009)
++2262: i211 = int_sub(i204, i210)
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#24 STORE_FAST')
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-18~#26 JUMP_ABSOLUTE')
++2272: i213 = getfield_raw_i(140350766812544, descr=<FieldS pypysig_long_struct.c_value 0>)
++2290: setfield_gc(p24, p49, descr=<FieldP pypy.objspace.std.frame.StdObjSpaceFrame.inst_w_yielding_from 96>)
++2306: setfield_gc(p36, p201, descr=<FieldP pypy.interpreter.executioncontext.ExecutionContext.inst_topframeref 128>)
++2314: setfield_gc(p15, 0, descr=<FieldU pypy.interpreter.generator.GeneratorOrCoroutine.inst_running 48>)
++2319: setfield_gc(p54, 14, descr=<FieldS pypy.interpreter.pyframe.PyFrame.inst_last_instr 40>)
++2327: setfield_gc(p24, ConstPtr(null), descr=<FieldP pypy.interpreter.pyframe.PyFrame.inst_f_backref 24>)
++2335: i218 = int_lt(i213, 0)
++2339: guard_false(i218, descr=<Guard0x7fa5f08d7920>) [p0, p6, p9, p198, p15, p1, i213, i211, None, None, None, None, None]
+debug_merge_point(0, 0, 'counting;/data/effect-jit-monorepo/my_benchmarks/multiple_handlers/main.py:15-17~#10 FOR_ITER')
++2345: i219 = arraylen_gc(p72, descr=<ArrayP 8>)
++2345: i220 = arraylen_gc(p119, descr=<ArrayP 8>)
++2345: jump(p0, p1, p6, p9, i211, p198, p15, p24, i29, p36, p39, p201, p37, i40, p49, p54, i59, p72, p119, descr=TargetToken(140350680191008))
++2384: --end of the loop--
+[63907f57f9ca] jit-log-opt-loop}
+[6390c3a98c19] {jit-summary
+Tracing:      	5	0.006173
+Backend:      	5	0.002127
+TOTAL:      		1.814661
+ops:             	1166
+heapcached ops:  	1035
+recorded ops:    	498
+  calls:         	30
+guards:          	188
+opt ops:         	873
+opt guards:      	198
+opt guards shared:	87
+forcings:        	0
+abort: trace too long:	0
+abort: compiling:	0
+abort: vable escape:	0
+abort: bad loop: 	0
+abort: force quasi-immut:	0
+abort: segmenting trace:	0
+virtualizables forced:	0
+nvirtuals:       	177
+nvholes:         	18
+nvreused:        	128
+vecopt tried:    	0
+vecopt success:  	0
+Total # of loops:	5
+Total # of bridges:	0
+Freed # of loops:	0
+Freed # of bridges:	0
+[6390c3aa2f09] jit-summary}
