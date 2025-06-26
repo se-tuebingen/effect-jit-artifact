@@ -451,6 +451,29 @@ if __name__ == "__main__":
     else:
         myargs = sys.argv[2:]
         sargs = None
+    if len(sys.argv) < 2 or sys.argv[1] == "help":
+      from rich import print
+      print("[bold]Available subcommands[/bold]")
+      print("=====================")
+      cmds = [
+          ("help", "Show this help"),
+          ("list-benchmarks", "Print the names of all available benchmarks"),
+          ("list-langs", "Print the names of all available language implementations"),
+          ("setup", "Install/compile all necessary dependencies"),
+          ("run", "Compile and run benchmarks (once, no timing)"),
+          ("rerun", "Run already compiled benchmarks (once, no timing)"),
+          ("debug", "(internal) Run a python REPL as a JIT debugger (available commands see rpyeffect/debugger/lib.py)"),
+          ("getcmd", "Return shell command to run the already compiled benchmark"),
+          ("jitlog", "Generate JIT trace logs"),
+          ("benchmark", "Run and time benchmarks (with multiple runs)"),
+          ("benchmark-for-paper", "Run and time the benchmarks as was done for the paper"),
+          ("report", "Show results of last benchmarking runs"),
+          ("export-all-paper-tables-tsv", "Export the tables corresponding to the ones in the paper as TSV"),
+          ("backup-results", "Copy all result files to a given folder"),
+      ]
+      for name, help in cmds:
+          print(f"[bold]{name}[/bold]:\t{help}")
+      sys.exit(1)
     if sys.argv[1:] == ["Forrest", "run"]:
       print("Life is like a box of chocolates: You never know what you get.")
       sys.exit(0)
@@ -468,7 +491,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
       case "run":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run run")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
         args = parser.parse_args(myargs)
@@ -494,7 +517,7 @@ if __name__ == "__main__":
                 if res is None:
                     runcmds[benchmark][lang] = None  # TODO error reporting
       case "benchmark":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run benchmark")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
         parser.add_argument("--quick", default=False, action='store_true')
@@ -511,7 +534,7 @@ if __name__ == "__main__":
         doreport(cbenchmarks, clangs, sargs)
 
       case "benchmark-for-paper":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run benchmark-for-paper")
         parser.add_argument("--quick", default=False, action='store_true')
         args = parser.parse_args(myargs)
         if args.quick:
@@ -531,7 +554,7 @@ if __name__ == "__main__":
             doreport(lcbenchmarks, lclangs, sargs)
 
       case "bm-param":
-          parser = ArgumentParser()
+          parser = ArgumentParser("./run bm-param")
           parser.add_argument("langs")
           parser.add_argument("benchmarks")
           parser.add_argument("params")
@@ -578,7 +601,7 @@ if __name__ == "__main__":
               doplot(benchmark, clangs, sargs, params)
 
       case "bm-param-plot":
-          parser = ArgumentParser()
+          parser = ArgumentParser("./run bm-param-plot")
           parser.add_argument("langs")
           parser.add_argument("benchmarks")
           parser.add_argument("params")
@@ -592,7 +615,7 @@ if __name__ == "__main__":
               doplot(benchmark, clangs, sargs, params)
 
       case "rerun":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run rerun")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
         args = parser.parse_args(myargs)
@@ -609,7 +632,7 @@ if __name__ == "__main__":
         store_logdict()
         
       case "report":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run report")
         parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
@@ -622,7 +645,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
       case "export-tables":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run export-tables")
         parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
@@ -637,7 +660,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
       case "export-tex-tables":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run export-tex-tables")
         parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
@@ -651,7 +674,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
       case "export-all-paper-tables":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run export-all-paper-tables")
         parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("--target", default=None, required=False, help="Prefix to prepend to the output filename (i.e. target directory + /)")
         args = parser.parse_args(myargs)
@@ -673,7 +696,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
       case "export-all-paper-tables-tsv":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run export-all-paper-tables-tsv")
         parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("--target", default=None, required=False, help="Prefix to prepend to the output filename (i.e. target directory + /)")
         args = parser.parse_args(myargs)
@@ -696,7 +719,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
       case "getcmd":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run getcmd")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
         args = parser.parse_args(myargs)
@@ -710,7 +733,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
       case "jitlog":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run jitlog")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
         parser.add_argument("-v", action="store_true", help="Enable verbose traces")
@@ -739,8 +762,13 @@ if __name__ == "__main__":
             print(bm.name)
         sys.exit(0)
 
+      case "list-langs":
+        for be in getlangs("all"):
+            print(be.name)
+        sys.exit(0)
+
       case "debug":
-        parser = ArgumentParser()
+        parser = ArgumentParser("./run debug")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
         args = parser.parse_args(myargs)
@@ -763,7 +791,7 @@ if __name__ == "__main__":
                     sys.exit(subprocess.run(["nix-shell", "--command", f"rpyeffect/debugger/__main__.py {path} {runargs}"], cwd="./rpyeffect-jit").returncode)
 
       case "backup-results":
-          parser = ArgumentParser()
+          parser = ArgumentParser("./run backup-results")
           parser.add_argument("to")
           args = parser.parse_args(myargs)
           
@@ -777,6 +805,7 @@ if __name__ == "__main__":
               shutil.copy(d, os.path.join(dst, d))
 
       case _:
-          print("Available subcommands: run, benchmark")
+          print("Unknown subcommand. Use './run help' to show available subcommands.")
+          sys.exit(1)
 
     store_logdict()
