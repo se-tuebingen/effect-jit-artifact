@@ -122,6 +122,29 @@ Otherwise, you can run the benchmarks with a small timeout and number of runs us
 As far as possible, run this on a quiet machine. The reduced number of runs will already result in relatively
 large noise in the results.
 
+### Comparing the outputs
+The resulting outputs are shown as tables in the terminal.
+Using `./run report $implementations $benchmarks`, individual subsets can be shown.
+For the paper, the following are relevant combinations (format copy-pasteable into the above):
+
+- Benchmarks `suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers` (Figure 5),
+  on implementations (mostly RQ 1)
+  - `eff-jit,eff-plain-ocaml,oldeff-plain-ocaml` for the comparison within Eff
+  - `effekt-jit,effekt-llvm,effekt-js,effekt-ml` for the comparison within Effekt
+  - `koka-vm,koka-c,koka-js` for the comparison wihtin Koka
+  - `eff-jit,effekt-jit,koka-vm` for the comparison between the JIT implementations (cmp. RQ 4)
+- `effekt-jit,js-v8,python-cpython,python-pypy,lua-lua,lua-luajit suite:are-we-fast-yet` for the baseline results not using effects (cmp. RQ 5)
+- `eff-jit,effekt-jit,ocaml5,js-v8,koka-vm,python-cpython,python-pypy countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup`
+  for the baseline comparison with effectful programs (cmp. RQ 5).
+
+For comparison, the results from the paper can be shown using `./run report --root results_x86 $implementations $benchmarks`
+(resp. using `results_m1` for the results generated on M1).
+Each table is printed twice, once with relative numbers (slowdown compared to the fastest shown) and once absolute (in seconds).
+
+The individual outputs will of course differ depending on specific hardware, and measurement noise will have distorted them
+slightly (especially when using `--quick` above). Thus, you should mostly check that the relative results are in a similar
+direction and order of magnitude.
+
 ### Saving time: Decrease the number of runs
 In `./runtool/config.py`, you can change the parameters passed to `hyperfine`,
 in particular, you want to change the following lines to use fewer runs (without `--quick`):
@@ -161,6 +184,10 @@ To generate the trace log for one (or multiple) benchmarks, run
 ./run jitlog $implementations $benchmarks
 ```
 
+The trace logs generated to `.jitlogs` end with a summary. Here, the numbers of loops and bridges should not differ by a large number from the ones for the paper results
+(in `./results_x86/.jitlogs` resp. `./results_m1/.jitlogs`).
+Also, the loop should be similar, which however is non-trivial to check.
+
 # Reusability Guide
 <!-- TODO explain which parts of your artifact constitute the core pieces which should be evaluated for reusability. Explain how to adapt the artifact to new inputs or new use cases. Provide instructions for how to find/generate/read documentation about the core artifact. Articulate any limitations to the artifact’s reusability. -->
 
@@ -169,7 +196,7 @@ The main part of the artifact is the RPython-based JIT implementation, to be fou
 To compile the JIT itself, a version of Python 2 and the (contained) PyPy-checkout,
 or a version of the `rpython` tool from there, are enough. The dependencies are there to simplify the
 usage of debug tooling etc.
-TODO Tests
+The (small) test suite can be run using `make test` in the `rpyeffect-jit` directory.
 
 ## The Middleend
 To simplify writing the language backends, a common middleend was created to transform the intermediate representation
