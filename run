@@ -93,17 +93,17 @@ def dorun(runcmd: list[str], lang: Language, benchmark: Benchmark, args: list[st
             return None
     return output
 
-def numeric_results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language], param = None) -> tuple[float, float]:
+def numeric_results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language], param = None, rootdir: str = ".") -> tuple[float, float]:
     benchmark_name = benchmark.name
     if sargs is not None:
         benchmark_name += "_" + "_".join(sargs)
 
     # Check run/compile result
     try:
-        if logdict is not None:
+        if logdict is not None and rootdir == ".":
             j = logdict.copy()
         else:
-            with open(f"./.runlog.json") as f:
+            with open(f"{rootdir}/.runlog.json") as f:
                 j = json.load(f)
     except Exception:
         return np.nan, np.nan
@@ -122,7 +122,7 @@ def numeric_results(benchmark: Benchmark, l: Language, sargs: list[str] | None, 
         
     # Check actual benchmark times
     try:
-        with open(f"./.results/.{benchmark_name}-results.json") as jf:
+        with open(f"{rootdir}/.results/.{benchmark_name}-results.json") as jf:
             j = json.load(jf)
     except Exception:
         return np.nan, np.nan
@@ -136,17 +136,17 @@ def numeric_results(benchmark: Benchmark, l: Language, sargs: list[str] | None, 
     else:
         return np.nan, np.nan
 
-def numeric_results_with_timeout_str(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language], param = None) -> tuple[float, float]:
+def numeric_results_with_timeout_str(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns: list[Language], param = None, rootdir: str = ".") -> tuple[float, float]:
     benchmark_name = benchmark.name
     if sargs is not None:
         benchmark_name += "_" + "_".join(sargs)
 
     # Check run/compile result
     try:
-        if logdict is not None:
+        if logdict is not None and rootdir == ".":
             j = logdict.copy()
         else:
-            with open(f"./.runlog.json") as f:
+            with open(f"{rootdir}/.runlog.json") as f:
                 j = json.load(f)
     except Exception:
         return np.nan, np.nan
@@ -167,7 +167,7 @@ def numeric_results_with_timeout_str(benchmark: Benchmark, l: Language, sargs: l
         
     # Check actual benchmark times
     try:
-        with open(f"./.results/.{benchmark_name}-results.json") as jf:
+        with open(f"{rootdir}/.results/.{benchmark_name}-results.json") as jf:
             j = json.load(jf)
     except Exception:
         return np.nan, np.nan
@@ -257,7 +257,7 @@ def doreport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[s
     rich.console.Console().print(table_rel)
     rich.console.Console().print(table_abs)
 
-def doexport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None) -> None:
+def doexport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None, rootdir: str = ".") -> None:
     os.makedirs("./.exported", exist_ok=True)
     export_dir = f"./.exported/{'_'.join(sorted(b.name for b in cbenchmarks))}/{'_'.join(sorted(l.name for l in clangs))}"
     os.makedirs(export_dir, exist_ok=True)
@@ -276,13 +276,13 @@ def doexport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[s
                 f_abs.write(f"\n{benchmark.name}")
                 f_rel.write(f"\n{benchmark.name}")
                 for lang in columns:
-                    abs_result, rel_result = numeric_results(benchmark, lang, sargs, columns)
+                    abs_result, rel_result = numeric_results(benchmark, lang, sargs, columns, rootdir=rootdir)
                     f_abs.write(f"\t{abs_result}")
                     f_rel.write(f"\t{rel_result}")
     
     return fname_abs, fname_rel
 
-def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None) -> None:
+def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None, rootdir: str = ".") -> None:
     os.makedirs("./.exported", exist_ok=True)
     export_dirname = '_'.join(sorted(b.name for b in cbenchmarks))
     if len(export_dirname) > 250:
@@ -330,7 +330,7 @@ def doexport_tex(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: li
             f.write(f"\n{benchmark.name.replace('_','-')}")
             for lang in supercolumns:
                 for be in columns_dict[lang]:
-                    abs_result, rel_result = numeric_results_with_timeout_str(benchmark, be, sargs, columns)
+                    abs_result, rel_result = numeric_results_with_timeout_str(benchmark, be, sargs, columns, rootdir=rootdir)
                     if isinstance(abs_result, str):
                         f.write(f" & {abs_result}")
                     elif np.isnan(abs_result):
@@ -623,6 +623,7 @@ if __name__ == "__main__":
 
       case "export-tables":
         parser = ArgumentParser()
+        parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
         args = parser.parse_args(myargs)
@@ -630,13 +631,14 @@ if __name__ == "__main__":
         clangs = getlangs(args.langs)
         cbenchmarks = getbenchmarks(args.benchmarks)
 
-        a,b = doexport(cbenchmarks, clangs, sargs)
+        a,b = doexport(cbenchmarks, clangs, sargs, rootdir=args.root)
         print(a)
         print(b)
         sys.exit(0)
 
       case "export-tex-tables":
         parser = ArgumentParser()
+        parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("langs")
         parser.add_argument("benchmarks")
         args = parser.parse_args(myargs)
@@ -644,12 +646,13 @@ if __name__ == "__main__":
         clangs = getlangs(args.langs)
         cbenchmarks = getbenchmarks(args.benchmarks)
 
-        a = doexport_tex(cbenchmarks, clangs, sargs)
+        a = doexport_tex(cbenchmarks, clangs, sargs, rootdir=args.root)
         print(a)
         sys.exit(0)
 
       case "export-all-paper-tables":
         parser = ArgumentParser()
+        parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("--target", default=None, required=False, help="Prefix to prepend to the output filename (i.e. target directory + /)")
         args = parser.parse_args(myargs)
 
@@ -663,7 +666,7 @@ if __name__ == "__main__":
         for name, conf in paper_tables.items():
             clangs = getlangs(conf['langs'])
             cbenchmarks = getbenchmarks(conf['benchmarks'])
-            a = doexport_tex(cbenchmarks, clangs, sargs)
+            a = doexport_tex(cbenchmarks, clangs, sargs, rootdir=args.root)
             shutil.copy(a, target + name)
 
         print(target)
@@ -671,6 +674,7 @@ if __name__ == "__main__":
 
       case "export-all-paper-tables-tsv":
         parser = ArgumentParser()
+        parser.add_argument("--root", default=".", help="Directory to read results from, default .")
         parser.add_argument("--target", default=None, required=False, help="Prefix to prepend to the output filename (i.e. target directory + /)")
         args = parser.parse_args(myargs)
 
@@ -684,7 +688,7 @@ if __name__ == "__main__":
         for name, conf in paper_tables.items():
             clangs = getlangs(conf['langs'])
             cbenchmarks = getbenchmarks(conf['benchmarks'])
-            a,b = doexport(cbenchmarks, clangs, sargs)
+            a,b = doexport(cbenchmarks, clangs, sargs, rootdir=args.root)
             shutil.copy(a, target + name)
             shutil.copy(b, target + "rel-" + name)
 
