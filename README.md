@@ -120,7 +120,3 @@ There are multiple ways to access the results
 ├── results_x86   - Raw data from the benchmarking results of the paper (on x86)
 └── results_m1    - Raw data from the benchmarking results of the paper (on M1, only in appendix)
 ```
-
-
-## Notes for MacOS
-- On MacOS, the package for mlton in nixpkgs does not work, so it will have to be installed manually (e.g. via brew)

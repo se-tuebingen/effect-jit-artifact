@@ -108,22 +108,21 @@ There should be no `ERROR` output (instead of the "DONE") for the runs.
 Be sure to explain the expected outputs produced by the Step by Step Instructions. State where to find the outputs and how to interpret them relative to the paper. If there are any expected warnings or error messages, explain those as well. Ideally, artifacts should include sample outputs and logs for comparison. -->
 
 ## Running all benchmarks
+*If you haven't, enter an environment where all dependencies are available by running `nix-shell` (without arguments) in the root directory of the artifact.*
+
 Note: Running all benchmarks in the same way as for the paper (with warmup runs, a 90s timeout, and 20 runs each)
 **takes a lot of time (~14h)**. If you want to do so regardless, you can use the following command:
 ```sh
 ./run benchmark-for-paper
 ```
 
-Otherwise, you can run the benchmarks with a smaller timeout and decreased number of runs (TODO) using:
+Otherwise, you can run the benchmarks with a small timeout and number of runs using:
 ```sh
 ./run benchmark-for-paper --quick
 ```
 **This still will take about 1h** --- you can reduce this time further as described below.
 As far as possible, run this on a quiet machine. The reduced number of runs will already result in relatively
 large noise in the results.
-
-TODO Running all benchmarks as was done for the paper (~14h)
-TODO For artifact: Run all once (or sth), small timeout, caveat: noisy.
 
 ### Saving time: Decrease the number of runs
 In `./runtool/config.py`, you can change the parameters passed to `hyperfine`,
@@ -155,6 +154,14 @@ will run the `triples` and `startup` benchmarks on `eff-jit` and `koka-vm` (the 
 
 Note that the results files are per-benchmark, over all languages, so all other results for the given
 benchmark will be overwritten.
+
+## Generating trace logs
+*If you haven't, enter an environment where all dependencies are available by running `nix-shell` (without arguments) in the root directory of the artifact.*
+
+To generate the trace log for one (or multiple) benchmarks, run
+```sh
+./run jitlog <implementations> <benchmarks>
+```
 
 TODO TODO
 
