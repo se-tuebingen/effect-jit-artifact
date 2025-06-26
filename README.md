@@ -10,6 +10,11 @@ should you wish to install them manually.
 ## Compiling
 
 While the compiled binaries are provided with the artefact, they might not work on all systems.
+Note that in addition to the following, some of the implementations need to be compiled, too.
+To compile everything, use:
+```sh
+./run setup
+```
 
 ### Compiling the JIT
 
