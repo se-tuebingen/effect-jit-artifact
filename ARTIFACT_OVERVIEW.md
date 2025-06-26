@@ -81,6 +81,9 @@ In the root directory run
 to install all dependencies and compile all the language implementations, the JIT in all variants, and the middleend.
 This will some time (25min on a M1 MacBook), but can be left running in the background.
 
+Note: Although binaries for some of the tools are included, this will still recompile them to ensure compatibility with
+the given system.
+
 ## Run a minimal program for each implementation, once
 *If you haven't, enter an environment where all dependencies are available by running `nix-shell` (without arguments) in the root directory of the artifact.*
 
