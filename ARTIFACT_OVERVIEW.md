@@ -56,10 +56,12 @@ It is provided to support our answers to the research questions posed in the pap
 # Hardware Dependencies
 <!-- TODO describe the hardware required to evaluate the artifact. If the artifact requires specific hardware (e.g., many cores, disk space, GPUs, specific processors), please provide instructions on how to gain access to the hardware. Keep in mind that reviewers must remain anonymous. -->
 
-- Free disk space TODO GB (20? 30?)
+- Free disk space: 64 GB
 - One of the following:
   - Linux running on x86_64
   - macOS running on M1/M2/M3/M4.
+- Good internet connection and somewhat recent hardware
+  (otherwise, some of the commands will run for longer).
 
 # Getting Started Guide
 <!-- TODO give instructions for setup and basic testing. List any software requirements and/or passwords needed to access the artifact. The instructions should take roughly 30 minutes to complete. Reviewers will follow the guide during an initial kick-the-tires phase and report issues as they arise.
