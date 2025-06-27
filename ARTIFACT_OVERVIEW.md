@@ -1,5 +1,4 @@
 # Introduction
-<!-- TODO briefly explain the purpose of the artifact and how it supports the paper. We recommend listing all claims in the paper and stating whether or not each is supported. For supported claims, say how the artifact provides support. For unsupported claims, explain why they are omitted. -->
 This artifact contains both the described JIT, the frontends for the different languages,
 alongside the middleend and the benchmarks. It also contains the other implementations of those languages
 used for benchmarking.
@@ -55,7 +54,6 @@ It is provided to support our answers to the research questions posed in the pap
   on the included subset of the "Are we fast yet?" benchmarks.
 
 # Hardware Dependencies
-<!-- TODO describe the hardware required to evaluate the artifact. If the artifact requires specific hardware (e.g., many cores, disk space, GPUs, specific processors), please provide instructions on how to gain access to the hardware. Keep in mind that reviewers must remain anonymous. -->
 
 - Free disk space: 64 GB
 - One of the following:
@@ -65,9 +63,6 @@ It is provided to support our answers to the research questions posed in the pap
   (otherwise, some of the commands will run for longer).
 
 # Getting Started Guide
-<!-- TODO give instructions for setup and basic testing. List any software requirements and/or passwords needed to access the artifact. The instructions should take roughly 30 minutes to complete. Reviewers will follow the guide during an initial kick-the-tires phase and report issues as they arise.
-
-The Getting Started Guide should be as simple as possible, and yet it should stress the key elements of your artifact. Anyone who has followed the Getting Started Guide should have no technical difficulties with the rest of your artifact. -->
 
 ## Install Nix
 If you haven't already, install the Nix package manager as described [here](https://nixos.org/download/)
@@ -107,9 +102,6 @@ OK
 There should be no `ERROR` output (instead of the "DONE") for the runs.
 
 # Step by Step Instructions
-<!-- TODO explain how to reproduce any experiments or other activities that support the conclusions in your paper. Write this for readers who have a deep interest in your work and are studying it to improve it or compare against it. If your artifact runs for more than a few minutes, point this out, note how long it is expected to run (roughly) and explain how to run it on smaller inputs. Reviewers may choose to run on smaller inputs or larger inputs depending on available resources.
-
-Be sure to explain the expected outputs produced by the Step by Step Instructions. State where to find the outputs and how to interpret them relative to the paper. If there are any expected warnings or error messages, explain those as well. Ideally, artifacts should include sample outputs and logs for comparison. -->
 
 ## Running all benchmarks
 *If you haven't, enter an environment where all dependencies are available by running `nix-shell` (without arguments) in the root directory of the artifact.*
@@ -207,7 +199,6 @@ The trace logs generated to `.jitlogs` end with a summary. Here, the numbers of 
 Also, the loop should be similar, which however is non-trivial to check.
 
 # Reusability Guide
-<!-- TODO explain which parts of your artifact constitute the core pieces which should be evaluated for reusability. Explain how to adapt the artifact to new inputs or new use cases. Provide instructions for how to find/generate/read documentation about the core artifact. Articulate any limitations to the artifact’s reusability. -->
 
 ## The JIT implementation
 The main part of the artifact is the RPython-based JIT implementation, to be found in `./rpyeffect-jit`.
