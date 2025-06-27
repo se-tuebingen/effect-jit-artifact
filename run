@@ -270,11 +270,16 @@ def doreport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[s
 
     # Compute geomeans
     geomeans = []
-    base_vals = {bm: numeric_results(bm, columns[0], sargs, columns, rootdir=rootdir)[0] for bm in cbenchmarks}
+    base_col = columns[0]
+    for col in columns:
+        if col.name == "effekt-jit":
+            base_col = col
+            break
+    base_vals = {bm: numeric_results(bm, base_col, sargs, columns, rootdir=rootdir)[0] for bm in cbenchmarks}
     for lang in columns:
         gm = geometric_mean(filter(lambda v: not np.isnan(v), ((numeric_results(benchmark, lang, sargs, columns, rootdir=rootdir)[0] / base_vals[benchmark]) for benchmark in cbenchmarks)))
         geomeans.append(f"{gm:.3f}") 
-    table_abs.add_row(f"[gray]geomean (wrt. {columns[0].name})[/gray]", *geomeans, style=style)
+    table_abs.add_row(f"[bold]geomean slowdown (wrt. {base_col.name})[/bold]", *geomeans, style=style)
     rich.console.Console().print(table_rel)
     rich.console.Console().print(table_abs)
 
