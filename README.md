@@ -45,6 +45,8 @@ To compile everything, use:
   (multiple implementations and benchmarks are possible, see below in Benchmarking).
 - Run `./run getcmd <implementation> <benchmark>` to get the command used to run a certain benchmark
   (including, e.g., `node`, but excluding `hyperfine`)
+- To get a list of available implementations, run `./run list-langs`. To get a list of available
+  benchmarks, run `./run list-benchmarks`.
 
 ## Benchmarking
 
