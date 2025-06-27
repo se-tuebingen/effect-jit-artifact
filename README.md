@@ -43,6 +43,8 @@ To compile everything, use:
 - Run `nix-shell` to enter an environment where the necessary systems for benchmarking are installed.
 - Run `./run run <implementation> <benchmark>` to run one of the benchmarks once, seeing it's output
   (multiple implementations and benchmarks are possible, see below in Benchmarking).
+- Run `./run getcmd <implementation> <benchmark>` to get the command used to run a certain benchmark
+  (including, e.g., `node`, but excluding `hyperfine`)
 
 ## Benchmarking
 
