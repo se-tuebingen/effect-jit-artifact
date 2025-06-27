@@ -5,6 +5,7 @@ alongside the middleend and the benchmarks. It also contains the other implement
 used for benchmarking.
 
 It is provided to support our answers to the research questions posed in the paper:
+
 - For **RQ 1** ("How does tracing JIT compilation compare with existing ahead-of-time optimizing implementations of effect handlers?"),
   we claim in the paper:
   > Benchmark results comparing our implementation to AOT optimizing compilers show a competetive performance both over most existing
@@ -77,7 +78,7 @@ To download them, please use `git submodule update --init` after downloading thi
 
 ## Compile the individual tools
 In the root directory run
-```sh
+```
 ./run setup
 ```
 to install all dependencies and compile all the language implementations, the JIT in all variants, and the middleend.
@@ -95,7 +96,7 @@ If this succeeds without any errors, everything should be setup correctly.
 Compilation should result in different output, starting with `COMPILING` and ending with `DONE.` each.
 More importantly, the output should end with multiple repetitions of output similar to the following (one per language implementation):
 
-```out
+```
 RUNNING ['/Users/gaisseml/dev/effect-jit-artifact/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-2-context', '/Users/gaisseml/dev/effect-jit-artifact/.effekt-out/effekt-jit-2-context:startup_e80a2bff-3c68-4aaa-b0b5-38d9c90c59dc/main.rpyeffect', '50000000']
 RUNNING timeout 90s /Users/gaisseml/dev/effect-jit-artifact/rpyeffect-jit/out/bin/arm64-Darwin/rpyeffect-jit-2-context /Users/gaisseml/dev/effect-jit-artifact/.effekt-out/effekt-jit-2-context:startup_e80a2bff-3c68-4aaa-b0b5-38d9c90c59dc/main.rpyeffect 50000000
 run | 0
@@ -115,22 +116,42 @@ Be sure to explain the expected outputs produced by the Step by Step Instruction
 
 Note: Running all benchmarks in the same way as for the paper (with warmup runs, a 90s timeout, and 20 runs each)
 **takes a lot of time (~14h)**. If you want to do so regardless, you can use the following command:
-```sh
+```
 ./run benchmark-for-paper
 ```
 
 Otherwise, you can run the benchmarks with a small timeout and number of runs using:
-```sh
+```
 ./run benchmark-for-paper --quick
 ```
-**This still will take about 1h** --- you can reduce this time further as described below.
+**This still will take about 1h** --- you can reduce this time further as described below in the
+sections titled "Saving time".
 As far as possible, run this on a quiet machine. The reduced number of runs will already result in relatively
 large noise in the results.
 
 ### Comparing the outputs
 The resulting outputs are shown as tables in the terminal.
 Using `./run report $implementations $benchmarks`, individual subsets can be shown.
-For the paper, the following are relevant combinations (format copy-pasteable into the above):
+For comparison, the results from the paper can be shown using `./run report --root results_x86 $implementations $benchmarks`
+(resp. using `results_m1` for the results generated on M1).
+Each table is printed twice, once with relative numbers (slowdown compared to the fastest shown) and once absolute (in seconds).
+
+The individual outputs will of course differ depending on specific hardware, and measurement noise will have distorted them
+slightly (especially when using `--quick` above). Thus, you should mostly check that the relative results are in a similar
+direction and order of magnitude. In particular, the fastest implementation (marked in green in the output)
+should be the same or similar.
+
+For each of the relevant combinations listed below:
+
+1. run `./run report $implementations $benchmarks` and, ideally in a different window/pane,
+   `./run --root results_x86 $implementations $benchmarks` (resp. with `results_m1` on M1).
+2. Compare the outputs for consistency, that is:
+
+   - Check that the fastest implementation for each benchmark (marked in green) is the same,
+     or if not, it was close in the original benchmarks (i.e. the relative number is close to 1)
+   - Check that the orders of magnitude of the relative numbers for the other implementations are similar.
+
+For the paper, the following are relevant combinations (format copy-pasteable into the above commands):
 
 - Benchmarks `suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers` (Figure 5),
   on implementations (mostly RQ 1)
@@ -138,17 +159,9 @@ For the paper, the following are relevant combinations (format copy-pasteable in
   - `effekt-jit,effekt-llvm,effekt-js,effekt-ml` for the comparison within Effekt
   - `koka-vm,koka-c,koka-js` for the comparison wihtin Koka
   - `eff-jit,effekt-jit,koka-vm` for the comparison between the JIT implementations (cmp. RQ 4)
-- `effekt-jit,js-v8,python-cpython,python-pypy,lua-lua,lua-luajit suite:are-we-fast-yet` for the baseline results not using effects (cmp. RQ 5)
-- `eff-jit,effekt-jit,ocaml5,js-v8,koka-vm,python-cpython,python-pypy countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup`
+- Implementations and benchmarks `effekt-jit,js-v8,python-cpython,python-pypy,lua-lua,lua-luajits suite:are-we-fast-yet` for the baseline results not using effects (cmp. RQ 5).
+- Implementations and benchmarks `eff-jit,effekt-jit,ocaml5,js-v8,koka-vm,python-cpython,python-pypy countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup`
   for the baseline comparison with effectful programs (cmp. RQ 5).
-
-For comparison, the results from the paper can be shown using `./run report --root results_x86 $implementations $benchmarks`
-(resp. using `results_m1` for the results generated on M1).
-Each table is printed twice, once with relative numbers (slowdown compared to the fastest shown) and once absolute (in seconds).
-
-The individual outputs will of course differ depending on specific hardware, and measurement noise will have distorted them
-slightly (especially when using `--quick` above). Thus, you should mostly check that the relative results are in a similar
-direction and order of magnitude.
 
 ### Saving time: Decrease the number of runs
 In `./runtool/config.py`, you can change the parameters passed to `hyperfine`,
@@ -185,7 +198,7 @@ benchmark will be overwritten.
 *If you haven't, enter an environment where all dependencies are available by running `nix-shell` (without arguments) in the root directory of the artifact.*
 
 To generate the trace log for one (or multiple) benchmarks, run
-```sh
+```
 ./run jitlog $implementations $benchmarks
 ```
 
@@ -214,7 +227,7 @@ All that was changed from the upstream version in each case was adding an additi
 called `jit` (or `vm` in the koka case).
 They all generate the input format for `rpyeffect-asm`, which has a JSON and an s-exp syntax.
 `rpyeffectasm` (the binary) can also convert between the two if needed by using, e.g.:
-```sh
+```
 rpyeffect-asm/target/universal/stage/bin/rpyeffectasm -f mcore-json -t mcore-sexp $inputfile $outputfile
 ```
 
