@@ -159,13 +159,12 @@ For the paper, the following are relevant combinations (format copy-pasteable in
   - `effekt-jit,effekt-llvm,effekt-js,effekt-ml` for the comparison within Effekt
   - `koka-vm,koka-c,koka-js` for the comparison wihtin Koka
   - `eff-jit,effekt-jit,koka-vm` for the comparison between the JIT implementations (cmp. RQ 4)
+  - `/eff-jit.*` resp. `/effekt-jit.*` resp. `/koka-vm.*` for the ablation study (cmp. RQ 3)
+    - Note that prefixing with `/` allows the use of regular expressions. 
 - Implementations and benchmarks `effekt-jit,js-v8,python-cpython,python-pypy,lua-lua,lua-luajit suite:are-we-fast-yet` for the baseline results not using effects (cmp. RQ 5).
 - Implementations and benchmarks
   ```
-  eff-jit,effekt-jit,ocaml5,js-v8,koka-vm,python-cpython,python-pypy
-  
-  countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,
-  parsing_dollars,product_early,resume_nontail,startup
+  eff-jit,effekt-jit,ocaml5,js-v8,koka-vm,python-cpython,python-pypy countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup
   ```
   for the baseline comparison with effectful programs (cmp. RQ 5).
 
