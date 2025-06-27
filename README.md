@@ -7,6 +7,8 @@ Also, the benchmarking tool will directly use `nix` to benchmark Ocaml 5.
 The `shell.nix` files in the respective subfolders should list all the necessary dependencies,
 should you wish to install them manually.
 
+Also, make sure to download the submodules using `git submodule update --init`.
+
 ## Compiling
 
 While the compiled binaries are provided with the artefact, they might not work on all systems.
@@ -16,14 +18,14 @@ To compile everything, use:
 ./run setup
 ```
 
-### Compiling the JIT
+### Compiling the JIT manually
 
 - Go into `./rpyeffect-jit`
 - enter a nix-shell (installing the necessary dependencies) by running `nix-shell`
 - run `make out/bin/$(uname-m)-$(uname -s)/rpyeffect-jit`
   - to compile other variants, change the target appropriately. run `make all` to compile all available variants.
 
-### Compiling the middle-end
+### Compiling the middle-end manually
 
 - Run `nix-shell` here (or make sure `sbt` is available)
 - Go into `./rpyeffect-asm`
@@ -60,6 +62,8 @@ To compile everything, use:
 - In `./runtool/config.py`, a `timeout` is set after which a benchmark is considered to run unsuccessfully
   (and thus not run multiple times).
 - In the same file, you can change the options passed to `hyperfine`, in particular the number of runs.
+- A variant of those options to run for only few iterations and with a small timeout can be activated by
+  passing `--quick`.
 
 ## Generating JIT logs (for qualitative analysis)
 - For the JIT-based implementations, `./run jitlog <implementations> <benchmarks>` will generate
@@ -87,7 +91,7 @@ There are multiple ways to access the results
 ```
 .
 ├── README.md  - this file
-├── implementation_descriptions  - TODO Drop?
+├── implementation_descriptions  - High-level descriptions of how the frontends were modified
 │
 │ # Language implementations
 ├── rpyeffect-jit  - Implementation of the JIT
