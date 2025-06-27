@@ -242,7 +242,20 @@ def results(benchmark: Benchmark, l: Language, sargs: list[str] | None, columns:
 def doreport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[str] | None, rootdir: str = ".") -> None:
     table_rel = rich.table.Table("Benchmark results (relative)", box=box.SIMPLE_HEAD)
     table_abs = rich.table.Table("Benchmark results (s)       ", box=box.SIMPLE_HEAD)
-    columns = sorted(list(clangs), key=lambda x: x.name)
+
+    # Sort columns like in paper 
+    columns_dict = {}
+    for lang in clangs:
+        lang_name = lang.lang_name.replace("old","")
+        if lang_name not in columns_dict:
+            columns_dict[lang_name] = []
+        columns_dict[lang_name].append(lang)
+    for key in columns_dict:
+        columns_dict[key].sort(key=lambda x: (not ("jit" in x.name or "vm" in x.name), adjustment_index(x), x.name))
+    supercolumns = sorted(columns_dict.keys(), key = lambda x: (not ("eff" in x or "koka" in x), x))
+    columns = [be for lang in supercolumns for be in columns_dict[lang]]
+
+    # Generate table
     for backend in columns:
         table_rel.add_column(backend.name, justify="right")
         table_abs.add_column(backend.name, justify="right")
@@ -254,6 +267,14 @@ def doreport(cbenchmarks: list[Benchmark], clangs: list[Language], sargs: list[s
         results_abs, results_rel = list(zip(*[results(benchmark, l, sargs, columns, rootdir=rootdir) for l in columns]))
         table_rel.add_row(benchmark_name, *(r for r in results_rel), style=style)
         table_abs.add_row(benchmark_name, *(r for r in results_abs), style=style)
+
+    # Compute geomeans
+    geomeans = []
+    base_vals = {bm: numeric_results(bm, columns[0], sargs, columns, rootdir=rootdir)[0] for bm in cbenchmarks}
+    for lang in columns:
+        gm = geometric_mean(filter(lambda v: not np.isnan(v), ((numeric_results(benchmark, lang, sargs, columns, rootdir=rootdir)[0] / base_vals[benchmark]) for benchmark in cbenchmarks)))
+        geomeans.append(f"{gm:.3f}") 
+    table_abs.add_row(f"[gray]geomean (wrt. {columns[0].name})[/gray]", *geomeans, style=style)
     rich.console.Console().print(table_rel)
     rich.console.Console().print(table_abs)
 
@@ -468,6 +489,7 @@ if __name__ == "__main__":
           ("benchmark", "Run and time benchmarks (with multiple runs)"),
           ("benchmark-for-paper", "Run and time the benchmarks as was done for the paper"),
           ("report", "Show results of last benchmarking runs"),
+          ("export-tables", "Export a set of benchmark results as a TSV file"),
           ("export-all-paper-tables-tsv", "Export the tables corresponding to the ones in the paper as TSV"),
           ("backup-results", "Copy all result files to a given folder"),
       ]
