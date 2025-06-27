@@ -11,14 +11,14 @@ It is provided to support our answers to the research questions posed in the pap
   > implementations of effect handlers and state-of-the-art language implementations for programs with control effects
 
   This is supported by the provided benchmark results for different implementations of Eff, Effekt, and Koka,
-  as well as the implementations and tooling needed to generate those results.
+  as well as the implementations and tooling needed to generate those results, described below.
 
 - For **RQ 2** ("What are classes of effectful programs that tracing JIT compilation can optimize well? What are the limitations of the approach?"),
   we claim in the paper:
   > Effect handlers that use the continuation in a one- shot and tail manner, or as exceptions, are optimized very well by the JIT
 
   This is supported by the benchmark programs, and the traces from JITting them (in `./.jitlogs/*.log`),
-  alongside the implementations and tooling needed ot generate those results.
+  alongside the implementations and tooling needed ot generate those results, described below.
 
 - For **RQ 3** ("How can we optimize the performance of tracing JIT compilation for effect handlers?"),
   we claim in the paper:
@@ -65,7 +65,7 @@ It is provided to support our answers to the research questions posed in the pap
 # Getting Started Guide
 
 ## Install Nix
-If you haven't already, install the Nix package manager as described [here](https://nixos.org/download/)
+If you haven't already, install the Nix package manager as described [here](https://nixos.org/download/).
 
 ## Submodules
 Effekt and Koka rely on git submodules for parts of their implementation (kiama resp. mimalloc).
@@ -124,7 +124,10 @@ large noise in the results.
 ### Comparing the outputs
 The resulting outputs are shown as tables in the terminal.
 Using `./run report $implementations $benchmarks`, individual subsets can be shown.
-For comparison, the results from the paper can be shown using `./run report --root results_x86 $implementations $benchmarks`
+For comparison, the results from the paper can be shown using
+```
+./run report --root results_x86 $implementations $benchmarks
+```
 (resp. using `results_m1` for the results generated on M1).
 Each table is printed twice, once with relative numbers (slowdown compared to the fastest shown) and once absolute (in seconds).
 
@@ -145,14 +148,25 @@ For each of the relevant combinations listed below:
 
 For the paper, the following are relevant combinations (format copy-pasteable into the above commands):
 
-- Benchmarks `suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers` (Figure 5),
+- Benchmarks (from Figure 5)
+
+  ```
+  suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers
+  ```
+
   on implementations (mostly RQ 1)
   - `eff-jit,eff-plain-ocaml,oldeff-plain-ocaml` for the comparison within Eff
   - `effekt-jit,effekt-llvm,effekt-js,effekt-ml` for the comparison within Effekt
   - `koka-vm,koka-c,koka-js` for the comparison wihtin Koka
   - `eff-jit,effekt-jit,koka-vm` for the comparison between the JIT implementations (cmp. RQ 4)
-- Implementations and benchmarks `effekt-jit,js-v8,python-cpython,python-pypy,lua-lua,lua-luajits suite:are-we-fast-yet` for the baseline results not using effects (cmp. RQ 5).
-- Implementations and benchmarks `eff-jit,effekt-jit,ocaml5,js-v8,koka-vm,python-cpython,python-pypy countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,parsing_dollars,product_early,resume_nontail,startup`
+- Implementations and benchmarks `effekt-jit,js-v8,python-cpython,python-pypy,lua-lua,lua-luajit suite:are-we-fast-yet` for the baseline results not using effects (cmp. RQ 5).
+- Implementations and benchmarks
+  ```
+  eff-jit,effekt-jit,ocaml5,js-v8,koka-vm,python-cpython,python-pypy
+  
+  countdown,fibonacci_recursive,generator,handler_sieve,iterator,multiple_handlers,
+  parsing_dollars,product_early,resume_nontail,startup
+  ```
   for the baseline comparison with effectful programs (cmp. RQ 5).
 
 ### Saving time: Decrease the number of runs
@@ -162,7 +176,7 @@ in particular, you want to change the following lines to use fewer runs (without
 hyperfine_opts = [
     "-w", "2", # warmup runs
     "-m", "20", # at least 20 runs (default is 10)
-    "--min-benchmarking-time", "6", # minimum benchmarking time in seconds (default is 3)
+    "--min-benchmarking-time", "6", # minimum benchmarking time in seconds
 ```
 The respective options for `--quick` are defined inside the function definition `quick`.
 
@@ -180,7 +194,9 @@ The respective options for `--quick` are defined inside the function definition 
 Of course, it is also possible to save time by running just a subset of the benchmarks.
 Most subcommands (in particular `run`, `benchmark`, `report`) take
 the set of implementations and benchmarks as command-line parameters, e.g.
-`./run run eff-jit,koka-vm triples,startup`
+```
+./run run eff-jit,koka-vm triples,startup
+```
 will run the `triples` and `startup` benchmarks on `eff-jit` and `koka-vm` (the Koka JIT backend).
 
 Note that the results files are per-benchmark, over all languages, so all other results for the given
