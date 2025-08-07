@@ -1,4 +1,5 @@
-{ pkgs ? import <nixpkgs> {}, ... }:
+{ sources ? import ./nix/sources.nix }:
+let pkgs = import sources.nixpkgs { overlays = []; config = {}; }; in
 let
   myJre = pkgs.temurin-jre-bin-11;
   sbtWithJre = pkgs.sbt.override { jre = myJre; };
