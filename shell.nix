@@ -1,5 +1,9 @@
-{ sources ? import ./nix/sources.nix }:
-let pkgs = import sources.nixpkgs { overlays = []; config = {}; }; in
+{ sources_x86 ? import ./nix/sources.nix, sources_darwin ? import ./nix_darwin/sources.nix }:
+let 
+  x86pkgs = import sources_x86.nixpkgs { overlays = []; config = {}; };
+  darwinpkgs = import sources_darwin.nixpkgs { overlays = []; config = {}; };
+in
+let pkgs = if x86pkgs.stdenv.isDarwin then darwinpkgs else x86pkgs; in
 let
   myJre = pkgs.temurin-jre-bin-11;
   sbtWithJre = pkgs.sbt.override { jre = myJre; };
