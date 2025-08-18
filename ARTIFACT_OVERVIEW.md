@@ -168,6 +168,26 @@ For the paper, the following are relevant combinations (format copy-pasteable in
   ```
   for the baseline comparison with effectful programs (cmp. RQ 5).
 
+- For the ablation study, Figure 7 is a summary of multiple figures (figure 18 in the appendix).
+  To reproduce the three parts of this table, you can run (after running all benchmarks as described in the instructions):
+
+  - `./run report '/eff-jit.*' suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers` for the Eff table
+  -  `./run report '/effekt-jit.*' suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers` for the Effekt one, and
+  - `./run report '/koka-vm.*' suite:effect-handlers-bench,counter,multiple_handlers,startup,to_outermost_handler,unused_handlers` for the Koka one.
+
+  The last rows (the geomean slowdowns) are the ones given in table 7.
+
+  The names of the variants map as follows (and should be in order):
+
+  | name in output       | name in paper |
+  | -------------------- | ------------- |
+  | `-no-addcej`         | no 4.1.1.     |
+  | `-no-labelbydefsite` | no 4.1.2.     |
+  | `-no-specialization` | no 4.1.3.     |
+  | `-no-context`        | no 4.1.4.     |
+  | `-2-context`         | more 4.1.4.   |
+  | `-no-opt`            | none          |
+
 ### Saving time: Decrease the number of runs
 In `./runtool/config.py`, you can change the parameters passed to `hyperfine`,
 in particular, you want to change the following lines to use fewer runs (without `--quick`):
