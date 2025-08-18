@@ -67,6 +67,8 @@ It is provided to support our answers to the research questions posed in the pap
 ## Install Nix
 If you haven't already, install the Nix package manager as described [here](https://nixos.org/download/).
 
+*Alternatively, a Dockerfile is provided that includes nix and, after building, can be run with `docker run -it <containername>`. Note that arm64-linux is not supported, so this will only work on x86. You will still have to enter a nix-shell below.*
+
 ## Submodules
 Effekt and Koka rely on git submodules for parts of their implementation (kiama resp. mimalloc).
 To download them, please use `git submodule update --init` after downloading this repository.
